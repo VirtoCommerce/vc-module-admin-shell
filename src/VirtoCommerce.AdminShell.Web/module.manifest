@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+  <id>VirtoCommerce.AdminShell</id>
+  <version>3.1000.0</version>
+  <version-tag></version-tag>
+
+  <platformVersion>3.1076.0</platformVersion>
+  <dependencies>
+    <!--<dependency id="VirtoCommerce.Core" version="3.1001.2" />-->
+  </dependencies>
+
+  <title>Virto Commerce Admin Shell</title>
+  <description>Virto Commerce Admin Shell</description>
+
+  <authors>
+    <author>Alexander Siniouguine</author>
+  </authors>
+  <owners>
+    <owner>Virto Commerce</owner>
+  </owners>
+
+  <projectUrl>https://github.com/Virto Commerce/vc-module-admin-shell</projectUrl>
+  <iconUrl>Modules/$(VirtoCommerce.AdminShell)/Content/logo.png</iconUrl>
+  <requireLicenseAcceptance>false</requireLicenseAcceptance>
+
+  <assemblyFile>VirtoCommerce.AdminShell.Web.dll</assemblyFile>
+  <moduleType>VirtoCommerce.AdminShell.Web.Module, VirtoCommerce.AdminShell.Web</moduleType>
+
+  <releaseNotes>First version.</releaseNotes>
+  <copyright>Copyright © 2026 Virto Commerce. All rights reserved</copyright>
+  <tags>extension module</tags>
+  <useFullTypeNameInSwagger>false</useFullTypeNameInSwagger>
+</module>

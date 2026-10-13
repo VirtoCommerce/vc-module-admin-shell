@@ -1,0 +1,24 @@
+{
+  "admin-shell": {
+    "blades": {
+      "hello-world": {
+        "title": "Hello world blade"
+      }
+    }
+  },
+  "permissions": {
+    "admin-shell:access": "Open Admin Shell menu",
+    "admin-shell:create": "Create Admin Shell related data",
+    "admin-shell:read": "View Admin Shell related data",
+    "admin-shell:update": "Update Admin Shell related data",
+    "admin-shell:delete": "Delete Admin Shell related data"
+  },
+  "settings": {
+    "AdminShell": {
+      "Enabled": {
+        "title": "Admin Shell Enabled",
+        "description": "Admin Shell Enabled setting"
+      }
+    }
+  }
+}
