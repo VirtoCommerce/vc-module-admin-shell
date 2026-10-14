@@ -32,8 +32,12 @@ export const railLabel = (section: { id: string; title: string }) =>
  * ponytail: kept here until the menu model carries a group per item (default-menu.json / plugin.json)
  */
 const SECTION_GROUPS: Record<string, { title: string; ids: string[] }[]> = {
+  orders: [
+    { title: "Sales", ids: ["orders", "legacy.orders", "quotes", "subscriptions", "legacy.subscriptions", "returns"] },
+    { title: "Customers", ids: ["customers", "legacy.customers", "contracts"] },
+  ],
   configuration: [
-    { title: "Store", ids: ["stores", "legacy.stores", "nativePaymentMethods"] },
+    { title: "Store", ids: ["stores", "legacy.stores", "nativePaymentMethods", "notifications", "legacy.notifications"] },
     {
       title: "Platform",
       ids: [
@@ -48,11 +52,32 @@ const SECTION_GROUPS: Record<string, { title: string; ids: string[] }[]> = {
         "platform.license",
       ],
     },
-    { title: "Search & catalog", ids: ["search-index", "legacy.searchIndex", "channels", "legacy.channels"] },
-    { title: "Security", ids: ["platform.security", "legacy.security", "audit-log"] },
     {
-      title: "Data",
-      ids: ["backup-restore", "legacy.exportImport", "generic-export", "legacy.genericExport", "environments-compare", "sql-queries"],
+      title: "Catalog & search",
+      ids: [
+        "measures",
+        "legacy.measures",
+        "thumbnails",
+        "legacy.thumbnail",
+        "search-index",
+        "legacy.searchIndex",
+        "channels",
+        "legacy.channels",
+      ],
+    },
+    { title: "Security & privacy", ids: ["platform.security", "legacy.security", "audit-log", "gdpr"] },
+    {
+      title: "Data & files",
+      ids: [
+        "assets",
+        "legacy.assets",
+        "backup-restore",
+        "legacy.exportImport",
+        "generic-export",
+        "legacy.genericExport",
+        "environments-compare",
+        "sql-queries",
+      ],
     },
     { title: "Monitoring & tools", ids: ["platform.developerTools", "legacy.developerTools", "appinsights"] },
   ],

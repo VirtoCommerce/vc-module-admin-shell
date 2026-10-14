@@ -144,7 +144,7 @@
           v-if="drawer"
           @picked="emit('navigate')"
         />
-        <!-- a busy section reads as headed groups (each folds), any other as one list; Pinned comes last -->
+        <!-- a busy section reads as headed groups (each folds), any other as one list; then Pinned, and on Home Recent -->
         <div
           v-for="group in groups"
           :key="group.key"
@@ -171,15 +171,15 @@
             <div
               class="as-item"
               :class="
-                group.pinned
-                  ? { 'as-item--pinned': true, 'as-item--active': inside(item) }
+                group.shortcut
+                  ? { 'as-item--pinned': true, 'as-item--active': shortcutActive(item) }
                   : { 'as-item--active': ownActive(item), 'as-item--inside': inside(item) }
               "
             >
               <button
                 type="button"
                 class="as-item__main"
-                :aria-current="!group.pinned && ownActive(item) ? 'page' : undefined"
+                :aria-current="!group.shortcut && ownActive(item) ? 'page' : undefined"
                 :aria-expanded="pagesOf(group, item).length ? inside(item) : undefined"
                 @click="go(item)"
               >
@@ -208,7 +208,7 @@
                   >{{ formatBadgeCount(badgeCounts[item.id]) }}</span
                 >
                 <span
-                  v-if="group.pinned"
+                  v-if="group.shortcut"
                   class="as-item__where"
                   >{{ sectionOf.get(item.id) }}</span
                 >
@@ -229,7 +229,7 @@
                   <VcIcon :icon="pinnedIds.has(item.id) ? 'lucide-pin-off' : 'lucide-pin'" />
                 </button>
                 <button
-                  v-if="!group.pinned"
+                  v-if="!group.shortcut"
                   type="button"
                   class="as-item__action"
                   :title="$t('SHELL.NAV.HIDE_ITEM')"
@@ -328,6 +328,8 @@ const panelVisible = computed(() => props.drawer || panelOpen.value || isFlyout.
 const inside = (item: MenuItem) => active.value?.item.id === item.id;
 /** highlighted itself only when none of its pages carries the highlight */
 const ownActive = (item: MenuItem) => inside(item) && !active.value?.child;
+/** a Pinned or Recent shortcut: lit for its item, or for the very page when it is one (News · Drafts) */
+const shortcutActive = (item: MenuItem) => inside(item) || isActive(item);
 
 const activeSectionId = computed(() => active.value?.section.id);
 // opening a screen brings its section's panel
@@ -339,15 +341,20 @@ const shown = computed(
     menu.value.sections[0],
 );
 
-type Group = { key: string; title: string; items: MenuItem[]; pinned?: boolean };
+/** shortcut: a Pinned or Recent group, whose items are copies of items elsewhere in the menu */
+type Group = { key: string; title: string; items: MenuItem[]; shortcut?: boolean };
 const groups = computed(() => {
   const list: Group[] = groupItems(shown.value).map((group) => ({ ...group, key: `${shown.value?.id}:${group.title}` }));
-  if (menu.value.pinned.length) list.push({ key: ":pinned", title: t("SHELL.NAV.PINNED"), items: menu.value.pinned, pinned: true });
+  if (menu.value.pinned.length) list.push({ key: ":pinned", title: t("SHELL.NAV.PINNED"), items: menu.value.pinned, shortcut: true });
+  // Home also lists the pages used most, below Pinned (the server leaves out pinned items and Home's own)
+  if (isHome.value && menu.value.recent.length) {
+    list.push({ key: ":recent", title: t("SHELL.NAV.RECENT"), items: menu.value.recent, shortcut: true });
+  }
   return list;
 });
 // a folded group still opens when it holds the screen that's open
 const isFolded = (group: Group) => !!foldedGroups.value[group.key] && !group.items.some(inside);
-const pagesOf = (group: Group, item: MenuItem) => (group.pinned ? [] : (item.children ?? []));
+const pagesOf = (group: Group, item: MenuItem) => (group.shortcut ? [] : (item.children ?? []));
 
 // the Home section (the seed's "dashboard") shows the logo in place of its title
 const isHome = computed(() => shown.value?.id === "dashboard");
@@ -366,7 +373,11 @@ function keepOpen() {
 }
 
 const sectionOf = computed(
-  () => new Map(menu.value.sections.flatMap((s) => s.items.map((i) => [i.id, railLabel(s)] as const))),
+  () =>
+    new Map(
+      // pages too: a pinned or recent page (News · Drafts) names its section like any item
+      menu.value.sections.flatMap((s) => s.items.flatMap((i) => [i, ...(i.children ?? [])]).map((i) => [i.id, railLabel(s)] as const)),
+    ),
 );
 
 // a rail button only changes the section shown; folding and unfolding the panel are the user's explicit choice

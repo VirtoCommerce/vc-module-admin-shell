@@ -28,6 +28,15 @@ public class AdminShellMenuController(AdminMenuService menuService) : Controller
         return NoContent();
     }
 
+    /// <summary>Counts a use of a menu item toward the user's Recent</summary>
+    [HttpPost("me/recent/{itemId}")]
+    [Authorize(Permissions.Access)]
+    public async Task<ActionResult> AddRecent([FromRoute] string itemId)
+    {
+        await menuService.AddRecentAsync(User.GetUserId(), itemId);
+        return NoContent();
+    }
+
     /// <summary>Menu built from installed modules, before any customization: the base the global and role patches below edit</summary>
     [HttpGet("default")]
     [Authorize(Permissions.MenuManage)]

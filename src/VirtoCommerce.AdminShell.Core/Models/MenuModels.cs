@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace VirtoCommerce.AdminShell.Core.Models;
@@ -112,5 +113,16 @@ public class EffectiveMenu
 {
     public List<MenuSection> Sections { get; set; } = [];
     public List<MenuItem> Pinned { get; set; } = [];
+
+    /// <summary>Pages the user opens most, best first (frequent and recent count; pinned and hidden ones are left out)</summary>
+    public List<MenuItem> Recent { get; set; } = [];
     public List<string> Hidden { get; set; } = [];
+}
+
+/// <summary>A menu item's use for Recent: a score that grows with each use and halves every few days without one</summary>
+public class RecentUse
+{
+    public string Id { get; set; }
+    public double Score { get; set; }
+    public DateTime LastUsed { get; set; }
 }

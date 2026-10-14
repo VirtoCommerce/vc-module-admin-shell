@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using VirtoCommerce.AdminShell.Core;
 using VirtoCommerce.AdminShell.Core.Models;
 using VirtoCommerce.AdminShell.Core.Services;
 using Xunit;
@@ -157,5 +159,93 @@ public class MenuComposerTests
         Assert.Equal(["orders"], menu.Sections.Select(x => x.Id));
         Assert.Equal(["vue.orders"], Ids(menu, "orders"));
         Assert.Equal(["vue.orders"], menu.Pinned.Select(x => x.Id)); // a pinned item the user can't see is dropped
+    }
+
+    /* ---- Recent ---- */
+
+    private static readonly DateTime Now = new(2026, 10, 13, 12, 0, 0, DateTimeKind.Utc);
+    private const double HalfLife = 7;
+
+    private static List<RecentUse> Use(IList<RecentUse> uses, string id, DateTime at) =>
+        MenuComposer.RecordUse(uses, id, at, HalfLife, 30);
+
+    private static List<string> Ranked(IList<RecentUse> uses, DateTime at) =>
+        MenuComposer.RankRecent(uses, at, HalfLife).Select(x => x.Id).ToList();
+
+    [Fact]
+    public void Recent_ranks_by_use_so_a_one_off_page_does_not_jump_to_the_top()
+    {
+        List<RecentUse> uses = [];
+        for (var day = -5; day < 0; day++)
+        {
+            uses = Use(uses, "vue.orders", Now.AddDays(day));
+            uses = Use(uses, "legacy.catalog", Now.AddDays(day).AddHours(1));
+        }
+
+        uses = Use(uses, "legacy.pricing", Now); // opened once, just now
+
+        Assert.Equal(["legacy.catalog", "vue.orders", "legacy.pricing"], Ranked(uses, Now));
+    }
+
+    [Fact]
+    public void Recent_lets_pages_no_longer_used_fade_out()
+    {
+        var uses = Use([], "legacy.catalog", Now.AddDays(-60));
+        uses = Use(uses, "legacy.catalog", Now.AddDays(-59));
+        uses = Use(uses, "legacy.catalog", Now.AddDays(-58)); // used a lot, two months ago
+        uses = Use(uses, "vue.orders", Now.AddDays(-1)); // used once, yesterday
+
+        Assert.Equal(["vue.orders", "legacy.catalog"], Ranked(uses, Now));
+    }
+
+    [Fact]
+    public void Recent_breaks_ties_by_the_last_use_and_keeps_a_bounded_list()
+    {
+        var uses = MenuComposer.RecordUse([], "a", Now.AddMinutes(-2), HalfLife, 2);
+        uses = MenuComposer.RecordUse(uses, "b", Now.AddMinutes(-1), HalfLife, 2);
+        uses = MenuComposer.RecordUse(uses, "c", Now, HalfLife, 2);
+
+        Assert.Equal(["c", "b"], uses.Select(x => x.Id));
+    }
+
+    [Fact]
+    public void Recent_reads_the_first_version_that_stored_only_ids()
+    {
+        var uses = MenuComposer.ReadRecent("[\"legacy.catalog\",\"vue.orders\"]", Now);
+        Assert.Equal(["legacy.catalog", "vue.orders"], Ranked(uses, Now));
+
+        var roundTrip = MenuComposer.ReadRecent(JsonConvert.SerializeObject(Use(uses, "vue.orders", Now)), Now);
+        Assert.Equal(["vue.orders", "legacy.catalog"], Ranked(roundTrip, Now));
+        Assert.Empty(MenuComposer.ReadRecent(null, Now));
+    }
+
+    [Fact]
+    public void Recent_skips_malformed_entries()
+    {
+        var uses = MenuComposer.ReadRecent("[1, [\"x\"], null, \"vue.orders\", {\"id\":\"y\",\"score\":\"abc\"}]", Now);
+        Assert.Equal(["vue.orders"], Ranked(uses, Now));
+        Assert.Empty(MenuComposer.ReadRecent("[{\"id\":\"x\",\"score\":1", Now)); // half-written
+    }
+
+    [Fact]
+    public void Recent_skips_pinned_items_and_items_the_user_cannot_see()
+    {
+        var menu = MenuComposer.Compose(
+            Default(), null, null, new UserMenuPrefs { Pinned = ["vue.orders"] }, p => p != "pricing:access",
+            ["legacy.catalog", "vue.orders", "legacy.pricing", "legacy.orders"]);
+
+        // vue.orders is pinned, legacy.pricing needs a permission, legacy.orders is replaced by vue.orders
+        Assert.Equal(["legacy.catalog"], menu.Recent.Select(x => x.Id));
+    }
+
+    [Fact]
+    public void Recent_skips_the_pages_Home_lists_itself()
+    {
+        var defaultMenu = Default();
+        defaultMenu.Sections.Add(new MenuSection { Id = ModuleConstants.HomeSectionId, Title = "Home", Items = [Item("home", 0, null)] });
+
+        var menu = MenuComposer.Compose(defaultMenu, null, null, null, _ => true, ["home", "legacy.catalog"]);
+
+        Assert.Equal(["legacy.catalog"], menu.Recent.Select(x => x.Id));
     }
 }

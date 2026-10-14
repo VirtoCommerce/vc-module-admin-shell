@@ -32,6 +32,8 @@ export interface MenuSection {
 export interface EffectiveMenu {
   sections: MenuSection[];
   pinned: MenuItem[];
+  /** ranked by use: frequent and recent pages first, one-off pages fade out (pinned, hidden and Home's own left out) */
+  recent: MenuItem[];
   hidden: string[];
 }
 
@@ -59,4 +61,5 @@ export const adminMenuApi = {
   getMenu: () => request<EffectiveMenu>(base),
   getPrefs: () => request<UserMenuPrefs>(`${base}/me/prefs`),
   savePrefs: (prefs: UserMenuPrefs) => request<void>(`${base}/me/prefs`, { method: "PUT", body: JSON.stringify(prefs) }),
+  addRecent: (itemId: string) => request<void>(`${base}/me/recent/${encodeURIComponent(itemId)}`, { method: "POST" }),
 };

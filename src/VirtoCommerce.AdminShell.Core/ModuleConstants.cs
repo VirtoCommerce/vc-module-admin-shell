@@ -12,6 +12,13 @@ public static class ModuleConstants
     public const string RoleTenant = "Role";
     public const string UserProfileTenant = "UserProfile";
 
+    /// <summary>The Home section of the default menu, where Recent shows</summary>
+    public const string HomeSectionId = "dashboard";
+
+    /// <summary>Recent: the uses kept per user, and the days after which an unused page's score has halved</summary>
+    public const int MaxRecentTracked = 30;
+    public const double RecentHalfLifeDays = 7;
+
     public static class Security
     {
         public static class Permissions
@@ -53,8 +60,18 @@ public static class ModuleConstants
             IsHidden = true,
         };
 
+        /// <summary>Per-user uses of menu items for Recent (score and last use per item). Hidden, like the prefs.</summary>
+        public static SettingDescriptor UserRecent { get; } = new()
+        {
+            Name = "AdminShell.Menu.Recent",
+            GroupName = "Admin Shell|Menu",
+            ValueType = SettingValueType.Json,
+            DefaultValue = "[]",
+            IsHidden = true,
+        };
+
         public static IEnumerable<SettingDescriptor> ModuleSettings => [GlobalMenu];
         public static IEnumerable<SettingDescriptor> RoleSettings => [RoleMenu];
-        public static IEnumerable<SettingDescriptor> UserSettings => [UserMenu];
+        public static IEnumerable<SettingDescriptor> UserSettings => [UserMenu, UserRecent];
     }
 }

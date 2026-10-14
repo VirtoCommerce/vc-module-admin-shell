@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -33,6 +34,7 @@ public class AdminMenuService(
         var rolePatches = Task.WhenAll(roles.Select(role => GetRolePatchAsync(role.Id)));
         var globalPatch = GetGlobalPatchAsync();
         var userPrefs = GetUserPrefsAsync(userId);
+        var recent = ReadUsesAsync(userId, DateTime.UtcNow);
 
         // administrators pass too, as for the endpoints' [Authorize]
         return MenuComposer.Compose(
@@ -40,8 +42,25 @@ public class AdminMenuService(
             await globalPatch,
             await rolePatches,
             await userPrefs,
-            principal.HasGlobalPermission);
+            principal.HasGlobalPermission,
+            (await recent).Select(x => x.Id).ToList());
     }
+
+    // the uses as stored, which is best first: RecordUse ranks them, and the shared half-life keeps that order over time
+    private async Task<List<RecentUse>> ReadUsesAsync(string userId, DateTime now) =>
+        MenuComposer.ReadRecent(await ReadJsonAsync(Settings.UserRecent, ModuleConstants.UserProfileTenant, userId), now);
+
+    // one write at a time per user: two quick clicks would each read the same uses, and the later write would drop one
+    public Task AddRecentAsync(string userId, string itemId) =>
+        distributedLock.ExecuteAsync($"admin-shell:recent:{userId}",
+            async _ =>
+            {
+                var now = DateTime.UtcNow;
+                var uses = await ReadUsesAsync(userId, now);
+                var updated = MenuComposer.RecordUse(uses, itemId, now, ModuleConstants.RecentHalfLifeDays, ModuleConstants.MaxRecentTracked);
+                await WriteAsync(Settings.UserRecent, ModuleConstants.UserProfileTenant, userId, updated);
+            },
+            TimeSpan.FromSeconds(10));
 
     public Task<MenuPatch> GetGlobalPatchAsync() => ReadAsync<MenuPatch>(Settings.GlobalMenu, null, null);
 
@@ -59,10 +78,12 @@ public class AdminMenuService(
             _ => WriteAsync(Settings.UserMenu, ModuleConstants.UserProfileTenant, userId, prefs),
             TimeSpan.FromSeconds(10));
 
+    private async Task<string> ReadJsonAsync(SettingDescriptor descriptor, string objectType, string objectId) =>
+        (await settingsManager.GetObjectSettingAsync(descriptor.Name, objectType, objectId))?.Value as string;
+
     private async Task<T> ReadAsync<T>(SettingDescriptor descriptor, string objectType, string objectId) where T : new()
     {
-        var setting = await settingsManager.GetObjectSettingAsync(descriptor.Name, objectType, objectId);
-        var json = setting?.Value as string;
+        var json = await ReadJsonAsync(descriptor, objectType, objectId);
         // a stored null ({"items":null}) keeps the model's empty default
         return string.IsNullOrWhiteSpace(json)
             ? new T()

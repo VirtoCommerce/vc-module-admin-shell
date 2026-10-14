@@ -4,11 +4,25 @@ import { useRoute, useRouter } from "vue-router";
 import { adminMenuApi, type EffectiveMenu, type MenuItem, type UserMenuPrefs } from "../api/adminMenu";
 
 // one shared state for the whole app (menu + legacy frame read it)
-const menu = ref<EffectiveMenu>({ sections: [], pinned: [], hidden: [] });
+const menu = ref<EffectiveMenu>({ sections: [], pinned: [], recent: [], hidden: [] });
 
 // load() runs from several places at once; only the latest request may set the menu
 const menuRequest = useLatestRequest();
 let prefsQueue: Promise<void> = Promise.resolve();
+
+const RECENT_SIZE = 5;
+
+/**
+ * Recent as shown: the server ranks it by use, but on screen an item keeps its place for the whole session, so opening
+ * a page never reshuffles the list under the cursor (the new ranking shows on the next load of the app). A newly ranked
+ * item only fills a free slot; items the server no longer lists (pinned, hidden) leave.
+ */
+function stableRecent(shown: MenuItem[], ranked: MenuItem[]): MenuItem[] {
+  const byId = new Map(ranked.map((x) => [x.id, x]));
+  const kept = shown.flatMap((x) => byId.get(x.id) ?? []);
+  const added = ranked.filter((x) => !kept.includes(x));
+  return [...kept, ...added].slice(0, RECENT_SIZE);
+}
 
 export function useAdminMenu() {
   const router = useRouter();
@@ -16,7 +30,7 @@ export function useAdminMenu() {
 
   async function load() {
     const next = await menuRequest.latest(adminMenuApi.getMenu());
-    if (next) menu.value = next;
+    if (next) menu.value = { ...next, recent: stableRecent(menu.value.recent, next.recent) };
   }
 
   /** Route for a menu item, or undefined if it has no target (a url opens in a tab of its own, see open) */
@@ -73,6 +87,7 @@ export function useAdminMenu() {
     // a url is someone else's site (a vendor dashboard that refuses framing): it gets a tab of its own
     if (item.target?.type === "url") {
       if (item.target.url) window.open(item.target.url, "_blank", "noopener");
+      recordUse(item);
       return;
     }
     const to = routeFor(item);
@@ -80,6 +95,16 @@ export function useAdminMenu() {
       return;
     }
     await router.push(to);
+    recordUse(item);
+  }
+
+  // counts toward Recent; the list on screen keeps its order (stableRecent), so only a free slot needs the new ranking now
+  function recordUse(item: MenuItem) {
+    const hasFreeSlot = menu.value.recent.length < RECENT_SIZE;
+    adminMenuApi
+      .addRecent(item.id)
+      .then(() => (hasFreeSlot ? load() : undefined))
+      .catch(() => undefined);
   }
 
   // one change at a time: each reads what the previous one saved, so a quick pin and hide keep both

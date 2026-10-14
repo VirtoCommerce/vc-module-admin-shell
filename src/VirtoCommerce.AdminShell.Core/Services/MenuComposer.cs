@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using VirtoCommerce.AdminShell.Core.Models;
 
 namespace VirtoCommerce.AdminShell.Core.Services;
@@ -16,7 +18,8 @@ public static class MenuComposer
         MenuPatch globalPatch,
         IList<MenuPatch> rolePatches,
         UserMenuPrefs userPrefs,
-        Func<string, bool> hasPermission)
+        Func<string, bool> hasPermission,
+        IList<string> recentIds = null)
     {
         var menu = Clone(defaultMenu);
         ApplyReplacements(menu);
@@ -45,8 +48,81 @@ public static class MenuComposer
         {
             Sections = sections,
             Pinned = Resolve(userPrefs.Pinned, index),
+            Recent = ResolveRecent(recentIds, userPrefs.Pinned, sections, index),
             Hidden = userHidden.ToList(),
         };
+    }
+
+    /* ---- Recent: ranked by use. Each use adds 1 to a page's score and a score halves every few days without one, so a
+       page used often stays near the top and a one-off click moves a page up a little instead of to the top. ---- */
+
+    /// <summary>The uses after the user opens <paramref name="itemId"/>, best first, at most <paramref name="maxTracked"/></summary>
+    public static List<RecentUse> RecordUse(IList<RecentUse> uses, string itemId, DateTime now, double halfLifeDays, int maxTracked)
+    {
+        var previous = (uses ?? []).FirstOrDefault(x => string.Equals(x?.Id, itemId, StringComparison.OrdinalIgnoreCase));
+        var result = (uses ?? []).Where(x => x != null && x != previous).ToList();
+        result.Add(new RecentUse { Id = itemId, Score = ScoreAt(previous, now, halfLifeDays) + 1, LastUsed = now });
+        return RankRecent(result, now, halfLifeDays).Take(maxTracked).ToList();
+    }
+
+    /// <summary>Uses by their score now, then by the last use</summary>
+    public static List<RecentUse> RankRecent(IList<RecentUse> uses, DateTime now, double halfLifeDays) =>
+        (uses ?? []).OrderByDescending(x => ScoreAt(x, now, halfLifeDays)).ThenByDescending(x => x.LastUsed).ToList();
+
+    /// <summary>
+    /// Reads the stored uses. The first version stored only ids, most recent first: those start equal, in that order.
+    /// Anything else (a number, a nested array, a half-written value) is skipped, not fatal for the whole menu.
+    /// </summary>
+    public static List<RecentUse> ReadRecent(string json, DateTime now) =>
+        ParseArray(json)
+            .Select((x, i) => ReadUse(x, i, now))
+            .Where(x => !string.IsNullOrEmpty(x?.Id))
+            .ToList();
+
+    private static JArray ParseArray(string json)
+    {
+        if (string.IsNullOrWhiteSpace(json))
+        {
+            return new JArray();
+        }
+
+        try
+        {
+            return JToken.Parse(json) as JArray ?? new JArray();
+        }
+        catch (JsonException)
+        {
+            return new JArray();
+        }
+    }
+
+    private static RecentUse ReadUse(JToken token, int position, DateTime now)
+    {
+        try
+        {
+            return token.Type switch
+            {
+                JTokenType.String => new RecentUse { Id = (string)token, Score = 1, LastUsed = now.AddMinutes(-position) },
+                JTokenType.Object => token.ToObject<RecentUse>(),
+                _ => null,
+            };
+        }
+        catch (Exception ex) when (ex is JsonException or FormatException)
+        {
+            return null; // one entry with a field of the wrong type
+        }
+    }
+
+    private static double ScoreAt(RecentUse use, DateTime now, double halfLifeDays) =>
+        use == null ? 0 : use.Score * Math.Pow(0.5, Math.Max(0, (now - use.LastUsed).TotalDays) / halfLifeDays);
+
+    // Recent shows on Home: pinned pages and Home's own already have their place there; Resolve drops what the user
+    // can't see or has hidden
+    private static List<MenuItem> ResolveRecent(IList<string> recentIds, IList<string> pinned, IList<MenuSection> sections, Dictionary<string, MenuItem> index)
+    {
+        var placed = new HashSet<string>(pinned ?? [], StringComparer.OrdinalIgnoreCase);
+        placed.UnionWith(sections.Where(x => x.Id == ModuleConstants.HomeSectionId).SelectMany(x => Flatten(x.Items)).Select(x => x.Id));
+        return Resolve(recentIds?.Where(x => !placed.Contains(x)).ToList(), index);
     }
 
     private static void ApplyReplacements(MenuDocument menu)
