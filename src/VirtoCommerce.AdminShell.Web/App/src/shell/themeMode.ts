@@ -11,6 +11,12 @@ export const themeMode = useStorage<ThemeMode>("adminShell.theme", "dark", undef
 
 let started = false;
 
+// anything else stored reads as the default, dark
+function themeFor(mode: ThemeMode, dark: boolean) {
+  if (mode === "system") return dark ? "dark" : "light";
+  return mode === "light" ? "light" : "dark";
+}
+
 /** Applies the mode to vc-shell's theme; call once from the app root */
 export function useThemeMode() {
   if (started) return;
@@ -19,8 +25,7 @@ export function useThemeMode() {
   const prefersDark = usePreferredDark();
   watch(
     [themeMode, prefersDark],
-    // anything else stored reads as the default, dark
-    ([mode, dark]) => setTheme(mode === "system" ? (dark ? "dark" : "light") : mode === "light" ? "light" : "dark"),
+    ([mode, dark]) => setTheme(themeFor(mode, dark)),
     { immediate: true },
   );
 }

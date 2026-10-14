@@ -74,6 +74,8 @@ function words(value?: string) {
   return spaced.charAt(0).toUpperCase() + spaced.slice(1);
 }
 
-const titleOf = (entry: OperationLog) =>
-  `${words(entry.objectType)} ${t(`SHELL.DASHBOARD.ACTIVITY.${(entry.operationType ?? "Modified").toUpperCase()}`)}`;
+const titleOf = (entry: OperationLog) => {
+  const key = `SHELL.DASHBOARD.ACTIVITY.${(entry.operationType ?? "Modified").toUpperCase()}`;
+  return `${words(entry.objectType)} ${t(key)}`;
+};
 </script>

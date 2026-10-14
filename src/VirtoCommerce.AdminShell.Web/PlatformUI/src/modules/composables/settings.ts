@@ -50,8 +50,8 @@ export const toEditor = (value: unknown, valueType: string) => (valueType === "J
  * ponytail: the platform after 3.1079.0 keeps date text as sent (SettingValues); drop this once module.manifest requires it.
  */
 function dateWire(value: unknown) {
-  const text = value instanceof Date ? value.toISOString() : value;
-  return typeof text === "string" && /^\d{4}-\d{2}-\d{2}T/.test(text) ? text.replace("T", " ") : text;
+  const raw = value instanceof Date ? value.toISOString() : value;
+  return typeof raw === "string" && /^\d{4}-\d{2}-\d{2}T/.test(raw) ? raw.replace("T", " ") : raw;
 }
 
 /** The document the export downloads and the JSON editor shows: modified settings only. */

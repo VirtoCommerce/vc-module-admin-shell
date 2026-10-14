@@ -104,9 +104,15 @@ export function useAdminMenu() {
       prefs.pinned = pinnedIds.value.has(item.id) ? prefs.pinned.filter((x) => x !== item.id) : [...prefs.pinned, item.id];
     });
 
-  const hide = (item: MenuItem) => updatePrefs((prefs) => void prefs.hidden.push(item.id));
+  const hide = (item: MenuItem) =>
+    updatePrefs((prefs) => {
+      prefs.hidden.push(item.id);
+    });
 
-  const restoreHidden = () => updatePrefs((prefs) => void (prefs.hidden = []));
+  const restoreHidden = () =>
+    updatePrefs((prefs) => {
+      prefs.hidden = [];
+    });
 
   return { menu, load, open, isActive, active, activeTitle, togglePin, hide, restoreHidden, pinnedIds };
 }

@@ -44,17 +44,14 @@ const KEYS = [
   "userId", "memberId", "ipAddress", "host", "userAgent", "clientId", "sessionId", "storeId", "storeName", "organizationName", "organizationId",
 ] as const;
 
+function textOf(value: unknown) {
+  if (typeof value !== "boolean") return value as string;
+  return t(value ? "PLATFORM.COMMON.YES" : "PLATFORM.COMMON.NO");
+}
+
 const fields = computed(() =>
   KEYS.map((key) => ({ key, label: t(`PLATFORM.SECURITY.SIGNIN.FIELDS.${key}`), value: record.value?.[key] }))
     .filter((f) => f.value !== null && f.value !== undefined && f.value !== "")
-    .map((f) => ({
-      ...f,
-      value:
-        f.key === "createdDate"
-          ? new Date(f.value as string)
-          : typeof f.value === "boolean"
-            ? t(f.value ? "PLATFORM.COMMON.YES" : "PLATFORM.COMMON.NO")
-            : (f.value as string),
-    })),
+    .map((f) => ({ ...f, value: f.key === "createdDate" ? new Date(f.value as string) : textOf(f.value) })),
 );
 </script>

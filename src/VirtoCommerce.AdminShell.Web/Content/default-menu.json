@@ -1,12 +1,9 @@
 {
-  // Default Admin Shell menu: sections (rail) and the AngularJS screens they open in the legacy frame.
-  // Items whose moduleId isn't installed are dropped; Vue modules add their own items via plugin.json contributions.
   "sections": [
     {
       "id": "dashboard", "title": "Home", "icon": "lucide-house", "priority": 0,
       "items": [
         { "id": "home", "title": "Dashboard", "icon": "lucide-layout-dashboard", "priority": 0, "target": { "type": "vue", "route": "/" } },
-        // apps get a place in the section they belong to; "replaces" drops the copy the builder adds to Apps
         { "id": "tasks", "title": "Tasks", "icon": "lucide-square-check-big", "priority": 10, "moduleId": "VirtoCommerce.TaskManagement", "permission": "task:access", "replaces": "app.tasks", "target": { "type": "app", "appId": "tasks" } }
       ]
     },
@@ -37,7 +34,6 @@
         { "id": "legacy.marketing", "title": "Marketing", "icon": "lucide-flag", "priority": 10, "moduleId": "VirtoCommerce.Marketing", "permission": "marketing:access", "target": { "type": "legacy", "legacyUrl": "/workspace/marketing" } },
         { "id": "legacy.content", "title": "Content", "icon": "lucide-code-xml", "priority": 20, "moduleId": "VirtoCommerce.Content", "permission": "content:access", "target": { "type": "legacy", "legacyUrl": "/workspace/content" } },
         { "id": "legacy.notifications", "title": "Notifications", "icon": "lucide-mail", "priority": 30, "moduleId": "VirtoCommerce.Notifications", "permission": "notifications:access", "target": { "type": "legacy", "legacyUrl": "/workspace/notifications" } },
-        // the News app's own lists become sub-items here, so it shows without its sidebar
         {
           "id": "news", "title": "News", "icon": "lucide-newspaper", "priority": 40, "moduleId": "VirtoCommerce.News", "permission": "news:access", "replaces": "app.vc-news",
           "target": { "type": "app", "appId": "vc-news", "route": "/list-all" },
@@ -53,7 +49,6 @@
       ]
     },
     {
-      // apps that are vendor dashboards; the ones whose vendor site refuses framing are "url" targets (a new tab)
       "id": "insights", "title": "Insights", "icon": "lucide-chart-column", "priority": 35,
       "items": [
         { "id": "reports", "title": "Reports", "icon": "lucide-chart-column", "priority": 10, "moduleId": "VirtoCommerce.PowerBiReports", "target": { "type": "app", "appId": "reports" } },

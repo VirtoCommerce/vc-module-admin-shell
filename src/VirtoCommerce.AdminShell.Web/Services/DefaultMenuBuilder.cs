@@ -20,6 +20,10 @@ public class DefaultMenuBuilder(IModuleService moduleService, ILogger<DefaultMen
 {
     private const string AppsSectionId = "apps";
     private const string OtherSectionId = "other";
+    // app items go after the seed's items in their section
+    private const int AppItemPriority = 100;
+    // a section the seed doesn't have goes between Configuration (90) and Apps (100)
+    private const int AddedSectionPriority = 95;
 
     // ponytail: rebuilt on every request (a few small file reads); cache with a file watcher if it ever shows up in profiles
     public MenuDocument Build()
@@ -65,7 +69,7 @@ public class DefaultMenuBuilder(IModuleService moduleService, ILogger<DefaultMen
                     : "/" + app.IconUrl,
                 Icon = "lucide-app-window",
                 Permission = app.Permission,
-                Priority = 100,
+                Priority = AppItemPriority,
                 Target = new MenuTarget { Type = MenuTargetTypes.App, AppId = app.Id },
             });
         }
@@ -75,33 +79,37 @@ public class DefaultMenuBuilder(IModuleService moduleService, ILogger<DefaultMen
     {
         foreach (var module in modules)
         {
-            var folder = Path.Combine(module.FullPhysicalPath ?? string.Empty, "plugins", ModuleConstants.AppId);
-            var pluginFile = Path.Combine(folder, "plugin.json");
-
-            // a declared plugin that isn't built yet would only produce dead menu items
-            if (!File.Exists(pluginFile) || !File.Exists(Path.Combine(folder, "remoteEntry.js")))
+            foreach (var item in ReadContributions(module))
             {
-                continue;
-            }
+                item.ModuleId ??= module.Id;
+                item.Target ??= new MenuTarget { Type = MenuTargetTypes.Vue, Route = item.Route };
+                item.Route = null;
 
-            try
-            {
-                var plugin = JObject.Parse(File.ReadAllText(pluginFile));
-                var items = plugin.SelectToken("contributions.menu")?.ToObject<List<MenuItem>>() ?? [];
-
-                foreach (var item in items)
-                {
-                    item.ModuleId ??= module.Id;
-                    item.Target ??= new MenuTarget { Type = MenuTargetTypes.Vue, Route = item.Route };
-                    item.Route = null;
-
-                    GetOrAddSection(menu, item.SectionId ?? OtherSectionId, item.SectionId ?? "Other").Items.Add(item);
-                }
+                GetOrAddSection(menu, item.SectionId ?? OtherSectionId, item.SectionId ?? "Other").Items.Add(item);
             }
-            catch (JsonException ex)
-            {
-                logger.LogWarning(ex, "Invalid {File} in module {Module}", pluginFile, module.Id);
-            }
+        }
+    }
+
+    private List<MenuItem> ReadContributions(ManifestModuleInfo module)
+    {
+        var folder = Path.Combine(module.FullPhysicalPath ?? string.Empty, "plugins", ModuleConstants.AppId);
+        var pluginFile = Path.Combine(folder, "plugin.json");
+
+        // a declared plugin that isn't built yet would only produce dead menu items
+        if (!File.Exists(pluginFile) || !File.Exists(Path.Combine(folder, "remoteEntry.js")))
+        {
+            return [];
+        }
+
+        try
+        {
+            var plugin = JObject.Parse(File.ReadAllText(pluginFile));
+            return plugin.SelectToken("contributions.menu")?.ToObject<List<MenuItem>>() ?? [];
+        }
+        catch (JsonException ex)
+        {
+            logger.LogWarning(ex, "Invalid {File} in module {Module}", pluginFile, module.Id);
+            return [];
         }
     }
 
@@ -110,7 +118,7 @@ public class DefaultMenuBuilder(IModuleService moduleService, ILogger<DefaultMen
         var section = menu.Sections.FirstOrDefault(x => string.Equals(x.Id, id, StringComparison.OrdinalIgnoreCase));
         if (section == null)
         {
-            section = new MenuSection { Id = id, Title = title, Icon = "lucide-ellipsis", Priority = 95 };
+            section = new MenuSection { Id = id, Title = title, Icon = "lucide-ellipsis", Priority = AddedSectionPriority };
             menu.Sections.Add(section);
         }
         return section;

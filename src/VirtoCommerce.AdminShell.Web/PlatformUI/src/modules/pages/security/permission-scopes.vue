@@ -87,7 +87,10 @@ function pickerFor(type: string): (() => Promise<NamedEntity[]>) | undefined {
   return undefined;
 }
 
-const kind = (type: string) => (TOGGLES.has(type) || /OnlyScope$/.test(type) ? "toggle" : pickerFor(type) ? "picker" : "text");
+const kind = (type: string) => {
+  if (TOGGLES.has(type) || /OnlyScope$/.test(type)) return "toggle";
+  return pickerFor(type) ? "picker" : "text";
+};
 
 const available = computed(() => bladeOptions.value?.available ?? []);
 const options = ref<Record<string, NamedEntity[]>>({});

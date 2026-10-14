@@ -28,9 +28,16 @@ export type ModuleAction = "install" | "update" | "uninstall";
 const rows = ref<ModuleRow[]>([]);
 
 const compareVersions = (a = "", b = "") => a.localeCompare(b, undefined, { numeric: true });
-export const versionText = (v?: ModuleIdentity["version"]) => (v ? [v.major, v.minor, v.patch].join(".") + (v.prerelease ? `-${v.prerelease}` : "") : "");
+export const versionText = (v?: ModuleIdentity["version"]) => {
+  if (!v) return "";
+  const core = [v.major, v.minor, v.patch].join(".");
+  return v.prerelease ? `${core}-${v.prerelease}` : core;
+};
 /** manifest icon urls are relative to the platform root ("Modules/$(VirtoCommerce.Core)/Content/logo.svg") */
-export const iconSrc = (url?: string) => (!url ? undefined : /^(https?:)?\//.test(url) ? url : `/${url}`);
+export const iconSrc = (url?: string) => {
+  if (!url) return undefined;
+  return /^(https?:)?\//.test(url) ? url : `/${url}`;
+};
 
 function buildRows(modules: ModuleDescriptor[]): ModuleRow[] {
   const byId = new Map<string, ModuleDescriptor[]>();
@@ -90,12 +97,10 @@ export function useModules() {
     const requests = [...targets, ...extra]
       .sort((a, b) => a.id!.localeCompare(b.id!))
       .map((m) => ({ id: m.id, version: m.version }));
-    const notification: ModulePushNotification =
-      action === "install"
-        ? await client.installModuleRequests(requests)
-        : action === "update"
-          ? await client.updateModuleRequests(requests)
-          : await client.uninstallModuleRequests(requests);
+    let notification: ModulePushNotification;
+    if (action === "install") notification = await client.installModuleRequests(requests);
+    else if (action === "update") notification = await client.updateModuleRequests(requests);
+    else notification = await client.uninstallModuleRequests(requests);
     await openBlade({ name: "PlatformModulesProgress", param: notification.id, options: { notification } });
   }
 

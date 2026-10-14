@@ -6,7 +6,7 @@ The Admin Shell is a Vue admin for the Virto Commerce platform, built on [vc-she
 - **Hosts module UIs.** Modules that ship an Admin Shell UI (a Module Federation remote built into the module's `plugins/admin-shell` folder) are loaded at runtime. Their menu entries come from each remote's `plugin.json`.
 - **Keeps unported screens working.** AngularJS screens and platform apps that have no Vue UI yet open inside the shell in embedded mode.
 - **Serves a server-driven menu.** The menu is composed per request from four layers:
-  1. the default menu: `Content/default-menu.json`, the installed apps and the module UIs' `plugin.json` contributions;
+  1. the default menu: `Content/default-menu.json`, the installed apps and the module UIs' `plugin.json` contributions. In `default-menu.json`, items whose `moduleId` isn't installed are dropped, an item's `replaces` drops the copy of an app the builder would add to Apps, and vendor apps whose site refuses framing are `url` targets that open in a new tab;
   2. a global patch (setting `AdminShell.Menu.Global`);
   3. role patches (setting `AdminShell.Menu.Role`, per role; an item stays visible when any role keeps it);
   4. the user's own pinned and hidden items.

@@ -30,12 +30,7 @@ public static class MenuComposer
 
         userPrefs ??= new UserMenuPrefs();
         var userHidden = new HashSet<string>(userPrefs.Hidden ?? [], StringComparer.OrdinalIgnoreCase);
-
-        foreach (var section in menu.Sections)
-        {
-            section.Items = FilterItems(section.Items, x => !userHidden.Contains(x.Id) && Allowed(x.Permission, hasPermission));
-            section.Items = OrderItems(section.Items, userPrefs.Order != null && userPrefs.Order.TryGetValue(section.Id, out var order) ? order : null);
-        }
+        ApplyUserPrefs(menu, userPrefs, userHidden, hasPermission);
 
         var sections = menu.Sections
             .Where(x => x.Items.Count > 0 && Allowed(x.Permission, hasPermission))
@@ -66,18 +61,38 @@ public static class MenuComposer
         }
     }
 
+    private static void ApplyUserPrefs(MenuDocument menu, UserMenuPrefs userPrefs, HashSet<string> userHidden, Func<string, bool> hasPermission)
+    {
+        foreach (var section in menu.Sections)
+        {
+            section.Items = FilterItems(section.Items, x => !userHidden.Contains(x.Id) && Allowed(x.Permission, hasPermission));
+            section.Items = OrderItems(section.Items, userPrefs.Order != null && userPrefs.Order.TryGetValue(section.Id, out var order) ? order : null);
+        }
+    }
+
     // patches are stored JSON: a null entry ({"items":{"x":null}}, "addItems":[null]) is skipped
     private static void ApplyPatch(MenuDocument menu, MenuPatch patch, bool applyHidden)
     {
-        foreach (var addSection in (patch.AddSections ?? []).Where(x => x != null))
+        AddSections(menu, patch.AddSections);
+        AddItems(menu, patch.AddItems);
+        PatchSections(menu, patch.Sections, applyHidden);
+        PatchItems(menu, patch.Items, applyHidden);
+    }
+
+    private static void AddSections(MenuDocument menu, List<MenuSection> sections)
+    {
+        foreach (var addSection in (sections ?? []).Where(x => x != null))
         {
             if (menu.Sections.All(x => !string.Equals(x.Id, addSection.Id, StringComparison.OrdinalIgnoreCase)))
             {
                 menu.Sections.Add(Clone(addSection));
             }
         }
+    }
 
-        foreach (var addItem in (patch.AddItems ?? []).Where(x => x != null))
+    private static void AddItems(MenuDocument menu, List<MenuItem> items)
+    {
+        foreach (var addItem in (items ?? []).Where(x => x != null))
         {
             var section = FindSection(menu, addItem.SectionId);
             if (section != null && !Flatten(section.Items).Any(x => string.Equals(x.Id, addItem.Id, StringComparison.OrdinalIgnoreCase)))
@@ -85,8 +100,11 @@ public static class MenuComposer
                 section.Items.Add(Clone(addItem));
             }
         }
+    }
 
-        foreach (var (sectionId, sectionPatch) in patch.Sections ?? [])
+    private static void PatchSections(MenuDocument menu, Dictionary<string, SectionPatch> patches, bool applyHidden)
+    {
+        foreach (var (sectionId, sectionPatch) in patches ?? [])
         {
             var section = FindSection(menu, sectionId);
             if (section == null || sectionPatch == null)
@@ -103,8 +121,11 @@ public static class MenuComposer
                 menu.Sections.Remove(section);
             }
         }
+    }
 
-        foreach (var (itemId, itemPatch) in patch.Items ?? [])
+    private static void PatchItems(MenuDocument menu, Dictionary<string, ItemPatch> patches, bool applyHidden)
+    {
+        foreach (var (itemId, itemPatch) in patches ?? [])
         {
             var (section, item) = FindItem(menu, itemId);
             if (item == null || itemPatch == null)
@@ -116,19 +137,24 @@ public static class MenuComposer
             item.Icon = itemPatch.Icon ?? item.Icon;
             item.Priority = itemPatch.Priority ?? item.Priority;
 
-            // the item may be a child: it is taken out of the tree, and a container left empty goes too
-            if (applyHidden && itemPatch.Hidden == true)
-            {
-                section.Items = FilterItems(section.Items, x => x != item);
-                continue;
-            }
+            HideOrMoveItem(menu, section, item, itemPatch, applyHidden);
+        }
+    }
 
-            var target = FindSection(menu, itemPatch.SectionId);
-            if (target != null && target != section)
-            {
-                section.Items = FilterItems(section.Items, x => x != item);
-                target.Items.Add(item);
-            }
+    // the item may be a child: it is taken out of the tree, and a container left empty goes too
+    private static void HideOrMoveItem(MenuDocument menu, MenuSection section, MenuItem item, ItemPatch itemPatch, bool applyHidden)
+    {
+        if (applyHidden && itemPatch.Hidden == true)
+        {
+            section.Items = FilterItems(section.Items, x => x != item);
+            return;
+        }
+
+        var target = FindSection(menu, itemPatch.SectionId);
+        if (target != null && target != section)
+        {
+            section.Items = FilterItems(section.Items, x => x != item);
+            target.Items.Add(item);
         }
     }
 

@@ -175,7 +175,10 @@ const globalFilters = computed(() => [
 
 function onFilter(event: { filters: Record<string, unknown> }) {
   const flags = event.filters.flags;
-  filters.value = { ...event.filters, flags: Array.isArray(flags) ? flags : flags ? [flags] : [] };
+  let flagList: unknown[] = [];
+  if (Array.isArray(flags)) flagList = flags;
+  else if (flags) flagList = [flags];
+  filters.value = { ...event.filters, flags: flagList };
 }
 
 load();

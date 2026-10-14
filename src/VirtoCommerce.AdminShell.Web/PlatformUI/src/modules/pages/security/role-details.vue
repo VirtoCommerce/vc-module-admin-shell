@@ -105,6 +105,12 @@ const selection = ref<PermissionRow[]>([]);
 const keyword = ref("");
 
 const registry = computed(() => new Map(registered.value.map((p) => [p.name!, p])));
+// "—" for a permission without scopes; none assigned means all
+function scopesText(p: Permission, known?: CatalogPermission) {
+  if (!known?.availableScopes?.length) return "—";
+  if (!p.assignedScopes?.length) return t("PLATFORM.SECURITY.ROLE.SCOPES_ALL");
+  return p.assignedScopes.map((s) => s.label || s.scope || s.type).join(", ");
+}
 const rows = computed<PermissionRow[]>(() =>
   (item.value.permissions ?? [])
     .map((p) => {
@@ -114,11 +120,7 @@ const rows = computed<PermissionRow[]>(() =>
         name: p.name!,
         description: known?.description ?? "",
         groupName: known?.groupName ?? p.groupName ?? "",
-        scopes: !known?.availableScopes?.length
-          ? "—"
-          : p.assignedScopes?.length
-            ? p.assignedScopes.map((s) => s.label || s.scope || s.type).join(", ")
-            : t("PLATFORM.SECURITY.ROLE.SCOPES_ALL"),
+        scopes: scopesText(p, known),
       };
     })
     .filter((r) => !keyword.value || `${r.name} ${r.description} ${r.groupName}`.toLowerCase().includes(keyword.value.toLowerCase())),

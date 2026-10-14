@@ -232,9 +232,13 @@ const globalFilters = computed(() => [
 
 function onFilter(event: { filters: Record<string, unknown> }) {
   const types = event.filters.signInTypes;
+  let signInTypes: string[] | undefined;
+  // a cleared multi-select comes as [], which means no filter
+  if (Array.isArray(types)) signInTypes = types.length ? types : undefined;
+  else if (types) signInTypes = [types as string];
   applyFilter({
     succeeded: event.filters.outcome ? event.filters.outcome === "succeeded" : undefined,
-    signInTypes: Array.isArray(types) && types.length ? types : types ? [types as string] : undefined,
+    signInTypes,
   });
 }
 

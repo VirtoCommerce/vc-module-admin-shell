@@ -128,10 +128,10 @@ const globalFilters = computed(() => [
     id: "status",
     label: t("PLATFORM.MODULES.STATUS"),
     filter: {
-      options: ["installed", "all", "notInstalled", "updates", "errors"].map((s) => ({
-        value: s,
-        label: `${t(`PLATFORM.MODULES.FILTERS.${s.toUpperCase()}`)} (${count(s)})`,
-      })),
+      options: ["installed", "all", "notInstalled", "updates", "errors"].map((s) => {
+        const key = `PLATFORM.MODULES.FILTERS.${s.toUpperCase()}`;
+        return { value: s, label: `${t(key)} (${count(s)})` };
+      }),
     },
   },
   {

@@ -144,9 +144,12 @@ const globalFilters = computed(() => [
 
 function onFilter(event: { filters: Record<string, unknown> }) {
   const show = event.filters.show;
+  let shown: string[] = [];
+  if (Array.isArray(show)) shown = show;
+  else if (show) shown = [show as string];
   filters.value = {
     moduleId: (event.filters.moduleId as string) || undefined,
-    show: Array.isArray(show) ? show : show ? [show as string] : [],
+    show: shown,
   };
 }
 

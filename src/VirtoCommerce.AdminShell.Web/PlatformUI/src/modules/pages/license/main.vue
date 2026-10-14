@@ -209,14 +209,15 @@ const formatDate = (value?: Date | string) =>
   // the license's calendar date (UTC), not the day it is in this browser's zone
   value ? new Date(value).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" }) : "";
 
-const state = computed(() => (!license.value ? "community" : isExpired(license.value) ? "expired" : "active"));
-const chip = computed(() =>
-  state.value === "community"
-    ? t("PLATFORM.LICENSE.CHIP_COMMUNITY")
-    : state.value === "expired"
-      ? t("PLATFORM.LICENSE.CHIP_EXPIRED")
-      : t("PLATFORM.LICENSE.CHIP_ACTIVE", { date: formatDate(license.value?.expirationDate) }),
-);
+const state = computed(() => {
+  if (!license.value) return "community";
+  return isExpired(license.value) ? "expired" : "active";
+});
+const chip = computed(() => {
+  if (state.value === "community") return t("PLATFORM.LICENSE.CHIP_COMMUNITY");
+  if (state.value === "expired") return t("PLATFORM.LICENSE.CHIP_EXPIRED");
+  return t("PLATFORM.LICENSE.CHIP_ACTIVE", { date: formatDate(license.value?.expirationDate) });
+});
 const previewExpired = computed(() => isExpired(preview.value));
 
 const facts = (l: License) =>

@@ -1,6 +1,4 @@
 {
-  // Platform admin screens for the Admin Shell host (Module Federation remote);
-  // titles, icons, priorities and permissions mirror the legacy items in Content/default-menu.json
   "remote": { "name": "platform_admin", "exposed": "./Module" },
   "contributions": {
     "menu": [

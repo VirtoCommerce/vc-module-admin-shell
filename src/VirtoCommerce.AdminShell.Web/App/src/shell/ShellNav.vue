@@ -353,13 +353,11 @@ const pagesOf = (group: Group, item: MenuItem) => (group.pinned ? [] : (item.chi
 const isHome = computed(() => shown.value?.id === "dashboard");
 
 // the button by the logo or title: close the drawer, unfold the panel for good, or fold it
-const topButton = computed(() =>
-  props.drawer
-    ? { icon: "lucide-x", label: t("COMPONENTS.ORGANISMS.VC_APP.CLOSE_MENU"), action: () => emit("close") }
-    : isFlyout.value
-      ? { icon: "lucide-panel-left-open", label: t("SHELL.NAV.KEEP_OPEN"), action: keepOpen }
-      : { icon: "lucide-panel-left-close", label: t("SHELL.NAV.HIDE_MENU"), action: () => (panelOpen.value = false) },
-);
+const topButton = computed(() => {
+  if (props.drawer) return { icon: "lucide-x", label: t("COMPONENTS.ORGANISMS.VC_APP.CLOSE_MENU"), action: () => emit("close") };
+  if (isFlyout.value) return { icon: "lucide-panel-left-open", label: t("SHELL.NAV.KEEP_OPEN"), action: keepOpen };
+  return { icon: "lucide-panel-left-close", label: t("SHELL.NAV.HIDE_MENU"), action: () => (panelOpen.value = false) };
+});
 
 function keepOpen() {
   panelSection.value = flyout.value ?? panelSection.value;
