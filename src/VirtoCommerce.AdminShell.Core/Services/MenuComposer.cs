@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using VirtoCommerce.AdminShell.Core.Models;
 
 namespace VirtoCommerce.AdminShell.Core.Services;
@@ -69,50 +67,6 @@ public static class MenuComposer
     /// <summary>Uses by their score now, then by the last use</summary>
     public static List<RecentUse> RankRecent(IList<RecentUse> uses, DateTime now, double halfLifeDays) =>
         (uses ?? []).OrderByDescending(x => ScoreAt(x, now, halfLifeDays)).ThenByDescending(x => x.LastUsed).ToList();
-
-    /// <summary>
-    /// Reads the stored uses. The first version stored only ids, most recent first: those start equal, in that order.
-    /// Anything else (a number, a nested array, a half-written value) is skipped, not fatal for the whole menu.
-    /// </summary>
-    public static List<RecentUse> ReadRecent(string json, DateTime now) =>
-        ParseArray(json)
-            .Select((x, i) => ReadUse(x, i, now))
-            .Where(x => !string.IsNullOrEmpty(x?.Id))
-            .ToList();
-
-    private static JArray ParseArray(string json)
-    {
-        if (string.IsNullOrWhiteSpace(json))
-        {
-            return new JArray();
-        }
-
-        try
-        {
-            return JToken.Parse(json) as JArray ?? new JArray();
-        }
-        catch (JsonException)
-        {
-            return new JArray();
-        }
-    }
-
-    private static RecentUse ReadUse(JToken token, int position, DateTime now)
-    {
-        try
-        {
-            return token.Type switch
-            {
-                JTokenType.String => new RecentUse { Id = (string)token, Score = 1, LastUsed = now.AddMinutes(-position) },
-                JTokenType.Object => token.ToObject<RecentUse>(),
-                _ => null,
-            };
-        }
-        catch (Exception ex) when (ex is JsonException or FormatException)
-        {
-            return null; // one entry with a field of the wrong type
-        }
-    }
 
     private static double ScoreAt(RecentUse use, DateTime now, double halfLifeDays) =>
         use == null ? 0 : use.Score * Math.Pow(0.5, Math.Max(0, (now - use.LastUsed).TotalDays) / halfLifeDays);

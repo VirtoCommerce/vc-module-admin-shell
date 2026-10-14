@@ -30,7 +30,7 @@ public class AdminMenuService(
         // the reads that don't need the user's roles run while the user loads
         var globalPatch = GetGlobalPatchAsync();
         var userPrefs = GetUserPrefsAsync(userId);
-        var recent = ReadUsesAsync(userId, DateTime.UtcNow);
+        var recent = ReadUsesAsync(userId);
         var user = await userManager.FindByIdAsync(userId);
         var roles = (user?.Roles ?? []).OrderBy(x => x.Name).ToList();
 
@@ -47,9 +47,20 @@ public class AdminMenuService(
             (await recent).Select(x => x.Id).ToList());
     }
 
-    // the uses as stored, which is best first: RecordUse ranks them, and the shared half-life keeps that order over time
-    private async Task<List<RecentUse>> ReadUsesAsync(string userId, DateTime now) =>
-        MenuComposer.ReadRecent(await ReadJsonAsync(Settings.UserRecent, ModuleConstants.UserProfileTenant, userId), now);
+    // the uses as stored, which is best first: RecordUse ranks them, and the shared half-life keeps that order over time.
+    // A value that doesn't read as uses (edited by hand) empties Recent instead of failing the menu; the next use rewrites it.
+    private async Task<List<RecentUse>> ReadUsesAsync(string userId)
+    {
+        try
+        {
+            var uses = await ReadAsync<List<RecentUse>>(Settings.UserRecent, ModuleConstants.UserProfileTenant, userId);
+            return uses.Where(x => !string.IsNullOrEmpty(x?.Id)).ToList();
+        }
+        catch (JsonException)
+        {
+            return [];
+        }
+    }
 
     // one write at a time per user: two quick clicks would each read the same uses, and the later write would drop one
     public Task AddRecentAsync(string userId, string itemId) =>
@@ -57,7 +68,7 @@ public class AdminMenuService(
             async _ =>
             {
                 var now = DateTime.UtcNow;
-                var uses = await ReadUsesAsync(userId, now);
+                var uses = await ReadUsesAsync(userId);
                 var updated = MenuComposer.RecordUse(uses, itemId, now, ModuleConstants.RecentHalfLifeDays, ModuleConstants.MaxRecentTracked);
                 await WriteAsync(Settings.UserRecent, ModuleConstants.UserProfileTenant, userId, updated);
             },

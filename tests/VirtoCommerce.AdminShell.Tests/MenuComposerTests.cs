@@ -209,25 +209,6 @@ public class MenuComposerTests
     }
 
     [Fact]
-    public void Recent_reads_the_first_version_that_stored_only_ids()
-    {
-        var uses = MenuComposer.ReadRecent("[\"legacy.catalog\",\"vue.orders\"]", Now);
-        Assert.Equal(["legacy.catalog", "vue.orders"], Ranked(uses, Now));
-
-        var roundTrip = MenuComposer.ReadRecent(JsonConvert.SerializeObject(Use(uses, "vue.orders", Now)), Now);
-        Assert.Equal(["vue.orders", "legacy.catalog"], Ranked(roundTrip, Now));
-        Assert.Empty(MenuComposer.ReadRecent(null, Now));
-    }
-
-    [Fact]
-    public void Recent_skips_malformed_entries()
-    {
-        var uses = MenuComposer.ReadRecent("[1, [\"x\"], null, \"vue.orders\", {\"id\":\"y\",\"score\":\"abc\"}]", Now);
-        Assert.Equal(["vue.orders"], Ranked(uses, Now));
-        Assert.Empty(MenuComposer.ReadRecent("[{\"id\":\"x\",\"score\":1", Now)); // half-written
-    }
-
-    [Fact]
     public void Recent_skips_pinned_items_and_items_the_user_cannot_see()
     {
         var menu = MenuComposer.Compose(
