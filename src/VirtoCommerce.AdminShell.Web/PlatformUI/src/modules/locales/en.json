@@ -265,7 +265,7 @@
       }
     },
     "DYNAMIC": {
-      "TITLE": "Dynamic properties",
+      "TITLE": "Dynamic Properties",
       "NO_TYPES": "No object types",
       "OBJECT_TYPE": "Object type",
       "PROPERTIES": "Dynamic properties",
@@ -296,7 +296,7 @@
       }
     },
     "DEVTOOLS": {
-      "TITLE": "Developer tools",
+      "TITLE": "Developer Tools",
       "EMPTY": "No developer tools are available to you",
       "OPEN_IN_TAB": "Open in new tab"
     },
