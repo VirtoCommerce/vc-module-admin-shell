@@ -52,8 +52,13 @@ public class DefaultMenuBuilder(IModuleService moduleService, ILogger<DefaultMen
 
     private static void AddApps(MenuDocument menu, IEnumerable<ManifestModuleInfo> modules)
     {
+        // an app the seed already places (Tasks and News on their sections) isn't listed again in Apps
+        var placed = new HashSet<string>(
+            menu.Sections.SelectMany(x => x.Items).Where(x => x.Target?.Type == MenuTargetTypes.App).Select(x => x.Target.AppId),
+            StringComparer.OrdinalIgnoreCase);
         var apps = modules.SelectMany(x => x.Apps)
-            .Where(x => x.Placement == AppPlacement.MainMenu && !string.Equals(x.Id, ModuleConstants.AppId, StringComparison.OrdinalIgnoreCase));
+            .Where(x => x.Placement == AppPlacement.MainMenu && !string.Equals(x.Id, ModuleConstants.AppId, StringComparison.OrdinalIgnoreCase))
+            .Where(x => !placed.Contains(x.Id));
 
         var section = GetOrAddSection(menu, AppsSectionId, "Apps");
         foreach (var app in apps)

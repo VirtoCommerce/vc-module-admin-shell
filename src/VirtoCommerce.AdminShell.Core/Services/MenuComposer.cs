@@ -22,17 +22,17 @@ public static class MenuComposer
         IList<string> recentIds = null)
     {
         var menu = Clone(defaultMenu);
-        ApplyReplacements(menu);
+        var aliases = ApplyReplacements(menu);
 
         if (globalPatch != null)
         {
-            ApplyPatch(menu, globalPatch, applyHidden: true);
+            ApplyPatch(menu, Aliased(globalPatch, aliases), applyHidden: true);
         }
 
-        ApplyRolePatches(menu, rolePatches?.Where(x => x != null).ToList() ?? []);
+        ApplyRolePatches(menu, rolePatches?.Where(x => x != null).Select(x => Aliased(x, aliases)).ToList() ?? []);
 
-        userPrefs ??= new UserMenuPrefs();
-        var userHidden = new HashSet<string>(userPrefs.Hidden ?? [], StringComparer.OrdinalIgnoreCase);
+        userPrefs = Aliased(userPrefs ?? new UserMenuPrefs(), aliases);
+        var userHidden = new HashSet<string>(userPrefs.Hidden, StringComparer.OrdinalIgnoreCase);
         ApplyUserPrefs(menu, userPrefs, userHidden, hasPermission);
 
         var sections = menu.Sections
@@ -40,6 +40,7 @@ public static class MenuComposer
             .OrderBy(x => x.Priority)
             .ThenBy(x => x.Title, StringComparer.OrdinalIgnoreCase)
             .ToList();
+        AssignGroups(sections);
 
         var index = sections.SelectMany(x => Flatten(x.Items)).GroupBy(x => x.Id, StringComparer.OrdinalIgnoreCase)
             .ToDictionary(x => x.Key, x => x.First(), StringComparer.OrdinalIgnoreCase);
@@ -48,7 +49,7 @@ public static class MenuComposer
         {
             Sections = sections,
             Pinned = Resolve(userPrefs.Pinned, index),
-            Recent = ResolveRecent(recentIds, userPrefs.Pinned, sections, index),
+            Recent = ResolveRecent(Aliased(recentIds, aliases), userPrefs.Pinned, sections, index),
             Hidden = userHidden.ToList(),
         };
     }
@@ -125,8 +126,19 @@ public static class MenuComposer
         return Resolve(recentIds?.Where(x => !placed.Contains(x)).ToList(), index);
     }
 
-    private static void ApplyReplacements(MenuDocument menu)
+    // An item that replaces another (a module's Vue screen over its AngularJS one) takes its place, section and priority;
+    // the returned aliases (old id -> new id) carry the old id's pins, hides, order, patches, Recent uses and group over
+    private static Dictionary<string, string> ApplyReplacements(MenuDocument menu)
     {
+        var replacements = Replacements(menu);
+        foreach (var x in replacements)
+        {
+            x.Section.Items.Remove(x.Item);
+            x.OldSection.Items.Add(x.Item);
+            x.Item.Priority = x.Old.Priority;
+        }
+
+        var aliases = AliasesOf(replacements);
         var replaced = new HashSet<string>(
             menu.Sections.SelectMany(x => Flatten(x.Items)).Select(x => x.Replaces).Where(x => !string.IsNullOrEmpty(x)),
             StringComparer.OrdinalIgnoreCase);
@@ -134,6 +146,79 @@ public static class MenuComposer
         foreach (var section in menu.Sections)
         {
             section.Items = FilterItems(section.Items, x => !replaced.Contains(x.Id));
+            foreach (var group in section.Groups ?? [])
+            {
+                group.Items = Aliased(group.Items, aliases) ?? [];
+            }
+        }
+
+        return aliases;
+    }
+
+    private sealed record Replacement(MenuSection Section, MenuItem Item, MenuSection OldSection, MenuItem Old);
+
+    // each item that replaces another the menu has, with the sections both are in
+    private static List<Replacement> Replacements(MenuDocument menu)
+    {
+        var result = new List<Replacement>();
+        foreach (var section in menu.Sections)
+        {
+            foreach (var item in section.Items.Where(x => !string.IsNullOrEmpty(x.Replaces)))
+            {
+                var (oldSection, old) = FindItem(menu, item.Replaces);
+                if (old != null)
+                {
+                    result.Add(new Replacement(section, item, oldSection, old));
+                }
+            }
+        }
+        return result;
+    }
+
+    private static Dictionary<string, string> AliasesOf(IEnumerable<Replacement> replacements) =>
+        replacements.GroupBy(x => x.Old.Id, StringComparer.OrdinalIgnoreCase)
+            .ToDictionary(x => x.Key, x => x.Last().Item.Id, StringComparer.OrdinalIgnoreCase);
+
+    /// <summary>
+    /// The user's prefs with today's ids: an AngularJS screen's id becomes the Vue screen's that replaces it, so a client
+    /// editing them (unpin, hide) works on the ids the menu shows, and saving them migrates the stored ones.
+    /// </summary>
+    public static UserMenuPrefs WithCurrentIds(MenuDocument defaultMenu, UserMenuPrefs prefs) =>
+        Aliased(prefs ?? new UserMenuPrefs(), AliasesOf(Replacements(defaultMenu)));
+
+    private static string Alias(Dictionary<string, string> aliases, string id) =>
+        id != null && aliases.TryGetValue(id, out var to) ? to : id;
+
+    private static List<string> Aliased(IEnumerable<string> ids, Dictionary<string, string> aliases) =>
+        ids?.Select(x => Alias(aliases, x)).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
+
+    private static UserMenuPrefs Aliased(UserMenuPrefs prefs, Dictionary<string, string> aliases) => new()
+    {
+        Pinned = Aliased(prefs.Pinned, aliases) ?? [],
+        Hidden = Aliased(prefs.Hidden, aliases) ?? [],
+        Order = prefs.Order?.ToDictionary(x => x.Key, x => Aliased(x.Value, aliases)) ?? [],
+    };
+
+    // an organization's or a role's patch of a page keeps applying once its Vue screen replaces the AngularJS one
+    private static MenuPatch Aliased(MenuPatch patch, Dictionary<string, string> aliases)
+    {
+        var copy = Clone(patch);
+        copy.Items = (patch.Items ?? [])
+            .GroupBy(x => Alias(aliases, x.Key), StringComparer.OrdinalIgnoreCase)
+            .ToDictionary(x => x.Key, x => x.Last().Value, StringComparer.OrdinalIgnoreCase);
+        return copy;
+    }
+
+    // an item's panel group: a contribution's own, else the one its section lists it in (ApplyReplacements has moved a
+    // replaced item's id in those lists to the item that replaces it)
+    private static void AssignGroups(IEnumerable<MenuSection> sections)
+    {
+        foreach (var section in sections)
+        {
+            foreach (var item in section.Items)
+            {
+                item.Group ??= section.Groups?.FirstOrDefault(g => g.Items?.Contains(item.Id, StringComparer.OrdinalIgnoreCase) == true)?.Title;
+            }
         }
     }
 

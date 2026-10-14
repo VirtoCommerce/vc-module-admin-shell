@@ -1,7 +1,7 @@
 import { useLatestRequest } from "@vc-shell/framework";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { adminMenuApi, type EffectiveMenu, type MenuItem, type UserMenuPrefs } from "../api/adminMenu";
+import { adminMenuApi, type EffectiveMenu, type MenuItem, type MenuTarget, type UserMenuPrefs } from "../api/adminMenu";
 
 // one shared state for the whole app (menu + legacy frame read it)
 const menu = ref<EffectiveMenu>({ sections: [], pinned: [], recent: [], hidden: [] });
@@ -11,6 +11,9 @@ const menuRequest = useLatestRequest();
 let prefsQueue: Promise<void> = Promise.resolve();
 
 const RECENT_SIZE = 5;
+
+/** The Home section of the default menu (ModuleConstants.HomeSectionId) */
+export const HOME_SECTION_ID = "dashboard";
 
 /**
  * Recent as shown: the server ranks it by use, but on screen an item keeps its place for the whole session, so opening
@@ -49,6 +52,9 @@ export function useAdminMenu() {
     }
   }
 
+  /** the open screen is this app, on any of its pages */
+  const onApp = (target: MenuTarget) => route.name === "EmbeddedApp" && String(route.params.appId) === target.appId;
+
   function isActive(item: MenuItem) {
     const target = item.target;
     switch (target?.type) {
@@ -57,11 +63,7 @@ export function useAdminMenu() {
       case "legacy":
         return route.name === "Legacy" && route.query.url === target.legacyUrl;
       case "app":
-        return (
-          route.name === "EmbeddedApp" &&
-          route.params.appId === target.appId &&
-          (route.query.path ?? "") === (target.route ?? "")
-        );
+        return onApp(target) && (route.query.path ?? "") === (target.route ?? "");
       default:
         return false;
     }
@@ -76,6 +78,12 @@ export function useAdminMenu() {
         if (child || isActive(item)) return { section, item, child };
       }
     }
+    // an app on a page this menu doesn't list (an old /app/tasks link, a task opened inside it) is still its item
+    if (route.name !== "EmbeddedApp") return undefined;
+    for (const section of menu.value.sections) {
+      const item = section.items.find((x) => x.target?.type === "app" && onApp(x.target));
+      if (item) return { section, item, child: undefined };
+    }
     return undefined;
   });
   /** "News · All", or the item's own title */
@@ -84,27 +92,39 @@ export function useAdminMenu() {
   );
 
   async function open(item: MenuItem) {
-    // a url is someone else's site (a vendor dashboard that refuses framing): it gets a tab of its own
+    // a url is someone else's site (a vendor dashboard that refuses framing): it gets a tab of its own, and as the
+    // route doesn't change, the click is what counts toward Recent
     if (item.target?.type === "url") {
       if (item.target.url) window.open(item.target.url, "_blank", "noopener");
-      recordUse(item);
+      recordUse(item.id);
       return;
     }
     const to = routeFor(item);
-    if (!to) {
-      return;
-    }
-    await router.push(to);
-    recordUse(item);
+    if (to) await router.push(to);
   }
 
-  // counts toward Recent; the list on screen keeps its order (stableRecent), so only a free slot needs the new ranking now
-  function recordUse(item: MenuItem) {
-    const hasFreeSlot = menu.value.recent.length < RECENT_SIZE;
+  // counts toward Recent; the list on screen keeps its order (stableRecent), so the new ranking is only worth loading
+  // when the page can fill a free slot: it isn't shown yet, and not pinned (the server leaves pinned pages out)
+  function recordUse(itemId: string) {
+    const recent = menu.value.recent;
+    const fillsSlot = recent.length < RECENT_SIZE && !pinnedIds.value.has(itemId) && !recent.some((x) => x.id === itemId);
     adminMenuApi
-      .addRecent(item.id)
-      .then(() => (hasFreeSlot ? load() : undefined))
+      .addRecent(itemId)
+      .then(() => (fillsSlot ? load() : undefined))
       .catch(() => undefined);
+  }
+
+  /**
+   * Recent counts the pages people use, however they get there: a menu click, a link in a widget, back and forward, a
+   * deep link. Home's own pages have their place on Home. Called once, by the shell layout.
+   */
+  function trackUses() {
+    watch(
+      () => active.value?.child?.id ?? active.value?.item.id,
+      (id) => {
+        if (id && active.value?.section.id !== HOME_SECTION_ID) recordUse(id);
+      },
+    );
   }
 
   // one change at a time: each reads what the previous one saved, so a quick pin and hide keep both
@@ -139,5 +159,5 @@ export function useAdminMenu() {
       prefs.hidden = [];
     });
 
-  return { menu, load, open, isActive, active, activeTitle, togglePin, hide, restoreHidden, pinnedIds };
+  return { menu, load, open, isActive, active, activeTitle, togglePin, hide, restoreHidden, pinnedIds, trackUses };
 }

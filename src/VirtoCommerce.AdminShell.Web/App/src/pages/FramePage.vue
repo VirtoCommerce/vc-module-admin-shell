@@ -5,7 +5,11 @@
     class="as-frame"
     :aria-label="title"
   >
-    <div class="as-frame__head">
+    <!-- an app with its pages in the menu (Tasks, News) is part of this shell: the menu says where you are, no head bar -->
+    <div
+      v-if="!navigatesFromMenu"
+      class="as-frame__head"
+    >
       <div class="as-frame__titles">
         <span
           v-if="kicker"

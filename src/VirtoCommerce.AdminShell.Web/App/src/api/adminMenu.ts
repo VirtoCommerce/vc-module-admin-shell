@@ -17,6 +17,8 @@ export interface MenuItem {
   permission?: string;
   priority: number;
   moduleId?: string;
+  /** the panel group it shows under (one of its section's groups) */
+  group?: string;
   target?: MenuTarget;
   children: MenuItem[];
 }
@@ -27,6 +29,8 @@ export interface MenuSection {
   icon?: string;
   priority: number;
   items: MenuItem[];
+  /** the panel's headed groups, in order (none: the panel is one list) */
+  groups: { title: string }[];
 }
 
 export interface EffectiveMenu {

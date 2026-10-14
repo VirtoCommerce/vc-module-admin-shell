@@ -17,6 +17,16 @@ public class MenuSection
     public int Priority { get; set; }
     public string Permission { get; set; }
     public List<MenuItem> Items { get; set; } = [];
+
+    /// <summary>Headed groups of the section's panel, in order. Each lists the item ids it holds; an item that replaces
+    /// one of them joins its group.</summary>
+    public List<MenuGroup> Groups { get; set; } = [];
+}
+
+public class MenuGroup
+{
+    public string Title { get; set; }
+    public List<string> Items { get; set; } = [];
 }
 
 public class MenuItem
@@ -36,6 +46,9 @@ public class MenuItem
 
     /// <summary>Id of an item this one supersedes, e.g. a Vue screen replacing its AngularJS counterpart</summary>
     public string Replaces { get; set; }
+
+    /// <summary>The panel group it shows under: a contribution's own, or the one its section lists it in</summary>
+    public string Group { get; set; }
 
     /// <summary>Shorthand used by plugin contributions: a Vue route, same as Target = { type: vue, route }</summary>
     public string Route { get; set; }

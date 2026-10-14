@@ -27,14 +27,15 @@ public class AdminMenuService(
     public async Task<EffectiveMenu> GetEffectiveMenuAsync(ClaimsPrincipal principal)
     {
         var userId = principal.GetUserId();
+        // the reads that don't need the user's roles run while the user loads
+        var globalPatch = GetGlobalPatchAsync();
+        var userPrefs = GetUserPrefsAsync(userId);
+        var recent = ReadUsesAsync(userId, DateTime.UtcNow);
         var user = await userManager.FindByIdAsync(userId);
         var roles = (user?.Roles ?? []).OrderBy(x => x.Name).ToList();
 
         // every role counts, with or without a patch: a role that hides nothing keeps an item another role hides
         var rolePatches = Task.WhenAll(roles.Select(role => GetRolePatchAsync(role.Id)));
-        var globalPatch = GetGlobalPatchAsync();
-        var userPrefs = GetUserPrefsAsync(userId);
-        var recent = ReadUsesAsync(userId, DateTime.UtcNow);
 
         // administrators pass too, as for the endpoints' [Authorize]
         return MenuComposer.Compose(
@@ -71,6 +72,10 @@ public class AdminMenuService(
     public Task SaveRolePatchAsync(string roleId, MenuPatch patch) => WriteAsync(Settings.RoleMenu, ModuleConstants.RoleTenant, roleId, patch);
 
     public Task<UserMenuPrefs> GetUserPrefsAsync(string userId) => ReadAsync<UserMenuPrefs>(Settings.UserMenu, ModuleConstants.UserProfileTenant, userId);
+
+    /// <summary>The prefs as the client edits them: with the ids the menu shows (see MenuComposer.WithCurrentIds)</summary>
+    public async Task<UserMenuPrefs> GetUserPrefsForEditAsync(string userId) =>
+        MenuComposer.WithCurrentIds(GetDefaultMenu(), await GetUserPrefsAsync(userId));
 
     // one write at a time per user: two first saves would each insert a settings row
     public Task SaveUserPrefsAsync(string userId, UserMenuPrefs prefs) =>

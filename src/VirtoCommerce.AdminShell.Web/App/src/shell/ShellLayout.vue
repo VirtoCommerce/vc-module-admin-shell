@@ -94,12 +94,14 @@ defineProps<{ mobile: boolean; avatar?: string }>();
 const router = useRouter();
 const route = useRoute();
 const { blades, activeBlade } = useBladeStack();
-const { menu, load, activeTitle } = useAdminMenu();
-// the menu and its counters load with the layout, which is always there (the phone drawer mounts its nav on opening)
+const { menu, load, activeTitle, trackUses } = useAdminMenu();
+// the menu, its counters and Recent's use count live with the layout, which is always there (the phone drawer mounts
+// its nav on opening)
 onMounted(() => {
   load();
   startBadges(menu);
 });
+trackUses();
 const { environmentName, isIgnored } = useEnvironmentName();
 
 const showBar = computed(() => blades.value.length <= 1);

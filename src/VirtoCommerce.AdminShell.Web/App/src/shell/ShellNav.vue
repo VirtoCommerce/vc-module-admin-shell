@@ -281,7 +281,7 @@ import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 import type { MenuItem, MenuSection } from "../api/adminMenu";
-import { useAdminMenu } from "../composables/useAdminMenu";
+import { HOME_SECTION_ID, useAdminMenu } from "../composables/useAdminMenu";
 import { badgeCounts, badgeHint } from "./badges";
 import { foldedGroups, groupItems, panelOpen, panelSection, railLabel, toggleFolded } from "./navState";
 import ShellSearch from "./ShellSearch.vue";
@@ -356,8 +356,8 @@ const groups = computed(() => {
 const isFolded = (group: Group) => !!foldedGroups.value[group.key] && !group.items.some(inside);
 const pagesOf = (group: Group, item: MenuItem) => (group.shortcut ? [] : (item.children ?? []));
 
-// the Home section (the seed's "dashboard") shows the logo in place of its title
-const isHome = computed(() => shown.value?.id === "dashboard");
+// the Home section shows the logo in place of its title
+const isHome = computed(() => shown.value?.id === HOME_SECTION_ID);
 
 // the button by the logo or title: close the drawer, unfold the panel for good, or fold it
 const topButton = computed(() => {

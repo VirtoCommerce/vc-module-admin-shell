@@ -27,71 +27,16 @@ export const railLabel = (section: { id: string; title: string }) =>
   RAIL_LABELS[section.id] ?? section.title.split(/[\s&]+/)[0];
 
 /**
- * Headed groups for a section with many items (by menu item id, in this order: a module's Vue screen, then the legacy
- * item it replaces); an item not listed goes to an untitled group at the end, so a new module's screen still shows.
- * ponytail: kept here until the menu model carries a group per item (default-menu.json / plugin.json)
+ * A section's headed groups, in the section's order, each with its items in the menu's order (the server sets an
+ * item's group, see default-menu.json "groups"); items without one go to an untitled group at the end, so a new
+ * module's screen still shows. A section without groups is one untitled list.
  */
-const SECTION_GROUPS: Record<string, { title: string; ids: string[] }[]> = {
-  orders: [
-    { title: "Sales", ids: ["orders", "legacy.orders", "quotes", "subscriptions", "legacy.subscriptions", "returns"] },
-    { title: "Customers", ids: ["customers", "legacy.customers", "contracts"] },
-  ],
-  configuration: [
-    { title: "Store", ids: ["stores", "legacy.stores", "nativePaymentMethods", "notifications", "legacy.notifications"] },
-    {
-      title: "Platform",
-      ids: [
-        "platform.settings",
-        "legacy.settings",
-        "platform.modules",
-        "legacy.modules",
-        "platform.dynamicProperties",
-        "legacy.dynamicProperties",
-        "state-machines",
-        "webhooks",
-        "platform.license",
-      ],
-    },
-    {
-      title: "Catalog & search",
-      ids: [
-        "measures",
-        "legacy.measures",
-        "thumbnails",
-        "legacy.thumbnail",
-        "search-index",
-        "legacy.searchIndex",
-        "channels",
-        "legacy.channels",
-      ],
-    },
-    { title: "Security & privacy", ids: ["platform.security", "legacy.security", "audit-log", "gdpr"] },
-    {
-      title: "Data & files",
-      ids: [
-        "assets",
-        "legacy.assets",
-        "backup-restore",
-        "legacy.exportImport",
-        "generic-export",
-        "legacy.genericExport",
-        "environments-compare",
-        "sql-queries",
-      ],
-    },
-    { title: "Monitoring & tools", ids: ["platform.developerTools", "legacy.developerTools", "appinsights"] },
-  ],
-};
-
-export function groupItems<T extends { id: string }>(section?: { id: string; items: T[] }) {
+export function groupItems<T extends { group?: string }>(section?: { items: T[]; groups: { title: string }[] }) {
   if (!section) return [];
-  const plan = SECTION_GROUPS[section.id];
-  if (!plan) return [{ title: "", items: section.items }];
-  const byId = new Map(section.items.map((item) => [item.id, item]));
-  const groups = plan
-    .map((group) => ({ title: group.title, items: group.ids.map((id) => byId.get(id)).filter((x): x is T => !!x) }))
+  const titles = section.groups.map((group) => group.title);
+  const groups = titles
+    .map((title) => ({ title, items: section.items.filter((item) => item.group === title) }))
     .filter((group) => group.items.length);
-  const listed = new Set(plan.flatMap((group) => group.ids));
-  const rest = section.items.filter((item) => !listed.has(item.id));
+  const rest = section.items.filter((item) => !item.group || !titles.includes(item.group));
   return rest.length ? [...groups, { title: "", items: rest }] : groups;
 }

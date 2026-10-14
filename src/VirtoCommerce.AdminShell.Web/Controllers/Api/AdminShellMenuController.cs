@@ -18,7 +18,7 @@ public class AdminShellMenuController(AdminMenuService menuService) : Controller
 
     [HttpGet("me/prefs")]
     [Authorize(Permissions.Access)]
-    public Task<UserMenuPrefs> GetMyPrefs() => menuService.GetUserPrefsAsync(User.GetUserId());
+    public Task<UserMenuPrefs> GetMyPrefs() => menuService.GetUserPrefsForEditAsync(User.GetUserId());
 
     [HttpPut("me/prefs")]
     [Authorize(Permissions.Access)]

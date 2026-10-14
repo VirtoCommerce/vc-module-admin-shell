@@ -238,6 +238,99 @@ public class MenuComposerTests
         Assert.Equal(["legacy.catalog"], menu.Recent.Select(x => x.Id));
     }
 
+    /* ---- a Vue screen replacing an AngularJS one ---- */
+
+    // configuration holds the AngularJS Units of measure; the module's Vue screen is contributed elsewhere
+    private static MenuDocument WithVueMeasures(string group = null) => new()
+    {
+        Sections =
+        [
+            new MenuSection
+            {
+                Id = "configuration", Title = "Settings", Priority = 90,
+                Items = [Item("legacy.stores", 10), Item("legacy.measures", 56)],
+                Groups =
+                [
+                    new MenuGroup { Title = "Store", Items = ["legacy.stores"] },
+                    new MenuGroup { Title = "Catalog & search", Items = ["legacy.measures"] },
+                ],
+            },
+            new MenuSection
+            {
+                Id = "catalog", Title = "Products", Priority = 10,
+                Items =
+                [
+                    Item("legacy.catalog", 10),
+                    new MenuItem
+                    {
+                        Id = "measures", Title = "Units of measure", Priority = 40, Replaces = "legacy.measures", Group = group,
+                        Target = new MenuTarget { Type = MenuTargetTypes.Vue, Route = "/measures" },
+                    },
+                ],
+            },
+        ],
+    };
+
+    [Fact]
+    public void A_Vue_screen_takes_the_place_and_group_of_the_AngularJS_one_it_replaces()
+    {
+        var menu = MenuComposer.Compose(WithVueMeasures(), null, null, null, _ => true);
+
+        Assert.Equal(["legacy.stores", "measures"], Ids(menu, "configuration"));
+        Assert.Equal(["legacy.catalog"], Ids(menu, "catalog"));
+        var measures = menu.Sections.Single(x => x.Id == "configuration").Items.Single(x => x.Id == "measures");
+        Assert.Equal(56, measures.Priority);
+        Assert.Equal("Catalog & search", measures.Group);
+    }
+
+    [Fact]
+    public void A_contributions_own_group_wins()
+    {
+        var menu = MenuComposer.Compose(WithVueMeasures(group: "Store"), null, null, null, _ => true);
+
+        Assert.Equal("Store", menu.Sections.Single(x => x.Id == "configuration").Items.Single(x => x.Id == "measures").Group);
+    }
+
+    [Fact]
+    public void Pins_hides_order_patches_and_Recent_on_the_AngularJS_id_follow_the_Vue_screen()
+    {
+        var prefs = new UserMenuPrefs { Pinned = ["legacy.measures"], Order = new() { ["configuration"] = ["legacy.measures", "legacy.stores"] } };
+        var global = new MenuPatch { Items = new() { ["legacy.measures"] = new ItemPatch { Title = "Measures" } } };
+
+        var menu = MenuComposer.Compose(WithVueMeasures(), global, null, prefs, _ => true, ["legacy.measures", "legacy.catalog"]);
+
+        Assert.Equal(["measures"], menu.Pinned.Select(x => x.Id));
+        Assert.Equal(["measures", "legacy.stores"], Ids(menu, "configuration"));
+        Assert.Equal("Measures", menu.Pinned.Single().Title);
+        Assert.Equal(["legacy.catalog"], menu.Recent.Select(x => x.Id)); // the use moved to measures, which is pinned
+
+        var hidden = MenuComposer.Compose(WithVueMeasures(), null, null, new UserMenuPrefs { Hidden = ["legacy.measures"] }, _ => true);
+        Assert.Equal(["legacy.stores"], Ids(hidden, "configuration"));
+        Assert.Equal(["measures"], hidden.Hidden);
+    }
+
+    [Fact]
+    public void Prefs_for_editing_carry_the_ids_the_menu_shows()
+    {
+        var prefs = MenuComposer.WithCurrentIds(WithVueMeasures(), new UserMenuPrefs { Pinned = ["legacy.measures", "legacy.catalog"], Hidden = ["legacy.measures"] });
+
+        // unpinning "measures" now finds it in the prefs it edits
+        Assert.Equal(["measures", "legacy.catalog"], prefs.Pinned);
+        Assert.Equal(["measures"], prefs.Hidden);
+    }
+
+    [Fact]
+    public void An_item_a_patch_moves_takes_the_group_its_new_section_gives_it()
+    {
+        var global = new MenuPatch { Items = new() { ["legacy.catalog"] = new ItemPatch { SectionId = "configuration" } } };
+
+        var menu = MenuComposer.Compose(WithVueMeasures(), global, null, null, _ => true);
+
+        var items = menu.Sections.Single(x => x.Id == "configuration").Items;
+        Assert.Null(items.Single(x => x.Id == "legacy.catalog").Group); // configuration's groups don't list it: untitled
+        Assert.Equal("Store", items.Single(x => x.Id == "legacy.stores").Group);
+    }
+
     [Fact]
     public void Recent_skips_the_pages_Home_lists_itself()
     {
