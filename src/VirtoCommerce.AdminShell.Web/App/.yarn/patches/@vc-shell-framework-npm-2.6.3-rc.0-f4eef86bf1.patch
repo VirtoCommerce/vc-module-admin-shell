@@ -1,0 +1,153 @@
+diff --git a/dist/chunks/VcAiAgentPanel.vue_vue_type_script_setup_true_lang-dCG9R7uD.js b/dist/chunks/VcAiAgentPanel.vue_vue_type_script_setup_true_lang-dCG9R7uD.js
+index 2990c5f..7dbca28 100644
+--- a/dist/chunks/VcAiAgentPanel.vue_vue_type_script_setup_true_lang-dCG9R7uD.js
++++ b/dist/chunks/VcAiAgentPanel.vue_vue_type_script_setup_true_lang-dCG9R7uD.js
+@@ -706,6 +706,7 @@ function On(e, i, a = tt) {
+     if (C.length > 0 && await p(C))
+       return !1;
+     _(C);
++    for (const mx of g.values()) mx.value = !1;
+     const E = Dt(n, r, w);
+     return t.value = [...t.value.slice(0, s + 1), E], n.onOpen && l.set(E.id, n.onOpen), n.onClose && f.set(E.id, n.onClose), n.onOpen?.(), !0;
+   }
+@@ -737,6 +738,7 @@ function On(e, i, a = tt) {
+       _(C);
+     }
+     const E = Mt(n, r.parentId, w);
++    for (const mx of g.values()) mx.value = !1;
+     _([r]);
+     const S = [...t.value.slice(0, s), E, ...t.value.slice(s + 1)];
+     return t.value = S, n.onOpen && l.set(E.id, n.onOpen), n.onClose && f.set(E.id, n.onClose), n.onOpen?.(), !0;
+@@ -755,6 +757,7 @@ function On(e, i, a = tt) {
+       if (await p(C)) return !1;
+       _(C);
+     }
++    for (const mx of g.values()) mx.value = !1;
+     const E = Ft(n, r.id, w), S = t.value.slice(0, s);
+     return S.push({ ...r, visible: !1 }), S.push(E), t.value = S, n.onOpen && l.set(E.id, n.onOpen), n.onClose && f.set(E.id, n.onClose), n.onOpen?.(), !0;
+   }
+diff --git a/dist/chunks/VcScheduler.vue_vue_type_script_setup_true_lang-CmrkgiHE.js b/dist/chunks/VcScheduler.vue_vue_type_script_setup_true_lang-CmrkgiHE.js
+index 1ce4039..9b0854b 100644
+--- a/dist/chunks/VcScheduler.vue_vue_type_script_setup_true_lang-CmrkgiHE.js
++++ b/dist/chunks/VcScheduler.vue_vue_type_script_setup_true_lang-CmrkgiHE.js
+@@ -1,7 +1,7 @@
+ import { nextTick as Re, ref as N, computed as y, getCurrentInstance as Ot, inject as ke, defineComponent as Z, openBlock as s, createElementBlock as m, createElementVNode as w, watch as ae, onMounted as tt, onBeforeUnmount as He, toValue as Be, reactive as vt, shallowRef as no, provide as Ne, createBlock as V, unref as n, withCtx as B, withDirectives as Xe, resolveDynamicComponent as qe, vShow as Ct, createCommentVNode as x, toRef as Ie, normalizeClass as Q, renderSlot as H, toDisplayString as z, Teleport as gt, createVNode as O, Transition as Ve, normalizeStyle as ye, Fragment as J, renderList as ve, createTextVNode as fe, mergeProps as Le, withModifiers as me, isRef as pt, h as ao, withKeys as Me, createSlots as De, markRaw as Dn, useId as Pt, useSlots as bt, TransitionGroup as Gn, toHandlers as Ml, onUnmounted as kt, hasInjectionContext as oo, getCurrentScope as qn, onScopeDispose as Vl, useAttrs as Pi, watchEffect as Kn, vModelText as Vi, toRefs as Fi, normalizeProps as ft, guardReactiveProps as mt, vModelCheckbox as Ui, toRaw as io } from "vue";
+ import { ac as zi, c as lt, z as Hi, d as so, B as al, R as Yn, Q as ro, e as co, O as uo, _ as ne, u as Vt, A as Wi, b as vo, W as fo, h as Gi, L as Nn, w as Pn, p as qi, P as Ki, a as ol, af as mo, M as Yi, V as jn, E as il, C as Vn, y as ji, a4 as Xi, $ as go, H as Qi, G as po, v as Zi, a9 as Ji } from "./VcAiAgentPanel.vue_vue_type_style_index_0_lang-DzDHuxUZ.js";
+ import { P as $t, af as es, aR as ts, a as ls, X as Fe, H as sl, l as Se, aP as bo, N as rl, am as ns, an as as, x as Ce, F as Ze, M as os, t as rt, a8 as is, T as Fl, Q as yt, a0 as ss, aS as rs, I as Et, V as Qe, ap as cs, u as us, aT as ds, ak as ho, aU as vs, aV as fs, au as yo, aN as wo, O as Ul, aO as ms, q as Pe, v as Rt, E as Co, p as gs, Y as ps, y as bs, az as hs, C as ys, w as wt, s as ws, aW as zl, K as ko, aX as Eo, aY as _o, aZ as ll, a_ as So, a$ as $o, b0 as Cs, A as Ro, n as ks, o as Cn } from "./VcScheduler.vue_vue_type_style_index_0_lang-DVVN7Shm.js";
+-import { q as Ft, p as kn, o as Es, n as Ao, r as _s, v as Ss, w as $s, f as Xn, x as Rs, _ as As } from "./VcAiAgentPanel.vue_vue_type_script_setup_true_lang-dCG9R7uD.js";
++import { q as Ft, p as kn, o as Es, n as Ao, r as _s, v as Ss, w as $s, f as Xn, x as Rs, _ as As, i as _bri } from "./VcAiAgentPanel.vue_vue_type_script_setup_true_lang-dCG9R7uD.js";
+ import { s as Hl, f as Qn, o as Zn, d as Ts } from "./vendor-floating-ui-dom-BvVXFZ4B.js";
+ import { u as ze } from "./vendor-vue-i18n-LO-EJStU.js";
+ import Os from "../assets/d5f9664ebbfb104b.svg";
+@@ -343,7 +343,7 @@ function Vc(e, a) {
+   const t = a[0], l = Sa(t.url);
+   let r;
+   for (let c = a.length - 1; c >= 1; c--)
+-    if (a[c].visible) {
++    if (a[c].visible && _bri?.getBlade(a[c].name)?.routable !== !1) {
+       r = a[c];
+       break;
+     }
+@@ -495,7 +495,7 @@ function la(e) {
+     const S = [], R = [], A = v.value;
+     for (const U of E) {
+       const q = _(U), X = S.length > 0 ? A : 0;
+-      $ + X + q <= M ? (S.push(U), $ += X + q) : R.push(U);
++      !R.length && $ + X + q <= M ? (S.push(U), $ += X + q) : R.push(U);
+     }
+     return { visible: S, hidden: R };
+   }, I = () => {
+@@ -560,13 +560,13 @@ function la(e) {
+   }), ae(
+     () => t.value.map(l).join("\0"),
+     () => {
+-      L(), Re(() => {
++      L(), b.value = [...t.value], g.value = [], Re(() => {
+         D();
+       });
+     }
+   ), tt(() => {
+-    Re(() => {
+-      F(), D();
++    b.value = [...t.value], g.value = [], Re(() => {
++      D();
+     });
+   }), He(() => {
+     h && (h.disconnect(), h = null), p.clear();
+@@ -2925,6 +2925,7 @@ const Fu = { class: "vc-blade-header__status-container" }, Uu = {
+       initialItemWidth: 60
+     });
+     function u(v) {
++      if (Be(v.disabled)) return;
+       v.clickHandler?.(), t.value = !1;
+     }
+     return ae(
+@@ -2971,8 +2972,9 @@ const Fu = { class: "vc-blade-header__status-container" }, Uu = {
+           item: B(({ item: g }) => [
+             O(Ql, {
+               title: Be(g.title) ?? "",
+-              icon: typeof g.icon == "function" ? g.icon() : g.icon
+-            }, null, 8, ["title", "icon"])
++              icon: typeof g.icon == "function" ? g.icon() : g.icon,
++              disabled: !!Be(g.disabled)
++            }, null, 8, ["title", "icon", "disabled"])
+           ]),
+           _: 1
+         }, 8, ["model-value", "items"])) : x("", !0)
+@@ -14649,7 +14651,7 @@ const v1 = {
+         $.value ? (s(), m("div", {
+           key: 1,
+           class: "vc-data-table-mobile-card__checkbox",
+-          onClick: me(G, ["stop"])
++          onClick: me(G, ["stop", "prevent"])
+         }, [
+           O(n(en), {
+             "model-value": e.isSelected,
+diff --git a/dist/chunks/VcScheduler.vue_vue_type_style_index_0_lang-DVVN7Shm.js b/dist/chunks/VcScheduler.vue_vue_type_style_index_0_lang-DVVN7Shm.js
+index 5b5a69e..e3be118 100644
+--- a/dist/chunks/VcScheduler.vue_vue_type_style_index_0_lang-DVVN7Shm.js
++++ b/dist/chunks/VcScheduler.vue_vue_type_style_index_0_lang-DVVN7Shm.js
+@@ -1799,7 +1799,7 @@ const ml = {
+         day: "numeric"
+       };
+       n.type === "datetime-local" && (B.hour = "numeric", B.minute = "numeric", B.hour12 = !F);
+-      const D = (V) => new Intl.DateTimeFormat(h, B).format(V);
++      const D = (V) => V instanceof Date && !isNaN(V.getTime()) ? new Intl.DateTimeFormat(h, B).format(V) : "";
+       return Array.isArray(C) ? C.map((V) => V != null ? D(V) : "").join(" - ") : D(C);
+     };
+     j(
+diff --git a/dist/core/composables/index.d.ts b/dist/core/composables/index.d.ts
+index f6c7032..8498351 100644
+--- a/dist/core/composables/index.d.ts
++++ b/dist/core/composables/index.d.ts
+@@ -31,4 +31,5 @@ export * from "../composables/usePopup";
+ export * from "../composables/useResponsive";
+ export * from "../composables/useEnvironmentName";
+ export * from "../composables/useKeyboardShortcuts";
+-//# sourceMappingURL=index.d.ts.map
+\ No newline at end of file
++export * from "./useUserManagement";
++//# sourceMappingURL=index.d.ts.map
+diff --git a/dist/framework.js b/dist/framework.js
+index 8e53176..9ff9636 100644
+--- a/dist/framework.js
++++ b/dist/framework.js
+@@ -1740,3 +1740,4 @@ function Do(e) {
+     return u ??= c.getCurrentUser().then(
+-      () => !0,
++      // The VirtoCommerce platform answers a caller without a session with 200 and an empty user, not a 401.
++      (E) => !!E?.userName,
+       // Only a 401 answers the question. Anything else — an unreachable platform, a 5xx — says
+@@ -1816,3 +1817,3 @@ function Do(e) {
+ function yo(e) {
+-  e && e.getRoutes().some((t) => t.path === "/login" || t.name === "Login") ? e.currentRoute.value.path !== "/login" && e.push("/login") : window.location.href = window.location.origin + "/";
++  e && e.getRoutes().some((t) => t.path === "/login" || t.name === "Login") ? e.currentRoute.value.path !== "/login" && (localStorage.setItem("redirectAfterLogin", e.currentRoute.value.fullPath), e.push("/login")) : window.location.href = window.location.origin + "/";
+ }
+@@ -3179,2 +3180,3 @@ function Fe(e, t) {
+   if (typeof e != typeof t || typeof e != "object" || e === null || t === null) return !1;
++  if (e instanceof Date || t instanceof Date) return e instanceof Date && t instanceof Date && e.getTime() === t.getTime();
+   if (Array.isArray(e) || Array.isArray(t))
+@@ -3563,2 +3565,3 @@ const Yl = {
+ export {
++  se as useUserManagement,
+   xf as AI_AGENT_URL_ENV_KEY,

@@ -1,46 +1,37 @@
 # Admin Shell
 
-## Overview
+The Admin Shell is a Vue admin for the Virto Commerce platform, built on [vc-shell](https://github.com/VirtoCommerce/vc-shell). It runs next to the AngularJS admin at `/apps/admin-shell/` and replaces its navigation with a section rail and panel.
 
-Short overview of what the new module is.
+## What it does
+- **Hosts module UIs.** Modules that ship an Admin Shell UI (a Module Federation remote built into the module's `plugins/admin-shell` folder) are loaded at runtime. Their menu entries come from each remote's `plugin.json`.
+- **Keeps unported screens working.** AngularJS screens and platform apps that have no Vue UI yet open inside the shell in embedded mode.
+- **Serves a server-driven menu.** The menu is composed per request from four layers:
+  1. the default menu: `Content/default-menu.json`, the installed apps and the module UIs' `plugin.json` contributions;
+  2. a global patch (setting `AdminShell.Menu.Global`);
+  3. role patches (setting `AdminShell.Menu.Role`, per role; an item stays visible when any role keeps it);
+  4. the user's own pinned and hidden items.
 
-- What is the new or updated experience?
+  Items the user has no permission for are removed.
+- **Platform screens.** Settings, security, modules, dynamic properties, the license and the user profile are rebuilt in Vue in `src/VirtoCommerce.AdminShell.Web/PlatformUI`.
 
-- Does this module replace an existing module/experience? If yes, what is the transition plan?
+## Projects
+- `src/VirtoCommerce.AdminShell.Core`: the menu model and the menu composer.
+- `src/VirtoCommerce.AdminShell.Web`:
+  - the module, the menu API (`api/admin-shell/menu`) and the default menu;
+  - `App/`: the host application, built into `Content/admin-shell`;
+  - `PlatformUI/`: the platform screens remote, built into `plugins/admin-shell`.
+- `tests/VirtoCommerce.AdminShell.Tests`: menu composition tests.
 
-- Does this module has dependency on other ? If yes, list/explain the dependencies.
+## Build
+- **Server:** `dotnet build`.
+- **Host:** in `src/VirtoCommerce.AdminShell.Web/App`, run `yarn install` and `yarn build:app`, then copy `dist` to `../Content/admin-shell`.
+- **Platform screens:** in `src/VirtoCommerce.AdminShell.Web/PlatformUI`, run `yarn install` and `yarn build`.
 
-- List the key deployment scenarios - why would people use this module?
+The host applies fixes to `@vc-shell/framework` 2.6.3-rc.0 through a Yarn patch in `App/.yarn/patches`, and PlatformUI builds against the same patch.
 
-## Functional Requirements
-
-Short description of the new module functional requirements.
-
-## Scenarios
-
-List of scenarios that the new module implements
-
-1. [Scenario 1](/doc/scenario-name1.md)
-1. [Scenario 2](/doc/scenario-name2.md)
-1. [Scenario 3](/doc/scenario-name3.md)
-    1. [Scenario 3.1](/doc/scenario-name31.md)
-    1. [Scenario 3.2](/doc/scenario-name32.md)
-1. [Scenario 4](/doc/scenario-name4.md)
-
-## Web API
-
-Web API documentation for each module is built out automatically and can be accessed by following the link bellow:
-<https://link-to-swager-api>
-
-## Database Model
-
-![DB model](./docs/media/diagram-db-model.png)
-
-## Related topics
-
-[Some Article1](some-article1.md)
-
-[Some Article2](some-article2.md)
+## Permissions
+- `admin-shell:access`: open the Admin Shell.
+- `admin-shell:menu:manage`: read and change the global and role menu layers through the API.
 
 ## License
 
@@ -50,7 +41,7 @@ Licensed under the Virto Commerce Open Software License (the "License"); you
 may not use this file except in compliance with the License. You may
 obtain a copy of the License at
 
-<https://virtocommerce.com/open-source-license>
+http://virtocommerce.com/opensourcelicense
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,

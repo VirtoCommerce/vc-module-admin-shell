@@ -1,23 +1,23 @@
 {
-  "admin-shell": {
-    "blades": {
-      "hello-world": {
-        "title": "Hello world blade"
-      }
-    }
-  },
   "permissions": {
-    "admin-shell:access": "Open Admin Shell menu",
-    "admin-shell:create": "Create Admin Shell related data",
-    "admin-shell:read": "View Admin Shell related data",
-    "admin-shell:update": "Update Admin Shell related data",
-    "admin-shell:delete": "Delete Admin Shell related data"
+    "admin-shell:access": "Open the Admin Shell",
+    "admin-shell:menu:manage": "Manage the Admin Shell menu (global and role layers)"
   },
   "settings": {
     "AdminShell": {
-      "Enabled": {
-        "title": "Admin Shell Enabled",
-        "description": "Admin Shell Enabled setting"
+      "Menu": {
+        "Global": {
+          "title": "Global menu patch",
+          "description": "JSON patch applied to the default Admin Shell menu for everyone: hide, rename or move sections and items, or add new ones"
+        },
+        "Role": {
+          "title": "Role menu patch",
+          "description": "JSON patch applied to the Admin Shell menu for users in this role; an item stays visible when any of the user's roles keeps it"
+        },
+        "User": {
+          "title": "Menu preferences",
+          "description": "The user's pinned and hidden Admin Shell menu items"
+        }
       }
     }
   }

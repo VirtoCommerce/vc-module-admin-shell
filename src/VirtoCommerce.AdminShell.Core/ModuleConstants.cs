@@ -5,54 +5,56 @@ namespace VirtoCommerce.AdminShell.Core;
 
 public static class ModuleConstants
 {
+    public const string ModuleId = "VirtoCommerce.AdminShell";
+    public const string AppId = "admin-shell";
+
+    // Tenant types used for per-role and per-user menu layers (platform settings tenants)
+    public const string RoleTenant = "Role";
+    public const string UserProfileTenant = "UserProfile";
+
     public static class Security
     {
         public static class Permissions
         {
             public const string Access = "admin-shell:access";
-            public const string Create = "admin-shell:create";
-            public const string Read = "admin-shell:read";
-            public const string Update = "admin-shell:update";
-            public const string Delete = "admin-shell:delete";
+            public const string MenuManage = "admin-shell:menu:manage";
 
-            public static string[] AllPermissions { get; } =
-            [
-                Access,
-                Create,
-                Read,
-                Update,
-                Delete,
-            ];
+            public static string[] AllPermissions { get; } = [Access, MenuManage];
         }
     }
 
     public static class Settings
     {
-        public static class General
+        /// <summary>Global (organization-wide) menu patch, applied on top of the default menu</summary>
+        public static SettingDescriptor GlobalMenu { get; } = new()
         {
-            public static SettingDescriptor AdminShellEnabled { get; } = new()
-            {
-                Name = "AdminShell.Enabled",
-                GroupName = "Admin Shell|General",
-                ValueType = SettingValueType.Boolean,
-                DefaultValue = false,
-            };
+            Name = "AdminShell.Menu.Global",
+            GroupName = "Admin Shell|Menu",
+            ValueType = SettingValueType.Json,
+            DefaultValue = "{}",
+        };
 
-            public static IEnumerable<SettingDescriptor> AllGeneralSettings
-            {
-                get
-                {
-                    yield return AdminShellEnabled;
-                }
-            }
-        }
-
-        public static IEnumerable<SettingDescriptor> AllSettings
+        /// <summary>Per-role menu patch (tenant type "Role", object id = role id)</summary>
+        public static SettingDescriptor RoleMenu { get; } = new()
         {
-            get
-            {
-                return General.AllGeneralSettings;
-            }
-        }
+            Name = "AdminShell.Menu.Role",
+            GroupName = "Admin Shell|Menu",
+            ValueType = SettingValueType.Json,
+            DefaultValue = "{}",
+        };
+
+        /// <summary>Per-user personalization: pinned, hidden and ordered items. Hidden so the AngularJS profile save can't overwrite it.</summary>
+        public static SettingDescriptor UserMenu { get; } = new()
+        {
+            Name = "AdminShell.Menu.User",
+            GroupName = "Admin Shell|Menu",
+            ValueType = SettingValueType.Json,
+            DefaultValue = "{}",
+            IsHidden = true,
+        };
+
+        public static IEnumerable<SettingDescriptor> ModuleSettings => [GlobalMenu];
+        public static IEnumerable<SettingDescriptor> RoleSettings => [RoleMenu];
+        public static IEnumerable<SettingDescriptor> UserSettings => [UserMenu];
     }
 }

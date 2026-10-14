@@ -1,0 +1,15 @@
+{
+  // Platform admin screens for the Admin Shell host (Module Federation remote);
+  // titles, icons, priorities and permissions mirror the legacy items in Content/default-menu.json
+  "remote": { "name": "platform_admin", "exposed": "./Module" },
+  "contributions": {
+    "menu": [
+      { "id": "platform.settings", "sectionId": "configuration", "title": "Settings", "icon": "lucide-settings-2", "route": "/settings", "permission": "platform:setting:access", "priority": 20, "replaces": "legacy.settings" },
+      { "id": "platform.security", "sectionId": "configuration", "title": "Security", "icon": "lucide-key-round", "route": "/security", "permission": "platform:security:access", "priority": 30, "replaces": "legacy.security" },
+      { "id": "platform.modules", "sectionId": "configuration", "title": "Modules", "icon": "lucide-blocks", "route": "/modules", "permission": "platform:module:access", "priority": 40, "replaces": "legacy.modules" },
+      { "id": "platform.dynamicProperties", "sectionId": "configuration", "title": "Dynamic properties", "icon": "lucide-list-plus", "route": "/dynamic-properties", "permission": "platform:dynamic_properties:access", "priority": 50, "replaces": "legacy.dynamicProperties" },
+      { "id": "platform.license", "sectionId": "configuration", "title": "License", "icon": "lucide-badge-check", "route": "/license", "permission": "platform:module:manage", "priority": 108 },
+      { "id": "platform.developerTools", "sectionId": "configuration", "title": "Developer tools", "icon": "lucide-terminal", "route": "/developer-tools", "permission": "platform:developer-tools:access", "priority": 100, "replaces": "legacy.developerTools" }
+    ]
+  }
+}
