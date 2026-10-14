@@ -40,6 +40,11 @@
     },
     {
       "id": "marketing", "title": "Marketing & Content", "icon": "lucide-megaphone", "priority": 30,
+      "groups": [
+        { "title": "Merchandising", "items": ["legacy.marketing", "dynamicAssociations"] },
+        { "title": "Content", "items": ["legacy.content", "marketing.dynamicContent", "news", "builderio"] },
+        { "title": "Engagement", "items": ["loyalty", "loyalty.missions", "customerReviews"] }
+      ],
       "items": [
         { "id": "legacy.marketing", "title": "Marketing", "icon": "lucide-flag", "priority": 10, "moduleId": "VirtoCommerce.Marketing", "permission": "marketing:access", "target": { "type": "legacy", "legacyUrl": "/workspace/marketing" } },
         { "id": "legacy.content", "title": "Content", "icon": "lucide-code-xml", "priority": 20, "moduleId": "VirtoCommerce.Content", "permission": "content:access", "target": { "type": "legacy", "legacyUrl": "/workspace/content" } },
@@ -59,6 +64,10 @@
     },
     {
       "id": "insights", "title": "Insights", "icon": "lucide-chart-column", "priority": 35,
+      "groups": [
+        { "title": "Analytics", "items": ["reports", "ga4", "hotjar"] },
+        { "title": "Search", "items": ["algolia", "appsearch"] }
+      ],
       "items": [
         { "id": "reports", "title": "Reports", "icon": "lucide-chart-column", "priority": 10, "moduleId": "VirtoCommerce.PowerBiReports", "target": { "type": "app", "appId": "reports" } },
         { "id": "ga4", "title": "Google Analytics", "icon": "lucide-trending-up", "priority": 20, "moduleId": "VirtoCommerce.GoogleEcommerceAnalytics", "permission": "googleanalytics:access", "target": { "type": "url", "url": "/apps/ga4/" } },
