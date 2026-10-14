@@ -68,8 +68,11 @@ public static class MenuComposer
     public static List<RecentUse> RankRecent(IList<RecentUse> uses, DateTime now, double halfLifeDays) =>
         (uses ?? []).OrderByDescending(x => ScoreAt(x, now, halfLifeDays)).ThenByDescending(x => x.LastUsed).ToList();
 
+    // a use's score halves every halfLifeDays
+    private const double HalfLifeDecay = 0.5;
+
     private static double ScoreAt(RecentUse use, DateTime now, double halfLifeDays) =>
-        use == null ? 0 : use.Score * Math.Pow(0.5, Math.Max(0, (now - use.LastUsed).TotalDays) / halfLifeDays);
+        use == null ? 0 : use.Score * Math.Pow(HalfLifeDecay, Math.Max(0, (now - use.LastUsed).TotalDays) / halfLifeDays);
 
     // Recent shows on Home: pinned pages and Home's own already have their place there; Resolve drops what the user
     // can't see or has hidden
