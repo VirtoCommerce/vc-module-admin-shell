@@ -338,4 +338,3 @@ ASALocalRun/
 dist/
 **/Properties/launchSettings.json
 /src/VirtoCommerce.AdminShell.Web/Content/admin-shell
-/src/VirtoCommerce.AdminShell.Web/plugins/

@@ -16,24 +16,9 @@
     <Content Remove="App\**" />
     <EmbeddedResource Remove="App\**" />
     <None Remove="App\**" />
-    <!-- the platform admin screens plugin (Module Federation remote, built by yarn build into plugins/admin-shell) -->
-    <Compile Remove="PlatformUI\**" />
-    <Content Remove="PlatformUI\**" />
-    <EmbeddedResource Remove="PlatformUI\**" />
-    <None Remove="PlatformUI\**" />
-    <Compile Remove="plugins\**" />
-    <Content Remove="plugins\**" />
-    <EmbeddedResource Remove="plugins\**" />
-    <None Remove="plugins\**" />
     <Content Remove="Content\admin-shell\**" />
     <None Remove="Content\admin-shell\**" />
   </ItemGroup>
-  <ItemGroup>
-    <AdminShellPlugin Include="plugins\**" />
-  </ItemGroup>
-  <Target Name="CopyCustomContentOnPublish" AfterTargets="Publish">
-    <Copy SourceFiles="@(AdminShellPlugin)" DestinationFiles="$(PublishDir)\..\%(Identity)" />
-  </Target>
   <ItemGroup>
     <ProjectReference Include="..\VirtoCommerce.AdminShell.Core\VirtoCommerce.AdminShell.Core.csproj" />
   </ItemGroup>

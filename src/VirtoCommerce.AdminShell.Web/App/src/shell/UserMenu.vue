@@ -26,7 +26,7 @@
           :title="license.title"
           >{{ license.text }}</span
         >
-        <!-- the platform's license screen (PlatformUI) -->
+        <!-- the platform's license screen (modules/platform) -->
         <button
           type="button"
           class="as-um__link"

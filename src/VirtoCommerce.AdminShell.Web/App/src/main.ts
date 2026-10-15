@@ -8,6 +8,8 @@ import { router } from "./router";
 import * as locales from "./locales";
 import { RouterView } from "vue-router";
 import { bootstrap } from "./bootstrap";
+// the platform's own screens (Settings, Security, Modules, ...) ship with the host
+import PlatformModule from "./modules/platform";
 
 import "@vc-shell/framework/dist/index.css";
 
@@ -31,6 +33,8 @@ async function startApp() {
       fallbackLocale: import.meta.env.APP_I18N_FALLBACK_LOCALE,
     },
   });
+
+  app.use(PlatformModule);
 
   app.use(router);
 

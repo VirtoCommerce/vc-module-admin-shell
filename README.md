@@ -12,22 +12,20 @@ The Admin Shell is a Vue admin for the Virto Commerce platform, built on [vc-she
   4. the user's own pinned and hidden items.
 
   Items the user has no permission for are removed.
-- **Platform screens.** Settings, security, modules, dynamic properties, the license and the user profile are rebuilt in Vue in `src/VirtoCommerce.AdminShell.Web/PlatformUI`.
+- **Platform screens.** Settings, security, modules, dynamic properties, the license and the user profile are rebuilt in Vue in the host app (`App/src/modules/platform`), so they ship with it.
 
 ## Projects
 - `src/VirtoCommerce.AdminShell.Core`: the menu model and the menu composer.
 - `src/VirtoCommerce.AdminShell.Web`:
   - the module, the menu API (`api/admin-shell/menu`) and the default menu;
-  - `App/`: the host application, built into `Content/admin-shell`;
-  - `PlatformUI/`: the platform screens remote, built into `plugins/admin-shell`.
+  - `App/`: the host application with the platform screens, built into `Content/admin-shell` (vc-build's `BuildCustomApp` does this in CI).
 - `tests/VirtoCommerce.AdminShell.Tests`: menu composition tests.
 
 ## Build
 - **Server:** `dotnet build`.
 - **Host:** in `src/VirtoCommerce.AdminShell.Web/App`, run `yarn install` and `yarn build:app`, then copy `dist` to `../Content/admin-shell`.
-- **Platform screens:** in `src/VirtoCommerce.AdminShell.Web/PlatformUI`, run `yarn install` and `yarn build`.
 
-The host applies fixes to `@vc-shell/framework` 2.6.3-rc.0 through a Yarn patch in `App/.yarn/patches`, and PlatformUI builds against the same patch.
+The host applies fixes to `@vc-shell/framework` 2.6.3-rc.0 through a Yarn patch in `App/.yarn/patches`.
 
 ## Permissions
 - `admin-shell:access`: open the Admin Shell.

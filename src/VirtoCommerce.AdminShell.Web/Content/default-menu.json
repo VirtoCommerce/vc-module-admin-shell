@@ -80,19 +80,19 @@
       "id": "configuration", "title": "Configuration", "icon": "lucide-settings", "priority": 90,
       "groups": [
         { "title": "Store", "items": ["legacy.stores", "nativePaymentMethods", "legacy.notifications"] },
-        { "title": "Platform", "items": ["legacy.settings", "legacy.modules", "legacy.dynamicProperties", "state-machines", "webhooks", "platform.license"] },
+        { "title": "Platform", "items": ["platform.settings", "platform.modules", "platform.dynamicProperties", "state-machines", "webhooks", "platform.license"] },
         { "title": "Catalog & Search", "items": ["legacy.measures", "legacy.thumbnail", "legacy.searchIndex", "legacy.channels"] },
-        { "title": "Security & Privacy", "items": ["legacy.security", "audit-log", "gdpr"] },
+        { "title": "Security & Privacy", "items": ["platform.security", "audit-log", "gdpr"] },
         { "title": "Data & Files", "items": ["legacy.assets", "legacy.exportImport", "legacy.genericExport", "environments-compare", "sql-queries"] },
-        { "title": "Monitoring & Tools", "items": ["legacy.developerTools", "appinsights"] }
+        { "title": "Monitoring & Tools", "items": ["platform.developerTools", "appinsights"] }
       ],
       "items": [
         { "id": "legacy.stores", "title": "Stores", "icon": "lucide-store", "priority": 10, "moduleId": "VirtoCommerce.Store", "permission": "store:access", "target": { "type": "legacy", "legacyUrl": "/workspace/store" } },
         { "id": "legacy.notifications", "title": "Notifications", "icon": "lucide-mail", "priority": 15, "moduleId": "VirtoCommerce.Notifications", "permission": "notifications:access", "target": { "type": "legacy", "legacyUrl": "/workspace/notifications" } },
-        { "id": "legacy.settings", "title": "Settings", "icon": "lucide-settings-2", "priority": 20, "permission": "platform:setting:access", "target": { "type": "legacy", "legacyUrl": "/workspace/settings" } },
-        { "id": "legacy.security", "title": "Security", "icon": "lucide-key-round", "priority": 30, "permission": "platform:security:access", "target": { "type": "legacy", "legacyUrl": "/workspace/security" } },
-        { "id": "legacy.modules", "title": "Modules", "icon": "lucide-blocks", "priority": 40, "permission": "platform:module:access", "target": { "type": "legacy", "legacyUrl": "/workspace/modules" } },
-        { "id": "legacy.dynamicProperties", "title": "Dynamic Properties", "icon": "lucide-list-plus", "priority": 50, "permission": "platform:dynamic_properties:access", "target": { "type": "legacy", "legacyUrl": "/workspace/dynamicProperties" } },
+        { "id": "platform.settings", "title": "Settings", "icon": "lucide-settings-2", "priority": 20, "permission": "platform:setting:access", "target": { "type": "vue", "route": "/settings" } },
+        { "id": "platform.security", "title": "Security", "icon": "lucide-key-round", "priority": 30, "permission": "platform:security:access", "target": { "type": "vue", "route": "/security" } },
+        { "id": "platform.modules", "title": "Modules", "icon": "lucide-blocks", "priority": 40, "permission": "platform:module:access", "target": { "type": "vue", "route": "/modules" } },
+        { "id": "platform.dynamicProperties", "title": "Dynamic Properties", "icon": "lucide-list-plus", "priority": 50, "permission": "platform:dynamic_properties:access", "target": { "type": "vue", "route": "/dynamic-properties" } },
         { "id": "legacy.searchIndex", "title": "Search Index", "icon": "lucide-search", "priority": 60, "moduleId": "VirtoCommerce.Search", "permission": "search:index:access", "target": { "type": "legacy", "legacyUrl": "/workspace/searchIndex" } },
         { "id": "legacy.measures", "title": "Units of Measure", "icon": "lucide-ruler", "priority": 56, "moduleId": "VirtoCommerce.Catalog", "permission": "measures:access", "target": { "type": "legacy", "legacyUrl": "/workspace/measures" } },
         { "id": "legacy.thumbnail", "title": "Thumbnails", "icon": "lucide-images", "priority": 58, "moduleId": "VirtoCommerce.ImageTools", "permission": "thumbnail:access", "target": { "type": "legacy", "legacyUrl": "/workspace/thumbnail" } },
@@ -100,7 +100,8 @@
         { "id": "legacy.assets", "title": "Assets", "icon": "lucide-image", "priority": 75, "moduleId": "VirtoCommerce.Assets", "permission": "platform:asset:access", "target": { "type": "legacy", "legacyUrl": "/workspace/assets" } },
         { "id": "legacy.exportImport", "title": "Backup & Restore", "icon": "lucide-database-backup", "priority": 80, "moduleId": "VirtoCommerce.BackupRestore", "permission": "platform:backuprestore:access", "target": { "type": "legacy", "legacyUrl": "/workspace/exportImport" } },
         { "id": "legacy.genericExport", "title": "Generic Export", "icon": "lucide-database", "priority": 90, "moduleId": "VirtoCommerce.Export", "permission": "export:access", "target": { "type": "legacy", "legacyUrl": "/workspace/generic-export" } },
-        { "id": "legacy.developerTools", "title": "Developer Tools", "icon": "lucide-terminal", "priority": 100, "permission": "platform:developer-tools:access", "target": { "type": "legacy", "legacyUrl": "/workspace/developer-tools" } },
+        { "id": "platform.developerTools", "title": "Developer Tools", "icon": "lucide-terminal", "priority": 100, "permission": "platform:developer-tools:access", "target": { "type": "vue", "route": "/developer-tools" } },
+        { "id": "platform.license", "title": "License", "icon": "lucide-badge-check", "priority": 108, "permission": "platform:module:manage", "target": { "type": "vue", "route": "/license" } },
         { "id": "appinsights", "title": "Application Insights", "icon": "lucide-activity", "priority": 105, "moduleId": "VirtoCommerce.ApplicationInsights", "permission": "application-insights:access", "target": { "type": "app", "appId": "app-insights" } }
       ]
     },
