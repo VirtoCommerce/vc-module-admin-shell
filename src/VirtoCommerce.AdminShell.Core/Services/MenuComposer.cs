@@ -199,12 +199,10 @@ public static class MenuComposer
 
     private static void AddSections(MenuDocument menu, List<MenuSection> sections)
     {
-        foreach (var addSection in (sections ?? []).Where(x => x != null))
+        // the check runs per section as the loop reaches it, so a section added earlier in the same patch counts
+        foreach (var addSection in (sections ?? []).Where(x => x != null && menu.Sections.All(s => !string.Equals(s.Id, x.Id, StringComparison.OrdinalIgnoreCase))))
         {
-            if (menu.Sections.All(x => !string.Equals(x.Id, addSection.Id, StringComparison.OrdinalIgnoreCase)))
-            {
-                menu.Sections.Add(Clone(addSection));
-            }
+            menu.Sections.Add(Clone(addSection));
         }
     }
 
@@ -280,7 +278,7 @@ public static class MenuComposer
     /// Role patches are combined as a union: an item or section is hidden only if every role hides it.
     /// Renames, moves and additions are applied in role order.
     /// </summary>
-    private static void ApplyRolePatches(MenuDocument menu, IList<MenuPatch> rolePatches)
+    private static void ApplyRolePatches(MenuDocument menu, List<MenuPatch> rolePatches)
     {
         if (rolePatches.Count == 0)
         {
@@ -328,7 +326,7 @@ public static class MenuComposer
         return result;
     }
 
-    private static List<MenuItem> OrderItems(List<MenuItem> items, IList<string> userOrder)
+    private static List<MenuItem> OrderItems(List<MenuItem> items, List<string> userOrder)
     {
         var ordered = items.OrderBy(x => x.Priority).ThenBy(x => x.Title, StringComparer.OrdinalIgnoreCase).ToList();
         if (userOrder == null || userOrder.Count == 0)

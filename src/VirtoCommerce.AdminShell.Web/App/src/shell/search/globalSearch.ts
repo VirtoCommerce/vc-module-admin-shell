@@ -274,7 +274,7 @@ function search(
     });
     const answer = Promise.resolve()
       .then(() => provider.search(text, context))
-      .then((result) => ({ status: "done" as GroupStatus, ...normalize(result, context.take) }))
+      .then((found) => ({ status: "done" as GroupStatus, ...normalize(found, context.take) }))
       .catch((error) => {
         if (!controller.signal.aborted) console.warn(`[global-search] provider "${provider.id}" failed`, error);
         return { status: "error" as GroupStatus };

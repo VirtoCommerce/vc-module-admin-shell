@@ -175,8 +175,13 @@ const units = computed(() =>
 );
 
 const thresholdEnabled = computed(() => !!values.value.UseTimeAgo && (values.value.FullDateThresholdUnit ?? "Never") !== "Never");
+// a threshold that is not a number (empty, text) is as invalid as one below 1
+const thresholdInvalid = (value: unknown) => {
+  const threshold = Number(value);
+  return Number.isNaN(threshold) || threshold < 1;
+};
 const thresholdError = computed(() =>
-  thresholdEnabled.value && !(Number(values.value.FullDateThreshold) >= 1) ? t("PLATFORM.PROFILE.THRESHOLD_INVALID") : undefined,
+  thresholdEnabled.value && thresholdInvalid(values.value.FullDateThreshold) ? t("PLATFORM.PROFILE.THRESHOLD_INVALID") : undefined,
 );
 
 // the account record (email, phone, linked contact); editing it takes the security update permission, as on Security > Users

@@ -125,13 +125,14 @@ export function registerPlatformProviders(options: {
   // the setting's group and points at the setting
   const store = useSettingsStore();
   let loading: Promise<void> | undefined;
-  const loadSettings = () =>
-    store.loaded.value
-      ? Promise.resolve()
-      : (loading ??= store.load().catch((error) => {
-          loading = undefined;
-          throw error;
-        }));
+  const loadSettings = () => {
+    if (store.loaded.value) return Promise.resolve();
+    loading ??= store.load().catch((error) => {
+      loading = undefined;
+      throw error;
+    });
+    return loading;
+  };
 
   globalSearch.registerProvider({
     id: "platform.settings",
@@ -196,6 +197,12 @@ export function registerPlatformProviders(options: {
     });
 
   const locked = (user: User) => !!user.lockoutEnd && new Date(user.lockoutEnd).getTime() > Date.now();
+  // a locked account says so before it says admin
+  const userBadge = (user: User) => {
+    if (locked(user)) return globalSearch.translate("SHELL.SEARCH.BADGES.LOCKED");
+    if (user.isAdministrator) return globalSearch.translate("SHELL.SEARCH.BADGES.ADMIN");
+    return undefined;
+  };
 
   globalSearch.registerProvider({
     id: "platform.security.users",
@@ -224,11 +231,7 @@ export function registerPlatformProviders(options: {
           title: user.userName,
           description: [user.email, user.userType].filter(Boolean).join(" · "),
           icon: "lucide-user",
-          badge: locked(user)
-            ? globalSearch.translate("SHELL.SEARCH.BADGES.LOCKED")
-            : user.isAdministrator
-              ? globalSearch.translate("SHELL.SEARCH.BADGES.ADMIN")
-              : undefined,
+          badge: userBadge(user),
           execute: () => openUsers(undefined, user),
         })),
       };
