@@ -54,7 +54,7 @@ export async function goTo(to: Parameters<Router["push"]>[0]) {
 /**
  * Opens a Vue blade: goes to the workspace (skipped when it is open), then opens each blade of `blades` under the
  * previous one. A blade already open there with the same name and param (and no options asked) is reused, so a list
- * stays as it is.
+ * stays as it is; blades open over the last one (or over the workspace, with no `blades`) close, so it is on top.
  *
  *   openBlade({ route: "/security", workspace: "PlatformSecurity",
  *               blades: [{ name: "PlatformSecurityUsers" }, { name: "PlatformSecurityUserDetails", param: user.id }] })
@@ -84,6 +84,9 @@ export async function openBlade(options: { route: string; workspace: string; bla
     if (!opened || opened.name !== event.name || opened.parentId !== parent.id) return;
     parent = opened;
   }
+  // the last blade asked for (the workspace when there are none) ends on top: a list already open (Show all) closes the
+  // detail open over it, as a phone shows only the top blade; unsaved changes there are asked about as usual
+  await bladeStack.closeChildren(parent.id);
 }
 
 /* ---- AngularJS screens: the embedded admin in the LegacyHost frame ---- */
