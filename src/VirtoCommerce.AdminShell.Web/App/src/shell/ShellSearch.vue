@@ -68,6 +68,7 @@
         v-if="open"
         ref="panel"
         class="as-search__drop"
+        :style="dropStyle"
         :box="box"
         :list-id="listId"
       />
@@ -78,8 +79,8 @@
 <script setup lang="ts">
 import { isTextInputFocused, matchesEvent, useKeyboardShortcuts } from "@vc-shell/framework";
 import { VcIcon } from "@vc-shell/framework/ui";
-import { onClickOutside, useEventListener } from "@vueuse/core";
-import { computed, ref } from "vue";
+import { onClickOutside, useElementBounding, useEventListener, useWindowSize } from "@vueuse/core";
+import { computed, onMounted, ref, watch } from "vue";
 import { globalSearch } from "./search/globalSearch";
 import SearchPanel from "./search/SearchPanel.vue";
 import { useSearchBox } from "./search/useSearchBox";
@@ -96,6 +97,36 @@ const open = ref(false);
 
 // hidden when there is nothing the user may search
 const available = computed(() => globalSearch.usableProviders().length > 0);
+
+// The dropdown, placed from where the box is: under it, right-aligned to it when there is room, else moved to stay in
+// the workspace (with a blade open the header lists the blade path and the box sits further left), as tall as the window
+// lets it be. Fixed, so nothing around the header clips it.
+const DROP_WIDTH = 620;
+const EDGE = 16;
+const bounds = useElementBounding(root);
+const workspace = ref<HTMLElement | null>(null);
+const area = useElementBounding(workspace);
+const viewport = useWindowSize();
+onMounted(() => (workspace.value = document.querySelector<HTMLElement>(".as-workspace")));
+// the blade path can move the box without resizing it: measure again on opening
+watch(open, (isOpen) => {
+  if (!isOpen) return;
+  bounds.update();
+  area.update();
+});
+const dropStyle = computed(() => {
+  const minLeft = (workspace.value ? area.left.value : 0) + EDGE;
+  const maxRight = (workspace.value ? Math.min(area.right.value, viewport.width.value) : viewport.width.value) - EDGE;
+  const width = Math.max(Math.min(DROP_WIDTH, maxRight - minLeft), 0);
+  const left = Math.min(Math.max(bounds.right.value - width, minLeft), maxRight - width);
+  const top = bounds.bottom.value + 8;
+  return {
+    left: `${left}px`,
+    top: `${top}px`,
+    width: `${width}px`,
+    maxHeight: `${Math.min(640, viewport.height.value - top - EDGE)}px`,
+  };
+});
 
 function close() {
   open.value = false;

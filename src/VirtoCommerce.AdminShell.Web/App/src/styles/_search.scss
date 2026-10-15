@@ -108,12 +108,9 @@
     }
   }
 
+  /* placed by ShellSearch (left, top, width, max-height) */
   &__drop {
-    max-height: min(72vh, 640px);
-    position: absolute;
-    right: 0;
-    top: calc(100% + 8px);
-    width: min(620px, calc(100vw - 32px));
+    position: fixed;
     z-index: 60;
   }
 
