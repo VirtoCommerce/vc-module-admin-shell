@@ -638,94 +638,7 @@
   }
 }
 
-.as-search {
-  align-items: center;
-  background: var(--as-surface);
-  border-radius: 10px;
-  box-shadow: var(--as-ring);
-  display: flex;
-  gap: 9px;
-  height: 36px;
-  max-width: 100%;
-  padding: 0 10px;
-  position: relative;
-  width: 280px;
-
-  &:focus-within {
-    box-shadow: 0 0 0 1px var(--as-accent);
-  }
-
-  &__icon.vc-icon {
-    color: var(--as-muted);
-    font-size: 15px;
-  }
-
-  &__input {
-    background: transparent;
-    border: 0;
-    color: var(--as-text);
-    flex: 1;
-    font-family: inherit;
-    font-size: 13px;
-    min-width: 0;
-    outline: none;
-
-    &::placeholder {
-      color: var(--as-muted);
-    }
-  }
-
-  &__kbd {
-    background: var(--as-chip);
-    border-radius: 5px;
-    color: var(--as-muted);
-    font-family: inherit;
-    font-size: 11px;
-    padding: 1px 6px;
-  }
-
-  &__results {
-    background: var(--as-surface);
-    border-radius: 12px;
-    box-shadow: var(--as-menu-shadow);
-    left: 0;
-    list-style: none;
-    margin: 0;
-    padding: 6px;
-    position: absolute;
-    right: 0;
-    top: calc(100% + 6px);
-    z-index: 60;
-  }
-
-  &__result {
-    align-items: center;
-    border-radius: 8px;
-    color: var(--as-text);
-    cursor: pointer;
-    display: flex;
-    font-size: 13.5px;
-    gap: 10px;
-    justify-content: space-between;
-    min-height: 36px;
-    padding: 0 10px;
-
-    &--active {
-      background: var(--as-nav-bg);
-    }
-  }
-
-  &__where {
-    color: var(--as-muted);
-    font-size: 12px;
-  }
-}
-
-/* in the phone drawer the search fills the panel's width */
-.as-panel .as-search {
-  flex: none;
-  width: auto;
-}
+/* global search: see _search.scss */
 
 /* the environment: a yellow corner ribbon (as in Buyer24) instead of vc-shell's banner */
 .vc-environment-banner.vc-environment-banner {
@@ -945,7 +858,8 @@
     white-space: nowrap;
   }
 
-  &__menu {
+  &__menu,
+  &__search {
     align-items: center;
     background: transparent;
     border: 0;

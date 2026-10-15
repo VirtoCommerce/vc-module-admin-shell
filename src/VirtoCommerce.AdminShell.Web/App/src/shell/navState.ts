@@ -18,6 +18,9 @@ export const toggleFolded = (key: string) => (foldedGroups.value = { ...foldedGr
 /** Phones: the menu drawer */
 export const drawerOpen = ref(false);
 
+/** Phones: the full-screen search sheet */
+export const searchSheetOpen = ref(false);
+
 /** Short rail labels where the section title's first word doesn't do; the panel shows the full title */
 const RAIL_LABELS: Record<string, string> = {
   configuration: "Settings",

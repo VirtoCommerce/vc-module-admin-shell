@@ -18,7 +18,6 @@
       "RECENT": "Recent",
       "SHOW_HIDDEN": "Show {count} hidden item(s)",
       "OPEN_BLADES": "Open blades",
-      "JUMP_TO": "Search or jump to…",
       "NEW_TAB": "Opens in a new tab"
     },
     "USER_MENU": {
@@ -140,6 +139,40 @@
       "ERRORS": {
         "LOCKED_OUT": "This account is locked after too many failed attempts. Try again later or contact your administrator.",
         "NOT_ALLOWED": "This account isn't allowed to sign in yet. Contact your administrator."
+      }
+    },
+    "SEARCH": {
+      "LABEL": "Search",
+      "PLACEHOLDER": "Search or jump to…",
+      "CLEAR": "Clear",
+      "CLOSE": "Close search",
+      "RESULTS": "Search results",
+      "SEARCH_IN": "Search in",
+      "SEARCHING_IN": "Searching in",
+      "SEARCH_EVERYWHERE": "Search everywhere",
+      "TYPE_TO_SEARCH": "Type what to look for",
+      "TIP_SCOPE": "Start with a group's name, like {example}, to search only there.",
+      "SEARCHING": "Searching…",
+      "FAILED": "Search failed",
+      "RETRY": "Retry",
+      "NO_RESULTS": "No results for “{query}”",
+      "NO_RESULTS_HINT": "Check the spelling or try fewer words.",
+      "NO_RESULTS_SCOPED": "Check the spelling, or search everywhere.",
+      "SHOW_ALL": "Show all {count} in {group}",
+      "OPEN_FAILED": "The result could not be opened",
+      "KEYS_MOVE": "to move",
+      "KEYS_OPEN": "to open",
+      "KEYS_CLOSE": "to close",
+      "GROUPS": {
+        "MENU": "Menu",
+        "APPS": "Apps",
+        "SETTINGS": "Settings",
+        "USERS": "Users",
+        "ROLES": "Roles"
+      },
+      "BADGES": {
+        "ADMIN": "Admin",
+        "LOCKED": "Locked"
       }
     }
   }

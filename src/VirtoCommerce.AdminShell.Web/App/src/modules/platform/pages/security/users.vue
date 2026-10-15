@@ -102,7 +102,8 @@ defineBlade({
 
 const PAGE_SIZE = 20;
 const { t } = useI18n({ useScope: "global" });
-const { openBlade, exposeToChildren } = useBlade();
+// options.keyword: the list opens filtered (global search's "Show all")
+const { openBlade, exposeToChildren, options } = useBlade<{ keyword?: string }>();
 const { debounce } = useFunctions();
 const { showConfirmation } = usePopup();
 const { getApiClient } = useApiClient(SecurityClient);
@@ -113,7 +114,7 @@ const users = ref<ApplicationUser[]>([]);
 const totalCount = ref(0);
 const selection = ref<ApplicationUser[]>([]);
 const activeId = ref<string>();
-const keyword = ref("");
+const keyword = ref(options.value?.keyword ?? "");
 const filters = ref<Record<string, unknown>>({});
 
 const { sortField, sortOrder, sortExpression } = useDataTableSort({

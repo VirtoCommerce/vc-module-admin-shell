@@ -13,6 +13,7 @@ The Admin Shell is a Vue admin for the Virto Commerce platform, built on [vc-she
 
   Items the user has no permission for are removed.
 - **Platform screens.** Settings, security, modules, dynamic properties, the license and the user profile are rebuilt in Vue in the host app (`App/src/modules/platform`), so they ship with it.
+- **Global search.** The header box (Ctrl+K / ⌘K; a full-screen sheet on phones) searches every registered provider at once, grouped by provider, with the AngularJS admin's design: `alias: text` scopes a search, slow groups don't hold back the others, a group that fails or takes over 8 seconds shows *Search failed* with *Retry*. The shell registers the platform's providers (menu, apps, settings, users and roles); each module registers its own from its plugin, through `app.config.globalProperties.$globalSearch`, which also carries the helpers to open a result in a Vue screen or in an AngularJS one. See [docs/global-search.md](docs/global-search.md); the Orders, Customer, Catalog and Store plugins register theirs.
 
 ## Projects
 - `src/VirtoCommerce.AdminShell.Core`: the menu model and the menu composer.

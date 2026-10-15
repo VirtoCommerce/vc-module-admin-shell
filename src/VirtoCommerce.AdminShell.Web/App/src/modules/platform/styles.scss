@@ -89,3 +89,21 @@
     white-space: nowrap;
   }
 }
+
+/* a setting opened from global search flashes once where it is */
+.platform-setting--found {
+  animation: platform-setting-found 2.4s ease-out;
+  border-radius: 8px;
+}
+
+@keyframes platform-setting-found {
+  0%,
+  35% {
+    background: var(--as-accent-soft, rgba(49, 158, 212, 0.12));
+    box-shadow: 0 0 0 6px var(--as-accent-soft, rgba(49, 158, 212, 0.12));
+  }
+  100% {
+    background: transparent;
+    box-shadow: 0 0 0 6px transparent;
+  }
+}

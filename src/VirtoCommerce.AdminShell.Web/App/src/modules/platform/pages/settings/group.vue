@@ -161,7 +161,7 @@ import {
   VcSwitch,
   VcTextarea,
 } from "@vc-shell/framework/ui";
-import { computed, ref } from "vue";
+import { computed, nextTick, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import {
   groupPath,
@@ -182,7 +182,8 @@ defineBlade({
 });
 
 const { t } = useI18n({ useScope: "global" });
-const { param, options, openBlade, exposeToChildren } = useBlade<{ includeTenant?: boolean }>();
+// options.focus: a setting to scroll to and flash (global search opens a setting this way)
+const { param, options, openBlade, exposeToChildren } = useBlade<{ includeTenant?: boolean; focus?: string }>();
 const { hasAccess } = usePermissions();
 const store = useSettingsStore();
 
@@ -235,7 +236,20 @@ function fill() {
 const { loading: loadLoading, action: load } = useAsync(async () => {
   if (!store.loaded.value) await store.load();
   fill();
+  focusSetting();
 });
+
+async function focusSetting() {
+  const name = options.value?.focus;
+  if (!name) return;
+  await nextTick();
+  const element = document.querySelector<HTMLElement>(`.platform-setting[data-setting="${CSS.escape(name)}"]`);
+  if (!element) return;
+  element.scrollIntoView({ block: "center", behavior: "smooth" });
+  element.classList.add("platform-setting--found");
+  setTimeout(() => element.classList.remove("platform-setting--found"), 2400);
+  element.querySelector<HTMLElement>("input, textarea, [tabindex]:not([tabindex='-1'])")?.focus({ preventScroll: true });
+}
 
 const { loading: saveLoading, action: save } = useAsync(async () => {
   await store.save(Object.fromEntries(changed.value.map((s) => [s.name, item.value[s.name]])));

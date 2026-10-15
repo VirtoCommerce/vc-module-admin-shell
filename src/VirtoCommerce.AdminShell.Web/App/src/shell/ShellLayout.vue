@@ -30,6 +30,18 @@
       </button>
       <span class="as-mbar__title">{{ title }}</span>
       <button
+        v-if="searchAvailable"
+        type="button"
+        class="as-mbar__search"
+        :aria-label="$t('SHELL.SEARCH.LABEL')"
+        @click="searchSheetOpen = true"
+      >
+        <VcIcon
+          icon="lucide-search"
+          size="l"
+        />
+      </button>
+      <button
         ref="menuButton"
         type="button"
         class="as-mbar__menu"
@@ -74,6 +86,7 @@
         </div>
       </div>
     </Transition>
+    <SearchSheet />
   </template>
 </template>
 
@@ -85,11 +98,13 @@ import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useAdminMenu } from "../composables/useAdminMenu";
 import { badgeCounts, startBadges } from "./badges";
-import { drawerOpen } from "./navState";
+import { drawerOpen, searchSheetOpen } from "./navState";
+import { globalSearch, useGlobalSearchSetup } from "./search";
+import SearchSheet from "./search/SearchSheet.vue";
 import ShellNav from "./ShellNav.vue";
 import logoMark from "/assets/logo-mark.svg";
 
-defineProps<{ mobile: boolean; avatar?: string }>();
+const props = defineProps<{ mobile: boolean; avatar?: string }>();
 
 const router = useRouter();
 const route = useRoute();
@@ -104,6 +119,26 @@ onMounted(() => {
 trackUses();
 const { environmentName, isIgnored } = useEnvironmentName();
 
+// global search: providers bound to the user and the shell's navigation (the layout is always there)
+useGlobalSearchSetup();
+const searchAvailable = computed(() => globalSearch.usableProviders().length > 0);
+
+// phones: Ctrl/Cmd+K (a tablet's keyboard) opens the search sheet
+useEventListener(window, "keydown", (event: KeyboardEvent) => {
+  const shortcut = (event.ctrlKey || event.metaKey) && !event.altKey && event.key.toLowerCase() === "k";
+  if (!props.mobile || !shortcut || !searchAvailable.value) return;
+  event.preventDefault();
+  drawerOpen.value = false;
+  searchSheetOpen.value = true;
+});
+// the sheet belongs to phones: growing the window past the phone layout closes it
+watch(
+  () => props.mobile,
+  (mobile) => {
+    if (!mobile) searchSheetOpen.value = false;
+  },
+);
+
 const showBar = computed(() => blades.value.length <= 1);
 // everything waiting in the menu, on the button that opens it
 const waiting = computed(() => Object.values(badgeCounts.value).reduce((sum, n) => sum + n, 0));
@@ -117,6 +152,7 @@ watch(
   () => {
     closedByNavigation = drawerOpen.value;
     drawerOpen.value = false;
+    searchSheetOpen.value = false;
   },
 );
 

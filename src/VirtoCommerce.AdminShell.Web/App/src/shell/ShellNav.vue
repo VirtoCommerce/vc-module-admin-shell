@@ -139,10 +139,11 @@
 
       <!-- only the list scrolls; the title row above stays -->
       <div class="as-panel__body">
-        <!-- phones have no header, so the drawer carries the jump-to search -->
+        <!-- phones have no header: the drawer carries a search box too, which opens the search sheet -->
         <ShellSearch
           v-if="drawer"
-          @picked="emit('navigate')"
+          trigger
+          @open-sheet="openSearchSheet"
         />
         <!-- a busy section reads as headed groups (each folds), any other as one list; then Pinned, and on Home Recent -->
         <div
@@ -283,7 +284,7 @@ import { useRoute, useRouter } from "vue-router";
 import type { MenuItem, MenuSection } from "../api/adminMenu";
 import { HOME_SECTION_ID, useAdminMenu } from "../composables/useAdminMenu";
 import { badgeCounts, badgeHint } from "./badges";
-import { foldedGroups, groupItems, panelOpen, panelSection, railLabel, toggleFolded } from "./navState";
+import { foldedGroups, groupItems, panelOpen, panelSection, railLabel, searchSheetOpen, toggleFolded } from "./navState";
 import ShellSearch from "./ShellSearch.vue";
 import UserMenu from "./UserMenu.vue";
 import logoMark from "/assets/logo-mark.svg";
@@ -393,6 +394,12 @@ function go(item: MenuItem) {
   open(item);
   flyout.value = null;
   emit("navigate");
+}
+
+// the drawer gives way to the search sheet
+function openSearchSheet() {
+  emit("close");
+  searchSheetOpen.value = true;
 }
 
 function goHome() {

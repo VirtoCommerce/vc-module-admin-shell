@@ -57,7 +57,8 @@ defineBlade({
 
 const PAGE_SIZE = 20;
 const { t } = useI18n({ useScope: "global" });
-const { openBlade, exposeToChildren } = useBlade();
+// options.keyword: the list opens filtered (global search's "Show all")
+const { openBlade, exposeToChildren, options } = useBlade<{ keyword?: string }>();
 const { debounce } = useFunctions();
 const { showConfirmation } = usePopup();
 const { getApiClient } = useApiClient(SecurityClient);
@@ -66,7 +67,7 @@ const roles = ref<Role[]>([]);
 const totalCount = ref(0);
 const selection = ref<Role[]>([]);
 const activeId = ref<string>();
-const keyword = ref("");
+const keyword = ref(options.value?.keyword ?? "");
 const pagination = useDataTablePagination({ stateKey: "PLATFORM_ROLES", pageSize: PAGE_SIZE, totalCount });
 
 const { loading: searchLoading, action: load } = useAsync(async () => {

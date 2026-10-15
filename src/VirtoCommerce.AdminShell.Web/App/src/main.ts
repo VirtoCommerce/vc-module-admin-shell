@@ -10,6 +10,8 @@ import { RouterView } from "vue-router";
 import { bootstrap } from "./bootstrap";
 // the platform's own screens (Settings, Security, Modules, ...) ship with the host
 import PlatformModule from "./modules/platform";
+// global search: module plugins register their providers through the app ($globalSearch)
+import { installGlobalSearch } from "./shell/search";
 
 import "@vc-shell/framework/dist/index.css";
 
@@ -35,6 +37,8 @@ async function startApp() {
   });
 
   app.use(PlatformModule);
+
+  installGlobalSearch(app);
 
   app.use(router);
 

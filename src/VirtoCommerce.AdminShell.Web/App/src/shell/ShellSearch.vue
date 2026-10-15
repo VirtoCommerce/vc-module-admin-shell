@@ -1,105 +1,146 @@
 <template>
-  <!-- Jump to any screen in the menu: in the header on desktop, at the top of the phone drawer -->
-  <div class="as-search">
+  <!--
+    Global search. In the header: the box, with the results in a dropdown under it (Ctrl/Cmd+K focuses it).
+    trigger: a box-shaped button that opens the phone's search sheet (in the phone drawer).
+  -->
+  <button
+    v-if="trigger && available"
+    type="button"
+    class="as-search as-search--trigger"
+    @click="emit('open-sheet')"
+  >
+    <VcIcon
+      class="as-search__icon"
+      icon="lucide-search"
+    />
+    <span class="as-search__placeholder">{{ $t("SHELL.SEARCH.PLACEHOLDER") }}</span>
+  </button>
+  <div
+    v-else-if="available"
+    ref="root"
+    class="as-search"
+    :class="{ 'as-search--open': open }"
+  >
     <VcIcon
       class="as-search__icon"
       icon="lucide-search"
     />
     <input
       ref="input"
-      v-model="query"
+      v-model="box.query.value"
       class="as-search__input"
-      type="search"
-      :placeholder="$t('SHELL.NAV.JUMP_TO')"
-      :aria-label="$t('SHELL.NAV.JUMP_TO')"
+      type="text"
+      autocomplete="off"
+      spellcheck="false"
+      enterkeyhint="search"
+      :placeholder="$t('SHELL.SEARCH.PLACEHOLDER')"
+      :aria-label="$t('SHELL.SEARCH.LABEL')"
       role="combobox"
-      aria-controls="as-search-results"
-      :aria-expanded="results.length > 0"
-      @keydown.down.prevent="move(1)"
-      @keydown.up.prevent="move(-1)"
-      @keydown.enter.prevent="pick(results[cursor])"
-      @keydown.esc="query = ''"
+      aria-autocomplete="list"
+      :aria-controls="listId"
+      :aria-expanded="open"
+      :aria-activedescendant="open ? panel?.activeOptionId : undefined"
+      @input="onInput"
+      @focus="open = true"
+      @keydown="onKeydown"
     />
+    <button
+      v-if="box.query.value"
+      type="button"
+      class="as-search__clear"
+      :aria-label="$t('SHELL.SEARCH.CLEAR')"
+      :title="$t('SHELL.SEARCH.CLEAR')"
+      @mousedown.prevent
+      @click="clear"
+    >
+      <VcIcon
+        icon="lucide-x"
+        size="s"
+      />
+    </button>
     <kbd
-      v-if="!query && shortcut"
+      v-else-if="shortcut && !open"
       class="as-search__kbd"
       >{{ shortcutLabel }}</kbd
     >
-    <ul
-      v-if="results.length"
-      id="as-search-results"
-      class="as-search__results"
-      role="listbox"
-    >
-      <li
-        v-for="(result, index) in results"
-        :key="result.item.id"
-        role="option"
-        :aria-selected="index === cursor"
-        class="as-search__result"
-        :class="{ 'as-search__result--active': index === cursor }"
-        @mousedown.prevent="pick(result)"
-        @mouseenter="cursor = index"
-      >
-        <span>{{ result.item.title }}</span>
-        <span class="as-search__where">{{ result.where }}</span>
-      </li>
-    </ul>
+    <Transition name="as-search-drop">
+      <SearchPanel
+        v-if="open"
+        ref="panel"
+        class="as-search__drop"
+        :box="box"
+        :list-id="listId"
+      />
+    </Transition>
   </div>
 </template>
 
 <script setup lang="ts">
 import { isTextInputFocused, matchesEvent, useKeyboardShortcuts } from "@vc-shell/framework";
 import { VcIcon } from "@vc-shell/framework/ui";
-import { useEventListener } from "@vueuse/core";
-import { computed, ref, watch } from "vue";
-import type { MenuItem } from "../api/adminMenu";
-import { useAdminMenu } from "../composables/useAdminMenu";
+import { onClickOutside, useEventListener } from "@vueuse/core";
+import { computed, ref } from "vue";
+import { globalSearch } from "./search/globalSearch";
+import SearchPanel from "./search/SearchPanel.vue";
+import { useSearchBox } from "./search/useSearchBox";
 
-/** shortcut: Ctrl/Cmd+K focuses this search (the header's; a phone has no keyboard shortcut) */
-const props = defineProps<{ shortcut?: boolean }>();
-const emit = defineEmits<{ (e: "picked"): void }>();
+/** shortcut: Ctrl/Cmd+K focuses this box (the header's); trigger: render the button that opens the phone sheet */
+const props = defineProps<{ shortcut?: boolean; trigger?: boolean }>();
+const emit = defineEmits<{ (e: "open-sheet"): void }>();
 
-const { menu, open } = useAdminMenu();
-
+const listId = "as-search-results";
+const root = ref<HTMLElement>();
 const input = ref<HTMLInputElement>();
-const query = ref("");
-const cursor = ref(0);
-const results = computed(() => {
-  const q = query.value.trim().toLowerCase();
-  if (!q) return [];
-  const found: { item: MenuItem; where: string }[] = [];
-  for (const section of menu.value.sections) {
-    for (const item of section.items) {
-      if (item.title.toLowerCase().includes(q)) found.push({ item, where: section.title });
-      for (const child of item.children ?? []) {
-        if (child.title.toLowerCase().includes(q)) found.push({ item: child, where: `${section.title} · ${item.title}` });
-      }
-    }
-  }
-  return found.slice(0, 8);
-});
-watch(query, () => (cursor.value = 0));
+const panel = ref<InstanceType<typeof SearchPanel>>();
+const open = ref(false);
 
-const move = (step: number) => {
-  if (results.value.length) cursor.value = (cursor.value + step + results.value.length) % results.value.length;
-};
+// hidden when there is nothing the user may search
+const available = computed(() => globalSearch.usableProviders().length > 0);
 
-function pick(result?: { item: MenuItem }) {
-  if (!result) return;
-  open(result.item);
-  query.value = "";
+function close() {
+  open.value = false;
   input.value?.blur();
-  emit("picked");
 }
+
+const box = useSearchBox({ onClose: close });
+
+function onInput() {
+  open.value = true;
+  box.onInput();
+}
+
+function onKeydown(event: KeyboardEvent) {
+  if (!open.value && (event.key === "ArrowDown" || event.key === "ArrowUp")) {
+    open.value = true;
+    return;
+  }
+  box.onKeydown(event);
+}
+
+function clear() {
+  box.clear();
+  input.value?.focus();
+}
+
+// a press outside closes the dropdown; the query stays, and focusing the box shows its results again
+onClickOutside(root, () => {
+  if (open.value) close();
+});
 
 const { hotkey, isMac, formatShortcut } = useKeyboardShortcuts();
 const shortcutLabel = formatShortcut(hotkey.mod.k).parts.join(" ");
 useEventListener(window, "keydown", (event: KeyboardEvent) => {
-  if (!props.shortcut || !matchesEvent(hotkey.mod.k, event, isMac)) return;
+  // the box handles its own keys; Escape elsewhere (focus moved off the box) still closes the open dropdown
+  if (event.key === "Escape" && open.value && document.activeElement !== input.value) {
+    close();
+    return;
+  }
+  if (!props.shortcut || !available.value || !matchesEvent(hotkey.mod.k, event, isMac)) return;
   // an editor's own Ctrl+K (insert link) stays the editor's
   if (isTextInputFocused() && document.activeElement !== input.value) return;
   event.preventDefault();
+  open.value = true;
   input.value?.focus();
+  input.value?.select();
 });
 </script>
