@@ -57,6 +57,7 @@ import { DeveloperToolsClient, useApiClient, useAsync, type DeveloperToolDescrip
 import { VcBlade, VcIcon } from "@vc-shell/framework/ui";
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { refreshItem } from "../../composables/blade";
 
 defineBlade({
   url: "/developer-tools",
@@ -108,7 +109,7 @@ function select(event: MouseEvent, tool: DeveloperToolDescriptor) {
 }
 
 const toolbar = ref<IBladeToolbar[]>([
-  { id: "reload", title: t("PLATFORM.COMMON.REFRESH"), icon: "lucide-refresh-cw", clickHandler: () => current.value && show(current.value) },
+  refreshItem(() => current.value && show(current.value)),
   {
     id: "open",
     title: t("PLATFORM.DEVTOOLS.OPEN_IN_TAB"),

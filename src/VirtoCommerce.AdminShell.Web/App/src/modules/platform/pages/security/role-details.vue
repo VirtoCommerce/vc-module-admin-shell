@@ -64,7 +64,6 @@ import {
   useApiClient,
   useAsync,
   useBlade,
-  useBladeForm,
   useLoading,
   usePermissions,
   usePopup,
@@ -76,6 +75,7 @@ import {
 import { VcBlade, VcCard, VcColumn, VcContainer, VcDataTable, VcForm, VcInput, VcTextarea } from "@vc-shell/framework/ui";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { saveResetItems, usePlatformBladeForm } from "../../composables/blade";
 import { ensureSucceeded, registeredPermissions, type CatalogPermission } from "../../composables/security";
 
 defineBlade({
@@ -126,10 +126,9 @@ const rows = computed<PermissionRow[]>(() =>
     .filter((r) => !keyword.value || `${r.name} ${r.description} ${r.groupName}`.toLowerCase().includes(keyword.value.toLowerCase())),
 );
 
-const form = useBladeForm({
+const form = usePlatformBladeForm({
   data: item,
   canSaveOverride: computed(() => !!item.value.name && hasAccess(isNew.value ? "platform:security:create" : "platform:security:update")),
-  closeConfirmMessage: computed(() => t("PLATFORM.COMMON.CLOSE_CONFIRMATION")),
 });
 
 const { loading: loadLoading, action: load } = useAsync(async () => {
@@ -172,20 +171,7 @@ function openScopes(row: PermissionRow) {
 }
 
 const toolbar = computed<IBladeToolbar[]>(() => [
-  {
-    id: "save",
-    title: isNew.value ? t("PLATFORM.COMMON.CREATE") : t("PLATFORM.COMMON.SAVE"),
-    icon: "lucide-save",
-    disabled: computed(() => !form.canSave.value),
-    clickHandler: () => save(),
-  },
-  {
-    id: "reset",
-    title: t("PLATFORM.COMMON.RESET"),
-    icon: "lucide-undo-2",
-    disabled: computed(() => !form.isModified.value),
-    clickHandler: () => load(),
-  },
+  ...saveResetItems(form, { save: () => save(), reset: () => load(), isNew: isNew.value }),
   {
     id: "assign",
     title: t("PLATFORM.SECURITY.ROLE.ASSIGN"),

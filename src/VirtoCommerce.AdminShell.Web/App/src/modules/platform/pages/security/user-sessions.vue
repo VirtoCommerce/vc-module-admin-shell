@@ -41,6 +41,7 @@ import { SecurityClient, useApiClient, useAsync, useBlade, useLoading, usePopup,
 import { VcBlade, VcColumn, VcDataTable } from "@vc-shell/framework/ui";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { refreshItem } from "../../composables/blade";
 
 defineBlade({
   url: "/sessions",
@@ -75,7 +76,7 @@ const { loading: terminateLoading, action: terminate } = useAsync<string[] | und
 const loading = useLoading(loadLoading, terminateLoading);
 
 const toolbar = ref<IBladeToolbar[]>([
-  { id: "refresh", title: t("PLATFORM.COMMON.REFRESH"), icon: "lucide-refresh-cw", clickHandler: () => load() },
+  refreshItem(() => load()),
   {
     id: "terminate",
     title: t("PLATFORM.SECURITY.SESSIONS.TERMINATE"),

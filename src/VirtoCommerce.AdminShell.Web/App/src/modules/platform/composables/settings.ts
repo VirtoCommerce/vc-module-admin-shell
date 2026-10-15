@@ -1,5 +1,5 @@
 import { computed, ref } from "vue";
-import { api, platformTranslations } from "../api";
+import { api, currentLocale, platformTranslations } from "../api";
 
 /** Global settings schema entry (SettingsV2Controller); valueType is a string because the framework enum lacks Cron. */
 export interface SettingSchema {
@@ -87,7 +87,7 @@ export const settingTitle = (s: SettingSchema) => text(s.name, "title") || s.dis
 export const settingDescription = (s: SettingSchema) => text(s.name, "description");
 
 export function useSettingsStore() {
-  async function load(locale = "en") {
+  async function load(locale = currentLocale()) {
     const [schemaResult, values, localization] = await Promise.all([
       api<SettingSchema[]>("GET", `${BASE}/schema`),
       api<SettingValues>("GET", `${BASE}/values`),

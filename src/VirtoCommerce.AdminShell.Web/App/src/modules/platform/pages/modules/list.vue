@@ -28,7 +28,7 @@
         <template #body="{ data }">
           <img
             class="platform-module-icon"
-            :src="iconSrc(data.iconUrl) ?? fallbackIcon"
+            :src="rootedUrl(data.iconUrl) ?? fallbackIcon"
             alt=""
           />
         </template>
@@ -70,7 +70,9 @@ import { useAsync, useBlade, type IBladeToolbar } from "@vc-shell/framework";
 import { VcBlade, VcColumn, VcDataTable, VcStatus } from "@vc-shell/framework/ui";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { iconSrc, useModules, type ModuleAction, type ModuleRow } from "../../composables/modules";
+import { refreshItem } from "../../composables/blade";
+import { useModules, type ModuleAction, type ModuleRow } from "../../composables/modules";
+import { rootedUrl } from "../../../../utils/url";
 
 defineBlade({
   url: "/modules",
@@ -168,7 +170,7 @@ const run = async (action: ModuleAction) => {
 };
 
 const toolbar = ref<IBladeToolbar[]>([
-  { id: "refresh", title: t("PLATFORM.COMMON.REFRESH"), icon: "lucide-refresh-cw", clickHandler: () => load(true) },
+  refreshItem(() => load(true)),
   {
     id: "install",
     title: t("PLATFORM.MODULES.INSTALL"),

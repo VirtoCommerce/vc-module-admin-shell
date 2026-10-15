@@ -55,6 +55,7 @@ import { ChangeLogClient, useApiClient, useAsync, useBlade, usePopup, notificati
 import { VcBlade, VcColumn, VcDataTable } from "@vc-shell/framework/ui";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { refreshItem } from "../../composables/blade";
 import { exportDocument, groupPath, settingsOf, settingTitle, useSettingsStore, type SettingSchema } from "../../composables/settings";
 
 defineBlade({
@@ -192,7 +193,7 @@ async function onImportFile(event: Event) {
 }
 
 const toolbar = ref<IBladeToolbar[]>([
-  { id: "refresh", title: t("PLATFORM.COMMON.REFRESH"), icon: "lucide-refresh-cw", clickHandler: () => load() },
+  refreshItem(() => load()),
   { id: "export", title: t("PLATFORM.SETTINGS.LIST.EXPORT"), icon: "lucide-download", clickHandler: () => exportJson() },
   {
     id: "import",

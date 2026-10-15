@@ -183,6 +183,7 @@ import { VcBanner, VcBlade, VcButton, VcCard, VcIcon, VcInput } from "@vc-shell/
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { api } from "../../api";
+import { formatLicenseDate, isLicenseExpired } from "../../../../shell/license";
 
 defineBlade({
   url: "/license",
@@ -204,27 +205,23 @@ const error = ref("");
 const busy = ref(false);
 const mode = ref<"code" | "file">();
 
-const isExpired = (l?: License | null) => !!l?.expirationDate && new Date(l.expirationDate).getTime() < Date.now();
-const formatDate = (value?: Date | string) =>
-  // the license's calendar date (UTC), not the day it is in this browser's zone
-  value ? new Date(value).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" }) : "";
 
 const state = computed(() => {
   if (!license.value) return "community";
-  return isExpired(license.value) ? "expired" : "active";
+  return isLicenseExpired(license.value) ? "expired" : "active";
 });
 const chip = computed(() => {
   if (state.value === "community") return t("PLATFORM.LICENSE.CHIP_COMMUNITY");
   if (state.value === "expired") return t("PLATFORM.LICENSE.CHIP_EXPIRED");
-  return t("PLATFORM.LICENSE.CHIP_ACTIVE", { date: formatDate(license.value?.expirationDate) });
+  return t("PLATFORM.LICENSE.CHIP_ACTIVE", { date: formatLicenseDate(license.value?.expirationDate) });
 });
-const previewExpired = computed(() => isExpired(preview.value));
+const previewExpired = computed(() => isLicenseExpired(preview.value));
 
 const facts = (l: License) =>
   [
     { label: t("PLATFORM.LICENSE.ISSUED_TO"), value: l.customerName },
     { label: t("PLATFORM.LICENSE.TYPE"), value: l.type },
-    { label: t("PLATFORM.LICENSE.EXPIRATION"), value: formatDate(l.expirationDate) },
+    { label: t("PLATFORM.LICENSE.EXPIRATION"), value: formatLicenseDate(l.expirationDate) },
     { label: t("PLATFORM.LICENSE.EMAIL"), value: l.customerEmail },
   ].filter((x) => x.value);
 
@@ -236,7 +233,7 @@ const { loading, action: load } = useAsync(async () => {
 function received(next: License | null | undefined) {
   if (!next) throw new Error("no license");
   preview.value = next;
-  error.value = isExpired(next) ? t("PLATFORM.LICENSE.ERROR_EXPIRED") : "";
+  error.value = isLicenseExpired(next) ? t("PLATFORM.LICENSE.ERROR_EXPIRED") : "";
 }
 
 async function byCode() {

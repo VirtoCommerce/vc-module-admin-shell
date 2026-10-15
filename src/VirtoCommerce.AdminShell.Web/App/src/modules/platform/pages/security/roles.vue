@@ -38,16 +38,16 @@ import {
   useApiClient,
   useAsync,
   useBlade,
-  useDataTablePagination,
-  useFunctions,
   useLoading,
   usePopup,
   type IBladeToolbar,
   type Role,
 } from "@vc-shell/framework";
 import { VcBlade, VcColumn, VcDataTable } from "@vc-shell/framework/ui";
-import { computed, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { refreshItem } from "../../composables/blade";
+import { PAGE_SIZE, useSearchableList } from "../../composables/list";
 
 defineBlade({
   url: "/roles",
@@ -55,20 +55,21 @@ defineBlade({
   permissions: ["platform:security:access"],
 });
 
-const PAGE_SIZE = 20;
 const { t } = useI18n({ useScope: "global" });
 // options.keyword: the list opens filtered (global search's "Show all")
 const { openBlade, exposeToChildren, options } = useBlade<{ keyword?: string }>();
-const { debounce } = useFunctions();
 const { showConfirmation } = usePopup();
 const { getApiClient } = useApiClient(SecurityClient);
 
 const roles = ref<Role[]>([]);
-const totalCount = ref(0);
 const selection = ref<Role[]>([]);
 const activeId = ref<string>();
-const keyword = ref(options.value?.keyword ?? "");
-const pagination = useDataTablePagination({ stateKey: "PLATFORM_ROLES", pageSize: PAGE_SIZE, totalCount });
+// the keyword, page and reload after typing; options.keyword: the list opens filtered (global search's "Show all")
+const { keyword, totalCount, pagination } = useSearchableList({
+  stateKey: "PLATFORM_ROLES",
+  keyword: options.value?.keyword,
+  load: () => load(),
+});
 
 const { loading: searchLoading, action: load } = useAsync(async () => {
   const result = await (
@@ -85,8 +86,6 @@ const { loading: deleteLoading, action: remove } = useAsync<string[]>(async (ids
 const loading = useLoading(searchLoading, deleteLoading);
 
 load();
-watch(keyword, () => pagination.setPage(1));
-watch([keyword, () => pagination.skip], debounce(() => load(), 300));
 
 function openRole(role?: Role) {
   activeId.value = role?.id;
@@ -101,7 +100,7 @@ function openRole(role?: Role) {
 }
 
 const toolbar = ref<IBladeToolbar[]>([
-  { id: "refresh", title: t("PLATFORM.COMMON.REFRESH"), icon: "lucide-refresh-cw", clickHandler: () => load() },
+  refreshItem(() => load()),
   {
     id: "add",
     title: t("PLATFORM.COMMON.ADD"),

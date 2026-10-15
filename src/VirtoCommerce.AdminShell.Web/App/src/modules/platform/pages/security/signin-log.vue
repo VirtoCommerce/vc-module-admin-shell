@@ -118,7 +118,10 @@ import { useAsync, useBlade, useDataTablePagination, useFunctions, useLoading, t
 import { VcBanner, VcBlade, VcColumn, VcDataTable, VcSelect, VcStatus } from "@vc-shell/framework/ui";
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { refreshItem } from "../../composables/blade";
+import { PAGE_SIZE } from "../../composables/list";
 import { signInLogApi, type SignInLogCriteria, type SignInLogStats, type UserSignInLog } from "../../composables/security";
+import { criteriaDate } from "../../../../shell/dashboard/api";
 
 defineBlade({
   url: "/sign-in-log",
@@ -126,7 +129,6 @@ defineBlade({
   permissions: ["platform:security:sign_in_log:read"],
 });
 
-const PAGE_SIZE = 20;
 const SIGN_IN_TYPES = ["Password", "External", "Impersonation", "ImpersonationRevert", "ClientCredentials", "Logout"];
 const { t } = useI18n({ useScope: "global" });
 const { options, openBlade } = useBlade<{ userId?: string; userName?: string }>();
@@ -154,8 +156,7 @@ function base(): SignInLogCriteria {
   const minutes = Number(period.value);
   return {
     userId: options.value?.userId,
-    // UTC without "Z": ASP.NET would bind a Z date into server-local time (porting guide, gotcha 6)
-    startDate: Number.isFinite(minutes) ? new Date(Date.now() - minutes * 60_000).toISOString().replace("Z", "") : undefined,
+    startDate: Number.isFinite(minutes) ? criteriaDate(new Date(Date.now() - minutes * 60_000)) : undefined,
   };
 }
 
@@ -256,7 +257,7 @@ watch(() => criteria.value.keyword, debounce(toFirstPage, 300));
 watch(() => pagination.skip, () => loadList());
 
 const toolbar = ref<IBladeToolbar[]>([
-  { id: "refresh", title: t("PLATFORM.COMMON.REFRESH"), icon: "lucide-refresh-cw", clickHandler: () => reload() },
+  refreshItem(() => reload()),
   {
     id: "clear",
     title: t("PLATFORM.SECURITY.SIGNIN.VIEW_ALL"),

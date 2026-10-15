@@ -13,7 +13,8 @@ import {
 } from "../../../modules/platform/composables/settings";
 import { globalSearch, type SearchItem } from "../globalSearch";
 import { openBlade } from "../navigation";
-import { searchApi } from "./api";
+import { request } from "../../../api/http";
+import { rootedUrl } from "../../../utils/url";
 
 const MENU_ICON = "lucide-panel-left";
 
@@ -77,7 +78,7 @@ export function registerPlatformProviders(options: {
     return placement === "AppMenu" || placement === 0;
   };
   const loadApps = () =>
-    (apps ??= searchApi<AppDescriptor[]>("GET", "/api/platform/apps").then(
+    (apps ??= request<AppDescriptor[]>("GET", "/api/platform/apps").then(
       (list) => (list ?? []).filter((app) => app.id !== "platform" && app.id !== "admin-shell" && isAppMenu(app)),
       (error) => {
         apps = undefined;
@@ -112,10 +113,10 @@ export function registerPlatformProviders(options: {
           title: app.title ?? app.id,
           description: app.description ?? "",
           icon: app.iconUrl ? undefined : "lucide-layout-grid",
-          iconUrl: rooted(app.iconUrl),
+          iconUrl: rootedUrl(app.iconUrl),
           permission: app.permission,
           external: true,
-          execute: () => window.open(rooted(app.relativeUrl) ?? `/apps/${app.id}/`, "_blank", "noopener"),
+          execute: () => window.open(rootedUrl(app.relativeUrl) ?? `/apps/${app.id}/`, "_blank", "noopener"),
         }));
     },
   });
@@ -208,7 +209,7 @@ export function registerPlatformProviders(options: {
     isAvailable: () => globalSearch.hasPermission("platform:security:access"),
     match: /^[^\s@]+@[^\s@]+$/,
     search: async (query, context) => {
-      const result = await searchApi<{ totalCount: number; results: User[] }>(
+      const result = await request<{ totalCount: number; results: User[] }>(
         "POST",
         "/api/platform/security/users/search",
         { keyword: query, take: context.take, skip: 0 },
@@ -245,7 +246,7 @@ export function registerPlatformProviders(options: {
     permission: "platform:security:read",
     isAvailable: () => globalSearch.hasPermission("platform:security:access"),
     search: async (query, context) => {
-      const result = await searchApi<{ totalCount: number; results: Role[] }>(
+      const result = await request<{ totalCount: number; results: Role[] }>(
         "POST",
         "/api/platform/security/roles/search",
         { keyword: query, take: context.take, skip: 0 },
@@ -301,10 +302,4 @@ function humanize(name: string) {
     .replace(/[_-]+/g, " ")
     .toLowerCase();
   return words.charAt(0).toUpperCase() + words.slice(1);
-}
-
-// a manifest's url may be relative to the site root ("Modules/$(VirtoCommerce.News)/..."); this page is under /apps/admin-shell/
-function rooted(url?: string) {
-  if (!url) return url;
-  return url.startsWith("/") || url.includes("://") ? url : `/${url}`;
 }

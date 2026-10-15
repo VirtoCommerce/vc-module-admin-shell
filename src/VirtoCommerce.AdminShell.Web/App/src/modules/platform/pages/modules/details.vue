@@ -11,7 +11,7 @@
         <div class="platform-module-head">
           <img
             class="platform-module-head__icon"
-            :src="iconSrc(module.iconUrl) ?? '/images/module-logo.svg'"
+            :src="rootedUrl(module.iconUrl) ?? '/images/module-logo.svg'"
             alt=""
           />
           <div>
@@ -153,7 +153,8 @@ import {
 } from "@vc-shell/framework/ui";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
-import { iconSrc, useModules, versionText } from "../../composables/modules";
+import { useModules, versionText } from "../../composables/modules";
+import { rootedUrl } from "../../../../utils/url";
 
 defineBlade({
   url: "/module",
@@ -232,7 +233,8 @@ defineBladeContext({ item: module });
 
 load();
 
-exposeToChildren({ reload: () => load() });
+// a child (the progress screen after install, update or uninstall) asks for fresh data: always read the modules again
+exposeToChildren({ reload: () => modules.load() });
 </script>
 
 <style lang="scss">

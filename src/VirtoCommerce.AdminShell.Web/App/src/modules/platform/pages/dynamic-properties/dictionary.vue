@@ -24,7 +24,6 @@ import {
   useApiClient,
   useAsync,
   useBlade,
-  useBladeForm,
   useLoading,
   usePermissions,
   usePopup,
@@ -35,6 +34,7 @@ import {
 import { VcBlade } from "@vc-shell/framework/ui";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { saveResetItems, usePlatformBladeForm } from "../../composables/blade";
 import DictionaryEditor, { type DictionaryRow } from "../../components/dictionary-editor.vue";
 
 defineBlade({
@@ -60,10 +60,9 @@ const rows = ref<DictionaryRow[]>([]);
 const selection = ref<DictionaryRow[]>([]);
 let seq = 0;
 
-const form = useBladeForm({
+const form = usePlatformBladeForm({
   data: rows,
   canSaveOverride: canEdit,
-  closeConfirmMessage: computed(() => t("PLATFORM.COMMON.CLOSE_CONFIRMATION")),
 });
 
 const toRow = (item: DynamicPropertyDictionaryItem): DictionaryRow =>
@@ -113,14 +112,7 @@ const { loading: deleteLoading, action: remove } = useAsync<DictionaryRow[]>(asy
 const loading = useLoading(loadLoading, saveLoading, deleteLoading);
 
 const toolbar = ref<IBladeToolbar[]>([
-  { id: "save", title: t("PLATFORM.COMMON.SAVE"), icon: "lucide-save", disabled: computed(() => !form.canSave.value), clickHandler: () => save() },
-  {
-    id: "reset",
-    title: t("PLATFORM.COMMON.RESET"),
-    icon: "lucide-undo-2",
-    disabled: computed(() => !form.isModified.value),
-    clickHandler: () => load(),
-  },
+  ...saveResetItems(form, { save: () => save(), reset: () => load() }),
   {
     id: "delete",
     title: t("PLATFORM.COMMON.DELETE"),

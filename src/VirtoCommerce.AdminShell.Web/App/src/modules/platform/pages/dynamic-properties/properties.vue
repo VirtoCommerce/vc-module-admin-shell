@@ -56,14 +56,14 @@ import {
   useApiClient,
   useAsync,
   useBlade,
-  useDataTablePagination,
-  useFunctions,
   type DynamicProperty,
   type IBladeToolbar,
 } from "@vc-shell/framework";
 import { VcBlade, VcColumn, VcDataTable, VcStatus } from "@vc-shell/framework/ui";
-import { computed, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { refreshItem } from "../../composables/blade";
+import { PAGE_SIZE, useSearchableList } from "../../composables/list";
 
 defineBlade({
   url: "/properties",
@@ -71,17 +71,16 @@ defineBlade({
   permissions: ["platform:dynamic_properties:access"],
 });
 
-const PAGE_SIZE = 20;
 const { t } = useI18n({ useScope: "global" });
 const { param, openBlade, exposeToChildren } = useBlade();
-const { debounce } = useFunctions();
 const { getApiClient } = useApiClient(DynamicPropertiesClient);
 
 const properties = ref<DynamicProperty[]>([]);
-const totalCount = ref(0);
-const keyword = ref("");
 const activeId = ref<string>();
-const pagination = useDataTablePagination({ stateKey: "PLATFORM_DYNAMIC_PROPERTIES", pageSize: PAGE_SIZE, totalCount });
+const { keyword, totalCount, pagination } = useSearchableList({
+  stateKey: "PLATFORM_DYNAMIC_PROPERTIES",
+  load: () => load(),
+});
 const typeName = computed(() => param.value?.split(".").pop() ?? "");
 
 const flags = (p: DynamicProperty) =>
@@ -114,11 +113,9 @@ function openProperty(id?: string) {
 }
 
 load();
-watch(keyword, () => pagination.setPage(1));
-watch([keyword, () => pagination.skip], debounce(() => load(), 300));
 
 const toolbar = ref<IBladeToolbar[]>([
-  { id: "refresh", title: t("PLATFORM.COMMON.REFRESH"), icon: "lucide-refresh-cw", clickHandler: () => load() },
+  refreshItem(() => load()),
   {
     id: "add",
     title: t("PLATFORM.COMMON.ADD"),

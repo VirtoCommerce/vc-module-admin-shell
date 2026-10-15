@@ -49,6 +49,8 @@ import {
 import { VcBlade, VcColumn, VcDataTable } from "@vc-shell/framework/ui";
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { refreshItem } from "../../composables/blade";
+import { PAGE_SIZE } from "../../composables/list";
 
 defineBlade({
   url: "/oauth-apps",
@@ -58,7 +60,6 @@ defineBlade({
 
 type AppRow = OpenIddictApplicationDescriptor & { id: string };
 
-const PAGE_SIZE = 20;
 const { t } = useI18n({ useScope: "global" });
 const { openBlade, exposeToChildren } = useBlade();
 const { showConfirmation } = usePopup();
@@ -96,7 +97,7 @@ function openApp(app?: AppRow) {
 }
 
 const toolbar = ref<IBladeToolbar[]>([
-  { id: "refresh", title: t("PLATFORM.COMMON.REFRESH"), icon: "lucide-refresh-cw", clickHandler: () => load() },
+  refreshItem(() => load()),
   {
     id: "add",
     title: t("PLATFORM.COMMON.ADD"),

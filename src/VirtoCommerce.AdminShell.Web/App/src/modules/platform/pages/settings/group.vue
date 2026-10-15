@@ -148,7 +148,7 @@
 </template>
 
 <script setup lang="ts">
-import { useAsync, useBlade, useBladeForm, useLoading, usePermissions, notification, type IBladeToolbar } from "@vc-shell/framework";
+import { useAsync, useBlade, useLoading, usePermissions, notification, type IBladeToolbar } from "@vc-shell/framework";
 import {
   VcBlade,
   VcButton,
@@ -163,6 +163,7 @@ import {
 } from "@vc-shell/framework/ui";
 import { computed, nextTick, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { saveResetItems, usePlatformBladeForm } from "../../composables/blade";
 import {
   groupPath,
   isEmpty,
@@ -222,10 +223,9 @@ const valid = computed(() =>
   settings.value.every((s) => !requiredError(s) && (s.valueType !== "Json" || !jsonError(s))),
 );
 
-const form = useBladeForm({
+const form = usePlatformBladeForm({
   data: item,
   canSaveOverride: computed(() => changed.value.length > 0 && valid.value && canUpdate.value),
-  closeConfirmMessage: computed(() => t("PLATFORM.COMMON.CLOSE_CONFIRMATION")),
 });
 
 function fill() {
@@ -287,20 +287,7 @@ function openDictionary(s: SettingSchema) {
 }
 
 const toolbar = ref<IBladeToolbar[]>([
-  {
-    id: "save",
-    title: t("PLATFORM.COMMON.SAVE"),
-    icon: "lucide-save",
-    disabled: computed(() => !form.canSave.value),
-    clickHandler: () => save(),
-  },
-  {
-    id: "reset",
-    title: t("PLATFORM.COMMON.RESET"),
-    icon: "lucide-undo-2",
-    disabled: computed(() => !changed.value.length),
-    clickHandler: () => fill(),
-  },
+  ...saveResetItems(form, { save: () => save(), reset: () => fill(), resetDisabled: computed(() => !changed.value.length) }),
 ]);
 
 load();

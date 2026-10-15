@@ -73,7 +73,7 @@
 <script lang="ts" setup>
 import { DashboardWidgetCard, useAsync } from "@vc-shell/framework";
 import { computed, onMounted, ref } from "vue";
-import { daysAgo, postJson } from "./api";
+import { criteriaDate, daysAgo, postJson } from "./api";
 
 const R = 80;
 const CIRCUMFERENCE = 2 * Math.PI * R;
@@ -86,7 +86,7 @@ const count = (isAnonymous: boolean) =>
   postJson<{ totalCount: number }>("/api/carts/search", {
     hasLineItems: true,
     notTypes: ["Wishlist", "SavedForLater"],
-    modifiedStartDate: daysAgo(30),
+    modifiedStartDate: criteriaDate(daysAgo(30)),
     isAnonymous,
     take: 0,
   }).then((r) => r.totalCount ?? 0);

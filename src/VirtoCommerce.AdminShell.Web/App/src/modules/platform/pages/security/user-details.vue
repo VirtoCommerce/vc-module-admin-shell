@@ -177,7 +177,6 @@ import {
   useApiClient,
   useAsync,
   useBlade,
-  useBladeForm,
   useBladeWidgets,
   useLoading,
   usePermissions,
@@ -199,6 +198,7 @@ import {
 } from "@vc-shell/framework/ui";
 import { computed, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { saveResetItems, usePlatformBladeForm } from "../../composables/blade";
 import { ensureSucceeded, usePasswordCheck, useSecurityLookups } from "../../composables/security";
 
 defineBlade({
@@ -241,10 +241,9 @@ const valid = computed(
   () => !!item.value.userName && (!isNew.value || ((!password.value || !passwordErrors.value) && password.value === passwordRepeat.value)),
 );
 
-const form = useBladeForm({
+const form = usePlatformBladeForm({
   data: item,
   canSaveOverride: computed(() => valid.value && hasAccess(isNew.value ? "platform:security:create" : "platform:security:update")),
-  closeConfirmMessage: computed(() => t("PLATFORM.COMMON.CLOSE_CONFIRMATION")),
 });
 
 const { loading: loadLoading, action: load } = useAsync(async () => {
@@ -319,14 +318,7 @@ const toolbar = computed<IBladeToolbar[]>(() =>
         },
       ]
     : [
-        { id: "save", title: t("PLATFORM.COMMON.SAVE"), icon: "lucide-save", disabled: computed(() => !form.canSave.value), clickHandler: () => save() },
-        {
-          id: "reset",
-          title: t("PLATFORM.COMMON.RESET"),
-          icon: "lucide-undo-2",
-          disabled: computed(() => !form.isModified.value),
-          clickHandler: () => load(),
-        },
+        ...saveResetItems(form, { save: () => save(), reset: () => load() }),
         {
           id: "password",
           title: t("SHELL.ACCOUNT.CHANGE_PASSWORD"),
@@ -375,7 +367,8 @@ const toolbar = computed<IBladeToolbar[]>(() =>
           permissions: ["platform:security:delete"],
           async clickHandler() {
             if (await showConfirmation(t("PLATFORM.SECURITY.USERS.DELETE_CONFIRM", { count: 1 }))) {
-              await (await getApiClient()).delete([item.value.userName!]);
+              // as the users list does: a refused delete (succeeded=false) shows its error and leaves the blade open
+              ensureSucceeded((await (await getApiClient()).delete([item.value.userName!])) as unknown as { succeeded?: boolean });
               form.setBaseline();
               await callParent("reload");
               await closeSelf();

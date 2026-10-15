@@ -149,6 +149,7 @@ import { computed, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { systemInfo, type SystemInfo } from "./dashboard/api";
+import { formatLicenseDate, isLicenseExpired } from "./license";
 import { themeMode, type ThemeMode } from "./themeMode";
 
 defineProps<{ avatar?: string }>();
@@ -198,10 +199,8 @@ const modes = computed<{ key: ThemeMode; icon: string; label: string }[]>(() => 
 const license = computed(() => {
   const l = info.value?.license;
   if (!l) return { state: "none", text: t("SHELL.USER_MENU.LICENSE_NONE"), title: t("SHELL.USER_MENU.LICENSE_NONE_HINT") };
-  const until = l.expirationDate ? new Date(l.expirationDate) : undefined;
-  const expired = !!until && until.getTime() < Date.now();
-  // the license's calendar date (UTC), not the day it is in this browser's zone
-  const date = until?.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" });
+  const expired = isLicenseExpired(l);
+  const date = formatLicenseDate(l.expirationDate, "short");
   return {
     state: expired ? "expired" : "active",
     text: expired ? t("SHELL.USER_MENU.LICENSE_EXPIRED") : [l.type, date && t("SHELL.USER_MENU.LICENSE_UNTIL", { date })].filter(Boolean).join(" · "),

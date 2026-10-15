@@ -81,17 +81,17 @@ import {
   useApiClient,
   useAsync,
   useBlade,
-  useDataTablePagination,
   useDataTableSort,
-  useFunctions,
   useLoading,
   usePopup,
   type ApplicationUser,
   type IBladeToolbar,
 } from "@vc-shell/framework";
 import { VcBlade, VcColumn, VcDataTable, VcStatus } from "@vc-shell/framework/ui";
-import { computed, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { refreshItem } from "../../composables/blade";
+import { PAGE_SIZE, useSearchableList } from "../../composables/list";
 import { ensureSucceeded, useSecurityLookups } from "../../composables/security";
 
 defineBlade({
@@ -100,21 +100,17 @@ defineBlade({
   permissions: ["platform:security:access"],
 });
 
-const PAGE_SIZE = 20;
 const { t } = useI18n({ useScope: "global" });
 // options.keyword: the list opens filtered (global search's "Show all")
 const { openBlade, exposeToChildren, options } = useBlade<{ keyword?: string }>();
-const { debounce } = useFunctions();
 const { showConfirmation } = usePopup();
 const { getApiClient } = useApiClient(SecurityClient);
 const lookups = useSecurityLookups();
 lookups.load();
 
 const users = ref<ApplicationUser[]>([]);
-const totalCount = ref(0);
 const selection = ref<ApplicationUser[]>([]);
 const activeId = ref<string>();
-const keyword = ref(options.value?.keyword ?? "");
 const filters = ref<Record<string, unknown>>({});
 
 const { sortField, sortOrder, sortExpression } = useDataTableSort({
@@ -122,7 +118,15 @@ const { sortField, sortOrder, sortExpression } = useDataTableSort({
   initialField: "userName",
   initialDirection: "ASC",
 });
-const pagination = useDataTablePagination({ stateKey: "PLATFORM_USERS", pageSize: PAGE_SIZE, totalCount });
+// the keyword, page and reload after typing; a filter goes back to page 1, the sort reloads; options.keyword: the list
+// opens filtered (global search's "Show all")
+const { keyword, totalCount, pagination } = useSearchableList({
+  stateKey: "PLATFORM_USERS",
+  keyword: options.value?.keyword,
+  load: () => load(),
+  resetOn: [filters],
+  reloadOn: [sortExpression],
+});
 
 const isLocked = (u: ApplicationUser) => !!u.lockoutEnd && new Date(u.lockoutEnd) > new Date();
 
@@ -183,8 +187,6 @@ function onFilter(event: { filters: Record<string, unknown> }) {
 }
 
 load();
-watch([keyword, filters], () => pagination.setPage(1));
-watch([sortExpression, keyword, filters, () => pagination.skip], debounce(() => load(), 300));
 
 function openUser(id?: string) {
   activeId.value = id;
@@ -199,7 +201,7 @@ function openUser(id?: string) {
 }
 
 const toolbar = ref<IBladeToolbar[]>([
-  { id: "refresh", title: t("PLATFORM.COMMON.REFRESH"), icon: "lucide-refresh-cw", clickHandler: () => load() },
+  refreshItem(() => load()),
   {
     id: "add",
     title: t("PLATFORM.COMMON.ADD"),

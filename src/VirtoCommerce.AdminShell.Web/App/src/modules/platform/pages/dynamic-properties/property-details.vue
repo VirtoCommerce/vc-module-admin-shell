@@ -89,7 +89,6 @@ import {
   useApiClient,
   useAsync,
   useBlade,
-  useBladeForm,
   useBladeWidgets,
   useLoading,
   usePermissions,
@@ -100,6 +99,7 @@ import {
 import { VcBlade, VcCard, VcCol, VcContainer, VcForm, VcInput, VcRow, VcSelect, VcSwitch, VcTextarea } from "@vc-shell/framework/ui";
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { saveResetItems, usePlatformBladeForm } from "../../composables/blade";
 import { settingValues } from "../../api";
 
 defineBlade({
@@ -142,12 +142,11 @@ watch(
   },
 );
 
-const form = useBladeForm({
+const form = usePlatformBladeForm({
   data: item,
   canSaveOverride: computed(
     () => !!item.value.name && hasAccess(isNew.value ? "platform:dynamic_properties:create" : "platform:dynamic_properties:update"),
   ),
-  closeConfirmMessage: computed(() => t("PLATFORM.COMMON.CLOSE_CONFIRMATION")),
 });
 
 /** one display name per platform language (VirtoCommerce.Core.General.Languages), matched case-insensitively */
@@ -204,21 +203,7 @@ const { loading: saveLoading, action: save } = useAsync(async () => {
 const loading = useLoading(loadLoading, saveLoading);
 
 const toolbar = computed<IBladeToolbar[]>(() => [
-  {
-    id: "save",
-    title: isNew.value ? t("PLATFORM.COMMON.CREATE") : t("PLATFORM.COMMON.SAVE"),
-    icon: "lucide-save",
-    disabled: computed(() => !form.canSave.value),
-    clickHandler: () => save(),
-  },
-  {
-    id: "reset",
-    title: t("PLATFORM.COMMON.RESET"),
-    icon: "lucide-undo-2",
-    isVisible: !isNew.value,
-    disabled: computed(() => !form.isModified.value),
-    clickHandler: () => load(),
-  },
+  ...saveResetItems(form, { save: () => save(), reset: () => load(), isNew: isNew.value, resetVisible: !isNew.value }),
   {
     id: "delete",
     title: t("PLATFORM.COMMON.DELETE"),

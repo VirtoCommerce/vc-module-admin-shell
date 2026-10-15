@@ -23,10 +23,11 @@
 </template>
 
 <script setup lang="ts">
-import { notification, useAsync, useBlade, useBladeForm, useLoading, usePermissions, usePopup, type IBladeToolbar } from "@vc-shell/framework";
+import { notification, useAsync, useBlade, useLoading, usePermissions, usePopup, type IBladeToolbar } from "@vc-shell/framework";
 import { VcBlade, VcContainer, VcForm, VcTextarea } from "@vc-shell/framework/ui";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { saveResetItems, usePlatformBladeForm } from "../../composables/blade";
 import { exportDocument, settingsOf, useSettingsStore } from "../../composables/settings";
 
 defineBlade({
@@ -52,10 +53,9 @@ const parsed = computed(() => {
 });
 const error = computed(() => (text.value && !parsed.value ? t("PLATFORM.SETTINGS.JSON.INVALID") : undefined));
 
-const form = useBladeForm({
+const form = usePlatformBladeForm({
   data: text,
   canSaveOverride: computed(() => !!parsed.value && hasAccess("platform:setting:update")),
-  closeConfirmMessage: computed(() => t("PLATFORM.COMMON.CLOSE_CONFIRMATION")),
 });
 
 // the same document the export downloads: modified settings only
@@ -76,20 +76,7 @@ const { loading: saveLoading, action: save } = useAsync(async () => {
 const loading = useLoading(loadLoading, saveLoading);
 
 const toolbar = ref<IBladeToolbar[]>([
-  {
-    id: "save",
-    title: t("PLATFORM.COMMON.SAVE"),
-    icon: "lucide-save",
-    disabled: computed(() => !form.canSave.value),
-    clickHandler: () => save(),
-  },
-  {
-    id: "reset",
-    title: t("PLATFORM.COMMON.RESET"),
-    icon: "lucide-undo-2",
-    disabled: computed(() => !form.isModified.value),
-    clickHandler: () => load(),
-  },
+  ...saveResetItems(form, { save: () => save(), reset: () => load() }),
   {
     id: "format",
     title: t("PLATFORM.SETTINGS.GROUP.FORMAT_JSON"),

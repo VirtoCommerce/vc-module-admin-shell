@@ -60,6 +60,7 @@ import {
 import { VcBlade, VcColumn, VcDataTable, VcSwitch } from "@vc-shell/framework/ui";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { refreshItem } from "../../composables/blade";
 
 defineBlade({
   url: "/apikeys",
@@ -92,7 +93,7 @@ const loading = useLoading(loadLoading, changeLoading);
 const toggle = (key: UserApiKey, isActive: boolean) => change((client) => client.updateUserApiKey({ ...key, isActive }));
 
 const toolbar = ref<IBladeToolbar[]>([
-  { id: "refresh", title: t("PLATFORM.COMMON.REFRESH"), icon: "lucide-refresh-cw", clickHandler: () => load() },
+  refreshItem(() => load()),
   {
     id: "generate",
     title: t("PLATFORM.SECURITY.APIKEYS.GENERATE"),

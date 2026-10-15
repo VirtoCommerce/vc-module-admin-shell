@@ -1,6 +1,6 @@
 import { useTheme } from "@vc-shell/framework";
 import { usePreferredDark, useStorage } from "@vueuse/core";
-import { watch } from "vue";
+import { effectScope, watch } from "vue";
 
 export type ThemeMode = "system" | "light" | "dark";
 
@@ -22,10 +22,13 @@ export function useThemeMode() {
   if (started) return;
   started = true;
   const { setTheme } = useTheme();
-  const prefersDark = usePreferredDark();
-  watch(
-    [themeMode, prefersDark],
-    ([mode, dark]) => setTheme(themeFor(mode, dark)),
-    { immediate: true },
-  );
+  // detached scope: outlives the component (Login or App) that started it
+  effectScope(true).run(() => {
+    const prefersDark = usePreferredDark();
+    watch(
+      [themeMode, prefersDark],
+      ([mode, dark]) => setTheme(themeFor(mode, dark)),
+      { immediate: true },
+    );
+  });
 }

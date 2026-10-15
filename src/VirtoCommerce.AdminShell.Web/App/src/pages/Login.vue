@@ -184,6 +184,7 @@ import { computed, onMounted, reactive, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import AuthShell from "./AuthShell.vue";
+import { rootedUrl } from "../utils/url";
 
 interface Provider {
   type: string;
@@ -233,11 +234,6 @@ const providers = computed<Provider[]>(() =>
       };
     }),
 );
-
-// module logos come relative to the site root ("Modules/$(VirtoCommerce.OpenIdConnectModule)/..."); this page is under /apps/
-function rootedUrl(url?: string) {
-  return !url || url.startsWith("/") || url.includes("://") ? url : `/${url}`;
-}
 
 // where an expired session or a deep link left off; same-site paths only. Read once, so a later sign-in can't land there.
 function takeRedirectTarget() {

@@ -1,5 +1,5 @@
 import { useUser } from "@vc-shell/framework";
-import { ref, watch, type Ref } from "vue";
+import { effectScope, ref, watch, type Ref } from "vue";
 import type { EffectiveMenu } from "../api/adminMenu";
 import { postJson } from "./dashboard/api";
 
@@ -58,7 +58,9 @@ export function startBadges(menu: Ref<EffectiveMenu>) {
 
   // the menu arrives after sign-in; then every minute while the tab is visible, and on coming back to it once
   // the counts are that old
-  watch([() => menu.value.sections.length, isAuthenticated], refresh, { immediate: true });
+  // in a detached scope, as the interval and the listener below live for the whole page: started from the layout, the
+  // watcher would stop when the layout unmounts on sign-out, and the next user's counters would wait for the next tick
+  effectScope(true).run(() => watch([() => menu.value.sections.length, isAuthenticated], refresh, { immediate: true }));
   setInterval(refresh, POLL_MS);
   document.addEventListener("visibilitychange", () => {
     if (!document.hidden && Date.now() - lastRefresh >= POLL_MS) refresh();

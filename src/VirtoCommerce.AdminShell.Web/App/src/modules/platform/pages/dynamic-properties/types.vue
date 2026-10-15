@@ -35,7 +35,7 @@
 import { DynamicPropertiesClient, useApiClient, useAsync, useBlade, type IBladeToolbar } from "@vc-shell/framework";
 import { VcBlade, VcColumn, VcDataTable } from "@vc-shell/framework/ui";
 import { computed, ref } from "vue";
-import { useI18n } from "vue-i18n";
+import { refreshItem } from "../../composables/blade";
 
 defineBlade({
   url: "/dynamic-properties",
@@ -49,7 +49,6 @@ interface TypeRow {
   name: string;
 }
 
-const { t } = useI18n({ useScope: "global" });
 const { openBlade } = useBlade();
 const { getApiClient } = useApiClient(DynamicPropertiesClient);
 
@@ -74,7 +73,7 @@ function openType(type: TypeRow) {
 }
 
 const toolbar = ref<IBladeToolbar[]>([
-  { id: "refresh", title: t("PLATFORM.COMMON.REFRESH"), icon: "lucide-refresh-cw", clickHandler: () => load() },
+  refreshItem(() => load()),
 ]);
 
 load();

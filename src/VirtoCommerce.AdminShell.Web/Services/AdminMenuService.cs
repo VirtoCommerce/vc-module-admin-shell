@@ -48,18 +48,11 @@ public class AdminMenuService(
     }
 
     // the uses as stored, which is best first: RecordUse ranks them, and the shared half-life keeps that order over time.
-    // A value that doesn't read as uses (edited by hand) empties Recent instead of failing the menu; the next use rewrites it.
+    // A value that doesn't read as uses (edited by hand) empties Recent (ReadAsync); the next use rewrites it.
     private async Task<List<RecentUse>> ReadUsesAsync(string userId)
     {
-        try
-        {
-            var uses = await ReadAsync<List<RecentUse>>(Settings.UserRecent, ModuleConstants.UserProfileTenant, userId);
-            return uses.Where(x => !string.IsNullOrEmpty(x?.Id)).ToList();
-        }
-        catch (JsonException)
-        {
-            return [];
-        }
+        var uses = await ReadAsync<List<RecentUse>>(Settings.UserRecent, ModuleConstants.UserProfileTenant, userId);
+        return uses.Where(x => !string.IsNullOrEmpty(x?.Id)).ToList();
     }
 
     // one write at a time per user: two quick clicks would each read the same uses, and the later write would drop one
@@ -97,13 +90,25 @@ public class AdminMenuService(
     private async Task<string> ReadJsonAsync(SettingDescriptor descriptor, string objectType, string objectId) =>
         (await settingsManager.GetObjectSettingAsync(descriptor.Name, objectType, objectId))?.Value as string;
 
+    // A value that doesn't read as T (a menu patch or prefs edited by hand, with a typo) reads as empty: one bad setting
+    // must not take the menu down for everyone, or for everyone in a role
     private async Task<T> ReadAsync<T>(SettingDescriptor descriptor, string objectType, string objectId) where T : new()
     {
         var json = await ReadJsonAsync(descriptor, objectType, objectId);
-        // a stored null ({"items":null}) keeps the model's empty default
-        return string.IsNullOrWhiteSpace(json)
-            ? new T()
-            : JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }) ?? new T();
+        if (string.IsNullOrWhiteSpace(json))
+        {
+            return new T();
+        }
+
+        try
+        {
+            // a stored null ({"items":null}) keeps the model's empty default
+            return JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }) ?? new T();
+        }
+        catch (JsonException)
+        {
+            return new T();
+        }
     }
 
     private async Task WriteAsync(SettingDescriptor descriptor, string objectType, string objectId, object value)

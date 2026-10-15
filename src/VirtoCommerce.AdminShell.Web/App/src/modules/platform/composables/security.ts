@@ -1,6 +1,6 @@
 import { ref, type Ref } from "vue";
 import { SecurityClient, useApiClient, useLatestRequest, type Permission, type Role } from "@vc-shell/framework";
-import { api, platformTranslations, settingValues } from "../api";
+import { api, currentLocale, platformTranslations, settingValues } from "../api";
 
 export interface Option {
   id: string;
@@ -38,16 +38,23 @@ export function usePasswordCheck(userName: () => string | undefined, password: R
 
 export type CatalogPermission = Permission & { description: string };
 
-let permissionCatalog: Promise<CatalogPermission[]> | undefined;
+const permissionCatalogs = new Map<string, Promise<CatalogPermission[]>>();
 
-/** The registered permissions with their descriptions (platform translations); they change only with a restart, so loaded once. */
-export function registeredPermissions(client: SecurityClient): Promise<CatalogPermission[]> {
-  permissionCatalog ??= Promise.all([client.getAllRegisteredPermissions(), platformTranslations()]).then(([all, translations]) => {
-    const descriptions = (translations.permissions ?? {}) as Record<string, string>;
-    return (all ?? []).map((p) => ({ ...p, description: descriptions[p.name!] ?? "" }));
-  });
-  permissionCatalog.catch(() => (permissionCatalog = undefined));
-  return permissionCatalog;
+/**
+ * The registered permissions with their descriptions in the UI's language (platform translations); they change only with a
+ * restart, so loaded once per language.
+ */
+export function registeredPermissions(client: SecurityClient, locale = currentLocale()): Promise<CatalogPermission[]> {
+  let catalog = permissionCatalogs.get(locale);
+  if (!catalog) {
+    catalog = Promise.all([client.getAllRegisteredPermissions(), platformTranslations(locale)]).then(([all, translations]) => {
+      const descriptions = (translations.permissions ?? {}) as Record<string, string>;
+      return (all ?? []).map((p) => ({ ...p, description: descriptions[p.name!] ?? "" }));
+    });
+    permissionCatalogs.set(locale, catalog);
+    catalog.catch(() => permissionCatalogs.delete(locale));
+  }
+  return catalog;
 }
 
 /** Account types, statuses and roles for the user list filters and the user form (legacy reads the same settings). */

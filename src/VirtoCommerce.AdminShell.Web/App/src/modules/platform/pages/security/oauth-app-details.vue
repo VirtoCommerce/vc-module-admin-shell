@@ -60,7 +60,6 @@ import {
   useApiClient,
   useAsync,
   useBlade,
-  useBladeForm,
   useLoading,
   usePermissions,
   usePopup,
@@ -70,6 +69,7 @@ import {
 import { VcBanner, VcBlade, VcContainer, VcField, VcForm, VcInput, VcMultivalue } from "@vc-shell/framework/ui";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { saveResetItems, usePlatformBladeForm } from "../../composables/blade";
 
 defineBlade({
   url: "/oauth-app",
@@ -114,11 +114,10 @@ function uriError(uris?: string[]) {
 
 const valid = computed(() => !!item.value.displayName && !uriError(item.value.redirectUris) && !uriError(item.value.postLogoutRedirectUris));
 
-const form = useBladeForm({
+const form = usePlatformBladeForm({
   data: item,
   // POST oauthapps saves new and existing apps alike, with :update
   canSaveOverride: computed(() => valid.value && hasAccess("platform:security:oauth_applications:update")),
-  closeConfirmMessage: computed(() => t("PLATFORM.COMMON.CLOSE_CONFIRMATION")),
 });
 
 const { loading: loadLoading, action: load } = useAsync(async () => {
@@ -139,21 +138,7 @@ const { loading: saveLoading, action: save } = useAsync(async () => {
 const loading = useLoading(loadLoading, saveLoading);
 
 const toolbar = computed<IBladeToolbar[]>(() => [
-  {
-    id: "save",
-    title: isNew.value ? t("PLATFORM.COMMON.CREATE") : t("PLATFORM.COMMON.SAVE"),
-    icon: "lucide-save",
-    disabled: computed(() => !form.canSave.value),
-    clickHandler: () => save(),
-  },
-  {
-    id: "reset",
-    title: t("PLATFORM.COMMON.RESET"),
-    icon: "lucide-undo-2",
-    disabled: computed(() => !form.isModified.value),
-    isVisible: !isNew.value,
-    clickHandler: () => load(),
-  },
+  ...saveResetItems(form, { save: () => save(), reset: () => load(), isNew: isNew.value, resetVisible: !isNew.value }),
   {
     id: "delete",
     title: t("PLATFORM.COMMON.DELETE"),

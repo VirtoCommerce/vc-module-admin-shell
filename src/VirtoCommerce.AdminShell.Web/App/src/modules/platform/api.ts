@@ -1,18 +1,8 @@
-// Same-origin fetch for the platform endpoints the framework's generated clients don't cover
-// (settings v2 values, profiles, localization, sign-in log, currencies). Cookie auth applies.
-export async function api<T = unknown>(method: string, url: string, body?: unknown): Promise<T> {
-  const response = await fetch(url, {
-    method,
-    headers: body === undefined ? undefined : { "Content-Type": "application/json" },
-    body: body === undefined ? undefined : JSON.stringify(body),
-  });
-  const text = await response.text();
-  if (!response.ok) {
-    const detail = text ? `: ${text}` : "";
-    throw new Error(`${response.status} ${response.statusText}${detail}`);
-  }
-  return (text ? JSON.parse(text) : undefined) as T;
-}
+import { i18n } from "@vc-shell/framework";
+import { request as api } from "../../api/http";
+
+// the shell's JSON request (settings v2 values, profiles, localization, sign-in log, currencies), as the screens call it
+export { api };
 
 /**
  * A setting's values as legacy's settings.getValues reads them (GET settings/values/{name}: allowed values, else [value],
@@ -21,10 +11,22 @@ export async function api<T = unknown>(method: string, url: string, body?: unkno
 export const settingValues = (name: string) =>
   api<unknown[] | null>("GET", `/api/platform/settings/values/${encodeURIComponent(name)}`).catch(() => []);
 
-let translations: Promise<Record<string, unknown>> | undefined;
+/** The language the UI shows now (vue-i18n's global locale), for the platform texts loaded per language */
+export function currentLocale(): string {
+  const locale = i18n.global.locale as unknown;
+  return String((locale as { value?: string } | null)?.value ?? locale ?? "") || "en";
+}
 
-/** The platform's merged AngularJS translations (setting titles, permission descriptions); best-effort, loaded once. */
-export const platformTranslations = (locale = "en") =>
-  (translations ??= api<Record<string, unknown>>("GET", `/api/platform/localization?lang=${encodeURIComponent(locale)}`).catch(
-    () => ({}) as Record<string, unknown>,
-  ));
+const translations = new Map<string, Promise<Record<string, unknown>>>();
+
+/** The platform's merged AngularJS translations (setting titles, permission descriptions); best-effort, loaded once per locale. */
+export const platformTranslations = (locale = currentLocale()) => {
+  let loaded = translations.get(locale);
+  if (!loaded) {
+    loaded = api<Record<string, unknown>>("GET", `/api/platform/localization?lang=${encodeURIComponent(locale)}`).catch(
+      () => ({}) as Record<string, unknown>,
+    );
+    translations.set(locale, loaded);
+  }
+  return loaded;
+};

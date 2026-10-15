@@ -7,7 +7,6 @@ import { createApp } from "vue";
 import { router } from "./router";
 import * as locales from "./locales";
 import { RouterView } from "vue-router";
-import { bootstrap } from "./bootstrap";
 // the platform's own screens (Settings, Security, Modules, ...) ship with the host
 import PlatformModule from "./modules/platform";
 // global search: module plugins register their providers through the app ($globalSearch)
@@ -41,8 +40,6 @@ async function startApp() {
   installGlobalSearch(app);
 
   app.use(router);
-
-  bootstrap(app);
 
   Object.entries(locales).forEach(([key, message]) => {
     app.config.globalProperties.$mergeLocaleMessage(key, message);

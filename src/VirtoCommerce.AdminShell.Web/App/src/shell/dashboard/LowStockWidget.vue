@@ -126,5 +126,7 @@ const rows = computed(() =>
   }),
 );
 
-const openInventory = () => router.push({ path: "/inventory" });
+// Inventory is an AngularJS screen (default-menu.json legacy.inventory): it opens through the shell's Legacy route, as the
+// menu opens it (useAdminMenu.routeFor)
+const openInventory = () => router.push({ name: "Legacy", query: { url: "/workspace/Inventory" } });
 </script>

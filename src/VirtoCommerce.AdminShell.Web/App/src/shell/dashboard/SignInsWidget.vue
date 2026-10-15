@@ -56,24 +56,15 @@
 import { DashboardWidgetCard, useAsync } from "@vc-shell/framework";
 import { VcIcon } from "@vc-shell/framework/ui";
 import { computed, onMounted, ref } from "vue";
-import { daysAgo, postJson } from "./api";
+import { signInLogApi, type SignInLogStats } from "../../modules/platform/composables/security";
+import { criteriaDate, daysAgo } from "./api";
 
-interface SignInStats {
-  recordingEnabled: boolean;
-  totalCount: number;
-  failedCount: number;
-  distinctUserCount: number;
-  previousTotalCount?: number;
-  previousFailedCount?: number;
-  previousDistinctUserCount?: number;
-}
-
-const stats = ref<SignInStats>();
+const stats = ref<SignInLogStats>();
 
 // the app's error handler shows a failure
 const { loading, action: load } = useAsync(
   async () => {
-    stats.value = await postJson<SignInStats>("/api/platform/security/sign-in-log/stats", { startDate: daysAgo(7) });
+    stats.value = await signInLogApi.stats({ startDate: criteriaDate(daysAgo(7)) });
   },
   { notify: false },
 );
@@ -82,16 +73,17 @@ onMounted(load);
 const formatCount = (value: number, signed = false) =>
   new Intl.NumberFormat(undefined, { signDisplay: signed ? "exceptZero" : "auto" }).format(value);
 
-// more failures is the bad direction, so it turns red when it goes up
+// more failures is the bad direction, so it turns red when it goes up; no earlier period to compare (null) shows no
+// change, as the sign-in log does
 const metrics = computed(() => {
   const s = stats.value;
-  const row = (key: string, icon: string, tint: string, now = 0, before = 0, upIsBad = false) => ({
+  const row = (key: string, icon: string, tint: string, now = 0, before?: number | null, upIsBad = false) => ({
     key,
     icon,
     tint,
     value: formatCount(now),
-    change: now - before,
-    bad: upIsBad ? now > before : now < before,
+    change: before == null ? 0 : now - before,
+    bad: before != null && (upIsBad ? now > before : now < before),
   });
   return [
     row("TOTAL", "lucide-log-in", "blue", s?.totalCount, s?.previousTotalCount),

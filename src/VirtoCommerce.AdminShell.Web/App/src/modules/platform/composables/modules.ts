@@ -33,11 +33,6 @@ export const versionText = (v?: ModuleIdentity["version"]) => {
   const core = [v.major, v.minor, v.patch].join(".");
   return v.prerelease ? `${core}-${v.prerelease}` : core;
 };
-/** manifest icon urls are relative to the platform root ("Modules/$(VirtoCommerce.Core)/Content/logo.svg") */
-export const iconSrc = (url?: string) => {
-  if (!url) return undefined;
-  return /^(https?:)?\//.test(url) ? url : `/${url}`;
-};
 
 function buildRows(modules: ModuleDescriptor[]): ModuleRow[] {
   const byId = new Map<string, ModuleDescriptor[]>();

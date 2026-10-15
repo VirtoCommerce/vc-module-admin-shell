@@ -46,14 +46,13 @@ import {
   useApiClient,
   useAsync,
   useBlade,
-  useDataTablePagination,
-  useFunctions,
   type IBladeToolbar,
   type OperationLog,
 } from "@vc-shell/framework";
 import { VcBlade, VcColumn, VcDataTable } from "@vc-shell/framework/ui";
-import { ref, watch } from "vue";
-import { useI18n } from "vue-i18n";
+import { ref } from "vue";
+import { refreshItem } from "../../composables/blade";
+import { PAGE_SIZE, useSearchableList } from "../../composables/list";
 
 defineBlade({
   url: "/changes",
@@ -61,16 +60,11 @@ defineBlade({
   permissions: ["platform:security:access"],
 });
 
-const PAGE_SIZE = 20;
-const { t } = useI18n({ useScope: "global" });
 const { param, options } = useBlade<{ userName?: string }>();
-const { debounce } = useFunctions();
 const { getApiClient } = useApiClient(ChangeLogClient);
 
 const changes = ref<OperationLog[]>([]);
-const totalCount = ref(0);
-const keyword = ref("");
-const pagination = useDataTablePagination({ stateKey: "PLATFORM_USER_CHANGES", pageSize: PAGE_SIZE, totalCount });
+const { keyword, totalCount, pagination } = useSearchableList({ stateKey: "PLATFORM_USER_CHANGES", load: () => load() });
 
 const { loading, action: load } = useAsync(async () => {
   const result = await (await getApiClient()).searchChangesV2({
@@ -85,10 +79,8 @@ const { loading, action: load } = useAsync(async () => {
 });
 
 load();
-watch(keyword, () => pagination.setPage(1));
-watch([keyword, () => pagination.skip], debounce(() => load(), 300));
 
 const toolbar = ref<IBladeToolbar[]>([
-  { id: "refresh", title: t("PLATFORM.COMMON.REFRESH"), icon: "lucide-refresh-cw", clickHandler: () => load() },
+  refreshItem(() => load()),
 ]);
 </script>

@@ -33,7 +33,7 @@ import type { BladeDescriptor } from "@vc-shell/framework";
 import { VcApp } from "@vc-shell/framework/ui";
 import { computed, inject, ref, watch } from "vue";
 import { useRouter } from "vue-router";
-import { requestedPath } from "../shell/deepLink";
+import { takeRequestedPath } from "../shell/deepLink";
 import LegacyHost from "../shell/LegacyHost.vue";
 import ShellHeader from "../shell/ShellHeader.vue";
 import ShellLayout from "../shell/ShellLayout.vue";
@@ -82,16 +82,12 @@ watch(
 // re-open a deep link into a module route (e.g. #/orders) once the modules have registered their routes
 const router = useRouter();
 const modulesReady = inject(ModulesReadyKey, ref(true));
-let deepLinkApplied = requestedPath === "/";
 watch(
   modulesReady,
   (ready) => {
-    if (ready && !deepLinkApplied) {
-      deepLinkApplied = true;
-      if (router.currentRoute.value.fullPath !== requestedPath) {
-        router.replace(requestedPath);
-      }
-    }
+    if (!ready) return;
+    const path = takeRequestedPath();
+    if (path && router.currentRoute.value.fullPath !== path) router.replace(path);
   },
   { immediate: true },
 );
