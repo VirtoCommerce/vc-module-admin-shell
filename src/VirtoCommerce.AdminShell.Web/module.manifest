@@ -11,7 +11,7 @@
   <description>Vue (vc-shell) admin host: server-driven menu, Vue modules loaded at runtime, AngularJS screens in embedded mode</description>
 
   <authors>
-    <author>Virto Commerce</author>
+    <author>Alexander Siniouguine</author>
   </authors>
   <owners>
     <owner>Virto Commerce</owner>
@@ -21,13 +21,14 @@
     <app id="admin-shell">
       <title>Admin Shell</title>
       <description>Virto Commerce admin</description>
+      <iconUrl>Modules/$(VirtoCommerce.AdminShell)/Content/logo.svg</iconUrl>
       <permission>admin-shell:access</permission>
       <placement>AppMenu</placement>
     </app>
   </apps>
 
   <projectUrl>https://github.com/VirtoCommerce/vc-module-admin-shell</projectUrl>
-  <iconUrl>Modules/$(VirtoCommerce.AdminShell)/Content/logo.png</iconUrl>
+  <iconUrl>Modules/$(VirtoCommerce.AdminShell)/Content/logo.svg</iconUrl>
   <requireLicenseAcceptance>false</requireLicenseAcceptance>
 
   <assemblyFile>VirtoCommerce.AdminShell.Web.dll</assemblyFile>
