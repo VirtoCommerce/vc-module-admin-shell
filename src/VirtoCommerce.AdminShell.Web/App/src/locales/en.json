@@ -62,12 +62,6 @@
         "MODIFIED": "updated",
         "DELETED": "deleted"
       },
-      "CARTS": {
-        "TITLE": "Currently in carts",
-        "CARTS": "carts",
-        "REGISTERED": "Customer carts",
-        "GUESTS": "Guest carts"
-      },
       "SIGN_INS": {
         "TITLE": "Sign-in activity",
         "TOTAL": "Sign-ins, last 7 days",

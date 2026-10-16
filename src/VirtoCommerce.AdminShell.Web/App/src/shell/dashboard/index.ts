@@ -2,13 +2,12 @@
 // Every widget declares a position (the grid only honours declared positions when all have one);
 // rows follow the design's Dashboard.jsx:
 //   y0  alerts (7) | activity (5)          y5  total sales (4) | sales trends (8)        [orders]
-//   y10 recent orders (8) | carts (4)      y16 low stock (8) [inventory] | orders to process (4)
+//   y10 recent orders (8) | carts (4) [cart]   y16 low stock (8) [inventory] | orders to process (4)
 //   y22 payments (5) | sign-ins (4) | fulfillment (3)
 import { registerDashboardWidget } from "@vc-shell/framework";
 import { markRaw } from "vue";
 import ActivityWidget from "./ActivityWidget.vue";
 import AlertsWidget from "./AlertsWidget.vue";
-import CartsWidget from "./CartsWidget.vue";
 import SignInsWidget from "./SignInsWidget.vue";
 
 registerDashboardWidget({
@@ -38,23 +37,3 @@ registerDashboardWidget({
   position: { x: 5, y: 22 },
   permissions: ["platform:security:sign_in_log:read"],
 });
-
-let moduleWidgetsRegistered = false;
-
-/** Widgets backed by modules without an Admin Shell plugin of their own; added only when the module is installed. */
-export function registerModuleWidgets(installedModuleIds: string[]) {
-  if (moduleWidgetsRegistered) return;
-  moduleWidgetsRegistered = true;
-  const installed = new Set(installedModuleIds);
-
-  if (installed.has("VirtoCommerce.Cart")) {
-    registerDashboardWidget({
-      id: "shell-carts",
-      name: "Currently in carts",
-      component: markRaw(CartsWidget),
-      size: { width: 4, height: 6 },
-      position: { x: 8, y: 10 },
-      permissions: ["cart:read"],
-    });
-  }
-}

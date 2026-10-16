@@ -28,7 +28,6 @@ What modules, system integrators and customers can add or change without changin
 | Part | Today | Possible next step |
 |---|---|---|
 | Menu counters (badges) | Hard-coded in `App/src/shell/badges.ts` for Orders, Returns, Quotes, Customer reviews, Tasks | A counter registry for plugins, like `$globalSearch` |
-| Widgets of modules without a plugin | The shell adds *Currently in carts* when Cart is installed | Move to the module once it has a plugin |
 | User menu, header, layout | Fixed | — |
 | Branding | Static logos and product name in the host | — |
 | Menu editor UI | API and settings only | — |

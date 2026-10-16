@@ -37,8 +37,6 @@ import { takeRequestedPath } from "../shell/deepLink";
 import LegacyHost from "../shell/LegacyHost.vue";
 import ShellHeader from "../shell/ShellHeader.vue";
 import ShellLayout from "../shell/ShellLayout.vue";
-import { registerModuleWidgets } from "../shell/dashboard";
-import { systemInfo } from "../shell/dashboard/api";
 import { useThemeMode } from "../shell/themeMode";
 
 // system / light / dark, chosen in the avatar's menu
@@ -67,17 +65,6 @@ const isReady = computed(() => isAuthenticated.value);
 // the current blade gets the accent edge only while another blade is beside it
 const { blades } = useBladeStack();
 const stacked = computed(() => !isMobile.value && blades.value.filter((b: BladeDescriptor) => b.visible).length > 1);
-
-// the installed modules decide which module-backed dashboard widgets the host adds (once: both calls are once-only)
-watch(
-  isReady,
-  async (ready) => {
-    if (!ready) return;
-    const { installedModules } = await systemInfo();
-    registerModuleWidgets((installedModules ?? []).map((m) => m.id!));
-  },
-  { immediate: true },
-);
 
 // re-open a deep link into a module route (e.g. #/orders) once the modules have registered their routes
 const router = useRouter();

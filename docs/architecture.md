@@ -48,7 +48,6 @@ The Admin Shell is the Vue admin of the Virto Commerce platform, built on [vc-sh
 ## Known limits
 
 - **Menu counters** (the badges on Orders, Returns, Quotes, Reviews and Tasks) are hard-coded in the shell (`App/src/shell/badges.ts`). There is no registry for modules yet.
-- **The "Currently in carts" widget** is still in the shell. It is added only when the Cart module is installed, because Cart has no plugin yet.
 - **AngularJS screens** keep their own look: the embedded classic admin is not re-themed.
 - **There is no runtime white-labelling.** Logos and the product name are static assets of the host.
 

@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Admin Shell's home page is a dashboard of widgets on a 12-column grid. Users drag, resize and reset them; the layout is saved per browser. The shell adds the platform's widgets (alerts, recent activity, sign-ins); each module adds its own from its plugin with vc-shell's `registerDashboardWidget`. Today Orders adds sales, recent orders, orders to process, payments and fulfilment, and Inventory adds *Low stock*.
+The Admin Shell's home page is a dashboard of widgets on a 12-column grid. Users drag, resize and reset them; the layout is saved per browser. The shell adds the platform's widgets (alerts, recent activity, sign-ins); each module adds its own from its plugin with vc-shell's `registerDashboardWidget`. Today Orders adds sales, recent orders, orders to process, payments and fulfilment, Inventory adds *Low stock*, and Cart adds *Currently in carts*.
 
 Source: `src/VirtoCommerce.AdminShell.Web/App/src/pages/Dashboard.vue` (the page), `src/shell/dashboard/` (the host's widgets and the planned layout), `src/styles/custom.scss` (`.dash-*` classes). Example plugin widget: `vc-module-inventory/src/VirtoCommerce.InventoryModule.Web/vue/src/modules/dashboard/`.
 
@@ -82,7 +82,7 @@ vc-shell honours declared positions only when **every** widget declares one; oth
 ```
 y0   alerts (7)          | activity (5)                       [shell]
 y5   total sales (4)     | sales trends (8)                   [orders]
-y10  recent orders (8)   | currently in carts (4)             [orders | shell]
+y10  recent orders (8)   | currently in carts (4)             [orders | cart]
 y16  low stock (8)       | orders to process (4)              [inventory | orders]
 y22  payments (5) | sign-ins (4) | fulfillment (3)            [orders | shell | orders]
 ```
@@ -122,7 +122,7 @@ Styles that only one widget needs go into the widget's own `<style scoped>`. Use
 - One request per widget, small `take`; a dashboard opens many widgets at once. Use `useAsync(…, { notify: false })`: the app's error handler shows a failure once.
 - Open the module's screens from the widget the way the menu does (`openBlade({ name, isWorkspace: true })`, then the detail blade), so the blade stack is the same.
 - Keep content to what fits the card at its size: one line per row, full text in `title`. Check at phone width, where the card is narrower; a container query (`container-type: inline-size`) lets the widget adapt to its own width.
-- A widget for a module that has no plugin yet can't live in the module. The shell adds it only when the module is installed (`registerModuleWidgets`, e.g. *Currently in carts* for Cart), and it should move to the module once the module has a plugin.
+- A widget belongs to the module whose data it shows, in that module's plugin, so it comes and goes with the module. A module without screens can have a plugin just for its widgets (Cart's plugin brings only *Currently in carts*).
 
 ## Testing
 

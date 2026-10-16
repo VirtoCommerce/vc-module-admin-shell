@@ -18,7 +18,7 @@ What a plugin can bring:
 | Content on the sign-in page | `useExtensionPoint("auth:after-form")` | [Sign-in page](sign-in-page.md) |
 | Opening AngularJS screens | `$globalSearch.openLegacy` | [AngularJS screens](legacy-screens.md) |
 
-Real plugins to copy, on the `feat/VCST-6327-admin-shell` branches: **Inventory** (`vc-module-inventory`, small: blades, blade widgets, a dashboard widget), **Store** (blades, search), **Orders** (blades, search, dashboard widgets, a blade widget), **Customer**, **Catalog**.
+Real plugins to copy, on the `feat/VCST-6327-admin-shell` branches: **Cart** (`vc-module-cart`, the smallest: one dashboard widget, no screens), **Inventory** (`vc-module-inventory`, small: blades, blade widgets, a dashboard widget), **Store** (blades, search), **Orders** (blades, search, dashboard widgets, a blade widget), **Customer**, **Catalog**.
 
 ## How a plugin is loaded
 
