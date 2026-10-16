@@ -34,6 +34,7 @@ The Admin Shell is the Vue admin of the Virto Commerce platform, built on [vc-sh
 5. **Extension happens through registries, not by changing the shell.** A plugin adds:
    - menu items (`plugin.json`);
    - global search providers (`$globalSearch`);
+   - counters on their menu items (`$menuCounters`);
    - dashboard widgets (`registerDashboardWidget`);
    - widgets in other modules' blades (`registerExternalWidget`);
    - content on the sign-in page (`auth:after-form`);
@@ -47,7 +48,6 @@ The Admin Shell is the Vue admin of the Virto Commerce platform, built on [vc-sh
 
 ## Known limits
 
-- **Menu counters** (the badges on Orders, Returns, Quotes, Reviews and Tasks) are hard-coded in the shell (`App/src/shell/badges.ts`). There is no registry for modules yet.
 - **AngularJS screens** keep their own look: the embedded classic admin is not re-themed.
 - **There is no runtime white-labelling.** Logos and the product name are static assets of the host.
 

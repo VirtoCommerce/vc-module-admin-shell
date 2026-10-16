@@ -203,10 +203,10 @@
                   :title="$t('SHELL.NAV.NEW_TAB')"
                 />
                 <span
-                  v-if="badgeCounts[item.id]"
+                  v-if="counterValues[item.id]"
                   class="as-item__count"
-                  :title="$t(badgeHint(item.id)!, { count: badgeCounts[item.id] })"
-                  >{{ formatBadgeCount(badgeCounts[item.id]) }}</span
+                  :title="counterTitle(item.id)"
+                  >{{ formatBadgeCount(counterValues[item.id]) }}</span
                 >
                 <span
                   v-if="group.shortcut"
@@ -283,7 +283,7 @@ import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 import type { MenuItem, MenuSection } from "../api/adminMenu";
 import { HOME_SECTION_ID, useAdminMenu } from "../composables/useAdminMenu";
-import { badgeCounts, badgeHint } from "./badges";
+import { counterHint, counterValues } from "./menuCounters";
 import { foldedGroups, groupItems, panelOpen, panelSection, railLabel, searchSheetOpen, toggleFolded } from "./navState";
 import ShellSearch from "./ShellSearch.vue";
 import UserMenu from "./UserMenu.vue";
@@ -302,7 +302,15 @@ const emit = defineEmits<{ (e: "navigate"): void; (e: "close"): void }>();
 const { menu, open, isActive, active, togglePin, hide, restoreHidden, pinnedIds } = useAdminMenu();
 const router = useRouter();
 const route = useRoute();
-const { t } = useI18n({ useScope: "global" });
+const { t, te } = useI18n({ useScope: "global" });
+
+// a counter's tooltip: its hint, a translation key or a text, with the count in place of {count}
+function counterTitle(itemId: string) {
+  const hint = counterHint(itemId);
+  const count = counterValues.value[itemId];
+  if (!hint) return undefined;
+  return te(hint) ? t(hint, { count }) : hint.replace("{count}", String(count));
+}
 const { currentThemeKey } = useTheme();
 // the logo's wordmark is near-black, so dark gets a light copy
 const logoImage = computed(() => (currentThemeKey.value === "dark" ? darkLogo : lightLogo));
@@ -410,5 +418,5 @@ function goHome() {
 
 // a section's counter: the sum of its items' counters
 const sectionCount = (section: MenuSection) =>
-  section.items.reduce((sum, item) => sum + (badgeCounts.value[item.id] ?? 0), 0);
+  section.items.reduce((sum, item) => sum + (counterValues.value[item.id] ?? 0), 0);
 </script>

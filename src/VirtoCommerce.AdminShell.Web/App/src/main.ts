@@ -11,6 +11,8 @@ import { RouterView } from "vue-router";
 import PlatformModule from "./modules/platform";
 // global search: module plugins register their providers through the app ($globalSearch)
 import { installGlobalSearch } from "./shell/search";
+// menu counters: module plugins register the counts on their menu items through the app ($menuCounters)
+import { installMenuCounters } from "./shell/menuCounters";
 
 import "@vc-shell/framework/dist/index.css";
 
@@ -38,6 +40,7 @@ async function startApp() {
   app.use(PlatformModule);
 
   installGlobalSearch(app);
+  installMenuCounters(app);
 
   app.use(router);
 

@@ -91,13 +91,13 @@
 </template>
 
 <script setup lang="ts">
-import { formatBadgeCount, useBladeStack, useEnvironmentName } from "@vc-shell/framework";
+import { formatBadgeCount, useBladeStack, useEnvironmentName, usePermissions } from "@vc-shell/framework";
 import { VcIcon } from "@vc-shell/framework/ui";
 import { useEventListener } from "@vueuse/core";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useAdminMenu } from "../composables/useAdminMenu";
-import { badgeCounts, startBadges } from "./badges";
+import { counterValues, startMenuCounters } from "./menuCounters";
 import { drawerOpen, searchSheetOpen } from "./navState";
 import { globalSearch, useGlobalSearchSetup } from "./search";
 import SearchSheet from "./search/SearchSheet.vue";
@@ -110,11 +110,12 @@ const router = useRouter();
 const route = useRoute();
 const { blades, activeBlade } = useBladeStack();
 const { menu, load, activeTitle, trackUses } = useAdminMenu();
+const { hasAccess } = usePermissions();
 // the menu, its counters and Recent's use count live with the layout, which is always there (the phone drawer mounts
 // its nav on opening)
 onMounted(() => {
   load();
-  startBadges(menu);
+  startMenuCounters(menu, hasAccess);
 });
 trackUses();
 const { environmentName, isIgnored } = useEnvironmentName();
@@ -141,7 +142,7 @@ watch(
 
 const showBar = computed(() => blades.value.length <= 1);
 // everything waiting in the menu, on the button that opens it
-const waiting = computed(() => Object.values(badgeCounts.value).reduce((sum, n) => sum + n, 0));
+const waiting = computed(() => Object.values(counterValues.value).reduce((sum, n) => sum + n, 0));
 
 // a blade's own title, else the menu item of the screen that's open (Dashboard, an app)
 const title = computed(() => activeBlade.value?.title || activeTitle.value);

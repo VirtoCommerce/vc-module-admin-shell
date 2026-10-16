@@ -35,10 +35,6 @@
       "BUILD": "Build {version}"
     },
     "BADGES": {
-      "ORDERS": "{count} new orders",
-      "RETURNS": "{count} returns requested",
-      "QUOTES": "{count} quotes waiting for a proposal",
-      "REVIEWS": "{count} reviews to moderate",
       "TASKS": "{count} open tasks"
     },
     "FRAME": {

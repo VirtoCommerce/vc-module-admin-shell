@@ -91,7 +91,7 @@ Vue 3.5, vue-router 5 (hash history under `/apps/admin-shell/`), `@vc-shell/fram
 1. `shell/deepLink` captures the requested hash before the router changes it.
 2. `shell/dashboard` registers the host's dashboard widgets.
 3. The current user is loaded.
-4. The app is created with vc-shell (`VirtoShellFramework`), the host's platform screens (`PlatformModule`), the global search registry (`installGlobalSearch`) and the router; the host's locales are merged.
+4. The app is created with vc-shell (`VirtoShellFramework`), the host's platform screens (`PlatformModule`), the global search and menu counter registries (`installGlobalSearch`, `installMenuCounters`) and the router; the host's locales are merged.
 5. `registerRemoteModules(app, { router, appName: "admin-shell" })` starts loading the plugins (not awaited).
 6. The router is ready → the app mounts.
 
@@ -151,9 +151,9 @@ On a phone the widgets are stacked. See [Dashboard widgets](dashboard-widgets.md
 - **Shell-private styles** (`.as-*`, `styles/_shell.scss`) are not an API.
 - **Locales:** the host's (`SHELL.*`, `PLATFORM.*`) and each plugin's (through `defineAppModule({ locales })`) are merged into one i18n. A locale that defines `language_name` appears in the language picker.
 
-### 3.11 Menu counters (`shell/badges.ts`)
+### 3.11 Menu counters (`shell/menuCounters.ts`)
 
-The counts on Orders (new), Returns, Quotes, Customer reviews and Tasks come from those modules' search endpoints (`take: 0`). They are polled every 60 s while the tab is visible, and again when it becomes visible. The list is hard-coded in the shell; modules can't register counters yet.
+A registry of counters per menu item, exposed to plugins as `app.config.globalProperties.$menuCounters` (and `inject("adminShell.menuCounters")`). Orders, Return, Quote and Customer Reviews register theirs from their plugins; the shell registers the one of its own Tasks item. The shell asks the counters of the items in the user's menu (with the counter's permission) once the menu arrives, after plugins register, every 60 s while the tab is visible and again when it becomes visible; a superseded round is aborted. See [Menu counters](menu-counters.md).
 
 ### 3.12 Sign-in and deep links
 

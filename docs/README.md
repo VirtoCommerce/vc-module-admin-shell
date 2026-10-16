@@ -17,6 +17,7 @@ What modules, system integrators and customers can add or change without changin
 | Menu contributions | module developers | `contributions.menu` in `plugin.json`; `replaces` takes over an AngularJS item | [menu-contributions.md](menu-contributions.md) |
 | Menu layers | system integrators, customers, users | Global and role patches in platform settings / API; each user's pins and hidden items | [menu-layers.md](menu-layers.md) |
 | Global search | module developers | `$globalSearch.registerProvider` | [global-search.md](global-search.md) |
+| Menu counters | module developers | `$menuCounters.register` | [menu-counters.md](menu-counters.md) |
 | Dashboard widgets | module developers | `registerDashboardWidget`, shared `.dash-*` styles | [dashboard-widgets.md](dashboard-widgets.md) |
 | Blade widgets | module developers | `registerExternalWidget` on another module's or the platform's blades | [blade-widgets.md](blade-widgets.md) |
 | AngularJS screens | module developers | `legacy` menu targets, the `Legacy` route, `$globalSearch.openLegacy` | [legacy-screens.md](legacy-screens.md) |
@@ -27,7 +28,6 @@ What modules, system integrators and customers can add or change without changin
 
 | Part | Today | Possible next step |
 |---|---|---|
-| Menu counters (badges) | Hard-coded in `App/src/shell/badges.ts` for Orders, Returns, Quotes, Customer reviews, Tasks | A counter registry for plugins, like `$globalSearch` |
 | User menu, header, layout | Fixed | — |
 | Branding | Static logos and product name in the host | — |
 | Menu editor UI | API and settings only | — |

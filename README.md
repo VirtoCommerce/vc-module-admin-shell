@@ -11,6 +11,7 @@ The Admin Shell module is the Vue admin of the Virto Commerce platform, built on
   * menu items open Vue screens, AngularJS screens (the classic admin in a persistent embedded frame), platform apps (embedded) or external links;
   * a module's Vue screen `replaces` its AngularJS item and keeps its place, group, pins and user settings.
 * **Server-driven, layered menu:** the default menu (`default-menu.json`, installed apps, plugin contributions) → a global patch → role patches → each user's pins and hidden items. The result is filtered by permission, and a section or item stays visible when any role keeps it.
+* **Menu counters:** menu items show what waits (new orders, returns requested, reviews to moderate). Each module registers its counter from its plugin, and the shell polls them every minute while the tab is visible.
 * **Recent and Pinned:**
   * the panel lists the pages a user opens most (frequency with a 7-day half-life);
   * users can pin and hide items.
@@ -30,6 +31,7 @@ The Admin Shell module is the Vue admin of the Virto Commerce platform, built on
 * **Extension points for modules:**
   * menu contributions;
   * search providers;
+  * menu counters;
   * dashboard widgets;
   * widgets on other modules' and the platform's blades;
   * the sign-in page.
@@ -120,6 +122,7 @@ The module hosts the Admin Shell app and composes its menu; the platform serves 
 | Plugins | Module Federation remote in `{module}/plugins/admin-shell/` | [plugins.md](docs/plugins.md) |
 | Menu contributions | `contributions.menu` in `plugin.json` | [menu-contributions.md](docs/menu-contributions.md) |
 | Global search | `app.config.globalProperties.$globalSearch` | [global-search.md](docs/global-search.md) |
+| Menu counters | `app.config.globalProperties.$menuCounters` | [menu-counters.md](docs/menu-counters.md) |
 | Dashboard widgets | `registerDashboardWidget` | [dashboard-widgets.md](docs/dashboard-widgets.md) |
 | Blade widgets | `registerExternalWidget` | [blade-widgets.md](docs/blade-widgets.md) |
 | AngularJS screens | `legacy` menu targets, `$globalSearch.openLegacy` | [legacy-screens.md](docs/legacy-screens.md) |

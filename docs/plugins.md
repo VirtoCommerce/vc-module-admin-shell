@@ -13,6 +13,7 @@ What a plugin can bring:
 | Notification types | `defineAppModule({ notifications })` | vc-shell |
 | Menu items, replacing AngularJS ones | `contributions.menu` in `plugin.json` | [Menu contributions](menu-contributions.md) |
 | Global search groups | `$globalSearch.registerProvider` | [Global search](global-search.md) |
+| Counters on menu items | `$menuCounters.register` | [Menu counters](menu-counters.md) |
 | Dashboard widgets | `registerDashboardWidget` | [Dashboard widgets](dashboard-widgets.md) |
 | Widgets in other modules' blades | `registerExternalWidget` | [Blade widgets](blade-widgets.md) |
 | Content on the sign-in page | `useExtensionPoint("auth:after-form")` | [Sign-in page](sign-in-page.md) |
@@ -157,6 +158,7 @@ Build the plugin before the module is published, so `vc-build Compress` packs it
 | Name | Where | Description |
 |---|---|---|
 | `$globalSearch` | `app.config.globalProperties`, `inject("adminShell.globalSearch")` | The search registry and the navigation helpers (`openBlade`, `openLegacy`, `goTo`, `waitFor`). Guard for its absence to run in other vc-shell hosts. |
+| `$menuCounters` | `app.config.globalProperties`, `inject("adminShell.menuCounters")` | The menu counter registry. Guard for its absence too. |
 | `ModulesReadyKey` | `inject` (vc-shell) | `true` once all plugins have loaded. |
 | Design tokens | global CSS | `--color-{primary,secondary,accent,neutral,warning,danger,success,info}-50…950`, `--fg-*`, `--bg-*`, `--border-*`, with dark-theme values. |
 | `.dash-*` classes | global CSS | Dashboard widget markup. See [Dashboard widgets](dashboard-widgets.md). |
