@@ -2,14 +2,13 @@
 // Every widget declares a position (the grid only honours declared positions when all have one);
 // rows follow the design's Dashboard.jsx:
 //   y0  alerts (7) | activity (5)          y5  total sales (4) | sales trends (8)        [orders]
-//   y10 recent orders (8) | carts (4)      y16 low stock (8) | orders to process (4)
+//   y10 recent orders (8) | carts (4)      y16 low stock (8) [inventory] | orders to process (4)
 //   y22 payments (5) | sign-ins (4) | fulfillment (3)
 import { registerDashboardWidget } from "@vc-shell/framework";
 import { markRaw } from "vue";
 import ActivityWidget from "./ActivityWidget.vue";
 import AlertsWidget from "./AlertsWidget.vue";
 import CartsWidget from "./CartsWidget.vue";
-import LowStockWidget from "./LowStockWidget.vue";
 import SignInsWidget from "./SignInsWidget.vue";
 
 registerDashboardWidget({
@@ -56,17 +55,6 @@ export function registerModuleWidgets(installedModuleIds: string[]) {
       size: { width: 4, height: 6 },
       position: { x: 8, y: 10 },
       permissions: ["cart:read"],
-    });
-  }
-
-  if (installed.has("VirtoCommerce.Inventory") && installed.has("VirtoCommerce.Catalog")) {
-    registerDashboardWidget({
-      id: "shell-low-stock",
-      name: "Low stock",
-      component: markRaw(LowStockWidget),
-      size: { width: 8, height: 6 },
-      position: { x: 0, y: 16 },
-      permissions: ["inventory:read"],
     });
   }
 }

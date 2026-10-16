@@ -68,16 +68,6 @@
         "REGISTERED": "Customer carts",
         "GUESTS": "Guest carts"
       },
-      "LOW_STOCK": {
-        "TITLE": "Low stock",
-        "NAME": "Name",
-        "SKU": "SKU",
-        "LOCATION": "Fulfillment center",
-        "STOCK": "Current stock",
-        "OUT": "Out of stock",
-        "LEFT": "{count} left",
-        "EMPTY": "No inventory records"
-      },
       "SIGN_INS": {
         "TITLE": "Sign-in activity",
         "TOTAL": "Sign-ins, last 7 days",

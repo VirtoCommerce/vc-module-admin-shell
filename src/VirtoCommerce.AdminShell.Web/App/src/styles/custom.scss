@@ -846,38 +846,6 @@
   }
 }
 
-/* stock bar (DashboardTables.jsx StockBar): 134x8 dark track, amber fill, red when at/below reorder point */
-.dash-stock {
-  align-items: center;
-  color: var(--color-neutral-700);
-  display: flex;
-  gap: 12px;
-  white-space: nowrap;
-
-  &__track {
-    background: #2b3a52;
-
-    [data-theme="dark"] & {
-      background: var(--color-neutral-300);
-    }
-    border-radius: 999px;
-    height: 8px;
-    overflow: hidden;
-    width: 134px;
-
-    span {
-      background: #f0ad4e;
-      border-radius: 999px;
-      display: block;
-      height: 100%;
-    }
-  }
-
-  &--low &__track span {
-    background: #ff6a6a;
-  }
-}
-
 /* count pill next to a widget's title actions */
 .dash-count {
   align-items: center;

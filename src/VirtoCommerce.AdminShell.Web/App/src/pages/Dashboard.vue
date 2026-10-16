@@ -18,6 +18,7 @@
       {{ $t("SHELL.DASHBOARD.RESET_LAYOUT") }}
     </button>
     <DraggableDashboard
+      :key="generation"
       ref="dashboard"
       resizable
       show-drag-handles
@@ -35,6 +36,8 @@ import { useI18n } from "vue-i18n";
 const { t } = useI18n({ useScope: "global" });
 const { showConfirmation } = usePopup();
 const dashboard = ref<InstanceType<typeof DraggableDashboard> | null>(null);
+// a new grid after a reset (see resetLayout)
+const generation = ref(0);
 
 // vc-shell's grid only floats widgets up, so moving one leaves holes beside it. After the user moves or resizes a
 // widget the widgets close up: in reading order, each takes the first place it fits. Only after the user's own moves,
@@ -62,9 +65,13 @@ function onKey(event: KeyboardEvent) {
   }
 }
 
+// vc-shell's reset saves the widgets' own positions but moves the widgets one by one in the order they registered, and a
+// widget that floats up into a row another one hasn't reached yet pushes that one down (plugins register theirs as
+// they load, e.g. Inventory before Orders). A new grid loads the saved positions all at once, as on a first visit.
 async function resetLayout() {
   if (await showConfirmation(t("SHELL.DASHBOARD.RESET_LAYOUT_CONFIRM"))) {
     dashboard.value?.rearrangeWidgets();
+    generation.value++;
   }
 }
 </script>
