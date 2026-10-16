@@ -1,0 +1,218 @@
+@use "sass:map";
+
+/* Color themes: Warm, Blue and Indigo, with the palettes of the AngularJS admin's modern look (vc-platform PR 3134,
+   _modern.sass and _modern-presets.sass); Virto, the shell's own palette, is the default and has no attribute.
+   shell/themeMode.ts sets data-color-theme on <html> next to vc-shell's data-theme (light or dark). Each palette is a
+   few named colors; the mixin below turns them into the shell's chrome (--as-*), its tokens (--color-*, semantic) and
+   vc-shell's palette (--primary-*, --neutrals-*, ...), so the screens follow without knowing the themes.
+   Adapted to the shell's color model: the surfaces, lines and inks are the PR's; the state colors (danger, warning,
+   success, info) stay the shell's in every theme, so red, amber and green keep one meaning; and a primary (buttons,
+   selection) never takes a state's hue - Warm's Virto orange (#e5451c, dark #e17853) reads as danger on a button, so
+   Warm's primary is the palette's espresso brown (light) and a warm sand (dark). */
+
+$themes: (
+  warm: (
+    light: (
+      bg: #f5f1ea, plate: #fffcf7, panel: #faf5ee, sunken: #f1eae0, select: #f3e6da, line: #e2d6c4, line-soft: #efe6d8,
+      ink: #312720, ink-2: #3d332b, muted: #6b5f55, faint: #8c7e6c, primary: #7a4a2a, primary-hover: #643c21,
+      on-primary: #ffffff, primary-soft: #f3e6da, primary-ink: #4a2c18, link: #2a6ba3, focus: #2a6ba3, chip: #f3e8e0,
+      shade: rgba(49, 39, 32, 0.18),
+    ),
+    dark: (
+      bg: #1e1814, plate: #29201b, panel: #2e241f, sunken: #332923, select: #3a2e24, line: #463a32, line-soft: #382e27,
+      ink: #f4efea, ink-2: #e3ddd7, muted: #b4aba3, faint: #948a83, primary: #c8a17d, primary-hover: #d6b392,
+      on-primary: #1e1814, primary-soft: #3a2e24, primary-ink: #e6cdb4, link: #8ebeec, focus: #74aee0, chip: #3d3127,
+      shade: rgba(0, 0, 0, 0.7),
+    ),
+  ),
+  blue: (
+    light: (
+      bg: #dbe4ec, plate: #ffffff, panel: #f7fafc, sunken: #eff7fc, select: #e1f0f9, line: #cad8e4, line-soft: #e3ebf2,
+      ink: #262626, ink-2: #333a40, muted: #5f6b77, faint: #7e8a96, primary: #237aa5, primary-hover: #1d6589,
+      on-primary: #ffffff, primary-soft: #e1f0f9, primary-ink: #1b5f81, link: #1b6890, focus: #237aa5, chip: #e8eef3,
+      shade: rgba(25, 45, 65, 0.18),
+    ),
+    dark: (
+      bg: #0f1720, plate: #16212c, panel: #1a2632, sunken: #1d2a37, select: #16364a, line: #2a3a4a, line-soft: #22303d,
+      ink: #e6edf3, ink-2: #d2dbe3, muted: #9fb0c0, faint: #7d8e9e, primary: #5fb3e0, primary-hover: #7cc2e8,
+      on-primary: #0f1720, primary-soft: #16364a, primary-ink: #8fcbee, link: #6cb8e4, focus: #6cb8e4, chip: #22313f,
+      shade: rgba(0, 0, 0, 0.7),
+    ),
+  ),
+  indigo: (
+    light: (
+      bg: #eaeaeb, plate: #fafafa, panel: #f4f4f5, sunken: #f0f0f1, select: #e4e8fd, line: #dbdbdc, line-soft: #e6e6e7,
+      ink: #383a42, ink-2: #44464f, muted: #696c77, faint: #80838c, primary: #4a63e0, primary-hover: #3b52c4,
+      on-primary: #ffffff, primary-soft: #e4e8fd, primary-ink: #2c3fa8, link: #2c59c4, focus: #526fff, chip: #e6e6e7,
+      shade: rgba(56, 58, 66, 0.18),
+    ),
+    dark: (
+      bg: #21252b, plate: #282c34, panel: #2c313a, sunken: #2c313a, select: #2c3a52, line: #3e4452, line-soft: #333842,
+      ink: #d7dae0, ink-2: #c3c8d1, muted: #9198a4, faint: #7a808c, primary: #61afef, primary-hover: #7fbff3,
+      on-primary: #21252b, primary-soft: #2c3a52, primary-ink: #8cc4f5, link: #61afef, focus: #61afef, chip: #333842,
+      shade: rgba(0, 0, 0, 0.7),
+    ),
+  ),
+);
+
+@mixin color-theme($p, $dark) {
+  $bg: map.get($p, bg);
+  $plate: map.get($p, plate);
+  $panel: map.get($p, panel);
+  $sunken: map.get($p, sunken);
+  $select: map.get($p, select);
+  $line: map.get($p, line);
+  $line-soft: map.get($p, line-soft);
+  $ink: map.get($p, ink);
+  $ink-2: map.get($p, ink-2);
+  $muted: map.get($p, muted);
+  $faint: map.get($p, faint);
+  $primary: map.get($p, primary);
+  $primary-hover: map.get($p, primary-hover);
+  $primary-soft: map.get($p, primary-soft);
+  $primary-ink: map.get($p, primary-ink);
+  $shade: map.get($p, shade);
+
+  /* the shell's chrome: a light (or dark) rail on the ground color, the panel and cards on the plate */
+  --as-bg: #{$bg};
+  --as-rail: #{$bg};
+  --as-rail-tile: #{$sunken};
+  // the rail's small labels on the ground color: muted keeps 4.5:1 on the dark grounds only
+  @if $dark {
+    --as-rail-text: #{$muted};
+  } @else {
+    --as-rail-text: #{$ink-2};
+  }
+  --as-rail-active-bg: #{$plate};
+  --as-rail-active: #{$primary};
+  --as-rail-bar: #{$primary};
+  --as-panel: #{$plate};
+  --as-panel-edge: inset -1px 0 0 #{$line-soft};
+  --as-panel-text: #{$ink-2};
+  --as-nav-bg: #{$select};
+  --as-nav-text: #{$primary-ink};
+  --as-nav-ring: none;
+  --as-surface: #{$plate};
+  --as-ring: 0 0 0 1px #{$line-soft};
+  --as-text: #{$ink};
+  --as-muted: #{$muted};
+  --as-faint: #{$faint};
+  --as-divider: #{$line-soft};
+  --as-chip: #{map.get($p, chip)};
+  --as-accent: #{$primary};
+  --as-accent-soft: #{$primary-soft};
+  --as-accent-text: #{$primary-ink};
+  --as-shadow: #{$shade};
+  --as-menu-shadow: 0 0 0 1px #{$line}, 0 18px 40px -16px #{$shade};
+
+  /* neutrals: surfaces 0-300, text 400-950, in both modes */
+  --color-neutral-0: #{$plate};
+  --color-neutral-50: #{$panel};
+  --color-neutral-100: #{$sunken};
+  --color-neutral-200: #{$line-soft};
+  --color-neutral-300: #{$line};
+  --color-neutral-400: #{$faint};
+  --color-neutral-500: #{$muted};
+  --color-neutral-600: #{$muted};
+  --color-neutral-700: #{$ink-2};
+  --color-neutral-800: #{$ink};
+  --color-neutral-900: #{$ink};
+  --color-neutral-950: #{$ink};
+  --color-additional-50: #{$plate};
+  --color-additional-950: #{$ink};
+
+  /* primary and accent: light, tinted surfaces at the low end and the ink at the high end (reversed in dark, as the
+     shell's dark tokens are) */
+  @if $dark {
+    --color-primary-50: color-mix(in srgb, #{$primary} 6%, #{$plate});
+    --color-primary-100: color-mix(in srgb, #{$primary} 10%, #{$plate});
+    --color-primary-200: #{$primary-soft};
+    --color-primary-300: #{$select};
+    --color-primary-400: #{$primary-hover};
+    --color-primary-500: #{$primary};
+    --color-primary-600: #{$primary-hover};
+    --color-primary-700: #{$primary-hover};
+    --color-primary-800: #{$primary-ink};
+    --color-primary-900: color-mix(in srgb, #{$primary-ink} 60%, #ffffff);
+    --color-primary-950: color-mix(in srgb, #{$primary-ink} 30%, #ffffff);
+  } @else {
+    --color-primary-50: #{$primary-soft};
+    --color-primary-100: #{$select};
+    --color-primary-200: color-mix(in srgb, #{$primary} 25%, #{$plate});
+    --color-primary-300: color-mix(in srgb, #{$primary} 45%, #{$plate});
+    --color-primary-400: color-mix(in srgb, #{$primary} 75%, #{$plate});
+    --color-primary-500: #{$primary};
+    --color-primary-600: #{$primary-hover};
+    --color-primary-700: color-mix(in srgb, #{$primary-hover} 75%, #{$primary-ink});
+    --color-primary-800: #{$primary-ink};
+    --color-primary-900: color-mix(in srgb, #{$primary-ink} 70%, #000000);
+    --color-primary-950: color-mix(in srgb, #{$primary-ink} 50%, #000000);
+  }
+  @each $stop in (50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950) {
+    --color-accent-#{$stop}: var(--color-primary-#{$stop});
+  }
+
+  /* secondary (blade headers, tables): the theme's neutrals rather than the shell's steel blue */
+  --color-secondary-50: #{$panel};
+  --color-secondary-100: #{$sunken};
+  --color-secondary-200: #{$line-soft};
+  --color-secondary-300: #{$line};
+
+  /* semantic */
+  --fg-link: #{map.get($p, link)};
+  --fg-on-primary: #{map.get($p, on-primary)};
+  --bg-app: #{$bg};
+  --bg-surface: #{$plate};
+  --bg-row-alt: #{$panel};
+  --bg-row-even: #{$panel};
+  --bg-row-selected: #{$select};
+  --border-row: #{$line-soft};
+  --border-focus: #{map.get($p, focus)};
+}
+
+/* vc-shell's palette onto the theme's tokens (vc-shell's stylesheet loads after this one) */
+@mixin vc-shell-palette($p) {
+  --neutrals-50: #{map.get($p, bg)};
+  --neutrals-100: #{map.get($p, plate)};
+  --neutrals-200: #{map.get($p, sunken)};
+  --neutrals-300: #{map.get($p, line)};
+  --neutrals-400: #{map.get($p, faint)};
+  --neutrals-500: #{map.get($p, muted)};
+  --neutrals-600: #{map.get($p, muted)};
+  --neutrals-700: #{map.get($p, ink-2)};
+  --neutrals-800: #{map.get($p, ink)};
+  --neutrals-900: #{map.get($p, ink)};
+  --neutrals-950: #{map.get($p, ink)};
+  --additional-50: #{map.get($p, plate)};
+  --additional-950: #{map.get($p, ink)};
+  // a dialog's title and message are body text: the ink, not vc-shell's dark primary (it stays for links and badges)
+  --popup-header-color: #{map.get($p, ink)};
+  --popup-content-text-color: #{map.get($p, ink-2)};
+  @each $stop in (50, 100, 200, 300) {
+    --secondary-#{$stop}: var(--color-secondary-#{$stop});
+  }
+  @each $stop in (50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950) {
+    --primary-#{$stop}: var(--color-primary-#{$stop});
+    --accent-#{$stop}: var(--color-primary-#{$stop});
+  }
+}
+
+@each $name, $modes in $themes {
+  :root[data-color-theme="#{$name}"]:not([data-theme="dark"]) {
+    color-scheme: light;
+    @include color-theme(map.get($modes, light), false);
+  }
+
+  :root[data-color-theme="#{$name}"][data-theme="dark"] {
+    color-scheme: dark;
+    @include color-theme(map.get($modes, dark), true);
+  }
+
+  :root:root[data-color-theme="#{$name}"]:not([data-theme="dark"]) {
+    @include vc-shell-palette(map.get($modes, light));
+  }
+
+  :root:root[data-color-theme="#{$name}"][data-theme="dark"] {
+    @include vc-shell-palette(map.get($modes, dark));
+  }
+}

@@ -39,6 +39,8 @@ The module has no database tables: everything it stores is in platform settings.
 | `AdminShell.Menu.Role` | each role (`Role` tenant) | `{}` | The role's menu patch (`MenuPatch`). |
 | `AdminShell.Menu.User` (hidden) | each user (`UserProfile` tenant) | `{}` | Pinned, hidden and ordered items (`UserMenuPrefs`). Hidden so the AngularJS profile save can't overwrite it. |
 | `AdminShell.Menu.Recent` (hidden) | each user | `[]` | Usage scores for *Recent* (`RecentUse[]`). |
+| `AdminShell.UI.Appearance` | each user | `dark` | `system`, `light` or `dark`. |
+| `AdminShell.UI.Theme` | each user | `virto` | `virto`, `warm`, `blue` or `indigo`. |
 
 A setting that isn't valid JSON is treated as empty and doesn't take the menu down. Writes of the user's settings are serialised per user with a distributed lock.
 
@@ -104,7 +106,7 @@ Plugins load in parallel with the first render. Each is installed as soon as its
 - **Desktop:** a rail of sections (`ShellNav`), a collapsible panel with the section's items in groups, *Pinned* and *Recent*, and a header (`ShellHeader`) with the breadcrumbs of the open blades and the search box. The panel state is kept in local storage.
 - **Phone:** a top bar (logo, title of the top blade, search, menu with the total of the counters) and a drawer with the menu. The search opens as a full-screen sheet.
 - **Environment ribbon:** the environment in a corner ribbon (a tag at the top on phones), read from the host name with the AngularJS admin banner's rules: Development (`localhost`, an IP, `*dev*`), QA (`*qa*`, `*test*`), UAT (`*stage*`, `*uat*`), Demo (`*demo*`), Production (`*prod*`), or the host name itself. Each has its color (amber, blue, purple, teal, red; gray for other hosts) at 70%; Production carries a pulsing dot.
-- **User menu** (avatar): license status, language, theme, *Classic admin*, profile, sign out, platform version.
+- **User menu** (avatar): license status, language, appearance (light, dark, system), theme (Virto, Warm, Blue, Indigo), *Classic admin*, profile, sign out, platform version.
 
 ### 3.4 Routing and menu targets
 
@@ -145,7 +147,9 @@ On a phone the widgets are stacked. See [Dashboard widgets](dashboard-widgets.md
 
 ### 3.10 Theme, styles and locales
 
-- **Theme:** `system`, `light` or `dark` (default `dark`), kept in `localStorage["adminShell.theme"]` (`shell/themeMode.ts`); vc-shell sets `data-theme` on `<html>`.
+- **Appearance** (user menu and profile): `system`, `light` or `dark` (default `dark`); vc-shell sets `data-theme` on `<html>`.
+- **Kept in the user's profile:** appearance, theme (the module's `AdminShell.UI.*` user settings) and language (the platform's `VirtoCommerce.Platform.UI.Language`, shared with the AngularJS admin) are read after sign-in and saved on change through the platform's Settings v2 "me" values (`shell/themeMode.ts`), so they follow the user to every browser and device. `localStorage` (`adminShell.theme`, `adminShell.colorTheme`, vc-shell's language) keeps a copy for the sign-in page and the first paint; the profile wins over it. The profile blade lists the three with the platform's other preferences and saves only its own fields.
+- **Theme** (user menu after Appearance, and profile): Virto (default), Warm, Blue or Indigo; `data-color-theme` on `<html>`. `styles/_themes.scss` turns each palette (surfaces, lines and inks from the AngularJS admin's modern look, vc-platform PR 3134) into the shell's `--as-*`, `--color-*` and vc-shell's palette, in light and dark. The state colors stay the shell's in every theme, and no primary takes a state's hue (Warm's red-orange became an espresso brown).
 - **Design tokens** (`styles/_tokens.scss`): global CSS variables (`--color-{primary…info}-50…950`, `--fg-*`, `--bg-*`, `--border-*`) with dark overrides. Plugins use them.
 - **Dashboard classes** (`styles/custom.scss`, `.dash-*`): shared by the host's and the plugins' widgets.
 - **Shell-private styles** (`.as-*`, `styles/_shell.scss`) are not an API.

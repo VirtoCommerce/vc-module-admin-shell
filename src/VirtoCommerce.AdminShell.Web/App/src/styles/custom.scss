@@ -1,6 +1,8 @@
 @use "tokens";
 @use "shell";
 @use "search";
+// color themes (Warm, Blue, Indigo) over the tokens and the shell
+@use "themes";
 
 /* Design overrides (vc-one-shell / Platform Atomic Round V3) on top of vc-shell component tokens.
    Values come from the design JSX (Sidebar.jsx, QuoteRequestList.jsx, ProductDetail.jsx, StatusPill.jsx,

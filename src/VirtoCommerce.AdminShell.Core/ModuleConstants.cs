@@ -70,8 +70,31 @@ public static class ModuleConstants
             IsHidden = true,
         };
 
+        /// <summary>
+        /// Per-user appearance: light, dark, or the operating system's. Kept in the user's profile (read and written by the
+        /// host through the Settings v2 "me" API, so not hidden) so it follows the user to every browser and device.
+        /// </summary>
+        public static SettingDescriptor UserAppearance { get; } = new()
+        {
+            Name = "AdminShell.UI.Appearance",
+            GroupName = "Admin Shell|Appearance",
+            ValueType = SettingValueType.ShortText,
+            DefaultValue = "dark",
+            AllowedValues = ["system", "light", "dark"],
+        };
+
+        /// <summary>Per-user color theme: Virto (the default), Warm, Blue or Indigo; kept like the appearance</summary>
+        public static SettingDescriptor UserTheme { get; } = new()
+        {
+            Name = "AdminShell.UI.Theme",
+            GroupName = "Admin Shell|Appearance",
+            ValueType = SettingValueType.ShortText,
+            DefaultValue = "virto",
+            AllowedValues = ["virto", "warm", "blue", "indigo"],
+        };
+
         public static IEnumerable<SettingDescriptor> ModuleSettings => [GlobalMenu];
         public static IEnumerable<SettingDescriptor> RoleSettings => [RoleMenu];
-        public static IEnumerable<SettingDescriptor> UserSettings => [UserMenu, UserRecent];
+        public static IEnumerable<SettingDescriptor> UserSettings => [UserMenu, UserRecent, UserAppearance, UserTheme];
     }
 }

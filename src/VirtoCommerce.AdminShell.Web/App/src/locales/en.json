@@ -29,8 +29,15 @@
       "LICENSE_ACTIVATE": "Activate",
       "LICENSE_DETAILS": "Details",
       "LANGUAGE": "Language",
-      "THEME": "Theme",
+      "THEME": "Appearance",
       "THEME_SYSTEM": "Match the system",
+      "COLOR_THEME": "Theme",
+      "COLOR_THEMES": {
+        "VIRTO": "Virto",
+        "WARM": "Warm",
+        "BLUE": "Blue",
+        "INDIGO": "Indigo"
+      },
       "SIGN_OUT": "Sign out",
       "BUILD": "Build {version}"
     },

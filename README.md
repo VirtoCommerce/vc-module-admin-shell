@@ -46,6 +46,8 @@ The Admin Shell module is the Vue admin of the Virto Commerce platform, built on
 | `AdminShell.Menu.Role` | Json (per role) | `{}` | A role's menu patch; an item is hidden only if every role of the user hides it |
 | `AdminShell.Menu.User` | Json (per user, hidden) | `{}` | The user's pinned and hidden items, set from the shell (and an item order, API only) |
 | `AdminShell.Menu.Recent` | Json (per user, hidden) | `[]` | Usage scores behind *Recent*, recorded by the shell |
+| `AdminShell.UI.Appearance` | ShortText (per user) | `dark` | Light, dark or the system's appearance; set in the user menu or the profile, and follows the user to every browser |
+| `AdminShell.UI.Theme` | ShortText (per user) | `virto` | The color theme: Virto, Warm, Blue or Indigo; set like the appearance |
 
 A setting that isn't valid JSON is ignored, so one typo can't take the menu down. See [Menu layers](docs/menu-layers.md).
 

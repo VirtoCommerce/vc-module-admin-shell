@@ -59,6 +59,46 @@
           :options="languages"
           searchable
         />
+        <!-- the Admin Shell's look, as in the avatar's menu (both keep it in the user's profile, shell/themeMode.ts) -->
+        <VcRow class="tw-gap-4">
+          <VcCol>
+            <VcSelect
+              v-model="themeMode"
+              :label="$t('SHELL.USER_MENU.THEME')"
+              :options="appearances"
+              :clearable="false"
+            />
+          </VcCol>
+          <VcCol>
+            <VcSelect
+              v-model="colorTheme"
+              :label="$t('SHELL.USER_MENU.COLOR_THEME')"
+              :options="colorThemes"
+              :clearable="false"
+            >
+              <template #selected-item="{ opt }">
+                <span class="platform-profile__theme">
+                  <span
+                    class="as-um__swatch"
+                    :class="`as-um__swatch--${opt.id}`"
+                    aria-hidden="true"
+                  />
+                  {{ opt.title }}
+                </span>
+              </template>
+              <template #option="{ opt }">
+                <span class="platform-profile__theme">
+                  <span
+                    class="as-um__swatch"
+                    :class="`as-um__swatch--${opt.id}`"
+                    aria-hidden="true"
+                  />
+                  {{ opt.title }}
+                </span>
+              </template>
+            </VcSelect>
+          </VcCol>
+        </VcRow>
         <VcSelect
           v-model="values.RegionalFormat"
           :label="$t('PLATFORM.PROFILE.REGIONAL_FORMAT')"
@@ -115,6 +155,7 @@ import {
   useApiClient,
   useAsync,
   useFunctions,
+  useLanguages,
   useUser,
   type ApplicationUser,
   type IBladeToolbar,
@@ -127,6 +168,7 @@ import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { api } from "../../api";
 import { ensureSucceeded } from "../../composables/security";
+import { COLOR_THEMES, colorTheme, themeMode } from "../../../../shell/themeMode";
 import { browserZone, languageName, timeZones } from "./intl";
 
 defineBlade({
@@ -146,7 +188,8 @@ const PREFIX = "VirtoCommerce.Platform.UI.";
 const FIELDS = ["Language", "RegionalFormat", "TimeZone", "UseTimeAgo", "FullDateThreshold", "FullDateThresholdUnit"] as const;
 type Field = (typeof FIELDS)[number];
 
-const { t } = useI18n({ useScope: "global" });
+const { t, availableLocales } = useI18n({ useScope: "global" });
+const { currentLocale, setLocale } = useLanguages();
 const { debounce } = useFunctions();
 const { getApiClient: securityClient } = useApiClient(SecurityClient);
 const { user } = useUser();
@@ -166,6 +209,16 @@ const values = ref<Partial<Record<Field, unknown>>>({});
 const languages = ref<{ id: string; title: string }[]>([]);
 const regionalFormats = ref<{ id: string; title: string }[]>([]);
 let saved = "";
+
+// the look: saved to the profile by shell/themeMode.ts as soon as it changes, like the avatar's menu does
+const appearances = computed(() => [
+  { id: "system", title: t("SHELL.USER_MENU.THEME_SYSTEM") },
+  { id: "light", title: t("CORE.THEMES.LIGHT") },
+  { id: "dark", title: t("CORE.THEMES.DARK") },
+]);
+const colorThemes = computed(() =>
+  COLOR_THEMES.map((id) => ({ id, title: t(`SHELL.USER_MENU.COLOR_THEMES.${id.toUpperCase()}`) })),
+);
 
 const units = computed(() =>
   ["Never", "Seconds", "Minutes", "Hours", "Days", "Weeks", "Months", "Quarters", "Years"].map((x) => ({
@@ -247,7 +300,10 @@ const { loading: saveLoading, action: save } = useAsync(async () => {
       entry.value = values.value[f] === "" ? null : values.value[f];
     }
   }
-  await api("POST", "/api/platform/profiles/currentuser", profile.value);
+  // only this blade's settings go back: the profile carries others (the look, saved as it changes) that this copy of it
+  // may hold older values of
+  const own = profile.value.settings.filter((s) => FIELDS.some((f) => s.name === PREFIX + f));
+  await api("POST", "/api/platform/profiles/currentuser", { ...profile.value, settings: own });
   saved = snapshot;
 });
 
@@ -255,10 +311,28 @@ const loading = useLoading(loadLoading, saveLoading, accountSaving);
 
 watch(values, debounce(() => save(), 400), { deep: true });
 
+// the language is the shell's too: chosen here it applies at once when the shell has it (the platform's list is longer),
+// and one chosen in the avatar's menu shows here
+watch(
+  () => values.value.Language,
+  (lang) => {
+    if (typeof lang === "string" && lang !== currentLocale.value && availableLocales.includes(lang)) setLocale(lang);
+  },
+);
+watch(currentLocale, (lang) => {
+  if (profile.value && lang && values.value.Language !== lang) values.value.Language = lang;
+});
+
 load();
 </script>
 
 <style lang="scss">
+.platform-profile__theme {
+  align-items: center;
+  display: inline-flex;
+  gap: 8px;
+}
+
 .platform-profile__heading {
   color: var(--color-neutral-900);
   font-size: 15px;

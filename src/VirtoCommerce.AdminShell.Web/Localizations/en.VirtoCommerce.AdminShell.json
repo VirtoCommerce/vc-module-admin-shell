@@ -18,6 +18,16 @@
           "title": "Menu preferences",
           "description": "The user's pinned and hidden Admin Shell menu items"
         }
+      },
+      "UI": {
+        "Appearance": {
+          "title": "Appearance",
+          "description": "Light, dark, or the operating system's appearance of the Admin Shell"
+        },
+        "Theme": {
+          "title": "Theme",
+          "description": "The Admin Shell's colors: Virto, Warm, Blue or Indigo"
+        }
       }
     }
   }

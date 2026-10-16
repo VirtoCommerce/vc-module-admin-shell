@@ -35,32 +35,20 @@
           {{ license.state === "active" ? $t("SHELL.USER_MENU.LICENSE_DETAILS") : $t("SHELL.USER_MENU.LICENSE_ACTIVATE") }}
         </button>
       </div>
-      <label class="as-um__row">
+      <div class="as-um__row">
         <VcIcon
           class="as-um__icon"
           icon="lucide-languages"
         />
         <span class="as-um__label">{{ $t("SHELL.USER_MENU.LANGUAGE") }}</span>
-        <span class="as-um__select">
-          <VcIcon icon="lucide-globe" />
-          <select
-            :value="currentLocale"
-            @change="setLocale(($event.target as HTMLSelectElement).value)"
-          >
-            <option
-              v-for="language in languages"
-              :key="language.lang"
-              :value="language.lang"
-            >
-              {{ language.title }}
-            </option>
-          </select>
-          <VcIcon
-            class="as-um__select-chevron"
-            icon="lucide-chevron-down"
-          />
-        </span>
-      </label>
+        <MenuSelect
+          :model-value="currentLocale"
+          :options="languages"
+          :label="$t('SHELL.USER_MENU.LANGUAGE')"
+          icon="lucide-globe"
+          @update:model-value="setLocale"
+        />
+      </div>
       <div class="as-um__row">
         <VcIcon
           class="as-um__icon"
@@ -91,6 +79,18 @@
             <VcIcon :icon="mode.icon" />
           </button>
         </span>
+      </div>
+      <div class="as-um__row">
+        <VcIcon
+          class="as-um__icon"
+          icon="lucide-palette"
+        />
+        <span class="as-um__label">{{ $t("SHELL.USER_MENU.COLOR_THEME") }}</span>
+        <MenuSelect
+          v-model="colorTheme"
+          :options="colorThemes"
+          :label="$t('SHELL.USER_MENU.COLOR_THEME')"
+        />
       </div>
     </div>
 
@@ -150,7 +150,8 @@ import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { systemInfo, type SystemInfo } from "./dashboard/api";
 import { formatLicenseDate, isLicenseExpired } from "./license";
-import { themeMode, type ThemeMode } from "./themeMode";
+import MenuSelect, { type MenuSelectOption } from "./MenuSelect.vue";
+import { COLOR_THEMES, colorTheme, themeMode, type ThemeMode } from "./themeMode";
 
 defineProps<{ avatar?: string }>();
 const emit = defineEmits<{ (e: "close"): void }>();
@@ -184,10 +185,19 @@ onMounted(async () => {
   knownEmails.set(userName, email.value);
 });
 
-const languages = computed(() =>
+const languages = computed<MenuSelectOption[]>(() =>
   availableLocales
-    .map((lang) => ({ lang, title: (getLocaleMessage(lang) as { language_name?: string }).language_name ?? "" }))
-    .filter((x) => x.title),
+    .map((lang) => ({ value: lang, label: (getLocaleMessage(lang) as { language_name?: string }).language_name ?? "" }))
+    .filter((x) => x.label),
+);
+
+// each theme with its mark: its main color in the light and in the dark appearance
+const colorThemes = computed<MenuSelectOption[]>(() =>
+  COLOR_THEMES.map((theme) => ({
+    value: theme,
+    label: t(`SHELL.USER_MENU.COLOR_THEMES.${theme.toUpperCase()}`),
+    swatch: `as-um__swatch--${theme}`,
+  })),
 );
 
 const modes = computed<{ key: ThemeMode; icon: string; label: string }[]>(() => [

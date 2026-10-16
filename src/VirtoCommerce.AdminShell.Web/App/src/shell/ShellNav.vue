@@ -78,7 +78,7 @@
       :anchor-ref="avatarRef"
       placement="right-end"
       :width="drawer ? '300px' : '320px'"
-      :content-scrollable="false"
+      content-scrollable
     >
       <UserMenu
         :avatar="avatar"
