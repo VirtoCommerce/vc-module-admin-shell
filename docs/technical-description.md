@@ -103,7 +103,7 @@ Plugins load in parallel with the first render. Each is installed as soon as its
 
 - **Desktop:** a rail of sections (`ShellNav`), a collapsible panel with the section's items in groups, *Pinned* and *Recent*, and a header (`ShellHeader`) with the breadcrumbs of the open blades and the search box. The panel state is kept in local storage.
 - **Phone:** a top bar (logo, title of the top blade, search, menu with the total of the counters) and a drawer with the menu. The search opens as a full-screen sheet.
-- **Environment ribbon:** the environment name in a corner ribbon.
+- **Environment ribbon:** the environment in a corner ribbon (a tag at the top on phones), read from the host name with the AngularJS admin banner's rules: Development (`localhost`, an IP, `*dev*`), QA (`*qa*`, `*test*`), UAT (`*stage*`, `*uat*`), Demo (`*demo*`), Production (`*prod*`), or the host name itself. Each has its color (amber, blue, purple, teal, red; gray for other hosts) at 70%; Production carries a pulsing dot.
 - **User menu** (avatar): license status, language, theme, *Classic admin*, profile, sign out, platform version.
 
 ### 3.4 Routing and menu targets

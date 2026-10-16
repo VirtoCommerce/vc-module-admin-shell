@@ -1,10 +1,17 @@
 <template>
   <!-- VcApp's layout slot: the rail and panel on desktop; on phones a top bar and the same navigation in a drawer -->
   <div
-    v-if="environmentName && !isIgnored"
+    v-if="environmentName"
     class="as-ribbon"
+    :class="`as-ribbon--${environmentKind}`"
     role="note"
   >
+    <!-- production: a recording light, as the AngularJS admin's banner marks it -->
+    <span
+      v-if="environmentKind === 'prod'"
+      class="as-ribbon__live"
+      aria-hidden="true"
+    />
     {{ environmentName }}
   </div>
   <ShellNav
@@ -91,7 +98,13 @@
 </template>
 
 <script setup lang="ts">
-import { formatBadgeCount, useBladeStack, useEnvironmentName, usePermissions } from "@vc-shell/framework";
+import {
+  detectThemePreset,
+  formatBadgeCount,
+  useBladeStack,
+  useEnvironmentName,
+  usePermissions,
+} from "@vc-shell/framework";
 import { VcIcon } from "@vc-shell/framework/ui";
 import { useEventListener } from "@vueuse/core";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
@@ -118,7 +131,10 @@ onMounted(() => {
   startMenuCounters(menu, hasAccess);
 });
 trackUses();
-const { environmentName, isIgnored } = useEnvironmentName();
+// the environment from the host name, as the AngularJS admin's banner reads it: its label, and its kind for the color
+// (prod, dev, test, staging, demo, default); production shows too, marked
+const { environmentName } = useEnvironmentName();
+const environmentKind = detectThemePreset(window.location.hostname);
 
 // global search: providers bound to the user and the shell's navigation (the layout is always there)
 useGlobalSearchSetup();

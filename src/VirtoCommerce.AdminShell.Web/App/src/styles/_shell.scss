@@ -645,23 +645,83 @@
   display: none;
 }
 
+/* the environment (from the host name): a color per kind at 70%, dark text; production on the dark theme takes light
+   text, as its red darkens over the dark page */
 .as-ribbon {
-  background: rgba(255, 190, 40, 0.7);
+  align-items: center;
+  background: var(--as-ribbon-bg);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-  color: rgba(61, 42, 0, 0.85);
+  color: var(--as-ribbon-fg);
+  display: flex;
   font-size: 11px;
   font-weight: 800;
+  gap: 6px;
+  justify-content: center;
   letter-spacing: 0.08em;
   line-height: 22px;
   pointer-events: none;
   position: fixed;
   right: -44px;
-  text-align: center;
   text-transform: uppercase;
   top: 37px;
   transform: rotate(45deg);
+  white-space: nowrap;
   width: 200px;
   z-index: 1100;
+
+  --as-ribbon-bg: rgba(180, 178, 169, 0.7);
+  --as-ribbon-fg: rgba(44, 44, 42, 0.85);
+
+  &--dev {
+    --as-ribbon-bg: rgba(255, 190, 40, 0.7);
+    --as-ribbon-fg: rgba(61, 42, 0, 0.85);
+  }
+
+  &--test {
+    --as-ribbon-bg: rgba(55, 138, 221, 0.7);
+    --as-ribbon-fg: rgba(4, 44, 83, 0.85);
+  }
+
+  &--staging {
+    --as-ribbon-bg: rgba(127, 119, 221, 0.7);
+    --as-ribbon-fg: rgba(38, 33, 92, 0.85);
+  }
+
+  &--demo {
+    --as-ribbon-bg: rgba(29, 158, 117, 0.7);
+    --as-ribbon-fg: rgba(4, 52, 44, 0.85);
+  }
+
+  &--prod {
+    --as-ribbon-bg: rgba(226, 75, 74, 0.7);
+    --as-ribbon-fg: rgba(80, 19, 19, 0.85);
+
+    [data-theme="dark"] & {
+      --as-ribbon-fg: rgba(255, 255, 255, 0.8);
+    }
+  }
+}
+
+/* production's recording light */
+.as-ribbon__live {
+  animation: as-ribbon-live 1.4s ease-in-out infinite;
+  background: currentColor;
+  border-radius: 50%;
+  flex: none;
+  height: 7px;
+  width: 7px;
+}
+
+@keyframes as-ribbon-live {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .as-ribbon__live {
+    animation: none;
+  }
 }
 
 /* room for it at the end of the header */
