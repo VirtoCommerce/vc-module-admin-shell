@@ -78,6 +78,7 @@
       :anchor-ref="avatarRef"
       placement="right-end"
       :width="drawer ? '300px' : '320px'"
+      :max-height="640"
       content-scrollable
     >
       <UserMenu
