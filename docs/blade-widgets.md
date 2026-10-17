@@ -92,6 +92,34 @@ const open = () => openBlade({ name: "InventoryProductStock", options: { product
 
 Modules' blades publish theirs the same way: `CatalogProductDetails` (the product), `StoreDetails` (the store), `CustomerContactDetails` and `CustomerOrganizationDetails` (the member). Each module documents what its blades publish.
 
+### Shared widgets
+
+A module may put widgets only on blades of modules it depends on (Inventory on the Catalog product blade). When the blade's module depends on yours instead, as Catalog, Customer and Orders depend on Search, the owner places your widget, as AngularJS modules did: Catalog put Search's Index widget on its product blade with Search's controller. The host's `$sharedWidgets` connects the two without either importing the other:
+
+```ts
+// Search's plugin: provide the widget (it reads the blade's item and takes its document type as a prop)
+const shared = app.config.globalProperties.$sharedWidgets;
+shared?.provide("search.index", IndexWidget);
+
+// Catalog's plugin: place it on its own blades
+shared?.place({
+  id: "CatalogProductSearchIndex",
+  widget: "search.index",
+  targetBlades: ["CatalogProductDetails"],
+  title: "Index",
+  props: { documentType: "Product" },
+  isVisible: (blade) => !!blade?.param && hasAccess("search:index:read"),
+});
+```
+
+| Method | Description |
+|---|---|
+| `provide(id, component)` | Offers a widget under an id prefixed with the providing module (`search.index`). Providing it again replaces it. |
+| `place({ id, widget, targetBlades, title?, props?, isVisible? })` | Places a provided widget on the placing module's own blades. Works before the widget is provided (plugins load in any order); the widget shows once it is, and never when the providing module isn't installed. `props` go to the provided component. |
+| `isProvided(id)` | Whether the widget is provided (reactive). |
+
+The provided component reads the blade's item with `injectBladeContext()`, like any blade widget.
+
 ### Widgets of the blade's own module
 
 A blade's own widgets don't need the registry: the blade declares them with `useBladeWidgets([...])` (headless widgets: `icon`, `title`, `badge`, `loading`, `onClick`, `onRefresh`), as the Security user blade and the dynamic property blade do.
@@ -102,9 +130,11 @@ A blade's own widgets don't need the registry: the blade declares them with `use
 - Keep the widget cheap: one count or one value, loaded when the item's id changes; open details in your own blade.
 - Open your blade with `openBlade` from the widget, so it becomes a child of the blade the widget is on and closes with it.
 - Don't rely on fields the blade doesn't publish; ask the owner module to add them to its blade context.
+- Put widgets only on blades of modules you depend on (or optionally depend on). For blades of modules that depend on you, provide a [shared widget](#shared-widgets) instead.
 
 ## Testing
 
 - Open the target blade for an existing item: the widget shows its value and opens its blade as a child.
 - A new (unsaved) item: the widget is hidden or disabled.
 - A user without the widget's permission doesn't see it.
+- A shared widget: with the providing module treated as missing (`adminShell.debug.missingModules`, see [Plugins](plugins.md#using-other-modules)) the placement doesn't show, and the overflow list doesn't offer it.

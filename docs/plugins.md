@@ -159,12 +159,47 @@ Build the plugin before the module is published, so `vc-build Compress` packs it
 |---|---|---|
 | `$globalSearch` | `app.config.globalProperties`, `inject("adminShell.globalSearch")` | The search registry and the navigation helpers (`openBlade`, `openLegacy`, `goTo`, `waitFor`). Guard for its absence to run in other vc-shell hosts. |
 | `$menuCounters` | `app.config.globalProperties`, `inject("adminShell.menuCounters")` | The menu counter registry. Guard for its absence too. |
+| `$modules` | `app.config.globalProperties`, `inject("adminShell.modules")` | The installed modules: `isInstalled(id)`, `whenInstalled(id)`, `version(id)`. See [Using other modules](#using-other-modules). |
+| `$sharedWidgets` | `app.config.globalProperties`, `inject("adminShell.sharedWidgets")` | Widgets one module provides and another places on its own blades. See [Blade widgets](blade-widgets.md#shared-widgets). |
 | `ModulesReadyKey` | `inject` (vc-shell) | `true` once all plugins have loaded. |
 | Design tokens | global CSS | `--color-{primary,secondary,accent,neutral,warning,danger,success,info}-50…950`, `--fg-*`, `--bg-*`, `--border-*`, with dark-theme values. |
 | `.dash-*` classes | global CSS | Dashboard widget markup. See [Dashboard widgets](dashboard-widgets.md). |
 | vc-shell | `@vc-shell/framework` | Everything else: blades, toolbars, tables, forms, notifications, permissions (`usePermissions`), API clients (`useApiClient`), popups. |
 
 A plugin can't import the host's code (`src/...` of the shell) or its private styles (`.as-*`). If a plugin needs something the host has, it belongs in vc-shell or in a registry the host exposes.
+
+### Using other modules
+
+A plugin may use another module's blades, API or routes only as its `module.manifest` allows:
+
+| The other module is | The plugin may | Example |
+|---|---|---|
+| A dependency (`<dependency id="…" />`), directly or through other modules | use it freely | Orders opens the Customer blades |
+| An optional dependency (`<dependency id="…" optional="true" />`) | use it only when it is installed: hide the picker, link or widget otherwise | Shipping's fulfillment-center picker needs Inventory |
+| Not declared | not use it: declare it, or leave it out | — |
+
+An optional dependency is the platform's own: the module installs without it, and it isn't part of the dependency-cycle check (`ModuleCatalog.SolveDependencies` skips it), so a module may declare one even on a module that depends on it. Modules already use it (Catalog on Bulk Actions and Export, Marketing on Customer and Orders).
+
+```xml
+<dependency id="VirtoCommerce.Inventory" version="3.1010.0" optional="true" />
+```
+
+Check the module with `$modules` before using it. In a template the check is reactive (false until the list has loaded, so the control appears once the answer is known); in code, wait for it:
+
+```vue
+<template>
+  <VcSelect v-if="$modules.isInstalled('VirtoCommerce.Inventory')" :options="searchFulfillmentCenters" … />
+</template>
+```
+
+```ts
+const modules = inject<InstalledModules | undefined>("adminShell.modules");
+if (await modules?.whenInstalled("VirtoCommerce.Catalog")) openBlade({ name: "CatalogBrowse", options: { pick } });
+```
+
+A widget on another module's blade needs no check: without that module the blade doesn't exist and the widget never shows. To put a widget on blades of a module that depends on yours, don't register it there: provide it and let that module place it ([shared widgets](blade-widgets.md#shared-widgets)).
+
+**Testing without a module.** This browser can treat modules as missing, without uninstalling them: set `localStorage.setItem("adminShell.debug.missingModules", "VirtoCommerce.Customer,VirtoCommerce.Inventory")` in the browser console and reload. The console warns while it is set; remove the key to go back.
 
 ### Translations
 
@@ -176,9 +211,11 @@ Ship `locales/en.json` under one top-level key for the module (`INVENTORY`, `ORD
 - Declare `permissions` on blades, widgets and providers, so the shell doesn't show what the user can't use; the API still checks.
 - Use vc-shell's components and the design tokens; check both themes and a phone-sized window.
 - Keep one plugin per module. A module that adds to another module's screens does it with [blade widgets](blade-widgets.md), not by importing the other plugin.
+- Use another module only as `module.manifest` allows, and check an optional one with `$modules` ([Using other modules](#using-other-modules)).
 
 ## Testing a plugin
 
 1. `yarn type-check` and `yarn build` in `vue/`.
 2. Copy `plugins/admin-shell/` into `{platform}/modules/{Module}/plugins/admin-shell/` (no restart; in production call `POST /api/apps/manifest/invalidate`).
 3. In the browser: `GET /api/apps/admin-shell/manifest` lists the plugin; the console shows no loading errors; the menu item opens the screen; a deep link to it (`#/inventory`) works after a reload.
+4. For each optional dependency: list it in `adminShell.debug.missingModules`, reload, and check that its pickers, links and widgets are hidden and nothing fails.

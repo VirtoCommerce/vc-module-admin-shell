@@ -13,6 +13,9 @@ import PlatformModule from "./modules/platform";
 import { installGlobalSearch } from "./shell/search";
 // menu counters: module plugins register the counts on their menu items through the app ($menuCounters)
 import { installMenuCounters } from "./shell/menuCounters";
+// installed modules ($modules.isInstalled, for optional dependencies) and shared widgets ($sharedWidgets)
+import { installModules } from "./shell/modules";
+import { installSharedWidgets } from "./shell/sharedWidgets";
 // white-labeling: the brand, the sign-in page, Home's welcome card, the theme files
 import { loadBranding } from "./shell/branding";
 
@@ -43,6 +46,8 @@ async function startApp() {
 
   installGlobalSearch(app);
   installMenuCounters(app);
+  installModules(app);
+  installSharedWidgets(app);
 
   app.use(router);
 
