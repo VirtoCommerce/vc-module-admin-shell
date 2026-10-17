@@ -1,0 +1,71 @@
+import "./shell/deepLink";
+// the host's dashboard widgets (module plugins add theirs when they load)
+import "./shell/dashboard";
+import VirtoShellFramework, { notification, useUser, useLanguages } from "@vc-shell/framework";
+import { registerRemoteModules } from "@vc-shell/mf-host";
+import { createApp } from "vue";
+import { router } from "./router";
+import * as locales from "./locales";
+import { RouterView } from "vue-router";
+// the platform's own screens (Settings, Security, Modules, ...) ship with the host
+import PlatformModule from "./modules/platform";
+// global search: module plugins register their providers through the app ($globalSearch)
+import { installGlobalSearch } from "./shell/search";
+// menu counters: module plugins register the counts on their menu items through the app ($menuCounters)
+import { installMenuCounters } from "./shell/menuCounters";
+// white-labeling: the brand, the sign-in page, Home's welcome card, the theme files
+import { loadBranding } from "./shell/branding";
+
+import "@vc-shell/framework/dist/index.css";
+
+async function startApp() {
+  const { loadUser } = useUser();
+
+  // the installation's brand (name, logos, themes) beside the user: the sign-in page shows it too
+  await Promise.all([
+    loadUser().catch((e) => console.log(e)),
+    loadBranding(),
+  ]);
+
+  const { currentLocale, setLocale } = useLanguages();
+
+  const app = createApp(RouterView);
+
+  app.use(VirtoShellFramework, {
+    router,
+    i18n: {
+      locale: import.meta.env.APP_I18N_LOCALE,
+      fallbackLocale: import.meta.env.APP_I18N_FALLBACK_LOCALE,
+    },
+  });
+
+  app.use(PlatformModule);
+
+  installGlobalSearch(app);
+  installMenuCounters(app);
+
+  app.use(router);
+
+  Object.entries(locales).forEach(([key, message]) => {
+    app.config.globalProperties.$mergeLocaleMessage(key, message);
+  });
+
+  setLocale(currentLocale.value);
+
+  app.config.errorHandler = (err: unknown) => {
+    notification.error((err as Error).toString(), {
+      timeout: 5000,
+    });
+  };
+
+  // Register remote modules BEFORE mount so the provide/inject keys
+  // (ModulesReadyKey, ModulesLoadErrorKey) are available to mounted components.
+  // Fire-and-forget — sets modulesReady/modulesLoadError when complete.
+  registerRemoteModules(app, { router, appName: "admin-shell" });
+
+  await router.isReady();
+
+  app.mount("#app");
+}
+
+startApp();

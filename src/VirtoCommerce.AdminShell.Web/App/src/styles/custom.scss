@@ -1,0 +1,1137 @@
+@use "tokens";
+@use "shell";
+@use "search";
+// color themes (Warm, Blue, Indigo) over the tokens and the shell
+@use "themes";
+
+/* Design overrides (vc-one-shell / Platform Atomic Round V3) on top of vc-shell component tokens.
+   Values come from the design JSX (Sidebar.jsx, QuoteRequestList.jsx, ProductDetail.jsx, StatusPill.jsx,
+   ToolbarButton.jsx) and are checked by scratchpad spec-check.js.
+   :root:root and doubled classes beat vc-shell's own declarations regardless of stylesheet order. */
+:root:root {
+  /* blade header: 20px/700 title, grey buttons turning primary on hover */
+  --blade-header-title-font-size: 20px;
+  --blade-header-button-color: var(--color-neutral-400);
+  --blade-header-button-color-hover: var(--color-primary-500);
+
+  /* toolbar buttons: #404040 icon + 12px/500 label, primary on hover, #A3A3A3 disabled */
+  --blade-toolbar-base-button-title-color: var(--color-neutral-700);
+  --blade-toolbar-base-button-icon-color: var(--color-neutral-700);
+  --blade-toolbar-base-button-hover-color: var(--color-primary-500);
+  --blade-toolbar-base-button-disabled-color: var(--color-neutral-400);
+
+  /* blade toolbar: white strip */
+  --blade-toolbar-background-color: var(--color-neutral-0);
+
+  /* checkboxes: 16px, #737373 border like the design's native boxes */
+  --checkbox-border-color: var(--color-neutral-500);
+  --checkbox-border-color-hover: var(--color-neutral-700);
+  --checkbox-border-radius: 3px;
+
+  /* status pill: neutral #A3A3A3 border, coloured dot */
+  --status-border-color: var(--color-neutral-400);
+
+  /* paginator: #404040 700 numbers, primary current page */
+  --pagination-item-color: var(--color-neutral-700);
+  --pagination-item-color-hover: var(--color-primary-500);
+  --pagination-item-background-color-current: var(--color-primary-500);
+  --pagination-item-background-color-disabled: transparent;
+}
+
+/* environment banner: compact, so it stays above blade titles (which start ~24px down) */
+.vc-environment-banner.vc-environment-banner {
+  font-size: 11px;
+  height: 18px;
+  padding: 0 10px;
+}
+
+/* ---- blade ---- */
+.vc-blade-header .vc-blade-header__title {
+  font-weight: 700 !important;
+}
+
+.vc-blade-toolbar-base-button__title.vc-blade-toolbar-base-button__title {
+  font-weight: 500;
+}
+
+/* ---- data table ---- */
+.vc-table-composition.vc-table-composition {
+  --table-cell-padding-x: 18px;
+  --table-header-bg: var(--color-primary-50);
+  --table-header-text-color: var(--color-neutral-900);
+  --table-text-color: var(--color-neutral-700);
+  --table-row-bg-odd: var(--color-neutral-0);
+  --table-row-bg-even: var(--bg-row-even);
+  --table-row-bg-hover: var(--color-secondary-50);
+  --table-row-bg-selected: var(--bg-row-selected);
+}
+
+/* rows: 60px body, 50px header (49px cells + 1px border), 14px/600 #171717 header text */
+.vc-table-composition__row.vc-table-composition__row {
+  min-height: 60px;
+}
+
+.vc-table-composition__row--header.vc-table-composition__row--header {
+  min-height: 50px;
+}
+
+.vc-table-composition__head.vc-table-composition__head {
+  font-weight: 600;
+  height: 49px;
+}
+
+/* checkbox column: no cell padding, box centred (18px padding would clip the header box) */
+.vc-data-table__selection-cell.vc-data-table__selection-cell {
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+
+  .vc-table-composition__head-content {
+    display: flex;
+    flex: none;
+    overflow: visible;
+  }
+}
+
+/* sorted column keeps the header colour; the chevron is #737373 */
+.vc-table-composition__head--sorted.vc-table-composition__head--sorted {
+  color: var(--color-neutral-900);
+
+  .vc-table-composition__head-sort {
+    color: var(--color-neutral-500);
+  }
+}
+
+/* column resize handles only while hovering the header */
+.vc-table-composition__head-resizer-line.vc-table-composition__head-resizer-line {
+  opacity: 0;
+}
+
+.vc-table-composition__row--header:hover .vc-table-composition__head-resizer-line {
+  opacity: 1;
+}
+
+/* body rows: #F0F0F0 divider, zebra #FAFBFC */
+.vc-data-table__row-wrapper > .vc-table-composition__row:not(.vc-table-composition__row--header) {
+  border-bottom: 1px solid var(--border-row);
+}
+
+.vc-data-table__row-wrapper:nth-child(even)
+  > .vc-table-composition__row:not(.vc-table-composition__row--selected, .vc-table-composition__row--header) {
+  background-color: var(--table-row-bg-even);
+}
+
+.vc-data-table__row-wrapper > .vc-table-composition__row--clickable:hover {
+  background-color: var(--table-row-bg-hover);
+}
+
+/* cell inks: dates #525252, amounts 700 #171717 */
+.vc-table-cell-date:not(.vc-table-cell-date--not-set) {
+  color: var(--color-neutral-600);
+}
+
+.vc-table-cell-money:not(.vc-table-cell-money--not-set) {
+  color: var(--color-neutral-900);
+  font-weight: 700;
+}
+
+/* footer: "Total" pill on the left, paginator on the right, 20px 24px */
+.vc-data-table__pagination.vc-data-table__pagination {
+  border-top: 0;
+  padding: 20px 24px;
+}
+
+.vc-data-table__page-info.vc-data-table__page-info {
+  align-items: center;
+  background: var(--color-neutral-0);
+  border: 1px solid var(--color-neutral-400);
+  border-radius: 20px;
+  color: var(--color-neutral-700);
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 500;
+  height: 28px;
+  padding: 0 12px;
+  white-space: nowrap;
+}
+
+/* search row: 54px white strip, full-width 36px #F4F7F9 input with 4px radius */
+.vc-table-search-header.vc-table-search-header {
+  background-color: var(--color-neutral-0);
+  border-color: var(--color-neutral-200);
+}
+
+/* the filters wrap under the search when they don't fit beside it (phones, narrow blades) */
+.vc-table-search-header__toolbar.vc-table-search-header__toolbar {
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  height: auto;
+  min-height: 54px;
+  padding: 9px 18px;
+}
+
+/* search first and full width, then the filter funnel (22px #737373) with a count badge */
+.vc-table-search-header__spacer.vc-table-search-header__spacer {
+  display: none;
+}
+
+.vc-table-search-header__actions.vc-table-search-header__actions {
+  flex-grow: 0;
+  order: 1;
+
+  .vc-button {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    color: var(--color-neutral-500);
+    min-width: 24px;
+    padding: 0;
+    position: relative;
+  }
+
+  .vc-button:hover {
+    color: var(--color-primary-500);
+  }
+
+  .vc-button .vc-icon,
+  .vc-button svg {
+    height: 22px;
+    width: 22px;
+  }
+
+  .vc-global-filters-button__label {
+    display: none;
+  }
+
+  .vc-global-filters-button__badge {
+    align-items: center;
+    background: var(--color-primary-500);
+    border: 1.5px solid var(--color-neutral-0);
+    border-radius: 999px;
+    color: var(--color-neutral-0);
+    display: inline-flex;
+    font-size: 10px;
+    font-weight: 700;
+    height: 18px;
+    justify-content: center;
+    line-height: 13px;
+    min-width: 18px;
+    padding: 0 4px;
+    position: absolute;
+    right: -6px;
+    top: -4px;
+  }
+}
+
+.vc-table-search-header__search.vc-table-search-header__search {
+  flex: 1 1 200px;
+  max-width: none;
+  --input-height-small: 36px;
+  --input-border-radius: 4px;
+  --input-border-color: var(--color-neutral-200);
+  --input-background-color: var(--color-secondary-50);
+  --input-text-color: var(--color-neutral-900);
+}
+
+/* ---- status pill: 4px 12px 4px 10px, 8px gap, 10px dot ---- */
+.vc-status.vc-status:not(.vc-status--dot, .vc-status--extended) {
+  padding: 4px 12px 4px 10px;
+}
+
+.vc-status::before {
+  height: 10px !important;
+  margin-right: 8px !important;
+  width: 10px !important;
+}
+
+/* ---- paginator ---- */
+.vc-pagination__item.vc-pagination__item {
+  font-weight: 700;
+}
+
+/* arrows: #737373, faded when disabled */
+.vc-pagination__item:has(.vc-icon, svg) {
+  color: var(--color-neutral-500);
+}
+
+.vc-pagination__item.vc-pagination__item--disabled,
+.vc-pagination__item.vc-pagination__item:disabled {
+  opacity: 0.35;
+}
+
+/* ---- menus (VcDropdown, e.g. the widget overflow): 8px card, 6px padding, 9px 12px rows ---- */
+:root:root {
+  --vc-dropdown-text: var(--color-neutral-700);
+  --vc-dropdown-border: var(--color-neutral-200);
+  --vc-dropdown-accent: var(--color-secondary-50);
+  --vc-dropdown-accent-foreground: var(--color-neutral-700);
+}
+
+.vc-dropdown__dropdown--floating.vc-dropdown__dropdown--floating {
+  border-radius: 8px;
+  box-shadow:
+    0 10px 24px -6px rgba(23, 23, 23, 0.18),
+    0 2px 6px rgba(23, 23, 23, 0.06);
+  min-width: 184px;
+}
+
+.vc-dropdown__content--padded.vc-dropdown__content--padded {
+  padding: 6px;
+}
+
+.vc-dropdown__item--padded.vc-dropdown__item--padded {
+  border-radius: 6px;
+  font-size: 14px;
+  padding: 9px 12px;
+}
+
+/* widgets moved into the overflow read like menu rows */
+.vc-dropdown__item .vc-widget.vc-widget {
+  padding: 0;
+
+  .vc-widget__title {
+    color: var(--color-neutral-700);
+    font-size: 14px;
+  }
+}
+
+/* ---- forms (ProductDetail.jsx): 14px/500 #404040 labels, 40px fields with #D4D4D4 border and #171717 text ---- */
+:root:root {
+  --label-text-color: var(--color-neutral-700);
+  --input-height: 40px;
+  --input-border-color: var(--color-neutral-300);
+  --select-height: 40px;
+  --select-border-color: var(--color-neutral-300);
+  --select-text-color: var(--color-neutral-900);
+  --textarea-border-color: var(--color-neutral-300);
+  --textarea-text-color: var(--color-neutral-900);
+
+  /* section cards: 8px radius, 46px #F4F7F9 header, 14px/600 #404040 title */
+  --card-border-radius: 8px;
+  --card-header-background: var(--color-secondary-50);
+  --card-header-color: var(--color-neutral-700);
+  --card-header-padding-hor: 16px;
+  --card-header-padding-vert: 0px;
+}
+
+.vc-label__text.vc-label__text {
+  font-size: 14px;
+}
+
+.vc-card__header.vc-card__header {
+  min-height: 46px;
+}
+
+.vc-card__title.vc-card__title {
+  font-weight: 600;
+}
+
+/* ==== dashboard (Dashboard.jsx, WidgetCard.jsx, DashboardTables.jsx, DashboardVisuals.jsx) ====
+   Shared markup classes (.dash-*) are used by widgets in the host and in module plugins. */
+:root:root {
+  --gridstack-dashboard-background: var(--bg-app);
+  /* the card draws the chrome; the grid item stays bare so the shadow isn't doubled */
+  --gridstack-widget-background: transparent;
+  --gridstack-widget-shadow: none;
+  --gridstack-widget-border-radius: 6px;
+  --gridstack-drag-handle-color: var(--color-neutral-400);
+  --gridstack-drag-handle-color-hover: var(--color-primary-500);
+
+  --dashboard-widget-card-background: var(--color-neutral-0);
+  --dashboard-widget-card-border-color: var(--color-neutral-200);
+  --dashboard-widget-card-border-radius: 6px;
+  --dashboard-widget-card-shadow: 3px 9px 15px -3px rgba(0, 0, 0, 0.08), 0 0 6px -2px rgba(0, 0, 0, 0.1);
+  --dashboard-widget-card-shadow-hover: 3px 9px 15px -3px rgba(0, 0, 0, 0.12), 0 0 6px -2px rgba(0, 0, 0, 0.12);
+  --dashboard-widget-card-header-text-color: var(--color-neutral-900);
+  --dashboard-widget-card-icon-color: var(--color-neutral-700);
+}
+
+/* 24px around the grid: 14px + the grid's 10px item margin; 20px between cards.
+   A margin, not padding: gridstack positions items absolutely, which ignores padding */
+.vc-gridstack-dashboard__grid.vc-gridstack-dashboard__grid {
+  margin: 14px;
+  padding: 0;
+}
+
+/* the six-dot grip sits at the start of the card header, as in WidgetCard.jsx */
+.vc-gridstack-dashboard__drag-handle.vc-gridstack-dashboard__drag-handle {
+  left: 13px; /* dots 20px in (design: 18px padding + 2px), centred on the title */
+  right: auto;
+  top: 17px;
+}
+
+.dashboard-widget-card {
+  &__header.dashboard-widget-card__header {
+    gap: 12px;
+    min-height: 50px;
+    padding: 14px 18px 12px 43px;
+  }
+
+  &__header-content.dashboard-widget-card__header-content {
+    gap: 12px;
+  }
+
+  &__icon-wrapper.dashboard-widget-card__icon-wrapper {
+    background: none;
+    height: 18px;
+    width: 18px;
+
+    .vc-icon {
+      font-size: 18px;
+      height: 18px;
+      width: 18px;
+    }
+  }
+
+  &__title.dashboard-widget-card__title {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+  }
+
+  &__body.dashboard-widget-card__body {
+    display: flex;
+    flex-direction: column;
+    padding: 0 18px 18px;
+  }
+}
+
+/* header actions: "View all" link, period select */
+.dash-link-button {
+  background: transparent;
+  border: 0;
+  color: var(--color-primary-500);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.dash-select {
+  background: var(--color-neutral-0);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 4px;
+  color: var(--color-neutral-700);
+  font-family: inherit;
+  font-size: 12px;
+  padding: 4px 10px;
+}
+
+/* metric row (Total Sales): 95px, 44px tinted round icon, 24px/700 value, coloured delta */
+.dash-metrics {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.dash-metric {
+  align-items: center;
+  display: flex;
+  gap: 16px;
+  height: 95px;
+  padding: 0 4px;
+
+  & + & {
+    border-top: 1px solid var(--border-row);
+  }
+
+  &__icon {
+    align-items: center;
+    border-radius: 999px;
+    display: flex;
+    flex: none;
+    height: 44px;
+    justify-content: center;
+    width: 44px;
+
+    .vc-icon {
+      font-size: 22px;
+      height: 22px;
+      width: 22px;
+    }
+
+    &--blue {
+      background: #e3f0f9;
+      color: var(--color-primary-500);
+    }
+
+    &--amber {
+      background: #fbefcf;
+      color: #e0a93b;
+    }
+
+    &--green {
+      background: #def0e4;
+      color: #449463;
+    }
+
+    [data-theme="dark"] &--blue {
+      background: var(--color-primary-100);
+    }
+
+    [data-theme="dark"] &--amber {
+      background: var(--color-warning-100);
+    }
+
+    [data-theme="dark"] &--green {
+      background: var(--color-success-100);
+      color: var(--color-success-400);
+    }
+  }
+
+  &__body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__label {
+    color: var(--color-neutral-500);
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+
+  &__line {
+    align-items: baseline;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  &__value {
+    color: var(--color-neutral-900);
+    font-size: 24px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+}
+
+.dash-delta {
+  align-items: center;
+  color: var(--color-success-500);
+  display: inline-flex;
+  font-size: 14px;
+  font-weight: 600;
+  gap: 5px;
+  white-space: nowrap;
+
+  &--down {
+    color: var(--color-danger-500);
+  }
+
+  .vc-icon {
+    font-size: 16px;
+    height: 16px;
+    width: 16px;
+  }
+}
+
+/* full-bleed table inside a card body (cancels the 18px body padding) */
+.dash-table {
+  margin: 6px -18px 0;
+  overflow: auto;
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th {
+    background: var(--color-secondary-50);
+    color: var(--color-neutral-600);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 11px 14px;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  td {
+    color: var(--color-neutral-800);
+    font-size: 14px;
+    padding: 13px 14px;
+    vertical-align: middle;
+  }
+
+  th:first-child,
+  td:first-child {
+    padding-left: 24px;
+  }
+
+  th:last-child,
+  td:last-child {
+    padding-right: 24px;
+  }
+
+  tbody tr {
+    border-top: 1px solid var(--border-row);
+  }
+
+  tr.dash-table__row--link {
+    cursor: pointer;
+
+    &:hover {
+      background: var(--color-secondary-50);
+    }
+  }
+
+  .dash-table__num {
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+
+  .dash-table__strong {
+    color: var(--color-neutral-900);
+    font-weight: 600;
+  }
+
+  .dash-table__muted {
+    color: var(--color-neutral-600);
+  }
+}
+
+.dash-link {
+  color: var(--color-primary-500);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+/* nothing to show yet */
+.dash-empty {
+  align-items: center;
+  color: var(--color-neutral-500);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  font-size: 14px;
+  gap: 8px;
+  justify-content: center;
+  text-align: center;
+
+  .vc-icon {
+    color: var(--color-neutral-400);
+  }
+}
+
+/* lets a block component (e.g. VcStatus) size to its content inside a table cell */
+.dash-inline {
+  display: inline-flex;
+}
+
+.dash-empty strong {
+  color: var(--color-neutral-700);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.dash-empty span {
+  max-width: 360px;
+}
+
+/* round × used to dismiss alerts */
+.dash-dismiss {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  color: var(--color-neutral-400);
+  cursor: pointer;
+  display: flex;
+  flex: none;
+  height: 24px;
+  justify-content: center;
+  width: 24px;
+
+  &:hover {
+    background: var(--color-neutral-100);
+    color: var(--color-primary-500);
+  }
+}
+
+/* alert cards (Dashboard.jsx AlertItem): 4px coloured stripe, 14px 18px 14px 22px */
+.dash-alerts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: auto;
+}
+
+.dash-alert {
+  align-items: flex-start;
+  background: var(--color-neutral-0);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 6px;
+  display: flex;
+  gap: 10px;
+  padding: 14px 18px 14px 22px;
+  position: relative;
+
+  &::before {
+    background: var(--color-primary-500);
+    border-radius: 6px 0 0 6px;
+    bottom: -1px;
+    content: "";
+    left: -1px;
+    position: absolute;
+    top: -1px;
+    width: 4px;
+  }
+
+  &--success::before {
+    background: #7bc394;
+  }
+
+  &--danger::before {
+    background: #ff6a6a;
+  }
+
+  &__body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__title {
+    color: var(--color-neutral-900);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 16px;
+  }
+
+  &__text {
+    color: var(--color-neutral-600);
+    font-size: 14px;
+    line-height: 16px;
+    margin-top: 4px;
+  }
+
+  &__date {
+    color: var(--color-neutral-400);
+    font-size: 12px;
+    margin-top: 8px;
+  }
+}
+
+/* feed rows (Dashboard.jsx AnnouncementItem): 8px dot, 14px 0, divider */
+.dash-feed {
+  overflow: auto;
+
+  &__item {
+    align-items: flex-start;
+    border-bottom: 1px solid var(--color-neutral-200);
+    display: flex;
+    gap: 12px;
+    padding: 14px 0;
+
+    &:first-child {
+      padding-top: 4px;
+    }
+  }
+
+  &__dot {
+    background: var(--color-neutral-400);
+    border-radius: 999px;
+    flex: none;
+    height: 8px;
+    margin-top: 6px;
+    width: 8px;
+
+    &--added {
+      background: var(--color-primary-500);
+    }
+
+    &--deleted {
+      background: var(--color-danger-500);
+    }
+  }
+
+  &__body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__title {
+    color: var(--color-neutral-900);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 16px;
+  }
+
+  &__text {
+    color: var(--color-neutral-600);
+    font-size: 14px;
+    line-height: 16px;
+    margin-top: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__meta {
+    color: var(--color-neutral-400);
+    font-size: 12px;
+    margin-top: 6px;
+  }
+}
+
+/* donut (DashboardVisuals.jsx CurrentlyInCarts): 200px ring, 30px total, 28x4 legend swatches */
+.dash-donut {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 22px;
+  justify-content: center;
+  padding-top: 8px;
+
+  &__chart {
+    height: 200px;
+    position: relative;
+    width: 200px;
+  }
+
+  &__center {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    inset: 0;
+    justify-content: center;
+    position: absolute;
+  }
+
+  &__total {
+    color: var(--color-neutral-900);
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  &__unit {
+    color: var(--color-neutral-500);
+    font-size: 16px;
+    margin-top: 2px;
+  }
+
+  &__legend {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 240px;
+    width: 100%;
+  }
+
+  &__legend-row {
+    align-items: center;
+    display: flex;
+    gap: 12px;
+  }
+
+  &__swatch {
+    border-radius: 999px;
+    flex: none;
+    height: 4px;
+    width: 28px;
+  }
+
+  &__label {
+    color: var(--color-neutral-500);
+    display: block;
+    font-size: 14px;
+  }
+
+  &__count {
+    color: var(--color-neutral-900);
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+  }
+}
+
+/* count pill next to a widget's title actions */
+.dash-count {
+  align-items: center;
+  border: 1px solid var(--color-neutral-300);
+  border-radius: 999px;
+  color: var(--color-neutral-700);
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 600;
+  height: 22px;
+  justify-content: center;
+  min-width: 26px;
+  padding: 0 8px;
+}
+
+/* bars (DashboardVisuals.jsx OperationalMetrics): 64x190 tracks, value inside the fill, chip label */
+.dash-bars {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 18px;
+  justify-content: center;
+
+  &__row {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+  }
+
+  &__bar {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__track {
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    height: 190px;
+    justify-content: flex-end;
+    overflow: hidden;
+    position: relative;
+    width: 64px;
+  }
+
+  &__fill {
+    border-radius: 8px 8px 0 0;
+  }
+
+  &__value {
+    color: var(--color-neutral-0);
+    font-size: 16px;
+    font-weight: 700;
+    left: 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+
+    &--outside {
+      color: var(--color-neutral-700);
+    }
+  }
+
+  &__chip {
+    background: var(--color-secondary-50);
+    border-radius: 4px;
+    color: var(--color-neutral-700);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 4px 10px;
+    white-space: nowrap;
+  }
+
+  &__legend {
+    border-top: 1px solid var(--border-row);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 14px;
+  }
+
+  &__legend-row {
+    align-items: center;
+    color: var(--color-neutral-600);
+    display: flex;
+    font-size: 14px;
+    gap: 10px;
+
+    span {
+      border-radius: 999px;
+      flex: none;
+      height: 4px;
+      width: 22px;
+    }
+  }
+}
+
+/* a blade with no actions and no widgets gets no empty 54px toolbar strip (vc-shell renders it regardless) */
+.vc-blade-toolbar:not(:has(.vc-blade-toolbar-base-button, .vc-widget, button)) {
+  display: none;
+}
+
+/* widget "More" dropdown: vc-shell caps it at 300px inline with a hidden scrollbar, so half a product's widgets were out
+   of sight — let it grow to the viewport; and its count badge sits past the icon, so give the label room */
+.vc-blade-toolbar__content .vc-dropdown__dropdown--floating:has(.vc-widget) {
+  max-height: calc(100vh - 140px) !important;
+}
+
+.vc-widget-container-desktop .vc-dropdown__item .vc-widget.vc-widget {
+  gap: 16px;
+}
+
+/* phones: vc-shell keeps the dashboard at 12 columns at any width, which squeezes every widget; stack them full width */
+@media (max-width: 767px) {
+  .vc-gridstack-dashboard .grid-stack.grid-stack {
+    display: flex;
+    flex-direction: column;
+    height: auto !important;
+  }
+
+  .vc-gridstack-dashboard .grid-stack > .grid-stack-item.grid-stack-item {
+    left: 0 !important;
+    position: relative !important;
+    top: 0 !important;
+    width: 100% !important;
+  }
+}
+
+/* login in dark: vc-shell gives the page and the card the same surface, so the page goes a step deeper; the platform's
+   default mark is a flat #4C4C4C, lifted to the dark text tone (a white-label logo is left as is) */
+:root[data-theme="dark"] .vc-auth-layout {
+  --auth-layout-bg: var(--bg-app);
+  --auth-layout-card-border: var(--color-neutral-300);
+}
+
+:root[data-theme="dark"] .vc-auth-layout__logo[src$="/images/logo.png"] {
+  filter: brightness(2.8);
+}
+
+/* phones: lists read as lists, not stacks of cards - full-width rows with a divider, the item's name on the first line
+   and its other values on one muted line under it (labels dropped, as in a phone list) */
+@media (max-width: 767px) {
+  .vc-data-table-mobile-view__list.vc-data-table-mobile-view__list {
+    background: var(--color-neutral-0);
+  }
+
+  .vc-data-table-mobile-card.vc-data-table-mobile-card {
+    background: var(--color-neutral-0);
+    border: 0;
+    border-bottom: 1px solid var(--border-row);
+    border-radius: 0;
+    box-shadow: none;
+    margin: 0;
+  }
+
+  /* the inner wrapper draws its own bordered, rounded, shadowed box */
+  .vc-data-table-mobile-card__content.vc-data-table-mobile-card__content {
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  /* vertical only: vc-shell's left padding makes room for the selection checkbox and drag handle */
+  .vc-data-table-mobile-card__body.vc-data-table-mobile-card__body {
+    padding-block: 11px;
+  }
+
+  .vc-data-table-mobile-card__main.vc-data-table-mobile-card__main {
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .vc-data-table-mobile-card__title.vc-data-table-mobile-card__title {
+    color: var(--color-neutral-900);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .vc-data-table-mobile-card__fields.vc-data-table-mobile-card__fields {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 14px;
+  }
+
+  .vc-data-table-mobile-card__field.vc-data-table-mobile-card__field {
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .vc-data-table-mobile-card__field-label.vc-data-table-mobile-card__field-label {
+    display: none;
+  }
+
+  /* a column declared mobile-role="status" sits on the title's line, on the right */
+  .vc-data-table-mobile-card__main.vc-data-table-mobile-card__main:has(> .vc-data-table-mobile-card__statuses) {
+    align-items: center;
+    column-gap: 12px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    row-gap: 2px;
+
+    > .vc-data-table-mobile-card__title {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    > .vc-data-table-mobile-card__statuses {
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: end;
+    }
+
+    > .vc-data-table-mobile-card__fields {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* an empty value would leave a blank gap in the line */
+  .vc-data-table-mobile-card__field:has(.vc-mobile-cell-renderer--static:empty) {
+    display: none;
+  }
+
+  /* a bare count, date or yes/no icon means nothing ("1 1", "10/12/2026 10/14/2026"), and neither does an inline
+     input ("122 100 1"), so these keep their label: "Settings: 1"; a yes/no column shows as an icon with
+     type="status-icon" */
+  .vc-data-table-mobile-card__field:has(
+      .vc-table-cell-number,
+      .vc-table-cell-date,
+      .vc-table-cell-date-ago,
+      .vc-table-cell-status-icon,
+      input,
+      select,
+      textarea
+    ) {
+    gap: 4px;
+
+    .vc-data-table-mobile-card__field-label {
+      color: var(--color-neutral-400);
+      display: inline;
+      font-size: 13px;
+      line-height: 20px;
+    }
+  }
+
+  .vc-data-table-mobile-card__field-value.vc-data-table-mobile-card__field-value {
+    color: var(--color-neutral-500);
+    font-size: 13px;
+    line-height: 20px;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    .vc-table-cell-default {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .vc-status {
+      font-size: 12px;
+      padding-bottom: 1px;
+      padding-top: 1px;
+    }
+  }
+
+  /* room for the floating action button under the last card */
+  .vc-data-table-mobile-view__list.vc-data-table-mobile-view__list {
+    padding-bottom: 84px;
+  }
+
+  /* the environment tag: small, centered above the bar (the logo and title start at the left, the buttons are at the right) */
+  .vc-environment-banner.vc-environment-banner {
+    font-size: 10px;
+    height: 16px;
+    padding: 0 8px;
+  }
+}

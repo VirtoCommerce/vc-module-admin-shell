@@ -1,0 +1,176 @@
+{
+  "language_name": "English",
+  "SHELL": {
+    "NAV": {
+      "SECTIONS": "Sections",
+      "HOME": "{name}, home",
+      "MENU": "Menu",
+      "NOTIFICATIONS": "Notifications",
+      "ACCOUNT": "Account",
+      "CLASSIC_ADMIN": "Open classic admin",
+      "HIDE_MENU": "Hide menu",
+      "KEEP_OPEN": "Keep menu open",
+      "SHOW_MENU": "Show menu",
+      "PIN": "Pin",
+      "UNPIN": "Unpin",
+      "HIDE_ITEM": "Hide from menu",
+      "PINNED": "Pinned",
+      "RECENT": "Recent",
+      "SHOW_HIDDEN": "Show {count} hidden item(s)",
+      "OPEN_BLADES": "Open blades",
+      "NEW_TAB": "Opens in a new tab"
+    },
+    "USER_MENU": {
+      "LICENSE": "License",
+      "LICENSE_NONE": "Not activated",
+      "LICENSE_NONE_HINT": "No commerce license is activated on this platform",
+      "LICENSE_EXPIRED": "Expired",
+      "LICENSE_UNTIL": "until {date}",
+      "LICENSE_ACTIVATE": "Activate",
+      "LICENSE_DETAILS": "Details",
+      "LANGUAGE": "Language",
+      "THEME": "Appearance",
+      "THEME_SYSTEM": "Match the system",
+      "COLOR_THEME": "Theme",
+      "COLOR_THEMES": {
+        "VIRTO": "Virto",
+        "WARM": "Warm",
+        "BLUE": "Blue",
+        "INDIGO": "Indigo"
+      },
+      "SIGN_OUT": "Sign out",
+      "BUILD": "Build {version}"
+    },
+    "BADGES": {
+      "TASKS": "{count} open tasks"
+    },
+    "FRAME": {
+      "REFRESH": "Refresh",
+      "NEW_TAB": "Open in new tab"
+    },
+    "DASHBOARD": {
+      "WELCOME": {
+        "TITLE": "Welcome"
+      },
+      "RESET_LAYOUT": "Reset layout",
+      "RESET_LAYOUT_CONFIRM": "Put every widget back to its default place and size?",
+      "VIEW_ALL": "View all",
+      "DISMISS": "Dismiss",
+      "ALERTS": {
+        "TITLE": "Alerts and Notifications",
+        "EMPTY": "You're all caught up",
+        "EMPTY_HINT": "Results of background jobs, imports and exports, and system messages show up here."
+      },
+      "ACTIVITY": {
+        "TITLE": "Recent activity",
+        "EMPTY": "No changes recorded yet",
+        "ADDED": "created",
+        "MODIFIED": "updated",
+        "DELETED": "deleted"
+      },
+      "SIGN_INS": {
+        "TITLE": "Sign-in activity",
+        "TOTAL": "Sign-ins, last 7 days",
+        "FAILED": "Failed sign-ins",
+        "USERS": "Users signed in",
+        "DISABLED": "Sign-in logging is turned off"
+      }
+    },
+    "AUTH": {
+      "LIGHT_THEME": "Switch to light theme",
+      "DARK_THEME": "Switch to dark theme",
+      "SHOWCASE": {
+        "LABEL": "About Virto Commerce",
+        "GO_TO": "Show: {name}",
+        "MORE": "Learn more at VirtoCommerce.com",
+        "PLATFORM": {
+          "CHIP": "Virto Commerce on Virto Cloud",
+          "TITLE": "Managed Composable Commerce for complex B2B",
+          "BODY": "An open-source, API-first platform on .NET, run for you on Virto Cloud. Start with what you need and add modules as the business grows.",
+          "POINT_1": "Virto Cloud hosts, scales, updates and monitors your environments",
+          "POINT_2": "100+ modules you install, update or replace one at a time",
+          "POINT_3": "Connect any storefront, ERP or marketplace through open APIs"
+        },
+        "CATALOG": {
+          "CHIP": "Catalog & pricing",
+          "TITLE": "One catalog for every channel and price list",
+          "BODY": "Manage physical, digital and configurable products once, then publish them to each store with its own assortment and prices.",
+          "POINT_1": "Virtual catalogs that reuse products across stores and channels",
+          "POINT_2": "Price lists with quantity tiers, dates and customer-segment rules",
+          "POINT_3": "Inventory across warehouses and fulfillment centers"
+        },
+        "B2B": {
+          "CHIP": "B2B buying",
+          "TITLE": "Built for the way businesses buy",
+          "BODY": "Company accounts, buyers and contracts, with the quotes and recurring orders that B2B deals depend on.",
+          "POINT_1": "Organizations with their buyers, roles and addresses",
+          "POINT_2": "Quotes and contract pricing negotiated per customer",
+          "POINT_3": "Subscriptions that reorder on a schedule"
+        },
+        "API": {
+          "CHIP": "APIs & AI agents",
+          "TITLE": "Open, API-first and agent-ready",
+          "BODY": "Every capability is an API: build any front end, let AI agents shop and act on your behalf, and extend the platform with your own modules.",
+          "POINT_1": "GraphQL xAPI for storefronts, apps and integrations",
+          "POINT_2": "Agentic Access via MCP for AI assistants and agents",
+          "POINT_3": "Native Support for UCP and OnX Protocols"
+        }
+      },
+      "HELP": "Help",
+      "LINKS": {
+        "HELP": "Help",
+        "SUPPORT": "Support",
+        "PRIVACY": "Privacy",
+        "TERMS": "Terms"
+      },
+      "SLIDES_LABEL": "About {name}"
+    },
+    "LOGIN": {
+      "SUBTITLE": "Sign in to {name} to continue",
+      "CONTINUE_WITH": "Continue with {name}",
+      "CONTINUE_WITH_SSO": "Continue with single sign-on",
+      "OR": "or",
+      "LOGIN": "Email or username",
+      "LOGIN_PLACEHOLDER": "Enter your email or username",
+      "SIGNING_IN": "Signing in…",
+      "ERRORS": {
+        "LOCKED_OUT": "This account is locked after too many failed attempts. Try again later or contact your administrator.",
+        "NOT_ALLOWED": "This account isn't allowed to sign in yet. Contact your administrator."
+      }
+    },
+    "SEARCH": {
+      "LABEL": "Search",
+      "PLACEHOLDER": "Search or jump to…",
+      "CLEAR": "Clear",
+      "CLOSE": "Close search",
+      "RESULTS": "Search results",
+      "SEARCH_IN": "Search in",
+      "SEARCHING_IN": "Searching in",
+      "SEARCH_EVERYWHERE": "Search everywhere",
+      "TYPE_TO_SEARCH": "Type what to look for",
+      "TIP_SCOPE": "Start with a group's name, like {example}, to search only there.",
+      "SEARCHING": "Searching…",
+      "FAILED": "Search failed",
+      "RETRY": "Retry",
+      "NO_RESULTS": "No results for “{query}”",
+      "NO_RESULTS_HINT": "Check the spelling or try fewer words.",
+      "NO_RESULTS_SCOPED": "Check the spelling, or search everywhere.",
+      "SHOW_ALL": "Show all {count} in {group}",
+      "OPEN_FAILED": "The result could not be opened",
+      "KEYS_MOVE": "to move",
+      "KEYS_OPEN": "to open",
+      "KEYS_CLOSE": "to close",
+      "GROUPS": {
+        "MENU": "Menu",
+        "APPS": "Apps",
+        "SETTINGS": "Settings",
+        "USERS": "Users",
+        "ROLES": "Roles"
+      },
+      "BADGES": {
+        "ADMIN": "Admin",
+        "LOCKED": "Locked"
+      }
+    }
+  }
+}

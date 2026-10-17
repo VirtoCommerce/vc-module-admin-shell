@@ -4,25 +4,22 @@
     <OutputType>Library</OutputType>
     <IsPackable>false</IsPackable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>NU1608, 1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <!-- Project is not a test project -->
     <SonarQubeTestProject>false</SonarQubeTestProject>
-    <NoWarn>1591;NU1608</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="dist\**" />
-    <Content Remove="dist\**" />
-    <EmbeddedResource Remove="dist\**" />
-    <None Remove="dist\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Update="Localizations\**">
-      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
-    </Content>
+    <!-- the vc-shell host app (built by vc-build BuildCustomApp into Content/admin-shell) -->
+    <Compile Remove="App\**" />
+    <Content Remove="App\**" />
+    <EmbeddedResource Remove="App\**" />
+    <None Remove="App\**" />
+    <Content Remove="Content\admin-shell\**" />
+    <None Remove="Content\admin-shell\**" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VirtoCommerce.AdminShell.Core\VirtoCommerce.AdminShell.Core.csproj" />
-    <ProjectReference Include="..\VirtoCommerce.AdminShell.Data\VirtoCommerce.AdminShell.Data.csproj" />
-    <ProjectReference Include="..\VirtoCommerce.AdminShell.Data.MySql\VirtoCommerce.AdminShell.Data.MySql.csproj" />
-    <ProjectReference Include="..\VirtoCommerce.AdminShell.Data.PostgreSql\VirtoCommerce.AdminShell.Data.PostgreSql.csproj" />
-    <ProjectReference Include="..\VirtoCommerce.AdminShell.Data.SqlServer\VirtoCommerce.AdminShell.Data.SqlServer.csproj" />
   </ItemGroup>
 </Project>
