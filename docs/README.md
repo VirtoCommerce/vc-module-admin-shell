@@ -4,6 +4,7 @@
 
 | Document | For | What it covers |
 |---|---|---|
+| [Admin UI requirements](admin-ui-requirements.md) | product owners, architects, anyone building a new admin UI | What the platform admin UI must do, whatever it is built with: roles, scenarios, pages, the shell, the extension contract modules rely on, APIs and quality requirements. |
 | [Architecture overview](architecture.md) | everyone | What the Admin Shell is and the ideas it is built on, in one page. |
 | [Technical description](technical-description.md) | developers | The server and client parts, startup, routing, menu composition, build and deployment. |
 | [White-labeling](branding.md) | administrators, developers | Three levels of branding for a customer: name, logos and links (settings); the sign-in page and Home (settings with content); a custom color theme (theme files). Requirements, steps and testing. |
