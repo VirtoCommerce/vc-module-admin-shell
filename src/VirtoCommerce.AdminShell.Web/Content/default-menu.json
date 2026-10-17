@@ -47,7 +47,7 @@
       ],
       "items": [
         { "id": "legacy.marketing", "title": "Marketing", "icon": "lucide-flag", "priority": 10, "moduleId": "VirtoCommerce.Marketing", "permission": "marketing:access", "target": { "type": "legacy", "legacyUrl": "/workspace/marketing" } },
-        { "id": "legacy.content", "title": "Content", "icon": "lucide-code-xml", "priority": 20, "moduleId": "VirtoCommerce.Content", "permission": "content:access", "target": { "type": "legacy", "legacyUrl": "/workspace/content" } },
+        { "id": "legacy.content", "title": "Sites", "icon": "lucide-globe", "priority": 20, "moduleId": "VirtoCommerce.Content", "permission": "content:access", "target": { "type": "legacy", "legacyUrl": "/workspace/content" } },
         {
           "id": "news", "title": "News", "icon": "lucide-newspaper", "priority": 40, "moduleId": "VirtoCommerce.News", "permission": "news:access",
           "target": { "type": "app", "appId": "vc-news", "route": "/list-all" },
