@@ -92,6 +92,18 @@ const open = () => openBlade({ name: "InventoryProductStock", options: { product
 
 Modules' blades publish theirs the same way: `CatalogProductDetails` (the product), `StoreDetails` (the store), `CustomerContactDetails` and `CustomerOrganizationDetails` (the member). Each module documents what its blades publish.
 
+The Settings blade, `PlatformSettings`, has no item. It replaces the AngularJS `settingsDetail` blade of a group, and its widgets read the group chosen in the tree from the blade's query, `blade.query.group` (`Catalog|Search`; none for *All settings*, see [Settings → Deep links](settings.md#deep-links)). The query changes with the choice, so `isVisible` follows it:
+
+```ts
+registerExternalWidget({
+  id: "PersonalizationOutlinesSync",
+  component: markRaw(OutlinesSyncWidget),
+  targetBlades: ["PlatformSettings"],
+  // the Personalization group or a group under it
+  isVisible: (blade) => /^Personalization(\||$)/.test(blade?.query?.group ?? ""),
+});
+```
+
 ### Shared widgets
 
 A module may put widgets only on blades of modules it depends on (Inventory on the Catalog product blade). When the blade's module depends on yours instead, as Catalog, Customer and Orders depend on Search, the owner places your widget, as AngularJS modules did: Catalog put Search's Index widget on its product blade with Search's controller. The host's `$sharedWidgets` connects the two without either importing the other:

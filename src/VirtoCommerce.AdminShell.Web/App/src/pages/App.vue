@@ -20,7 +20,7 @@
         tabindex="-1"
       >
         <ShellHeader v-if="!isMobile" />
-        <VcBladeNavigation />
+        <VcBladeNavigation v-if="pluginsSettled" />
       </main>
     </template>
   </VcApp>
@@ -28,7 +28,14 @@
 </template>
 
 <script lang="ts" setup>
-import { ModulesReadyKey, VcBladeNavigation, useBladeStack, useResponsive, useUser } from "@vc-shell/framework";
+import {
+  ModulesLoadErrorKey,
+  ModulesReadyKey,
+  VcBladeNavigation,
+  useBladeStack,
+  useResponsive,
+  useUser,
+} from "@vc-shell/framework";
 import type { BladeDescriptor } from "@vc-shell/framework";
 import { VcApp } from "@vc-shell/framework/ui";
 import { computed, inject, ref, watch } from "vue";
@@ -79,6 +86,11 @@ watch(
   },
   { immediate: true },
 );
+
+// the blades mount once every plugin is installed (or failed): vc-shell gathers a blade's external widgets when it
+// mounts, so a host blade opened at start (a link to #/settings?group=Personalization) would miss the plugins' widgets
+const modulesLoadError = inject(ModulesLoadErrorKey, ref(false));
+const pluginsSettled = computed(() => modulesReady.value || modulesLoadError.value);
 </script>
 
 <style lang="scss">
