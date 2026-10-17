@@ -13,17 +13,19 @@ import PlatformModule from "./modules/platform";
 import { installGlobalSearch } from "./shell/search";
 // menu counters: module plugins register the counts on their menu items through the app ($menuCounters)
 import { installMenuCounters } from "./shell/menuCounters";
+// white-labeling: the brand, the sign-in page, Home's welcome card, the theme files
+import { loadBranding } from "./shell/branding";
 
 import "@vc-shell/framework/dist/index.css";
 
 async function startApp() {
   const { loadUser } = useUser();
 
-  try {
-    await loadUser();
-  } catch (e) {
-    console.log(e);
-  }
+  // the installation's brand (name, logos, themes) beside the user: the sign-in page shows it too
+  await Promise.all([
+    loadUser().catch((e) => console.log(e)),
+    loadBranding(),
+  ]);
 
   const { currentLocale, setLocale } = useLanguages();
 

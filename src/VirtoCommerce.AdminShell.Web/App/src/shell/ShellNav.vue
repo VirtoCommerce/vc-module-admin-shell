@@ -12,12 +12,12 @@
       <button
         type="button"
         class="as-rail__logo"
-        :aria-label="$t('SHELL.NAV.HOME')"
-        :title="$t('SHELL.NAV.HOME')"
+        :aria-label="$t('SHELL.NAV.HOME', { name: companyName })"
+        :title="$t('SHELL.NAV.HOME', { name: companyName })"
         @click="goHome"
       >
         <img
-          :src="logoMark"
+          :src="brandMark() ?? logoMark"
           alt=""
         />
       </button>
@@ -112,8 +112,8 @@
           v-if="isHome"
           type="button"
           class="as-panel__logo"
-          :aria-label="$t('SHELL.NAV.HOME')"
-          :title="$t('SHELL.NAV.HOME')"
+          :aria-label="$t('SHELL.NAV.HOME', { name: companyName })"
+          :title="$t('SHELL.NAV.HOME', { name: companyName })"
           @click="goHome"
         >
           <img
@@ -291,6 +291,7 @@ import UserMenu from "./UserMenu.vue";
 import logoMark from "/assets/logo-mark.svg";
 import darkLogo from "/assets/logo-shell-dark.svg";
 import lightLogo from "/assets/logo-shell.svg";
+import { brandLogo, brandMark, companyName } from "./branding";
 
 const props = defineProps<{
   /** inside the phone drawer: the panel is always shown and its button closes the drawer */
@@ -313,8 +314,11 @@ function counterTitle(itemId: string) {
   return te(hint) ? t(hint, { count }) : hint.replace("{count}", String(count));
 }
 const { currentThemeKey } = useTheme();
-// the logo's wordmark is near-black, so dark gets a light copy
-const logoImage = computed(() => (currentThemeKey.value === "dark" ? darkLogo : lightLogo));
+// the company's logo (white-labeling), else Virto's: its wordmark is near-black, so dark gets a light copy
+const logoImage = computed(() => {
+  const dark = currentThemeKey.value === "dark";
+  return brandLogo(dark) ?? (dark ? darkLogo : lightLogo);
+});
 const notifications = useNotificationStore();
 
 const bellRef = ref<HTMLElement | null>(null);

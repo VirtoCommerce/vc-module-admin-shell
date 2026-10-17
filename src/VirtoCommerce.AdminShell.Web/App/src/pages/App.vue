@@ -1,7 +1,7 @@
 <template>
   <VcApp
     :is-ready="isReady"
-    title="Virto Commerce"
+    :title="companyName"
     :version="version"
     :avatar="initialsAvatar"
   >
@@ -38,6 +38,7 @@ import LegacyHost from "../shell/LegacyHost.vue";
 import ShellHeader from "../shell/ShellHeader.vue";
 import ShellLayout from "../shell/ShellLayout.vue";
 import { useThemeMode } from "../shell/themeMode";
+import { companyName } from "../shell/branding";
 
 // system / light / dark, chosen in the avatar's menu
 useThemeMode();

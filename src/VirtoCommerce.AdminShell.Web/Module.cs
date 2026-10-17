@@ -18,6 +18,7 @@ public class Module : IModule
     {
         serviceCollection.AddTransient<DefaultMenuBuilder>();
         serviceCollection.AddTransient<AdminMenuService>();
+        serviceCollection.AddTransient<BrandingService>();
         // the host page is revalidated, so an updated module's build reaches browsers at once
         serviceCollection.AddTransient<IStartupFilter, AppIndexNoCacheStartupFilter>();
     }

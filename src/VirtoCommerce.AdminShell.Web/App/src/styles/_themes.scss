@@ -3,8 +3,10 @@
 /* Color themes: Warm, Blue and Indigo, with the palettes of the AngularJS admin's modern look (vc-platform PR 3134,
    _modern.sass and _modern-presets.sass); Virto, the shell's own palette, is the default and has no attribute.
    shell/themeMode.ts sets data-color-theme on <html> next to vc-shell's data-theme (light or dark). Each palette is a
-   few named colors; the mixin below turns them into the shell's chrome (--as-*), its tokens (--color-*, semantic) and
-   vc-shell's palette (--primary-*, --neutrals-*, ...), so the screens follow without knowing the themes.
+   few named colors, set as --as-p-* variables; the rules below turn them into the shell's chrome (--as-*), its tokens
+   (--color-*, semantic) and vc-shell's palette (--primary-*, --neutrals-*, ...), so the screens follow without knowing
+   the themes. A theme file's theme (shell/branding.ts, docs/branding.md) starts from a built-in palette (data-color-base)
+   and sets the colors it changes in a style of its own.
    Adapted to the shell's color model: the surfaces, lines and inks are the PR's; the state colors (danger, warning,
    success, info) stay the shell's in every theme, so red, amber and green keep one meaning; and a primary (buttons,
    selection) never takes a state's hue - Warm's Virto orange (#e5451c, dark #e17853) reads as danger on a button, so
@@ -55,23 +57,30 @@ $themes: (
   ),
 );
 
-@mixin color-theme($p, $dark) {
-  $bg: map.get($p, bg);
-  $plate: map.get($p, plate);
-  $panel: map.get($p, panel);
-  $sunken: map.get($p, sunken);
-  $select: map.get($p, select);
-  $line: map.get($p, line);
-  $line-soft: map.get($p, line-soft);
-  $ink: map.get($p, ink);
-  $ink-2: map.get($p, ink-2);
-  $muted: map.get($p, muted);
-  $faint: map.get($p, faint);
-  $primary: map.get($p, primary);
-  $primary-hover: map.get($p, primary-hover);
-  $primary-soft: map.get($p, primary-soft);
-  $primary-ink: map.get($p, primary-ink);
-  $shade: map.get($p, shade);
+/* a palette as variables: --as-p-bg, --as-p-primary, ... */
+@mixin palette($p) {
+  @each $key, $value in $p {
+    --as-p-#{$key}: #{$value};
+  }
+}
+
+@mixin color-theme($dark) {
+  $bg: var(--as-p-bg);
+  $plate: var(--as-p-plate);
+  $panel: var(--as-p-panel);
+  $sunken: var(--as-p-sunken);
+  $select: var(--as-p-select);
+  $line: var(--as-p-line);
+  $line-soft: var(--as-p-line-soft);
+  $ink: var(--as-p-ink);
+  $ink-2: var(--as-p-ink-2);
+  $muted: var(--as-p-muted);
+  $faint: var(--as-p-faint);
+  $primary: var(--as-p-primary);
+  $primary-hover: var(--as-p-primary-hover);
+  $primary-soft: var(--as-p-primary-soft);
+  $primary-ink: var(--as-p-primary-ink);
+  $shade: var(--as-p-shade);
 
   /* the shell's chrome: a light (or dark) rail on the ground color, the panel and cards on the plate */
   --as-bg: #{$bg};
@@ -98,7 +107,7 @@ $themes: (
   --as-muted: #{$muted};
   --as-faint: #{$faint};
   --as-divider: #{$line-soft};
-  --as-chip: #{map.get($p, chip)};
+  --as-chip: var(--as-p-chip);
   --as-accent: #{$primary};
   --as-accent-soft: #{$primary-soft};
   --as-accent-text: #{$primary-ink};
@@ -159,35 +168,35 @@ $themes: (
   --color-secondary-300: #{$line};
 
   /* semantic */
-  --fg-link: #{map.get($p, link)};
-  --fg-on-primary: #{map.get($p, on-primary)};
+  --fg-link: var(--as-p-link);
+  --fg-on-primary: var(--as-p-on-primary);
   --bg-app: #{$bg};
   --bg-surface: #{$plate};
   --bg-row-alt: #{$panel};
   --bg-row-even: #{$panel};
   --bg-row-selected: #{$select};
   --border-row: #{$line-soft};
-  --border-focus: #{map.get($p, focus)};
+  --border-focus: var(--as-p-focus);
 }
 
 /* vc-shell's palette onto the theme's tokens (vc-shell's stylesheet loads after this one) */
-@mixin vc-shell-palette($p) {
-  --neutrals-50: #{map.get($p, bg)};
-  --neutrals-100: #{map.get($p, plate)};
-  --neutrals-200: #{map.get($p, sunken)};
-  --neutrals-300: #{map.get($p, line)};
-  --neutrals-400: #{map.get($p, faint)};
-  --neutrals-500: #{map.get($p, muted)};
-  --neutrals-600: #{map.get($p, muted)};
-  --neutrals-700: #{map.get($p, ink-2)};
-  --neutrals-800: #{map.get($p, ink)};
-  --neutrals-900: #{map.get($p, ink)};
-  --neutrals-950: #{map.get($p, ink)};
-  --additional-50: #{map.get($p, plate)};
-  --additional-950: #{map.get($p, ink)};
+@mixin vc-shell-palette {
+  --neutrals-50: var(--as-p-bg);
+  --neutrals-100: var(--as-p-plate);
+  --neutrals-200: var(--as-p-sunken);
+  --neutrals-300: var(--as-p-line);
+  --neutrals-400: var(--as-p-faint);
+  --neutrals-500: var(--as-p-muted);
+  --neutrals-600: var(--as-p-muted);
+  --neutrals-700: var(--as-p-ink-2);
+  --neutrals-800: var(--as-p-ink);
+  --neutrals-900: var(--as-p-ink);
+  --neutrals-950: var(--as-p-ink);
+  --additional-50: var(--as-p-plate);
+  --additional-950: var(--as-p-ink);
   // a dialog's title and message are body text: the ink, not vc-shell's dark primary (it stays for links and badges)
-  --popup-header-color: #{map.get($p, ink)};
-  --popup-content-text-color: #{map.get($p, ink-2)};
+  --popup-header-color: var(--as-p-ink);
+  --popup-content-text-color: var(--as-p-ink-2);
   @each $stop in (50, 100, 200, 300) {
     --secondary-#{$stop}: var(--color-secondary-#{$stop});
   }
@@ -197,22 +206,31 @@ $themes: (
   }
 }
 
+/* every theme but Virto (which has no attribute): its palette in the shell's tokens */
+:root[data-color-theme]:not([data-theme="dark"]) {
+  color-scheme: light;
+  @include color-theme(false);
+}
+
+:root[data-color-theme][data-theme="dark"] {
+  color-scheme: dark;
+  @include color-theme(true);
+}
+
+:root:root[data-color-theme]:not([data-theme="dark"]),
+:root:root[data-color-theme][data-theme="dark"] {
+  @include vc-shell-palette;
+}
+
+/* the built-in palettes; a theme file's theme starts from one of them (data-color-base) and overrides some colors */
 @each $name, $modes in $themes {
-  :root[data-color-theme="#{$name}"]:not([data-theme="dark"]) {
-    color-scheme: light;
-    @include color-theme(map.get($modes, light), false);
+  :root[data-color-theme="#{$name}"]:not([data-theme="dark"]),
+  :root[data-color-base="#{$name}"]:not([data-theme="dark"]) {
+    @include palette(map.get($modes, light));
   }
 
-  :root[data-color-theme="#{$name}"][data-theme="dark"] {
-    color-scheme: dark;
-    @include color-theme(map.get($modes, dark), true);
-  }
-
-  :root:root[data-color-theme="#{$name}"]:not([data-theme="dark"]) {
-    @include vc-shell-palette(map.get($modes, light));
-  }
-
-  :root:root[data-color-theme="#{$name}"][data-theme="dark"] {
-    @include vc-shell-palette(map.get($modes, dark));
+  :root[data-color-theme="#{$name}"][data-theme="dark"],
+  :root[data-color-base="#{$name}"][data-theme="dark"] {
+    @include palette(map.get($modes, dark));
   }
 }

@@ -99,8 +99,10 @@
     margin-bottom: 12px;
     width: 46px;
 
+    // a company's mark (white-labeling) keeps its proportions in the tile
     img {
       height: 26px;
+      object-fit: contain;
       width: 24px;
     }
   }
@@ -279,6 +281,8 @@
     img {
       display: block;
       height: 46px;
+      object-fit: contain;
+      object-position: left center;
       width: 137px;
     }
   }
@@ -903,6 +907,7 @@
 
     img {
       height: 22px;
+      object-fit: contain;
       width: 20px;
     }
   }

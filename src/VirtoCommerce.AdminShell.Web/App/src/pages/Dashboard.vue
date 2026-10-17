@@ -2,6 +2,7 @@
   <!-- widgets come from the host (shell/dashboard) and from module plugins via registerDashboardWidget -->
   <div
     class="as-dashboard"
+    :class="{ 'as-dashboard--welcome': hasWelcome }"
     @pointerdown.capture="arm"
     @keydown.capture="onKey"
     @change.capture="tidy"
@@ -17,6 +18,8 @@
       />
       {{ $t("SHELL.DASHBOARD.RESET_LAYOUT") }}
     </button>
+    <!-- the company's message (white-labeling), above the widgets -->
+    <WelcomeCard />
     <DraggableDashboard
       :key="generation"
       ref="dashboard"
@@ -30,12 +33,16 @@
 import { DraggableDashboard, usePopup } from "@vc-shell/framework";
 import { VcIcon } from "@vc-shell/framework/ui";
 import type { GridStack } from "gridstack";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { branding } from "../shell/branding";
+import WelcomeCard from "../shell/dashboard/WelcomeCard.vue";
 
 const { t } = useI18n({ useScope: "global" });
 const { showConfirmation } = usePopup();
 const dashboard = ref<InstanceType<typeof DraggableDashboard> | null>(null);
+// with the welcome card above the grid, the page scrolls as one (the card, then the widgets)
+const hasWelcome = computed(() => !!branding.value.home.welcome);
 // a new grid after a reset (see resetLayout)
 const generation = ref(0);
 
@@ -81,6 +88,18 @@ async function resetLayout() {
 .as-dashboard {
   height: 100%;
   position: relative;
+}
+
+// the welcome card (white-labeling) scrolls away with the widgets: the page scrolls, not the grid's own container, which
+// would sit under the card at the full height and lose its bottom
+.as-dashboard--welcome {
+  overflow-y: auto;
+
+  > .vc-container,
+  > .vc-container > .vc-container__inner {
+    height: auto;
+    overflow: visible;
+  }
 }
 
 .as-dashboard__reset {

@@ -7,8 +7,9 @@
       <header class="as-auth__header">
         <img
           class="as-auth__logo"
+          :class="{ 'as-auth__logo--brand': !!brandLogo(isDark) }"
           :src="logo"
-          alt="Virto Commerce"
+          :alt="companyName"
         />
         <button
           type="button"
@@ -31,18 +32,27 @@
       </main>
 
       <footer class="as-auth__footer">
-        <span>© {{ year }} Virto Commerce</span>
-        <a
-          href="https://docs.virtocommerce.org/platform/user-guide/latest/getting-started/"
-          target="_blank"
-          rel="noopener"
+        <span>© {{ year }} {{ companyName }}</span>
+        <nav
+          v-if="links.length"
+          class="as-auth__links"
         >
-          {{ $t("SHELL.AUTH.HELP") }}
-        </a>
+          <a
+            v-for="link in links"
+            :key="link.key"
+            :href="link.url"
+            target="_blank"
+            rel="noopener"
+          >
+            {{ link.text }}
+          </a>
+        </nav>
       </footer>
     </div>
 
-    <AuthShowcase />
+    <!-- Virto's slides, the company's own (white-labeling), or only the form -->
+    <AuthSlides v-if="branding.signIn.showcase === 'custom' && branding.signIn.slides.length" />
+    <AuthShowcase v-else-if="branding.signIn.showcase !== 'none'" />
   </div>
 </template>
 
@@ -51,8 +61,10 @@ import { useTheme } from "@vc-shell/framework";
 import { VcIcon } from "@vc-shell/framework/ui";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
+import { brandLogo, branding, companyName, safeUrl } from "../shell/branding";
 import { themeMode, useThemeMode } from "../shell/themeMode";
 import AuthShowcase from "./AuthShowcase.vue";
+import AuthSlides from "./AuthSlides.vue";
 import logoLight from "/assets/logo-shell.svg";
 import logoDark from "/assets/logo-shell-dark.svg";
 
@@ -63,9 +75,16 @@ const { t } = useI18n({ useScope: "global" });
 const { currentThemeKey } = useTheme();
 
 const isDark = computed(() => currentThemeKey.value === "dark");
-// the wordmark for the theme; the platform's UI customization logo (by default its small grey mark) is one image for
-// both themes, so it isn't used here
-const logo = computed(() => (isDark.value ? logoDark : logoLight));
+// the company's logo (AdminShell.Branding.LogoUrl / LogoDarkUrl), else Virto's wordmark for the theme; the platform's UI
+// customization logo (by default its small grey mark) is one image for both themes, so it isn't used here
+const logo = computed(() => brandLogo(isDark.value) ?? (isDark.value ? logoDark : logoLight));
+
+// Help, Support, Privacy, Terms: the ones the installation gives (AdminShell.Branding.*Url)
+const links = computed(() =>
+  (["help", "support", "privacy", "terms"] as const)
+    .map((key) => ({ key, url: safeUrl(branding.value.links[key]), text: t(`SHELL.AUTH.LINKS.${key.toUpperCase()}`) }))
+    .filter((x) => x.url),
+);
 const themeLabel = computed(() => t(isDark.value ? "SHELL.AUTH.LIGHT_THEME" : "SHELL.AUTH.DARK_THEME"));
 const year = new Date().getFullYear();
 
@@ -123,6 +142,19 @@ function toggleTheme() {
   display: block;
   height: 40px;
   width: auto;
+}
+
+// a company's logo: its own proportions, within the header
+.as-auth__logo--brand {
+  max-height: 48px;
+  max-width: min(240px, 60vw);
+  object-fit: contain;
+}
+
+.as-auth__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
 }
 
 .as-auth__theme {

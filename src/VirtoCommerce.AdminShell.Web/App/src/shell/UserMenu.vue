@@ -80,7 +80,10 @@
           </button>
         </span>
       </div>
-      <div class="as-um__row">
+      <div
+        v-if="themeChoice"
+        class="as-um__row"
+      >
         <VcIcon
           class="as-um__icon"
           icon="lucide-palette"
@@ -95,6 +98,21 @@
     </div>
 
     <div class="as-um__group">
+      <a
+        v-for="link in helpLinks"
+        :key="link.key"
+        class="as-um__row as-um__row--action"
+        :href="link.url"
+        target="_blank"
+        rel="noopener"
+        @click="emit('close')"
+      >
+        <VcIcon
+          class="as-um__icon"
+          :icon="link.icon"
+        />
+        <span class="as-um__label">{{ $t(`SHELL.AUTH.LINKS.${link.key.toUpperCase()}`) }}</span>
+      </a>
       <!-- the way out to the AngularJS admin while modules move over -->
       <a
         class="as-um__row as-um__row--action"
@@ -151,7 +169,8 @@ import { useRouter } from "vue-router";
 import { systemInfo, type SystemInfo } from "./dashboard/api";
 import { formatLicenseDate, isLicenseExpired } from "./license";
 import MenuSelect, { type MenuSelectOption } from "./MenuSelect.vue";
-import { COLOR_THEMES, colorTheme, themeMode, type ThemeMode } from "./themeMode";
+import { branding, safeUrl } from "./branding";
+import { colorTheme, colorThemeOptions, themeChoice, themeMode, type ThemeMode } from "./themeMode";
 
 defineProps<{ avatar?: string }>();
 const emit = defineEmits<{ (e: "close"): void }>();
@@ -193,11 +212,20 @@ const languages = computed<MenuSelectOption[]>(() =>
 
 // each theme with its mark: its main color in the light and in the dark appearance
 const colorThemes = computed<MenuSelectOption[]>(() =>
-  COLOR_THEMES.map((theme) => ({
-    value: theme,
-    label: t(`SHELL.USER_MENU.COLOR_THEMES.${theme.toUpperCase()}`),
-    swatch: `as-um__swatch--${theme}`,
+  colorThemeOptions.value.map((theme) => ({
+    value: theme.id,
+    label: theme.name ?? t(`SHELL.USER_MENU.COLOR_THEMES.${theme.id.toUpperCase()}`),
+    swatch: theme.swatchClass,
+    swatchStyle: theme.swatchStyle,
   })),
+);
+
+// the installation's Help and Support (white-labeling); none without a link
+const helpLinks = computed(() =>
+  [
+    { key: "help", icon: "lucide-circle-help", url: safeUrl(branding.value.links.help) },
+    { key: "support", icon: "lucide-life-buoy", url: safeUrl(branding.value.links.support) },
+  ].filter((x) => x.url),
 );
 
 const modes = computed<{ key: ThemeMode; icon: string; label: string }[]>(() => [

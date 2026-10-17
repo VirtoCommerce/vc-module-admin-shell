@@ -21,9 +21,10 @@
         :icon="icon"
       />
       <span
-        v-else-if="current?.swatch"
+        v-else-if="current?.swatch !== undefined"
         class="as-um__swatch"
         :class="current.swatch"
+        :style="current.swatchStyle"
         aria-hidden="true"
       />
       <span class="as-ms__value">{{ current?.label }}</span>
@@ -55,9 +56,10 @@
         @mousemove="active = i"
       >
         <span
-          v-if="option.swatch"
+          v-if="option.swatch !== undefined"
           class="as-um__swatch"
           :class="option.swatch"
+          :style="option.swatchStyle"
           aria-hidden="true"
         />
         <span class="as-ms__label">{{ option.label }}</span>
@@ -81,6 +83,8 @@ export interface MenuSelectOption {
   label: string;
   /** classes of a color dot before the label (as-um__swatch modifiers) */
   swatch?: string;
+  /** the dot's colors as variables (--as-swatch-light, --as-swatch-dark), for a theme file's theme */
+  swatchStyle?: Record<string, string>;
 }
 
 const props = defineProps<{

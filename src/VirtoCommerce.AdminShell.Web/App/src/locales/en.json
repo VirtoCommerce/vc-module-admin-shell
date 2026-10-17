@@ -3,7 +3,7 @@
   "SHELL": {
     "NAV": {
       "SECTIONS": "Sections",
-      "HOME": "Virto Commerce, home",
+      "HOME": "{name}, home",
       "MENU": "Menu",
       "NOTIFICATIONS": "Notifications",
       "ACCOUNT": "Account",
@@ -49,6 +49,9 @@
       "NEW_TAB": "Open in new tab"
     },
     "DASHBOARD": {
+      "WELCOME": {
+        "TITLE": "Welcome"
+      },
       "RESET_LAYOUT": "Reset layout",
       "RESET_LAYOUT_CONFIRM": "Put every widget back to its default place and size?",
       "VIEW_ALL": "View all",
@@ -113,10 +116,17 @@
           "POINT_3": "Native Support for UCP and OnX Protocols"
         }
       },
-      "HELP": "Help"
+      "HELP": "Help",
+      "LINKS": {
+        "HELP": "Help",
+        "SUPPORT": "Support",
+        "PRIVACY": "Privacy",
+        "TERMS": "Terms"
+      },
+      "SLIDES_LABEL": "About {name}"
     },
     "LOGIN": {
-      "SUBTITLE": "Sign in to Virto Commerce to continue",
+      "SUBTITLE": "Sign in to {name} to continue",
       "CONTINUE_WITH": "Continue with {name}",
       "CONTINUE_WITH_SSO": "Continue with single sign-on",
       "OR": "or",

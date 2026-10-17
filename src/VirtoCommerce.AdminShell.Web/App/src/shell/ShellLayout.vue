@@ -27,11 +27,11 @@
       <button
         type="button"
         class="as-mbar__logo"
-        :aria-label="$t('SHELL.NAV.HOME')"
+        :aria-label="$t('SHELL.NAV.HOME', { name: companyName })"
         @click="router.push({ path: '/' })"
       >
         <img
-          :src="logoMark"
+          :src="brandMark() ?? logoMark"
           alt=""
         />
       </button>
@@ -116,6 +116,7 @@ import { globalSearch, useGlobalSearchSetup } from "./search";
 import SearchSheet from "./search/SearchSheet.vue";
 import ShellNav from "./ShellNav.vue";
 import logoMark from "/assets/logo-mark.svg";
+import { brandMark, companyName } from "./branding";
 
 const props = defineProps<{ mobile: boolean; avatar?: string }>();
 

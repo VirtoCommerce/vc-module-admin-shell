@@ -1,7 +1,7 @@
 <template>
   <AuthShell>
     <h1 class="as-auth__title">{{ $t("LOGIN.TITLE") }}</h1>
-    <p class="as-auth__subtitle">{{ $t("SHELL.LOGIN.SUBTITLE") }}</p>
+    <p class="as-auth__subtitle">{{ $t("SHELL.LOGIN.SUBTITLE", { name: companyName }) }}</p>
 
     <div
       v-if="error"
@@ -185,6 +185,7 @@ import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import AuthShell from "./AuthShell.vue";
 import { rootedUrl } from "../utils/url";
+import { companyName } from "../shell/branding";
 
 interface Provider {
   type: string;

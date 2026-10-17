@@ -69,7 +69,7 @@
               :clearable="false"
             />
           </VcCol>
-          <VcCol>
+          <VcCol v-if="themeChoice">
             <VcSelect
               v-model="colorTheme"
               :label="$t('SHELL.USER_MENU.COLOR_THEME')"
@@ -80,7 +80,8 @@
                 <span class="platform-profile__theme">
                   <span
                     class="as-um__swatch"
-                    :class="`as-um__swatch--${opt.id}`"
+                    :class="opt.swatchClass"
+                    :style="opt.swatchStyle"
                     aria-hidden="true"
                   />
                   {{ opt.title }}
@@ -90,7 +91,8 @@
                 <span class="platform-profile__theme">
                   <span
                     class="as-um__swatch"
-                    :class="`as-um__swatch--${opt.id}`"
+                    :class="opt.swatchClass"
+                    :style="opt.swatchStyle"
                     aria-hidden="true"
                   />
                   {{ opt.title }}
@@ -168,7 +170,7 @@ import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { api } from "../../api";
 import { ensureSucceeded } from "../../composables/security";
-import { COLOR_THEMES, colorTheme, themeMode } from "../../../../shell/themeMode";
+import { colorTheme, colorThemeOptions, themeChoice, themeMode } from "../../../../shell/themeMode";
 import { browserZone, languageName, timeZones } from "./intl";
 
 defineBlade({
@@ -217,7 +219,10 @@ const appearances = computed(() => [
   { id: "dark", title: t("CORE.THEMES.DARK") },
 ]);
 const colorThemes = computed(() =>
-  COLOR_THEMES.map((id) => ({ id, title: t(`SHELL.USER_MENU.COLOR_THEMES.${id.toUpperCase()}`) })),
+  colorThemeOptions.value.map((theme) => ({
+    ...theme,
+    title: theme.name ?? t(`SHELL.USER_MENU.COLOR_THEMES.${theme.id.toUpperCase()}`),
+  })),
 );
 
 const units = computed(() =>
