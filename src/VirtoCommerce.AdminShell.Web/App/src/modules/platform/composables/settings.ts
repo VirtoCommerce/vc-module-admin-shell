@@ -64,6 +64,13 @@ export const settingsOf = (doc: { settings?: unknown } | null): SettingValues =>
 /** "Catalog|Search" -> ["Catalog", "Search"]; settings without a group live under "General". */
 export const groupPath = (s: SettingSchema) => (s.groupName || "General").split("|").map((x) => x.trim());
 
+/** The tree node of a setting's group: "Catalog|Search" */
+export const groupId = (s: SettingSchema) => groupPath(s).join("|");
+
+/** A setting the Settings blade is asked to show (global search); the blade picks it up once it is open */
+export const settingFocus = ref<{ name: string; at: number }>();
+export const focusSetting = (name: string) => (settingFocus.value = { name, at: Date.now() });
+
 // legacy labels come from the platform translations: settings.<Name.With.Dots>.title / .description (nested by dots)
 function resolve(node: unknown, parts: string[]): unknown {
   if (!parts.length) return node;

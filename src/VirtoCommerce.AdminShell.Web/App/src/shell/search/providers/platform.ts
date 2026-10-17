@@ -6,6 +6,7 @@
 import { shallowRef, type Ref } from "vue";
 import type { EffectiveMenu, MenuItem } from "../../../api/adminMenu";
 import {
+  focusSetting,
   groupPath,
   settingTitle,
   useSettingsStore,
@@ -283,18 +284,10 @@ export function reorder<T>(items: T[], query: string, fields: (item: T) => unkno
   return [...ranked, ...items.filter((x) => !ranked.includes(x))];
 }
 
+// the Settings blade shows the setting: its group chosen in the tree, the setting scrolled to and flashed
 function openSetting(setting: SettingSchema) {
-  return openBlade({
-    route: "/settings",
-    workspace: "PlatformSettings",
-    blades: [
-      {
-        name: "PlatformSettingsGroup",
-        param: groupPath(setting).join("|"),
-        options: { focus: setting.name, includeTenant: !!setting.assignedToTenants?.length },
-      },
-    ],
-  });
+  focusSetting(setting.name);
+  return openBlade({ route: "/settings", workspace: "PlatformSettings" });
 }
 
 // "VirtoCommerce.Search.IndexingJobs.ScanInterval" -> "Scan interval" (settings without a translated title)

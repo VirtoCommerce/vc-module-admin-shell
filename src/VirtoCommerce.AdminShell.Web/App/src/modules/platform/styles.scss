@@ -90,12 +90,7 @@
   }
 }
 
-/* a setting opened from global search flashes once where it is */
-.platform-setting--found {
-  animation: platform-setting-found 2.4s ease-out;
-  border-radius: 8px;
-}
-
+/* a setting opened from global search or a link flashes once where it is (the Settings blade) */
 @keyframes platform-setting-found {
   0%,
   35% {

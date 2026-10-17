@@ -6,6 +6,7 @@
 |---|---|---|
 | [Architecture overview](architecture.md) | everyone | What the Admin Shell is and the ideas it is built on, in one page. |
 | [Technical description](technical-description.md) | developers | The server and client parts, startup, routing, menu composition, build and deployment. |
+| [Settings](settings.md) | developers | The Settings screen (tree, properties edited in place, deep links, phone layout), the settings store and the user's preferences, all on the platform's Settings v2 API. |
 
 ## Extension points
 
