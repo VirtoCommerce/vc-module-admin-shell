@@ -165,7 +165,7 @@ import {
   type UserDetail,
 } from "@vc-shell/framework";
 import { VcBlade, VcCol, VcContainer, VcForm, VcInput, VcRow, VcSelect, VcSwitch } from "@vc-shell/framework/ui";
-import { computed, ref, watch } from "vue";
+import { computed, nextTick, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { api } from "../../api";
@@ -211,6 +211,8 @@ const values = ref<Partial<Record<Field, unknown>>>({});
 const languages = ref<{ id: string; title: string }[]>([]);
 const regionalFormats = ref<{ id: string; title: string }[]>([]);
 let saved = "";
+// true while loaded values are put in place: the language watch below applies only what the user picks
+let loadingValues = false;
 
 // the look: saved to the profile by shell/themeMode.ts as soon as it changes, like the avatar's menu does
 const appearances = computed(() => [
@@ -284,13 +286,19 @@ const { loading: loadLoading, action: load } = useAsync(async () => {
   profile.value = result;
   languages.value = (locales ?? []).map((code) => ({ id: code, title: languageName(code) }));
   regionalFormats.value = (formats ?? []).map((code) => ({ id: code, title: `${languageName(code, "en")} (${code})` }));
+  // what is loaded is shown, not applied: the language field follows the UI's language when the profile has none (its
+  // platform default would otherwise switch the UI, e.g. from a language picked on the sign-in page)
+  loadingValues = true;
   values.value = Object.fromEntries(
     FIELDS.map((f) => {
       const entry = result.settings.find((s) => s.name === PREFIX + f);
-      return [f, entry?.value ?? entry?.defaultValue ?? undefined];
+      const fallback = f === "Language" ? currentLocale.value : entry?.defaultValue;
+      return [f, entry?.value ?? fallback ?? undefined];
     }),
   );
   saved = JSON.stringify(values.value);
+  await nextTick();
+  loadingValues = false;
 });
 
 // legacy saves every change immediately: the whole profile goes back with the updated setting values
@@ -321,6 +329,7 @@ watch(values, debounce(() => save(), 400), { deep: true });
 watch(
   () => values.value.Language,
   (lang) => {
+    if (loadingValues) return;
     if (typeof lang === "string" && lang !== currentLocale.value && availableLocales.includes(lang)) setLocale(lang);
   },
 );
