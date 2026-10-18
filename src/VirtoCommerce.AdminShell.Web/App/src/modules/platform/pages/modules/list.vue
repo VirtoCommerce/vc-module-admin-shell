@@ -102,7 +102,8 @@ const isView = (x: unknown): x is View => VIEWS.includes(x as View);
 const openedWith = new URLSearchParams(window.location.hash.split("?")[1] ?? "").get("view");
 // the view shown: the one the address asks for, kept while an address without one (the shell's start drops queries; the
 // menu always names one, Modules itself is Installed) comes and goes
-const view = ref<View>(isView(route.query.view) ? route.query.view : isView(openedWith) ? openedWith : "installed");
+const firstView = [route.query.view, openedWith].find(isView) ?? "installed";
+const view = ref<View>(firstView);
 watch(
   () => route.query.view,
   (asked) => {

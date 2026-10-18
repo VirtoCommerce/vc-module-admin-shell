@@ -37,8 +37,8 @@ export function useAdminMenu() {
   }
 
   /** "/modules?view=updates" -> the path and its query: a screen's views as menu items (Modules · Updates) */
-  function splitRoute(route: string) {
-    const [path, search = ""] = route.split("?");
+  function splitRoute(address: string) {
+    const [path, search = ""] = address.split("?");
     return { path, query: Object.fromEntries(new URLSearchParams(search)) };
   }
 
