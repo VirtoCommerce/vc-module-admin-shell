@@ -985,6 +985,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fontsource-variable/noto-sans-hebrew@npm:5.2.8":
+  version: 5.2.8
+  resolution: "@fontsource-variable/noto-sans-hebrew@npm:5.2.8"
+  checksum: 10/3f1ba765aff835f0f07a7096f572d4e7a5c6eaceeeb3db8edaea4b9adc57243ebda34d1288095454ceba29f21709d087cc05b1f14a739f8fad17d19718868df6
+  languageName: node
+  linkType: hard
+
 "@fontsource/lato@npm:^5.2.7":
   version: 5.3.0
   resolution: "@fontsource/lato@npm:5.3.0"
@@ -4201,6 +4208,7 @@ __metadata:
     "@commitlint/cli": "npm:^20.4.1"
     "@commitlint/config-conventional": "npm:^20.4.1"
     "@fontsource-variable/noto-sans-arabic": "npm:5.2.10"
+    "@fontsource-variable/noto-sans-hebrew": "npm:5.2.8"
     "@laynezh/vite-plugin-lib-assets": "npm:^0.5.13"
     "@rollup/plugin-typescript": "npm:^11.1.5"
     "@types/lodash-es": "npm:^4.17.12"

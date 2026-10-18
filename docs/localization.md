@@ -12,7 +12,7 @@ The Admin Shell shows its interface in the language each user picks (avatar menu
 | `fi` | Suomi | `no` | Norsk | `sv` | Svenska |
 | | | | | `zh` | 中文 |
 
-Besides these, the Admin Shell and its module plugins speak **Arabic** (`ar`, right to left; see *Right-to-left languages*). The platform offers a language once a module ships its server texts in it, so Arabic is in the platform's list too.
+Besides these, the Admin Shell and its module plugins speak **Arabic** (`ar`) and **Hebrew** (`he`), both right to left (see *Right-to-left languages*). The platform offers a language once a module ships its server texts in it, so both are in the platform's list too.
 
 The language codes are the platform's (`GET api/platform/localization/locales`), so a user's language, stored once in their profile (`VirtoCommerce.Platform.UI.Language`), applies to the AngularJS admin and to the Admin Shell alike.
 
@@ -57,8 +57,8 @@ Arabic, Hebrew, Persian and Urdu are written right to left. For them the whole p
 | Mirrored styles | at build time every left/right rule of the shell, Tailwind and vc-shell's stylesheet gets its mirror under `[dir="rtl"]` (margins, paddings, positions, borders, corners, text alignment, rotations) | `App/postcss.config.cjs` (`postcss-rtlcss`) |
 | Not mirrored | the dashboard grid (gridstack) places widgets itself and has its own right-to-left rules, so its rules are left out | `App/postcss.config.cjs` (`keepGridstack`) |
 | Arrows | arrows that mean forward, back, open or in/out (chevrons, arrows, log in/out, panel) point the way of reading | `App/src/styles/_rtl.scss` |
-| Text with its own direction | data in tables, cards and fields (emails, codes, versions, URLs, amounts) keeps its own direction inside the Arabic page, so it is cut and ordered from its first letter | `App/src/styles/_rtl.scss` |
-| Arabic letters | Noto Sans Arabic, bundled with the app (no font service), added to the shell's font names for the Arabic code points only | `App/src/styles/_rtl.scss`, `@fontsource-variable/noto-sans-arabic` |
+| Text with its own direction | data in tables, cards and fields (emails, codes, versions, URLs, amounts) keeps its own direction inside the right-to-left page, so it is cut and ordered from its first letter | `App/src/styles/_rtl.scss` |
+| Arabic and Hebrew letters | Noto Sans Arabic and Noto Sans Hebrew, bundled with the app (no font service), added to the shell's font names for those scripts' code points only | `App/src/styles/_rtl.scss` (`$scripts`), `@fontsource-variable/noto-sans-arabic`, `@fontsource-variable/noto-sans-hebrew` |
 
 Writing a screen that works both ways:
 
@@ -66,9 +66,9 @@ Writing a screen that works both ways:
 - **Icons:** a directional icon from the list in `_rtl.scss` flips by itself. An icon that shows a direction in the world (a chart going up, "open in new tab") doesn't flip; one that shows the way of reading does.
 - **Data:** put codes, emails and URLs in table cells, fields or the mobile card's fields; elsewhere give the element `dir="auto"` (or `dir="ltr"` for code-like values) so they read correctly.
 - **Sentences around fields** (the condition builders) are separate texts: each language orders them in its reading order, so keep them short.
-- **Charts** keep their time axis left to right, as charts in Arabic interfaces usually do.
+- **Charts** keep their time axis left to right, as charts in Arabic and Hebrew interfaces usually do.
 
-Adding another right-to-left language (Hebrew, `he`): the steps of *Adding a new language* below; the direction, styles and arrows already apply (`he` is in `RTL_LANGUAGES`). For a script other than Arabic, add its font as `_rtl.scss` does for Arabic.
+Adding another right-to-left language (Persian `fa`, Urdu `ur`): the steps of *Adding a new language* below; the direction, styles and arrows already apply (both are in `RTL_LANGUAGES`). A script without a bundled font gets one in `_rtl.scss` (`$scripts`); Urdu's Nastaliq is taller than Naskh, so check line heights.
 
 ## Adding a new language
 

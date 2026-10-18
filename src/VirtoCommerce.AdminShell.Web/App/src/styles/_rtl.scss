@@ -1,24 +1,32 @@
 /* Right-to-left languages (ar, he, fa, ur; <html dir="rtl">, see locales/direction.ts). The layout's left/right rules are
    mirrored at build time (postcss-rtlcss, postcss.config.cjs); this file holds what a mirror can't do:
-   the Arabic letters, arrows that point the way of reading, and text whose direction is its own. */
+   the letters of these scripts, arrows that point the way of reading, and text whose direction is its own. */
 
-/* Arabic letters: vc-shell's fonts have none, so the browser would pick any system font. The same font names get Noto
-   Sans Arabic for the Arabic code points only (unicode-range), bundled with the app (no font service: the admin works
-   in a closed network). Latin text keeps its font. */
-$arabic-font: url("../../node_modules/@fontsource-variable/noto-sans-arabic/files/noto-sans-arabic-arabic-wght-normal.woff2")
-  format("woff2-variations");
-$arabic-range:
-  U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F,
-  U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
+/* Arabic and Hebrew letters: vc-shell's fonts have none, so the browser would pick any system font. The same font names
+   get Noto Sans Arabic and Noto Sans Hebrew for those scripts' code points only (unicode-range), bundled with the app (no
+   font service: the admin works in a closed network). Latin text keeps its font. */
+$scripts: (
+  arabic: (
+    url("../../node_modules/@fontsource-variable/noto-sans-arabic/files/noto-sans-arabic-arabic-wght-normal.woff2"),
+    (U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F,
+      U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC)
+  ),
+  hebrew: (
+    url("../../node_modules/@fontsource-variable/noto-sans-hebrew/files/noto-sans-hebrew-hebrew-wght-normal.woff2"),
+    (U+0590-05FF, U+20AA, U+FB1D-FB4F)
+  ),
+);
 
 @each $family in ("Plus Jakarta Sans", "Lato") {
-  @font-face {
-    font-display: swap;
-    font-family: $family;
-    font-style: normal;
-    font-weight: 100 900;
-    src: $arabic-font;
-    unicode-range: $arabic-range;
+  @each $script, $font in $scripts {
+    @font-face {
+      font-display: swap;
+      font-family: $family;
+      font-style: normal;
+      font-weight: 100 900;
+      src: nth($font, 1) format("woff2-variations");
+      unicode-range: nth($font, 2);
+    }
   }
 }
 
@@ -52,7 +60,7 @@ $arabic-range:
   }
 
   /* text whose direction is its own: data in tables, cards and fields (emails, codes, versions, URLs, amounts) reads left
-     to right inside the Arabic page, from its first letter, and keeps the cell's alignment */
+     to right inside a right-to-left page, from its first letter, and keeps the cell's alignment */
   :is(input:not([type="checkbox"], [type="radio"], [type="range"]), textarea) {
     unicode-bidi: plaintext;
   }
@@ -62,3 +70,16 @@ $arabic-range:
     unicode-bidi: plaintext;
   }
 }
+
+/* code reads left to right whatever the page: the sign-in showcase's GraphQL and JSON, JSON views, setting names. Kept
+   out of the build-time mirroring, which would turn this "ltr" and "left" around too */
+/*rtl:begin:ignore*/
+[dir="rtl"] :is(pre, code, kbd, samp) {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+[dir="rtl"] pre {
+  text-align: left;
+}
+/*rtl:end:ignore*/

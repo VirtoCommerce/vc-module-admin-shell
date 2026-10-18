@@ -1,0 +1,102 @@
+{
+  "permissions": {
+    "admin-shell:access": "פתיחת Admin Shell",
+    "admin-shell:menu:manage": "ניהול התפריט של Admin Shell (השכבה הגלובלית ושכבת התפקידים)"
+  },
+  "settings": {
+    "AdminShell": {
+      "Menu": {
+        "Global": {
+          "title": "שינויים בתפריט הגלובלי",
+          "description": "תיקון JSON שמוחל על תפריט ברירת המחדל של Admin Shell לכל המשתמשים: הסתרה, שינוי שם או העברה של מקטעים ופריטים, או הוספת חדשים"
+        },
+        "Role": {
+          "title": "שינויים בתפריט לפי תפקיד",
+          "description": "תיקון JSON שמוחל על תפריט Admin Shell עבור משתמשים בתפקיד זה; פריט נשאר גלוי אם אחד מתפקידי המשתמש משאיר אותו"
+        },
+        "User": {
+          "title": "העדפות תפריט",
+          "description": "פריטי התפריט של Admin Shell שהמשתמש הצמיד או הסתיר"
+        }
+      },
+      "UI": {
+        "Appearance": {
+          "title": "מראה",
+          "description": "המראה של Admin Shell: בהיר, כהה או לפי מערכת ההפעלה"
+        },
+        "Theme": {
+          "title": "ערכת נושא",
+          "description": "הצבעים של Admin Shell: Virto, Warm, Blue, Indigo או ערכת נושא מותאמת אישית"
+        }
+      },
+      "Branding": {
+        "CompanyName": {
+          "title": "שם החברה",
+          "description": "מוצג בכרטיסיית הדפדפן, בדף הכניסה ובכותרת התחתונה שלו. ריק: Virto Commerce"
+        },
+        "LogoUrl": {
+          "title": "לוגו",
+          "description": "הלוגו על רקעים בהירים (דף הכניסה, דף הבית): כתובת URL של תמונה, למשל מתוך נכסים. SVG או PNG, בגודל של כ-200 x 48 px"
+        },
+        "LogoDarkUrl": {
+          "title": "לוגו למראה כהה",
+          "description": "הלוגו על רקעים כהים. ריק: הלוגו שלמעלה"
+        },
+        "MarkUrl": {
+          "title": "סמל הלוגו",
+          "description": "סמל ריבועי לסרגל התפריט ולסרגל העליון בטלפון: כתובת URL של תמונה. SVG או PNG, בגודל של 64 x 64 px לפחות"
+        },
+        "FaviconUrl": {
+          "title": "סמל כרטיסיית הדפדפן",
+          "description": "ה-favicon: כתובת URL של תמונה (ICO, PNG או SVG). ריק: סמל הלוגו"
+        },
+        "HelpUrl": {
+          "title": "קישור לעזרה",
+          "description": "היעד של 'עזרה' בדף הכניסה ובתפריט המשתמש. ריק: אין קישור לעזרה"
+        },
+        "SupportUrl": {
+          "title": "קישור לתמיכה",
+          "description": "דף תמיכה או כתובת mailto:, בכותרת התחתונה של דף הכניסה ובתפריט המשתמש"
+        },
+        "PrivacyUrl": {
+          "title": "קישור למדיניות הפרטיות",
+          "description": "מוצג בכותרת התחתונה של דף הכניסה"
+        },
+        "TermsUrl": {
+          "title": "קישור לתנאי השימוש",
+          "description": "מוצג בכותרת התחתונה של דף הכניסה"
+        }
+      },
+      "SignIn": {
+        "Showcase": {
+          "title": "חלונית דף הכניסה",
+          "description": "החלונית לצד טופס הכניסה (מרוחב 1024 px): virto מציג את השקופיות של Virto Commerce, custom את השקופיות שלהלן, none את הטופס בלבד"
+        },
+        "Slides": {
+          "title": "שקופיות דף הכניסה",
+          "description": "רשימת JSON של שקופיות: [{ \"chip\", \"title\", \"body\", \"points\": [], \"image\", \"imageDark\", \"alt\", \"link\": { \"text\", \"url\" } }]. טקסט יכול להיות מחרוזת או { \"en\": \"...\", \"de\": \"...\" }"
+        }
+      },
+      "Home": {
+        "Welcome": {
+          "title": "כרטיס הפתיחה בדף הבית",
+          "description": "JSON: { \"title\", \"body\", \"image\", \"imageDark\", \"links\": [{ \"text\", \"url\" }] }, מוצג ראשון בדף הבית. {} מסתיר אותו"
+        }
+      },
+      "Theme": {
+        "Default": {
+          "title": "ערכת נושא ברירת מחדל",
+          "description": "ערכת הנושא של דף הכניסה ושל משתמשים שלא בחרו ערכת נושא: virto, warm, blue, indigo או המזהה של קובץ ערכת נושא"
+        },
+        "Appearance": {
+          "title": "מראה ברירת מחדל",
+          "description": "בהיר, כהה או לפי מערכת ההפעלה, עבור דף הכניסה ומשתמשים שלא בחרו מראה"
+        },
+        "UserChoice": {
+          "title": "המשתמשים בוחרים ערכת נושא",
+          "description": "כבוי: לכולם ערכת הנושא של ברירת המחדל, ובוררי ערכת הנושא מוסתרים"
+        }
+      }
+    }
+  }
+}
