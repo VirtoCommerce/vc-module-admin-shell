@@ -1,5 +1,5 @@
 <template>
-  <!-- The page around every sign-in screen: logo and theme switch on top, the form in a 400px column, a small footer.
+  <!-- The page around every sign-in screen: logo, language and theme switch on top, the form in a 400px column, a small footer.
        vc-shell's own auth pages (forgot/reset password, invite, change password) render inside it too: the styles below
        flatten their card so they read like the sign-in form. -->
   <div class="as-auth">
@@ -11,18 +11,30 @@
           :src="logo"
           :alt="companyName"
         />
-        <button
-          type="button"
-          class="as-auth__theme"
-          :title="themeLabel"
-          :aria-label="themeLabel"
-          @click="toggleTheme"
-        >
-          <VcIcon
-            :icon="isDark ? 'lucide-sun' : 'lucide-moon'"
-            size="m"
+        <div class="as-auth__tools">
+          <!-- the language for these pages; once signed in, the profile's language applies if the user has one -->
+          <MenuSelect
+            v-if="languages.length > 1"
+            class="as-auth__language"
+            :model-value="currentLocale"
+            :options="languages"
+            :label="$t('SHELL.USER_MENU.LANGUAGE')"
+            icon="lucide-globe"
+            @update:model-value="setLocale"
           />
-        </button>
+          <button
+            type="button"
+            class="as-auth__theme"
+            :title="themeLabel"
+            :aria-label="themeLabel"
+            @click="toggleTheme"
+          >
+            <VcIcon
+              :icon="isDark ? 'lucide-sun' : 'lucide-moon'"
+              size="m"
+            />
+          </button>
+        </div>
       </header>
 
       <main class="as-auth__main">
@@ -57,11 +69,13 @@
 </template>
 
 <script lang="ts" setup>
-import { useTheme } from "@vc-shell/framework";
+import { useLanguages, useTheme } from "@vc-shell/framework";
 import { VcIcon } from "@vc-shell/framework/ui";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { brandLogo, branding, companyName, safeUrl } from "../shell/branding";
+import { useLanguageOptions } from "../shell/languages";
+import MenuSelect from "../shell/MenuSelect.vue";
 import { themeMode, useThemeMode } from "../shell/themeMode";
 import AuthShowcase from "./AuthShowcase.vue";
 import AuthSlides from "./AuthSlides.vue";
@@ -73,6 +87,8 @@ useThemeMode();
 
 const { t } = useI18n({ useScope: "global" });
 const { currentThemeKey } = useTheme();
+const { currentLocale, setLocale } = useLanguages();
+const languages = useLanguageOptions();
 
 const isDark = computed(() => currentThemeKey.value === "dark");
 // the company's logo (AdminShell.Branding.LogoUrl / LogoDarkUrl), else Virto's wordmark for the theme; the platform's UI
@@ -157,6 +173,48 @@ function toggleTheme() {
   gap: 8px 16px;
 }
 
+.as-auth__tools {
+  align-items: center;
+  display: flex;
+  gap: 4px;
+  margin-right: -8px;
+}
+
+// the language: a quiet field like the theme switch beside it, the select's border only on hover and focus
+.as-auth__language .as-um__select {
+  background: transparent;
+  border-color: transparent;
+  border-radius: 10px;
+  color: var(--color-neutral-600);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  height: 36px;
+  padding: 0 28px 0 10px;
+  width: auto;
+
+  .vc-icon {
+    color: var(--color-neutral-500);
+  }
+
+  &:hover {
+    background: var(--color-neutral-100);
+    border-color: transparent;
+    color: var(--color-neutral-800);
+  }
+
+  // the ring for the keyboard only, like the theme switch (the field takes the focus back after a pick)
+  &:focus-within:not(:focus-visible) {
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+  }
+}
+
 .as-auth__theme {
   align-items: center;
   background: transparent;
@@ -167,7 +225,6 @@ function toggleTheme() {
   display: flex;
   height: 36px;
   justify-content: center;
-  margin-right: -8px;
   width: 36px;
 
   &:hover {

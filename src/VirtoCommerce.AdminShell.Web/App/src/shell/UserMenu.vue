@@ -169,13 +169,14 @@ import { useRouter } from "vue-router";
 import { systemInfo, type SystemInfo } from "./dashboard/api";
 import { formatLicenseDate, isLicenseExpired } from "./license";
 import MenuSelect, { type MenuSelectOption } from "./MenuSelect.vue";
+import { useLanguageOptions } from "./languages";
 import { branding, safeUrl } from "./branding";
 import { colorTheme, colorThemeOptions, themeChoice, themeMode, type ThemeMode } from "./themeMode";
 
 defineProps<{ avatar?: string }>();
 const emit = defineEmits<{ (e: "close"): void }>();
 
-const { t, availableLocales, getLocaleMessage } = useI18n({ useScope: "global" });
+const { t } = useI18n({ useScope: "global" });
 const { user, signOut } = useUser();
 const { currentLocale, setLocale } = useLanguages();
 const { blades, closeBlade } = useBladeStack();
@@ -204,11 +205,7 @@ onMounted(async () => {
   knownEmails.set(userName, email.value);
 });
 
-const languages = computed<MenuSelectOption[]>(() =>
-  availableLocales
-    .map((lang) => ({ value: lang, label: (getLocaleMessage(lang) as { language_name?: string }).language_name ?? "" }))
-    .filter((x) => x.label),
-);
+const languages = useLanguageOptions();
 
 // each theme with its mark: its main color in the light and in the dark appearance
 const colorThemes = computed<MenuSelectOption[]>(() =>
