@@ -5,7 +5,9 @@ const keepGridstack = {
   // before the mirroring, which reads the whole stylesheet once
   Once(root) {
     root.walkRules(/grid-stack|ui-resizable|ui-draggable/, (rule) => {
-      if (rule.prev()?.text !== "rtl:ignore") rule.before({ text: "rtl:ignore" });
+      if (rule.prev()?.text !== "rtl:ignore") {
+        rule.before({ text: "rtl:ignore" });
+      }
     });
   },
 };
