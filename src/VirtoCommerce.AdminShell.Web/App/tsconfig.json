@@ -2,8 +2,6 @@
   "extends": "@vc-shell/ts-config/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
-    // vc-shell's published typings of its German texts don't parse (dist/locales/types.d.ts): typed by a local
-    // declaration; the bundler still loads vc-shell's file
     "paths": { "@vc-shell/framework/locales/de": ["src/locales/framework/vc-shell-de.d.ts"] },
     "outDir": "dist",
     "rootDir": "src",
