@@ -34,7 +34,7 @@ export const versionText = (v?: ModuleIdentity["version"]) => {
   return v.prerelease ? `${core}-${v.prerelease}` : core;
 };
 
-function buildRows(modules: ModuleDescriptor[]): ModuleRow[] {
+export function buildRows(modules: ModuleDescriptor[]): ModuleRow[] {
   const byId = new Map<string, ModuleDescriptor[]>();
   for (const m of modules) byId.set(m.id!, [...(byId.get(m.id!) ?? []), m]);
   return [...byId.entries()]

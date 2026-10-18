@@ -481,6 +481,13 @@
     .as-item:hover & {
       display: none;
     }
+
+    /* a plain total (Modules · Installed): a muted number, not a badge asking for attention */
+    &--total {
+      background: transparent;
+      color: var(--as-faint);
+      font-weight: 500;
+    }
   }
 
   &__where {
@@ -553,6 +560,14 @@
       color: var(--as-nav-text);
       font-weight: 700;
     }
+  }
+
+  &__label {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 

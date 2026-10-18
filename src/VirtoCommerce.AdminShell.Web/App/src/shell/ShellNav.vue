@@ -206,8 +206,9 @@
                 <span
                   v-if="counterValues[item.id]"
                   class="as-item__count"
+                  :class="{ 'as-item__count--total': isTotalCounter(item.id) }"
                   :title="counterTitle(item.id)"
-                  >{{ formatBadgeCount(counterValues[item.id]) }}</span
+                  >{{ countText(item.id) }}</span
                 >
                 <span
                   v-if="group.shortcut"
@@ -256,7 +257,14 @@
                 :aria-current="isActive(child) ? 'page' : undefined"
                 @click="go(child)"
               >
-                {{ child.title }}
+                <span class="as-sub__label">{{ child.title }}</span>
+                <span
+                  v-if="counterValues[child.id]"
+                  class="as-item__count"
+                  :class="{ 'as-item__count--total': isTotalCounter(child.id) }"
+                  :title="counterTitle(child.id)"
+                  >{{ countText(child.id) }}</span
+                >
               </button>
             </div>
           </template>
@@ -284,7 +292,7 @@ import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 import type { MenuItem, MenuSection } from "../api/adminMenu";
 import { HOME_SECTION_ID, useAdminMenu } from "../composables/useAdminMenu";
-import { counterHint, counterValues } from "./menuCounters";
+import { counterHint, counterValues, isTotalCounter, waitingOn } from "./menuCounters";
 import { foldedGroups, groupItems, panelOpen, panelSection, railLabel, searchSheetOpen, toggleFolded } from "./navState";
 import ShellSearch from "./ShellSearch.vue";
 import UserMenu from "./UserMenu.vue";
@@ -305,6 +313,10 @@ const { menu, open, isActive, active, togglePin, hide, restoreHidden, pinnedIds 
 const router = useRouter();
 const route = useRoute();
 const { t, te } = useI18n({ useScope: "global" });
+
+// a badge caps at 99+; a plain total (Modules · Browse) shows its number
+const countText = (itemId: string) =>
+  isTotalCounter(itemId) ? String(counterValues.value[itemId]) : formatBadgeCount(counterValues.value[itemId]);
 
 // a counter's tooltip: its hint, a translation key or a text, with the count in place of {count}
 function counterTitle(itemId: string) {
@@ -423,5 +435,5 @@ function goHome() {
 
 // a section's counter: the sum of its items' counters
 const sectionCount = (section: MenuSection) =>
-  section.items.reduce((sum, item) => sum + (counterValues.value[item.id] ?? 0), 0);
+  waitingOn(section.items.map((item) => item.id));
 </script>

@@ -91,7 +91,15 @@
         { "id": "legacy.notifications", "title": "Notifications", "icon": "lucide-mail", "priority": 15, "moduleId": "VirtoCommerce.Notifications", "permission": "notifications:access", "target": { "type": "legacy", "legacyUrl": "/workspace/notifications" } },
         { "id": "platform.settings", "title": "Settings", "icon": "lucide-settings-2", "priority": 20, "permission": "platform:setting:access", "target": { "type": "vue", "route": "/settings" } },
         { "id": "platform.security", "title": "Security", "icon": "lucide-key-round", "priority": 30, "permission": "platform:security:access", "target": { "type": "vue", "route": "/security" } },
-        { "id": "platform.modules", "title": "Modules", "icon": "lucide-blocks", "priority": 40, "permission": "platform:module:access", "target": { "type": "vue", "route": "/modules" } },
+        {
+          "id": "platform.modules", "title": "Modules", "icon": "lucide-blocks", "priority": 40, "permission": "platform:module:access", "target": { "type": "vue", "route": "/modules?view=installed" },
+          "children": [
+            { "id": "platform.modules.browse", "title": "Browse", "target": { "type": "vue", "route": "/modules?view=browse" } },
+            { "id": "platform.modules.installed", "title": "Installed", "target": { "type": "vue", "route": "/modules?view=installed" } },
+            { "id": "platform.modules.updates", "title": "Updates", "target": { "type": "vue", "route": "/modules?view=updates" } },
+            { "id": "platform.modules.advanced", "title": "Advanced", "permission": "platform:module:manage", "target": { "type": "vue", "route": "/modules-advanced" } }
+          ]
+        },
         { "id": "platform.dynamicProperties", "title": "Dynamic Properties", "icon": "lucide-list-plus", "priority": 50, "permission": "platform:dynamic_properties:access", "target": { "type": "vue", "route": "/dynamic-properties" } },
         { "id": "legacy.searchIndex", "title": "Search Index", "icon": "lucide-search", "priority": 60, "moduleId": "VirtoCommerce.Search", "permission": "search:index:access", "target": { "type": "legacy", "legacyUrl": "/workspace/searchIndex" } },
         { "id": "legacy.measures", "title": "Units of Measure", "icon": "lucide-ruler", "priority": 56, "moduleId": "VirtoCommerce.Catalog", "permission": "measures:access", "target": { "type": "legacy", "legacyUrl": "/workspace/measures" } },

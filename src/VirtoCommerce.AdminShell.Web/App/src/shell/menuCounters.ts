@@ -17,7 +17,7 @@ export interface MenuCounterContext {
 }
 
 export interface MenuCounter {
-  /** The menu item the count shows on (its rail section shows the sum): the item's id in the menu */
+  /** The menu item the count shows on: the item's id in the menu, or a sub-item's (Modules · Updates) */
   itemId: string;
   /** The tooltip: a translation key or text, given { count } ("{count} new orders") */
   hint: string;
@@ -25,6 +25,11 @@ export interface MenuCounter {
   permission?: Permission;
   /** The count. A failed or rejected count shows no counter rather than a wrong one */
   count: (context: MenuCounterContext) => Promise<number>;
+  /**
+   * "attention" (default): work waiting for someone, a badge, added to the rail section's sum. "total": how many there
+   * are (Modules · Installed), a muted number, not added to the section
+   */
+  tone?: "attention" | "total";
 }
 
 export interface MenuCounters {
@@ -54,6 +59,13 @@ const counters = shallowRef(new Map<string, MenuCounter>());
 export const counterValues = ref<Record<string, number>>({});
 
 export const counterHint = (itemId: string) => counters.value.get(itemId)?.hint;
+
+/** A counter that is a plain total (muted, not in the section's sum) rather than work waiting */
+export const isTotalCounter = (itemId: string) => counters.value.get(itemId)?.tone === "total";
+
+/** The work waiting on these items: their counts, without the plain totals */
+export const waitingOn = (itemIds: string[]) =>
+  itemIds.reduce((sum, id) => sum + (isTotalCounter(id) ? 0 : (counterValues.value[id] ?? 0)), 0);
 
 let refreshNow: () => void = () => undefined;
 
@@ -106,7 +118,8 @@ export function startMenuCounters(menu: Ref<EffectiveMenu>, hasPermission: (perm
     if (document.hidden) return;
     lastRefresh = Date.now();
     const controller = (current = new AbortController());
-    const present = new Set(menu.value.sections.flatMap((s) => s.items.map((i) => i.id)));
+    // the items and their sub-items (Modules · Updates)
+    const present = new Set(menu.value.sections.flatMap((s) => s.items.flatMap((i) => [i.id, ...(i.children ?? []).map((c) => c.id)])));
     const counted = await Promise.all(
       menuCounters
         .getCounters()

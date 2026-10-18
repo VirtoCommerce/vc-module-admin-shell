@@ -42,7 +42,10 @@
       "BUILD": "Build {version}"
     },
     "BADGES": {
-      "TASKS": "{count} open tasks"
+      "TASKS": "{count} open tasks",
+      "MODULE_UPDATES": "{count} module updates",
+      "MODULES_INSTALLED": "{count} modules installed",
+      "MODULES_AVAILABLE": "{count} modules"
     },
     "FRAME": {
       "REFRESH": "Refresh",

@@ -256,6 +256,26 @@
       "NO_DEPENDENCIES": "No dependencies",
       "OPTIONAL": "Optional",
       "RELEASE_NOTES": "Release notes",
+      "VIEWS": {
+        "BROWSE": "Browse",
+        "INSTALLED": "Installed",
+        "UPDATES": "Updates"
+      },
+      "ADVANCED": {
+        "TITLE": "Advanced",
+        "SUBTITLE": "Install a module from a file",
+        "DROP_TITLE": "Install a module from a package",
+        "DROP_HINT": "Drop a module package (.zip) here or choose it. You'll see what it contains before anything is installed.",
+        "CHOOSE": "Choose a .zip file",
+        "UPLOADING": "Uploading {name}… {percent}%",
+        "NOT_ZIP": "Choose a module package: a .zip file.",
+        "INVALID": "{name} isn't a module package this platform accepts (status {status}).",
+        "FAILED": "Uploading {name} failed. Check the connection and try again.",
+        "REPLACES": "Version {version} of this module is installed: installing the package replaces it.",
+        "WILL_INSTALL": "will be installed",
+        "ANOTHER": "Choose another file",
+        "NOTE": "A package must contain module.manifest and be built for this platform version. The platform restarts to finish the install."
+      },
       "FILTERS": {
         "INSTALLED": "Installed",
         "ALL": "Browse all",

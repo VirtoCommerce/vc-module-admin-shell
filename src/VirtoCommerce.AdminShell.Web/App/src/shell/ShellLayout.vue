@@ -110,7 +110,7 @@ import { useEventListener } from "@vueuse/core";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useAdminMenu } from "../composables/useAdminMenu";
-import { counterValues, startMenuCounters } from "./menuCounters";
+import { startMenuCounters, waitingOn } from "./menuCounters";
 import { drawerOpen, searchSheetOpen } from "./navState";
 import { globalSearch, useGlobalSearchSetup } from "./search";
 import SearchSheet from "./search/SearchSheet.vue";
@@ -158,8 +158,9 @@ watch(
 );
 
 const showBar = computed(() => blades.value.length <= 1);
-// everything waiting in the menu, on the button that opens it
-const waiting = computed(() => Object.values(counterValues.value).reduce((sum, n) => sum + n, 0));
+// everything waiting in the menu, on the button that opens it: the items' own counters (a sub-item's repeats its item's,
+// Modules · Updates), without plain totals
+const waiting = computed(() => waitingOn(menu.value.sections.flatMap((s) => s.items.map((i) => i.id))));
 
 // a blade's own title, else the menu item of the screen that's open (Dashboard, an app)
 const title = computed(() => activeBlade.value?.title || activeTitle.value);

@@ -3,6 +3,7 @@ export { default as PlatformSettingDictionary } from "./settings/dictionary.vue"
 export { default as PlatformSettingsJson } from "./settings/json.vue";
 export { default as PlatformSecurity } from "./security/main.vue";
 export { default as PlatformModules } from "./modules/list.vue";
+export { default as PlatformModulesAdvanced } from "./modules/advanced.vue";
 export { default as PlatformDynamicProperties } from "./dynamic-properties/types.vue";
 export { default as PlatformDeveloperTools } from "./developer-tools/main.vue";
 export { default as PlatformUserProfile } from "./user-profile/main.vue";

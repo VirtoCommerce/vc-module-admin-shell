@@ -36,12 +36,18 @@ export function useAdminMenu() {
     if (next) menu.value = { ...next, recent: stableRecent(menu.value.recent, next.recent) };
   }
 
+  /** "/modules?view=updates" -> the path and its query: a screen's views as menu items (Modules · Updates) */
+  function splitRoute(route: string) {
+    const [path, search = ""] = route.split("?");
+    return { path, query: Object.fromEntries(new URLSearchParams(search)) };
+  }
+
   /** Route for a menu item, or undefined if it has no target (a url opens in a tab of its own, see open) */
   function routeFor(item: MenuItem) {
     const target = item.target;
     switch (target?.type) {
       case "vue":
-        return target.route ? { path: target.route } : undefined;
+        return target.route ? splitRoute(target.route) : undefined;
       case "legacy":
         return { name: "Legacy", query: { url: target.legacyUrl ?? "/workspace" } };
       case "app":
@@ -58,8 +64,13 @@ export function useAdminMenu() {
   function isActive(item: MenuItem) {
     const target = item.target;
     switch (target?.type) {
-      case "vue":
-        return !!target.route && (route.path === target.route || route.path.startsWith(target.route + "/"));
+      case "vue": {
+        if (!target.route) return false;
+        // a view of a screen (a query in its route) is open when the screen is and shows that view
+        const { path, query } = splitRoute(target.route);
+        const onPath = route.path === path || route.path.startsWith(path + "/");
+        return onPath && Object.entries(query).every(([key, value]) => route.query[key] === value);
+      }
       case "legacy":
         return route.name === "Legacy" && route.query.url === target.legacyUrl;
       case "app":
