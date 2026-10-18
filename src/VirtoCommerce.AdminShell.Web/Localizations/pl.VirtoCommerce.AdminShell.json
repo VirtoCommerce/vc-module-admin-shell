@@ -1,0 +1,102 @@
+{
+  "permissions": {
+    "admin-shell:access": "Otwieranie Admin Shell",
+    "admin-shell:menu:manage": "Zarządzanie menu Admin Shell (warstwy globalna i ról)"
+  },
+  "settings": {
+    "AdminShell": {
+      "Menu": {
+        "Global": {
+          "title": "Globalna poprawka menu",
+          "description": "Poprawka JSON stosowana do domyślnego menu Admin Shell dla wszystkich: ukrywanie, zmiana nazw lub przenoszenie sekcji i elementów albo dodawanie nowych"
+        },
+        "Role": {
+          "title": "Poprawka menu roli",
+          "description": "Poprawka JSON stosowana do menu Admin Shell dla użytkowników z tą rolą; element pozostaje widoczny, jeśli zachowuje go którakolwiek z ról użytkownika"
+        },
+        "User": {
+          "title": "Preferencje menu",
+          "description": "Przypięte i ukryte przez użytkownika elementy menu Admin Shell"
+        }
+      },
+      "UI": {
+        "Appearance": {
+          "title": "Wygląd",
+          "description": "Jasny, ciemny lub zgodny z systemem operacyjnym wygląd Admin Shell"
+        },
+        "Theme": {
+          "title": "Motyw",
+          "description": "Kolory Admin Shell: Virto, Ciepły, Niebieski, Indygo lub motyw niestandardowy"
+        }
+      },
+      "Branding": {
+        "CompanyName": {
+          "title": "Nazwa firmy",
+          "description": "Wyświetlana na karcie przeglądarki, na stronie logowania i w jej stopce. Puste: Virto Commerce"
+        },
+        "LogoUrl": {
+          "title": "Logo",
+          "description": "Logo na jasnym tle (strona logowania, strona główna): URL obrazu, na przykład z Assets. SVG lub PNG, ok. 200 x 48 px"
+        },
+        "LogoDarkUrl": {
+          "title": "Logo dla ciemnego wyglądu",
+          "description": "Logo na ciemnym tle. Puste: logo powyżej"
+        },
+        "MarkUrl": {
+          "title": "Sygnet",
+          "description": "Kwadratowa ikona do paska menu i górnego paska na telefonie: URL obrazu. SVG lub PNG, co najmniej 64 x 64 px"
+        },
+        "FaviconUrl": {
+          "title": "Ikona karty przeglądarki",
+          "description": "Favicon: URL obrazu (ICO, PNG lub SVG). Puste: sygnet"
+        },
+        "HelpUrl": {
+          "title": "Link do pomocy",
+          "description": "Dokąd prowadzi Pomoc na stronie logowania i w menu użytkownika. Puste: brak linku Pomoc"
+        },
+        "SupportUrl": {
+          "title": "Link do wsparcia",
+          "description": "Strona wsparcia lub adres mailto: w stopce strony logowania i w menu użytkownika"
+        },
+        "PrivacyUrl": {
+          "title": "Link do polityki prywatności",
+          "description": "Wyświetlany w stopce strony logowania"
+        },
+        "TermsUrl": {
+          "title": "Link do warunków korzystania",
+          "description": "Wyświetlany w stopce strony logowania"
+        }
+      },
+      "SignIn": {
+        "Showcase": {
+          "title": "Panel strony logowania",
+          "description": "Panel obok formularza logowania (od szerokości 1024 px): virto pokazuje slajdy Virto Commerce, custom slajdy poniżej, none tylko formularz"
+        },
+        "Slides": {
+          "title": "Slajdy strony logowania",
+          "description": "Lista slajdów w JSON: [{ \"chip\", \"title\", \"body\", \"points\": [], \"image\", \"imageDark\", \"alt\", \"link\": { \"text\", \"url\" } }]. Tekst może być ciągiem znaków lub { \"en\": \"...\", \"de\": \"...\" }"
+        }
+      },
+      "Home": {
+        "Welcome": {
+          "title": "Karta powitalna strony głównej",
+          "description": "JSON: { \"title\", \"body\", \"image\", \"imageDark\", \"links\": [{ \"text\", \"url\" }] }, wyświetlany jako pierwszy na stronie głównej. {} ukrywa kartę"
+        }
+      },
+      "Theme": {
+        "Default": {
+          "title": "Motyw domyślny",
+          "description": "Motyw strony logowania i użytkowników, którzy go nie wybrali: virto, warm, blue, indigo lub id pliku motywu"
+        },
+        "Appearance": {
+          "title": "Domyślny wygląd",
+          "description": "Jasny, ciemny lub zgodny z systemem operacyjnym, dla strony logowania i użytkowników, którzy go nie wybrali"
+        },
+        "UserChoice": {
+          "title": "Użytkownicy wybierają motyw",
+          "description": "Wyłączone: wszyscy mają motyw domyślny, a wybór motywu jest ukryty"
+        }
+      }
+    }
+  }
+}

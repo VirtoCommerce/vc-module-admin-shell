@@ -1,0 +1,102 @@
+{
+  "permissions": {
+    "admin-shell:access": "Abrir Admin Shell",
+    "admin-shell:menu:manage": "Gestionar el menú de Admin Shell (niveles global y de rol)"
+  },
+  "settings": {
+    "AdminShell": {
+      "Menu": {
+        "Global": {
+          "title": "Parche global del menú",
+          "description": "Parche JSON que se aplica al menú predeterminado de Admin Shell para todos: ocultar, renombrar o mover secciones y elementos, o añadir otros nuevos"
+        },
+        "Role": {
+          "title": "Parche del menú por rol",
+          "description": "Parche JSON que se aplica al menú de Admin Shell para los usuarios con este rol; un elemento sigue visible si alguno de los roles del usuario lo mantiene"
+        },
+        "User": {
+          "title": "Preferencias del menú",
+          "description": "Los elementos del menú de Admin Shell que el usuario ha anclado y ocultado"
+        }
+      },
+      "UI": {
+        "Appearance": {
+          "title": "Apariencia",
+          "description": "Apariencia clara, oscura o la del sistema operativo para Admin Shell"
+        },
+        "Theme": {
+          "title": "Tema",
+          "description": "Los colores de Admin Shell: Virto, Cálido, Azul, Índigo o un tema personalizado"
+        }
+      },
+      "Branding": {
+        "CompanyName": {
+          "title": "Nombre de la empresa",
+          "description": "Se muestra en la pestaña del navegador, en la página de inicio de sesión y en su pie de página. Vacío: Virto Commerce"
+        },
+        "LogoUrl": {
+          "title": "Logotipo",
+          "description": "El logotipo sobre fondos claros (página de inicio de sesión, Inicio): una URL de imagen, por ejemplo de Recursos. SVG o PNG, de unos 200 x 48 px"
+        },
+        "LogoDarkUrl": {
+          "title": "Logotipo para la apariencia oscura",
+          "description": "El logotipo sobre fondos oscuros. Vacío: el logotipo anterior"
+        },
+        "MarkUrl": {
+          "title": "Símbolo del logotipo",
+          "description": "Un icono cuadrado para la barra del menú y la barra superior en el teléfono: una URL de imagen. SVG o PNG, de al menos 64 x 64 px"
+        },
+        "FaviconUrl": {
+          "title": "Icono de la pestaña del navegador",
+          "description": "El favicon: una URL de imagen (ICO, PNG o SVG). Vacío: el símbolo del logotipo"
+        },
+        "HelpUrl": {
+          "title": "Enlace de ayuda",
+          "description": "Adónde lleva Ayuda en la página de inicio de sesión y en el menú de usuario. Vacío: sin enlace de Ayuda"
+        },
+        "SupportUrl": {
+          "title": "Enlace de soporte",
+          "description": "Una página de soporte o una dirección mailto:, en el pie de la página de inicio de sesión y en el menú de usuario"
+        },
+        "PrivacyUrl": {
+          "title": "Enlace a la política de privacidad",
+          "description": "Se muestra en el pie de la página de inicio de sesión"
+        },
+        "TermsUrl": {
+          "title": "Enlace a las condiciones de uso",
+          "description": "Se muestra en el pie de la página de inicio de sesión"
+        }
+      },
+      "SignIn": {
+        "Showcase": {
+          "title": "Panel de la página de inicio de sesión",
+          "description": "El panel junto al formulario de inicio de sesión (a partir de 1024 px de ancho): virto muestra las diapositivas de Virto Commerce, custom las diapositivas siguientes, none solo el formulario"
+        },
+        "Slides": {
+          "title": "Diapositivas de la página de inicio de sesión",
+          "description": "Lista JSON de diapositivas: [{ \"chip\", \"title\", \"body\", \"points\": [], \"image\", \"imageDark\", \"alt\", \"link\": { \"text\", \"url\" } }]. Un texto puede ser una cadena o { \"en\": \"...\", \"de\": \"...\" }"
+        }
+      },
+      "Home": {
+        "Welcome": {
+          "title": "Tarjeta de bienvenida de Inicio",
+          "description": "JSON: { \"title\", \"body\", \"image\", \"imageDark\", \"links\": [{ \"text\", \"url\" }] }, se muestra en primer lugar en Inicio. {} la oculta"
+        }
+      },
+      "Theme": {
+        "Default": {
+          "title": "Tema predeterminado",
+          "description": "El tema de la página de inicio de sesión y de los usuarios que no han elegido ninguno: virto, warm, blue, indigo o el ID de un archivo de tema"
+        },
+        "Appearance": {
+          "title": "Apariencia predeterminada",
+          "description": "Apariencia clara, oscura o la del sistema operativo para la página de inicio de sesión y los usuarios que no han elegido ninguna"
+        },
+        "UserChoice": {
+          "title": "Los usuarios eligen su tema",
+          "description": "Desactivado: todos tienen el tema predeterminado y los selectores de tema se ocultan"
+        }
+      }
+    }
+  }
+}

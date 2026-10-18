@@ -1,0 +1,102 @@
+{
+  "permissions": {
+    "admin-shell:access": "Aprire Admin Shell",
+    "admin-shell:menu:manage": "Gestire il menu di Admin Shell (livelli globale e per ruolo)"
+  },
+  "settings": {
+    "AdminShell": {
+      "Menu": {
+        "Global": {
+          "title": "Patch globale del menu",
+          "description": "Patch JSON applicata al menu predefinito di Admin Shell per tutti: nascondere, rinominare o spostare sezioni e voci, oppure aggiungerne di nuove"
+        },
+        "Role": {
+          "title": "Patch del menu per ruolo",
+          "description": "Patch JSON applicata al menu di Admin Shell per gli utenti con questo ruolo; una voce resta visibile se almeno uno dei ruoli dell'utente la mantiene"
+        },
+        "User": {
+          "title": "Preferenze del menu",
+          "description": "Le voci del menu di Admin Shell fissate e nascoste dall'utente"
+        }
+      },
+      "UI": {
+        "Appearance": {
+          "title": "Aspetto",
+          "description": "Aspetto chiaro, scuro o quello del sistema operativo per Admin Shell"
+        },
+        "Theme": {
+          "title": "Tema",
+          "description": "I colori di Admin Shell: Virto, Caldo, Blu, Indaco o un tema personalizzato"
+        }
+      },
+      "Branding": {
+        "CompanyName": {
+          "title": "Nome dell'azienda",
+          "description": "Mostrato nella scheda del browser, nella pagina di accesso e nel suo piè di pagina. Vuoto: Virto Commerce"
+        },
+        "LogoUrl": {
+          "title": "Logo",
+          "description": "Il logo su sfondi chiari (pagina di accesso, Home): un URL di immagine, ad esempio da Risorse. SVG o PNG, circa 200 x 48 px"
+        },
+        "LogoDarkUrl": {
+          "title": "Logo per l'aspetto scuro",
+          "description": "Il logo su sfondi scuri. Vuoto: il logo precedente"
+        },
+        "MarkUrl": {
+          "title": "Simbolo del logo",
+          "description": "Un'icona quadrata per la barra del menu e la barra superiore su smartphone: un URL di immagine. SVG o PNG, almeno 64 x 64 px"
+        },
+        "FaviconUrl": {
+          "title": "Icona della scheda del browser",
+          "description": "La favicon: un URL di immagine (ICO, PNG o SVG). Vuoto: il simbolo del logo"
+        },
+        "HelpUrl": {
+          "title": "Link alla guida",
+          "description": "Dove porta Aiuto nella pagina di accesso e nel menu utente. Vuoto: nessun link Aiuto"
+        },
+        "SupportUrl": {
+          "title": "Link al supporto",
+          "description": "Una pagina di supporto o un indirizzo mailto:, nel piè di pagina di accesso e nel menu utente"
+        },
+        "PrivacyUrl": {
+          "title": "Link all'informativa sulla privacy",
+          "description": "Mostrato nel piè di pagina della pagina di accesso"
+        },
+        "TermsUrl": {
+          "title": "Link ai termini di utilizzo",
+          "description": "Mostrato nel piè di pagina della pagina di accesso"
+        }
+      },
+      "SignIn": {
+        "Showcase": {
+          "title": "Pannello della pagina di accesso",
+          "description": "Il pannello accanto al modulo di accesso (da 1024 px di larghezza): virto mostra le slide di Virto Commerce, custom le slide qui sotto, none solo il modulo"
+        },
+        "Slides": {
+          "title": "Slide della pagina di accesso",
+          "description": "Elenco JSON di slide: [{ \"chip\", \"title\", \"body\", \"points\": [], \"image\", \"imageDark\", \"alt\", \"link\": { \"text\", \"url\" } }]. Un testo può essere una stringa o { \"en\": \"...\", \"de\": \"...\" }"
+        }
+      },
+      "Home": {
+        "Welcome": {
+          "title": "Scheda di benvenuto della Home",
+          "description": "JSON: { \"title\", \"body\", \"image\", \"imageDark\", \"links\": [{ \"text\", \"url\" }] }, mostrata per prima nella Home. {} la nasconde"
+        }
+      },
+      "Theme": {
+        "Default": {
+          "title": "Tema predefinito",
+          "description": "Il tema della pagina di accesso e degli utenti che non ne hanno scelto uno: virto, warm, blue, indigo o l'ID di un file di tema"
+        },
+        "Appearance": {
+          "title": "Aspetto predefinito",
+          "description": "Aspetto chiaro, scuro o quello del sistema operativo per la pagina di accesso e gli utenti che non ne hanno scelto uno"
+        },
+        "UserChoice": {
+          "title": "Gli utenti scelgono il proprio tema",
+          "description": "Disattivato: tutti hanno il tema predefinito e i selettori del tema sono nascosti"
+        }
+      }
+    }
+  }
+}

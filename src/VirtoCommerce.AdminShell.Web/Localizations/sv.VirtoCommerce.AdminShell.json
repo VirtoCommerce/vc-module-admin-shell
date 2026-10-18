@@ -1,0 +1,102 @@
+{
+  "permissions": {
+    "admin-shell:access": "Öppna Admin Shell",
+    "admin-shell:menu:manage": "Hantera Admin Shell-menyn (global nivå och rollnivå)"
+  },
+  "settings": {
+    "AdminShell": {
+      "Menu": {
+        "Global": {
+          "title": "Global menypatch",
+          "description": "JSON-patch som tillämpas på standardmenyn i Admin Shell för alla: dölj, byt namn på eller flytta avsnitt och objekt, eller lägg till nya"
+        },
+        "Role": {
+          "title": "Menypatch för roll",
+          "description": "JSON-patch som tillämpas på Admin Shell-menyn för användare med den här rollen; ett objekt förblir synligt om någon av användarens roller behåller det"
+        },
+        "User": {
+          "title": "Menypreferenser",
+          "description": "Användarens fästa och dolda objekt i Admin Shell-menyn"
+        }
+      },
+      "UI": {
+        "Appearance": {
+          "title": "Utseende",
+          "description": "Ljust, mörkt eller operativsystemets utseende för Admin Shell"
+        },
+        "Theme": {
+          "title": "Tema",
+          "description": "Färgerna i Admin Shell: Virto, Varm, Blå, Indigo eller ett anpassat tema"
+        }
+      },
+      "Branding": {
+        "CompanyName": {
+          "title": "Företagsnamn",
+          "description": "Visas på webbläsarfliken, på inloggningssidan och i dess sidfot. Tomt: Virto Commerce"
+        },
+        "LogoUrl": {
+          "title": "Logotyp",
+          "description": "Logotypen på ljusa bakgrunder (inloggningssidan, startsidan): en bild-URL, till exempel från Tillgångar. SVG eller PNG, cirka 200 x 48 px"
+        },
+        "LogoDarkUrl": {
+          "title": "Logotyp för mörkt utseende",
+          "description": "Logotypen på mörka bakgrunder. Tomt: logotypen ovan"
+        },
+        "MarkUrl": {
+          "title": "Logosymbol",
+          "description": "En kvadratisk ikon för menylisten och mobilens övre fält: en bild-URL. SVG eller PNG, minst 64 x 64 px"
+        },
+        "FaviconUrl": {
+          "title": "Ikon för webbläsarfliken",
+          "description": "Favikonen: en bild-URL (ICO, PNG eller SVG). Tomt: logosymbolen"
+        },
+        "HelpUrl": {
+          "title": "Hjälplänk",
+          "description": "Vart Hjälp på inloggningssidan och i användarmenyn leder. Tomt: ingen hjälplänk"
+        },
+        "SupportUrl": {
+          "title": "Supportlänk",
+          "description": "En supportsida eller mailto:-adress, i inloggningssidans sidfot och i användarmenyn"
+        },
+        "PrivacyUrl": {
+          "title": "Länk till integritetspolicy",
+          "description": "Visas i inloggningssidans sidfot"
+        },
+        "TermsUrl": {
+          "title": "Länk till användarvillkor",
+          "description": "Visas i inloggningssidans sidfot"
+        }
+      },
+      "SignIn": {
+        "Showcase": {
+          "title": "Panel på inloggningssidan",
+          "description": "Panelen bredvid inloggningsformuläret (från 1024 px bredd): virto visar Virto Commerces bilder, custom bilderna nedan, none endast formuläret"
+        },
+        "Slides": {
+          "title": "Bilder på inloggningssidan",
+          "description": "JSON-lista med bilder: [{ \"chip\", \"title\", \"body\", \"points\": [], \"image\", \"imageDark\", \"alt\", \"link\": { \"text\", \"url\" } }]. En text kan vara en sträng eller { \"en\": \"...\", \"de\": \"...\" }"
+        }
+      },
+      "Home": {
+        "Welcome": {
+          "title": "Välkomstkort på startsidan",
+          "description": "JSON: { \"title\", \"body\", \"image\", \"imageDark\", \"links\": [{ \"text\", \"url\" }] }, visas först på startsidan. {} döljer det"
+        }
+      },
+      "Theme": {
+        "Default": {
+          "title": "Standardtema",
+          "description": "Temat för inloggningssidan och för användare som inte har valt något: virto, warm, blue, indigo eller id för en temafil"
+        },
+        "Appearance": {
+          "title": "Standardutseende",
+          "description": "Ljust, mörkt eller operativsystemets utseende för inloggningssidan och för användare som inte har valt något"
+        },
+        "UserChoice": {
+          "title": "Användare väljer sitt tema",
+          "description": "Av: alla har standardtemat och temaväljarna är dolda"
+        }
+      }
+    }
+  }
+}

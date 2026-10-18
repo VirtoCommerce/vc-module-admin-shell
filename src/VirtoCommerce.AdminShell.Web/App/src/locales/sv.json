@@ -1,0 +1,212 @@
+{
+  "language_name": "Svenska",
+  "SHELL": {
+    "NAV": {
+      "SECTIONS": "Avsnitt",
+      "HOME": "{name}, startsida",
+      "MENU": "Meny",
+      "NOTIFICATIONS": "Notiser",
+      "ACCOUNT": "Konto",
+      "CLASSIC_ADMIN": "Öppna klassisk admin",
+      "HIDE_MENU": "Dölj menyn",
+      "KEEP_OPEN": "Håll menyn öppen",
+      "SHOW_MENU": "Visa menyn",
+      "PIN": "Fäst",
+      "UNPIN": "Lossa",
+      "HIDE_ITEM": "Dölj i menyn",
+      "PINNED": "Fästa",
+      "RECENT": "Senaste",
+      "SHOW_HIDDEN": "Visa dolda objekt ({count})",
+      "OPEN_BLADES": "Öppna paneler",
+      "NEW_TAB": "Öppnas i en ny flik"
+    },
+    "USER_MENU": {
+      "LICENSE": "Licens",
+      "LICENSE_NONE": "Inte aktiverad",
+      "LICENSE_NONE_HINT": "Ingen kommersiell licens är aktiverad på den här plattformen",
+      "LICENSE_EXPIRED": "Har gått ut",
+      "LICENSE_UNTIL": "till {date}",
+      "LICENSE_ACTIVATE": "Aktivera",
+      "LICENSE_DETAILS": "Detaljer",
+      "LANGUAGE": "Språk",
+      "THEME": "Utseende",
+      "THEME_SYSTEM": "Följ systemet",
+      "COLOR_THEME": "Tema",
+      "COLOR_THEMES": {
+        "VIRTO": "Virto",
+        "WARM": "Varm",
+        "BLUE": "Blå",
+        "INDIGO": "Indigo"
+      },
+      "SIGN_OUT": "Logga ut",
+      "BUILD": "Bygge {version}"
+    },
+    "BADGES": {
+      "TASKS": "Öppna uppgifter: {count}",
+      "MODULE_UPDATES": "Moduluppdateringar: {count}",
+      "MODULES_INSTALLED": "Installerade moduler: {count}",
+      "MODULES_AVAILABLE": "Moduler: {count}"
+    },
+    "FRAME": {
+      "REFRESH": "Uppdatera",
+      "NEW_TAB": "Öppna i ny flik"
+    },
+    "DASHBOARD": {
+      "WELCOME": {
+        "TITLE": "Välkommen"
+      },
+      "RESET_LAYOUT": "Återställ layout",
+      "RESET_LAYOUT_CONFIRM": "Vill du flytta tillbaka alla widgetar till deras standardplats och standardstorlek?",
+      "VIEW_ALL": "Visa alla",
+      "DISMISS": "Avfärda",
+      "ALERTS": {
+        "TITLE": "Aviseringar och notiser",
+        "EMPTY": "Du har inget nytt",
+        "EMPTY_HINT": "Resultat av bakgrundsjobb, importer och exporter samt systemmeddelanden visas här."
+      },
+      "ACTIVITY": {
+        "TITLE": "Senaste aktivitet",
+        "EMPTY": "Inga ändringar har registrerats ännu",
+        "ADDED": "skapades",
+        "MODIFIED": "uppdaterades",
+        "DELETED": "togs bort"
+      },
+      "SIGN_INS": {
+        "TITLE": "Inloggningsaktivitet",
+        "TOTAL": "Inloggningar, senaste 7 dagarna",
+        "FAILED": "Misslyckade inloggningar",
+        "USERS": "Inloggade användare",
+        "DISABLED": "Registrering av inloggningar är avstängd"
+      }
+    },
+    "AUTH": {
+      "LIGHT_THEME": "Byt till ljust tema",
+      "DARK_THEME": "Byt till mörkt tema",
+      "SHOWCASE": {
+        "LABEL": "Om Virto Commerce",
+        "GO_TO": "Visa: {name}",
+        "MORE": "Läs mer på VirtoCommerce.com",
+        "PLATFORM": {
+          "CHIP": "Virto Commerce i Virto Cloud",
+          "TITLE": "Hanterad composable commerce för komplex B2B",
+          "BODY": "En API-först-plattform med öppen källkod på .NET som drivs åt dig i Virto Cloud. Börja med det du behöver och lägg till moduler när verksamheten växer.",
+          "POINT_1": "Virto Cloud driftar, skalar, uppdaterar och övervakar dina miljöer",
+          "POINT_2": "Över 100 moduler som du installerar, uppdaterar eller byter ut en i taget",
+          "POINT_3": "Anslut valfri butiksfront, ERP eller marknadsplats via öppna API:er"
+        },
+        "CATALOG": {
+          "CHIP": "Katalog och priser",
+          "TITLE": "En katalog för alla kanaler och prislistor",
+          "BODY": "Hantera fysiska, digitala och konfigurerbara produkter en gång och publicera dem sedan i varje butik med eget sortiment och egna priser.",
+          "POINT_1": "Virtuella kataloger som återanvänder produkter i olika butiker och kanaler",
+          "POINT_2": "Prislistor med mängdtrappor, datum och regler för kundsegment",
+          "POINT_3": "Lagersaldo i alla lager och distributionscenter"
+        },
+        "B2B": {
+          "CHIP": "B2B-inköp",
+          "TITLE": "Byggd för hur företag köper",
+          "BODY": "Företagskonton, köpare och avtal, med de offerter och återkommande beställningar som B2B-affärer bygger på.",
+          "POINT_1": "Organisationer med sina köpare, roller och adresser",
+          "POINT_2": "Offerter och avtalspriser som förhandlas per kund",
+          "POINT_3": "Prenumerationer som beställs om enligt schema"
+        },
+        "API": {
+          "CHIP": "API:er och AI-agenter",
+          "TITLE": "Öppen, API-först och redo för agenter",
+          "BODY": "Varje funktion är ett API: bygg valfri frontend, låt AI-agenter handla och agera åt dig och bygg ut plattformen med egna moduler.",
+          "POINT_1": "GraphQL xAPI för butiksfronter, appar och integrationer",
+          "POINT_2": "Agentic Access via MCP för AI-assistenter och agenter",
+          "POINT_3": "Inbyggt stöd för protokollen UCP och OnX"
+        }
+      },
+      "HELP": "Hjälp",
+      "LINKS": {
+        "HELP": "Hjälp",
+        "SUPPORT": "Support",
+        "PRIVACY": "Integritet",
+        "TERMS": "Villkor"
+      },
+      "SLIDES_LABEL": "Om {name}"
+    },
+    "LOGIN": {
+      "SUBTITLE": "Logga in på {name} för att fortsätta",
+      "CONTINUE_WITH": "Fortsätt med {name}",
+      "CONTINUE_WITH_SSO": "Fortsätt med enkel inloggning",
+      "OR": "eller",
+      "LOGIN": "E-post eller användarnamn",
+      "LOGIN_PLACEHOLDER": "Ange e-post eller användarnamn",
+      "SIGNING_IN": "Loggar in…",
+      "ERRORS": {
+        "LOCKED_OUT": "Kontot är låst efter för många misslyckade försök. Försök igen senare eller kontakta administratören.",
+        "NOT_ALLOWED": "Kontot får inte logga in ännu. Kontakta administratören."
+      }
+    },
+    "SEARCH": {
+      "LABEL": "Sök",
+      "PLACEHOLDER": "Sök eller gå till…",
+      "CLEAR": "Rensa",
+      "CLOSE": "Stäng sökningen",
+      "RESULTS": "Sökresultat",
+      "SEARCH_IN": "Sök i",
+      "SEARCHING_IN": "Söker i",
+      "SEARCH_EVERYWHERE": "Sök överallt",
+      "TYPE_TO_SEARCH": "Skriv vad du letar efter",
+      "TIP_SCOPE": "Börja med namnet på en grupp, till exempel {example}, för att bara söka där.",
+      "SEARCHING": "Söker…",
+      "FAILED": "Sökningen misslyckades",
+      "RETRY": "Försök igen",
+      "NO_RESULTS": "Inga resultat för ”{query}”",
+      "NO_RESULTS_HINT": "Kontrollera stavningen eller prova med färre ord.",
+      "NO_RESULTS_SCOPED": "Kontrollera stavningen eller sök överallt.",
+      "SHOW_ALL": "Visa alla {count} i {group}",
+      "OPEN_FAILED": "Det gick inte att öppna resultatet",
+      "KEYS_MOVE": "för att flytta",
+      "KEYS_OPEN": "för att öppna",
+      "KEYS_CLOSE": "för att stänga",
+      "GROUPS": {
+        "MENU": "Meny",
+        "APPS": "Appar",
+        "SETTINGS": "Inställningar",
+        "USERS": "Användare",
+        "ROLES": "Roller"
+      },
+      "BADGES": {
+        "ADMIN": "Admin",
+        "LOCKED": "Låst"
+      }
+    },
+    "FRAMEWORK": {
+      "PROGRESS": "Förlopp",
+      "CLOSE_SIDEBAR": "Stäng sidofältet",
+      "DASHBOARD_GRID": "Instrumentpanelens widgetar. Dra en widget, eller markera den och tryck på Enter för att flytta den med piltangenterna.",
+      "DATE_PICKER": {
+        "TOGGLE_OVERLAY": "Visa eller dölj väljaren",
+        "MENU": "Datumväljarens meny",
+        "INPUT": "Datumfält",
+        "OPEN_TIME_PICKER": "Öppna tidsväljaren",
+        "CLOSE_TIME_PICKER": "Stäng tidsväljaren",
+        "INCREMENT": "Öka {unit}",
+        "DECREMENT": "Minska {unit}",
+        "OPEN_TIME_OVERLAY": "Välj {unit}",
+        "AM_PM": "Växla FM/EM",
+        "OPEN_YEARS": "Välj år",
+        "OPEN_MONTHS": "Välj månad",
+        "NEXT_MONTH": "Nästa månad",
+        "PREV_MONTH": "Föregående månad",
+        "NEXT_YEAR": "Nästa år",
+        "PREV_YEAR": "Föregående år",
+        "CLEAR": "Rensa värdet",
+        "CALENDAR_ICON": "Öppna kalendern",
+        "TIME_PICKER": "Tidsväljare",
+        "MONTH_PICKER": "Månadsväljare",
+        "YEAR_PICKER": "Årsväljare",
+        "TIME_OVERLAY": "Väljare: {unit}",
+        "UNITS": {
+          "hours": "timmar",
+          "minutes": "minuter",
+          "seconds": "sekunder"
+        }
+      }
+    }
+  }
+}

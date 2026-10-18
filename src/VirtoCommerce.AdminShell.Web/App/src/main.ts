@@ -6,6 +6,9 @@ import { registerRemoteModules } from "@vc-shell/mf-host";
 import { createApp } from "vue";
 import { router } from "./router";
 import * as locales from "./locales";
+// vc-shell's texts in the languages it doesn't ship (docs/localization.md)
+import * as frameworkLocales from "./locales/framework";
+import { translateFrameworkDefaults } from "./locales/framework/defaults";
 import { RouterView } from "vue-router";
 // the platform's own screens (Settings, Security, Modules, ...) ship with the host
 import PlatformModule from "./modules/platform";
@@ -51,9 +54,14 @@ async function startApp() {
 
   app.use(router);
 
-  Object.entries(locales).forEach(([key, message]) => {
-    app.config.globalProperties.$mergeLocaleMessage(key, message);
-  });
+  // vc-shell's texts first, then the shell's own (a key in both is the shell's)
+  [frameworkLocales, locales].forEach((source) =>
+    Object.entries(source).forEach(([key, message]) => {
+      app.config.globalProperties.$mergeLocaleMessage(key, message);
+    }),
+  );
+
+  translateFrameworkDefaults(app);
 
   setLocale(currentLocale.value);
 

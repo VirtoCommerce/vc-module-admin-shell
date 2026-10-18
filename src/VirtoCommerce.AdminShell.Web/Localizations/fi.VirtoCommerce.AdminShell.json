@@ -1,0 +1,102 @@
+{
+  "permissions": {
+    "admin-shell:access": "Avaa Admin Shell",
+    "admin-shell:menu:manage": "Hallinnoi Admin Shellin valikkoa (yleinen ja roolikohtainen taso)"
+  },
+  "settings": {
+    "AdminShell": {
+      "Menu": {
+        "Global": {
+          "title": "Yleinen valikkopatch",
+          "description": "JSON-patch, joka sovelletaan Admin Shellin oletusvalikkoon kaikille: piilota, nimeä uudelleen tai siirrä osioita ja kohteita tai lisää uusia"
+        },
+        "Role": {
+          "title": "Roolin valikkopatch",
+          "description": "JSON-patch, joka sovelletaan Admin Shellin valikkoon tämän roolin käyttäjille; kohde pysyy näkyvissä, jos jokin käyttäjän rooleista säilyttää sen"
+        },
+        "User": {
+          "title": "Valikkoasetukset",
+          "description": "Käyttäjän kiinnittämät ja piilottamat Admin Shellin valikon kohteet"
+        }
+      },
+      "UI": {
+        "Appearance": {
+          "title": "Ulkoasu",
+          "description": "Admin Shellin vaalea, tumma tai käyttöjärjestelmän mukainen ulkoasu"
+        },
+        "Theme": {
+          "title": "Teema",
+          "description": "Admin Shellin värit: Virto, Lämmin, Sininen, Indigo tai mukautettu teema"
+        }
+      },
+      "Branding": {
+        "CompanyName": {
+          "title": "Yrityksen nimi",
+          "description": "Näytetään selaimen välilehdellä, kirjautumissivulla ja sen alatunnisteessa. Tyhjä: Virto Commerce"
+        },
+        "LogoUrl": {
+          "title": "Logo",
+          "description": "Logo vaaleilla taustoilla (kirjautumissivu, etusivu): kuvan URL, esimerkiksi Resursseista. SVG tai PNG, noin 200 x 48 px"
+        },
+        "LogoDarkUrl": {
+          "title": "Logo tummalle ulkoasulle",
+          "description": "Logo tummilla taustoilla. Tyhjä: yllä oleva logo"
+        },
+        "MarkUrl": {
+          "title": "Logomerkki",
+          "description": "Neliön muotoinen kuvake valikkopalkkiin ja puhelimen yläpalkkiin: kuvan URL. SVG tai PNG, vähintään 64 x 64 px"
+        },
+        "FaviconUrl": {
+          "title": "Selaimen välilehden kuvake",
+          "description": "Favicon: kuvan URL (ICO, PNG tai SVG). Tyhjä: logomerkki"
+        },
+        "HelpUrl": {
+          "title": "Ohjelinkki",
+          "description": "Minne kirjautumissivun ja käyttäjävalikon Ohje-linkki vie. Tyhjä: ei Ohje-linkkiä"
+        },
+        "SupportUrl": {
+          "title": "Tukilinkki",
+          "description": "Tukisivu tai mailto:-osoite kirjautumissivun alatunnisteessa ja käyttäjävalikossa"
+        },
+        "PrivacyUrl": {
+          "title": "Tietosuojakäytännön linkki",
+          "description": "Näytetään kirjautumissivun alatunnisteessa"
+        },
+        "TermsUrl": {
+          "title": "Käyttöehtojen linkki",
+          "description": "Näytetään kirjautumissivun alatunnisteessa"
+        }
+      },
+      "SignIn": {
+        "Showcase": {
+          "title": "Kirjautumissivun paneeli",
+          "description": "Kirjautumislomakkeen vieressä oleva paneeli (leveys vähintään 1024 px): virto näyttää Virto Commercen diat, custom alla olevat diat, none pelkän lomakkeen"
+        },
+        "Slides": {
+          "title": "Kirjautumissivun diat",
+          "description": "Diojen JSON-luettelo: [{ \"chip\", \"title\", \"body\", \"points\": [], \"image\", \"imageDark\", \"alt\", \"link\": { \"text\", \"url\" } }]. Teksti voi olla merkkijono tai { \"en\": \"...\", \"de\": \"...\" }"
+        }
+      },
+      "Home": {
+        "Welcome": {
+          "title": "Etusivun tervetulokortti",
+          "description": "JSON: { \"title\", \"body\", \"image\", \"imageDark\", \"links\": [{ \"text\", \"url\" }] }, näytetään ensimmäisenä etusivulla. {} piilottaa sen"
+        }
+      },
+      "Theme": {
+        "Default": {
+          "title": "Oletusteema",
+          "description": "Kirjautumissivun ja teemaa valitsemattomien käyttäjien teema: virto, warm, blue, indigo tai teematiedoston ID"
+        },
+        "Appearance": {
+          "title": "Oletusulkoasu",
+          "description": "Vaalea, tumma tai käyttöjärjestelmän mukainen ulkoasu kirjautumissivulle ja ulkoasua valitsemattomille käyttäjille"
+        },
+        "UserChoice": {
+          "title": "Käyttäjät valitsevat teemansa",
+          "description": "Pois: kaikilla on oletusteema, ja teemavalitsimet on piilotettu"
+        }
+      }
+    }
+  }
+}

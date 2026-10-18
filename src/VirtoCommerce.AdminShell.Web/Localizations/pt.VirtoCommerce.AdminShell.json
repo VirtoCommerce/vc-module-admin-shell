@@ -1,0 +1,102 @@
+{
+  "permissions": {
+    "admin-shell:access": "Abrir o Admin Shell",
+    "admin-shell:menu:manage": "Gerenciar o menu do Admin Shell (camadas global e por função)"
+  },
+  "settings": {
+    "AdminShell": {
+      "Menu": {
+        "Global": {
+          "title": "Patch do menu global",
+          "description": "Patch JSON aplicado ao menu padrão do Admin Shell para todos: oculte, renomeie ou mova seções e itens, ou adicione novos"
+        },
+        "Role": {
+          "title": "Patch do menu por função",
+          "description": "Patch JSON aplicado ao menu do Admin Shell para os usuários desta função; um item continua visível se qualquer uma das funções do usuário o mantiver"
+        },
+        "User": {
+          "title": "Preferências do menu",
+          "description": "Itens do menu do Admin Shell fixados e ocultos pelo usuário"
+        }
+      },
+      "UI": {
+        "Appearance": {
+          "title": "Aparência",
+          "description": "Aparência clara, escura ou a do sistema operacional no Admin Shell"
+        },
+        "Theme": {
+          "title": "Tema",
+          "description": "As cores do Admin Shell: Virto, Quente, Azul, Índigo ou um tema personalizado"
+        }
+      },
+      "Branding": {
+        "CompanyName": {
+          "title": "Nome da empresa",
+          "description": "Exibido na aba do navegador, na página de login e no rodapé dela. Vazio: Virto Commerce"
+        },
+        "LogoUrl": {
+          "title": "Logotipo",
+          "description": "O logotipo sobre fundos claros (página de login, Início): URL de uma imagem, por exemplo de Assets. SVG ou PNG, cerca de 200 x 48 px"
+        },
+        "LogoDarkUrl": {
+          "title": "Logotipo para a aparência escura",
+          "description": "O logotipo sobre fundos escuros. Vazio: o logotipo acima"
+        },
+        "MarkUrl": {
+          "title": "Símbolo do logotipo",
+          "description": "Ícone quadrado para a barra do menu e a barra superior no celular: URL de uma imagem. SVG ou PNG, no mínimo 64 x 64 px"
+        },
+        "FaviconUrl": {
+          "title": "Ícone da aba do navegador",
+          "description": "O favicon: URL de uma imagem (ICO, PNG ou SVG). Vazio: o símbolo do logotipo"
+        },
+        "HelpUrl": {
+          "title": "Link de ajuda",
+          "description": "Destino de Ajuda na página de login e no menu do usuário. Vazio: sem link de Ajuda"
+        },
+        "SupportUrl": {
+          "title": "Link de suporte",
+          "description": "Uma página de suporte ou um endereço mailto:, no rodapé da página de login e no menu do usuário"
+        },
+        "PrivacyUrl": {
+          "title": "Link da política de privacidade",
+          "description": "Exibido no rodapé da página de login"
+        },
+        "TermsUrl": {
+          "title": "Link dos termos de uso",
+          "description": "Exibido no rodapé da página de login"
+        }
+      },
+      "SignIn": {
+        "Showcase": {
+          "title": "Painel da página de login",
+          "description": "O painel ao lado do formulário de login (a partir de 1024 px de largura): virto mostra os slides da Virto Commerce, custom os slides abaixo, none apenas o formulário"
+        },
+        "Slides": {
+          "title": "Slides da página de login",
+          "description": "Lista JSON de slides: [{ \"chip\", \"title\", \"body\", \"points\": [], \"image\", \"imageDark\", \"alt\", \"link\": { \"text\", \"url\" } }]. Um texto pode ser uma string ou { \"en\": \"...\", \"de\": \"...\" }"
+        }
+      },
+      "Home": {
+        "Welcome": {
+          "title": "Cartão de boas-vindas do Início",
+          "description": "JSON: { \"title\", \"body\", \"image\", \"imageDark\", \"links\": [{ \"text\", \"url\" }] }, exibido primeiro no Início. {} oculta o cartão"
+        }
+      },
+      "Theme": {
+        "Default": {
+          "title": "Tema padrão",
+          "description": "O tema da página de login e dos usuários que não escolheram um: virto, warm, blue, indigo ou o id de um arquivo de tema"
+        },
+        "Appearance": {
+          "title": "Aparência padrão",
+          "description": "Clara, escura ou a do sistema operacional, para a página de login e os usuários que não escolheram uma"
+        },
+        "UserChoice": {
+          "title": "Usuários escolhem o tema",
+          "description": "Desativado: todos usam o tema padrão e os seletores de tema ficam ocultos"
+        }
+      }
+    }
+  }
+}

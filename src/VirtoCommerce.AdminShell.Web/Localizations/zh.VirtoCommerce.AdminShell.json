@@ -1,0 +1,102 @@
+{
+  "permissions": {
+    "admin-shell:access": "打开 Admin Shell",
+    "admin-shell:menu:manage": "管理 Admin Shell 菜单（全局层和角色层）"
+  },
+  "settings": {
+    "AdminShell": {
+      "Menu": {
+        "Global": {
+          "title": "全局菜单补丁",
+          "description": "应用于所有用户默认 Admin Shell 菜单的 JSON 补丁：隐藏、重命名或移动栏目和菜单项，或添加新项"
+        },
+        "Role": {
+          "title": "角色菜单补丁",
+          "description": "应用于此角色用户 Admin Shell 菜单的 JSON 补丁；只要用户的任一角色保留某菜单项，该项就保持可见"
+        },
+        "User": {
+          "title": "菜单偏好",
+          "description": "用户在 Admin Shell 菜单中固定和隐藏的菜单项"
+        }
+      },
+      "UI": {
+        "Appearance": {
+          "title": "外观",
+          "description": "Admin Shell 的外观：浅色、深色或跟随操作系统"
+        },
+        "Theme": {
+          "title": "主题",
+          "description": "Admin Shell 的配色：Virto、暖色、蓝色、靛蓝或自定义主题"
+        }
+      },
+      "Branding": {
+        "CompanyName": {
+          "title": "公司名称",
+          "description": "显示在浏览器标签页、登录页及其页脚中。留空：Virto Commerce"
+        },
+        "LogoUrl": {
+          "title": "徽标",
+          "description": "浅色背景（登录页、首页）上的徽标：图片 URL，例如来自资源库的图片。SVG 或 PNG，约 200 x 48 px"
+        },
+        "LogoDarkUrl": {
+          "title": "深色外观徽标",
+          "description": "深色背景上的徽标。留空：使用上方的徽标"
+        },
+        "MarkUrl": {
+          "title": "徽标图形",
+          "description": "用于菜单栏和手机顶栏的方形图标：图片 URL。SVG 或 PNG，至少 64 x 64 px"
+        },
+        "FaviconUrl": {
+          "title": "浏览器标签页图标",
+          "description": "网站图标（favicon）：图片 URL（ICO、PNG 或 SVG）。留空：使用徽标图形"
+        },
+        "HelpUrl": {
+          "title": "帮助链接",
+          "description": "登录页和用户菜单中“帮助”链接的目标地址。留空：不显示帮助链接"
+        },
+        "SupportUrl": {
+          "title": "支持链接",
+          "description": "支持页面或 mailto: 地址，显示在登录页页脚和用户菜单中"
+        },
+        "PrivacyUrl": {
+          "title": "隐私政策链接",
+          "description": "显示在登录页页脚"
+        },
+        "TermsUrl": {
+          "title": "使用条款链接",
+          "description": "显示在登录页页脚"
+        }
+      },
+      "SignIn": {
+        "Showcase": {
+          "title": "登录页面板",
+          "description": "登录表单旁的面板（宽度 1024 px 起）：virto 显示 Virto Commerce 的幻灯片，custom 显示下方的幻灯片，none 仅显示表单"
+        },
+        "Slides": {
+          "title": "登录页幻灯片",
+          "description": "幻灯片的 JSON 列表：[{ \"chip\", \"title\", \"body\", \"points\": [], \"image\", \"imageDark\", \"alt\", \"link\": { \"text\", \"url\" } }]。文本可以是字符串或 { \"en\": \"...\", \"de\": \"...\" }"
+        }
+      },
+      "Home": {
+        "Welcome": {
+          "title": "首页欢迎卡片",
+          "description": "JSON：{ \"title\", \"body\", \"image\", \"imageDark\", \"links\": [{ \"text\", \"url\" }] }，显示在首页最前面。{} 表示隐藏"
+        }
+      },
+      "Theme": {
+        "Default": {
+          "title": "默认主题",
+          "description": "登录页以及未选择主题的用户所用的主题：virto、warm、blue、indigo 或主题文件的 ID"
+        },
+        "Appearance": {
+          "title": "默认外观",
+          "description": "登录页以及未选择外观的用户所用的外观：浅色、深色或跟随操作系统"
+        },
+        "UserChoice": {
+          "title": "允许用户选择主题",
+          "description": "关闭：所有用户使用默认主题，并隐藏主题选择器"
+        }
+      }
+    }
+  }
+}

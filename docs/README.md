@@ -8,6 +8,7 @@
 | [Architecture overview](architecture.md) | everyone | What the Admin Shell is and the ideas it is built on, in one page. |
 | [Technical description](technical-description.md) | developers | The server and client parts, startup, routing, menu composition, build and deployment. |
 | [White-labeling](branding.md) | administrators, developers | Three levels of branding for a customer: name, logos and links (settings); the sign-in page and Home (settings with content); a custom color theme (theme files). Requirements, steps and testing. |
+| [Localization](localization.md) | developers, translators | The 13 languages, where each screen's texts come from, how to add a language or a text, the translation check. |
 | [Settings](settings.md) | developers | The Settings screen (tree, properties edited in place, deep links, phone layout), the settings store and the user's preferences, all on the platform's Settings v2 API. |
 
 ## Extension points

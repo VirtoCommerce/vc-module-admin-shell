@@ -1,0 +1,102 @@
+{
+  "permissions": {
+    "admin-shell:access": "Ouvrir l'Admin Shell",
+    "admin-shell:menu:manage": "Gérer le menu de l'Admin Shell (niveaux global et par rôle)"
+  },
+  "settings": {
+    "AdminShell": {
+      "Menu": {
+        "Global": {
+          "title": "Patch global du menu",
+          "description": "Patch JSON appliqué au menu par défaut de l'Admin Shell pour tous : masquer, renommer ou déplacer des sections et des éléments, ou en ajouter de nouveaux"
+        },
+        "Role": {
+          "title": "Patch du menu par rôle",
+          "description": "Patch JSON appliqué au menu de l'Admin Shell pour les utilisateurs de ce rôle ; un élément reste visible si l'un des rôles de l'utilisateur le conserve"
+        },
+        "User": {
+          "title": "Préférences du menu",
+          "description": "Les éléments du menu de l'Admin Shell épinglés et masqués par l'utilisateur"
+        }
+      },
+      "UI": {
+        "Appearance": {
+          "title": "Apparence",
+          "description": "Apparence claire, sombre ou celle du système d'exploitation pour l'Admin Shell"
+        },
+        "Theme": {
+          "title": "Thème",
+          "description": "Les couleurs de l'Admin Shell : Virto, Chaud, Bleu, Indigo ou un thème personnalisé"
+        }
+      },
+      "Branding": {
+        "CompanyName": {
+          "title": "Nom de l'entreprise",
+          "description": "Affiché dans l'onglet du navigateur, sur la page de connexion et dans son pied de page. Vide : Virto Commerce"
+        },
+        "LogoUrl": {
+          "title": "Logo",
+          "description": "Le logo sur fond clair (page de connexion, Accueil) : une URL d'image, par exemple issue des Ressources. SVG ou PNG, environ 200 x 48 px"
+        },
+        "LogoDarkUrl": {
+          "title": "Logo pour l'apparence sombre",
+          "description": "Le logo sur fond sombre. Vide : le logo ci-dessus"
+        },
+        "MarkUrl": {
+          "title": "Emblème du logo",
+          "description": "Une icône carrée pour la barre du menu et la barre supérieure sur téléphone : une URL d'image. SVG ou PNG, au moins 64 x 64 px"
+        },
+        "FaviconUrl": {
+          "title": "Icône de l'onglet du navigateur",
+          "description": "Le favicon : une URL d'image (ICO, PNG ou SVG). Vide : l'emblème du logo"
+        },
+        "HelpUrl": {
+          "title": "Lien d'aide",
+          "description": "La destination du lien Aide sur la page de connexion et dans le menu utilisateur. Vide : pas de lien Aide"
+        },
+        "SupportUrl": {
+          "title": "Lien de support",
+          "description": "Une page de support ou une adresse mailto:, dans le pied de page de connexion et le menu utilisateur"
+        },
+        "PrivacyUrl": {
+          "title": "Lien vers la politique de confidentialité",
+          "description": "Affiché dans le pied de page de la page de connexion"
+        },
+        "TermsUrl": {
+          "title": "Lien vers les conditions d'utilisation",
+          "description": "Affiché dans le pied de page de la page de connexion"
+        }
+      },
+      "SignIn": {
+        "Showcase": {
+          "title": "Panneau de la page de connexion",
+          "description": "Le panneau à côté du formulaire de connexion (à partir de 1024 px de large) : virto affiche les diapositives de Virto Commerce, custom les diapositives ci-dessous, none uniquement le formulaire"
+        },
+        "Slides": {
+          "title": "Diapositives de la page de connexion",
+          "description": "Liste JSON de diapositives : [{ \"chip\", \"title\", \"body\", \"points\": [], \"image\", \"imageDark\", \"alt\", \"link\": { \"text\", \"url\" } }]. Un texte peut être une chaîne ou { \"en\": \"...\", \"de\": \"...\" }"
+        }
+      },
+      "Home": {
+        "Welcome": {
+          "title": "Carte de bienvenue de l'accueil",
+          "description": "JSON : { \"title\", \"body\", \"image\", \"imageDark\", \"links\": [{ \"text\", \"url\" }] }, affichée en premier sur l'Accueil. {} la masque"
+        }
+      },
+      "Theme": {
+        "Default": {
+          "title": "Thème par défaut",
+          "description": "Le thème de la page de connexion et des utilisateurs qui n'en ont pas choisi : virto, warm, blue, indigo ou l'ID d'un fichier de thème"
+        },
+        "Appearance": {
+          "title": "Apparence par défaut",
+          "description": "Apparence claire, sombre ou celle du système d'exploitation pour la page de connexion et les utilisateurs qui n'en ont pas choisi"
+        },
+        "UserChoice": {
+          "title": "Les utilisateurs choisissent leur thème",
+          "description": "Désactivé : tout le monde a le thème par défaut et les sélecteurs de thème sont masqués"
+        }
+      }
+    }
+  }
+}
