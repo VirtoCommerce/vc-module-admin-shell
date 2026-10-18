@@ -978,6 +978,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fontsource-variable/noto-sans-arabic@npm:5.2.10":
+  version: 5.2.10
+  resolution: "@fontsource-variable/noto-sans-arabic@npm:5.2.10"
+  checksum: 10/d39e43e6a41d1857415c2a89eba115139860214cf2d29853ffa5af10eda48c209129b7fdaa436113a95eb255a13a32f5229c1f74925113a2927ceb9cbbafadc2
+  languageName: node
+  linkType: hard
+
 "@fontsource/lato@npm:^5.2.7":
   version: 5.3.0
   resolution: "@fontsource/lato@npm:5.3.0"
@@ -4193,6 +4200,7 @@ __metadata:
   dependencies:
     "@commitlint/cli": "npm:^20.4.1"
     "@commitlint/config-conventional": "npm:^20.4.1"
+    "@fontsource-variable/noto-sans-arabic": "npm:5.2.10"
     "@laynezh/vite-plugin-lib-assets": "npm:^0.5.13"
     "@rollup/plugin-typescript": "npm:^11.1.5"
     "@types/lodash-es": "npm:^4.17.12"
@@ -4221,6 +4229,7 @@ __metadata:
     lint-staged: "npm:^15.2.0"
     lodash-es: "npm:^4.17.21"
     postcss: "npm:^8.4.32"
+    postcss-rtlcss: "npm:5.7.1"
     prettier: "npm:^3.1.1"
     sass: "npm:^1.87.0"
     tailwindcss: "npm:^3.4.0"
@@ -8670,7 +8679,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"picocolors@npm:^1.1.1":
+"picocolors@npm:^1.0.0, picocolors@npm:^1.1.1":
   version: 1.1.1
   resolution: "picocolors@npm:1.1.1"
   checksum: 10/e1cf46bf84886c79055fdfa9dcb3e4711ad259949e3565154b004b260cd356c5d54b31a1437ce9782624bf766272fe6b0154f5f0c744fb7af5d454d2b60db045
@@ -8794,6 +8803,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss-rtlcss@npm:5.7.1":
+  version: 5.7.1
+  resolution: "postcss-rtlcss@npm:5.7.1"
+  dependencies:
+    rtlcss: "npm:4.3.0"
+  peerDependencies:
+    postcss: ^8.4.21
+  checksum: 10/1ba324c6e8f820dc3b90752cc8eab7038ea1b58754353486a2ca1b86736805499179c0bf1fa88d49734175e63ceefeef3bb885aec31d8c1a19f6f59f0bfe68de
+  languageName: node
+  linkType: hard
+
 "postcss-selector-parser@npm:^6.1.1, postcss-selector-parser@npm:^6.1.2":
   version: 6.1.4
   resolution: "postcss-selector-parser@npm:6.1.4"
@@ -8821,7 +8841,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.32, postcss@npm:^8.4.47, postcss@npm:^8.5.28, postcss@npm:^8.5.3":
+"postcss@npm:^8.4.21, postcss@npm:^8.4.32, postcss@npm:^8.4.47, postcss@npm:^8.5.28, postcss@npm:^8.5.3":
   version: 8.5.30
   resolution: "postcss@npm:8.5.30"
   dependencies:
@@ -9456,6 +9476,20 @@ __metadata:
   dependencies:
     tslib: "npm:^2.4.0"
   checksum: 10/5df8cd2fa08f54ecce704750beb80420a3b15009961c77bd1447c1ccbb3abc1f23929228b13532992c89b813b52430ef0fefb8c9aa0b4ffbc50c51edc514731e
+  languageName: node
+  linkType: hard
+
+"rtlcss@npm:4.3.0":
+  version: 4.3.0
+  resolution: "rtlcss@npm:4.3.0"
+  dependencies:
+    escalade: "npm:^3.1.1"
+    picocolors: "npm:^1.0.0"
+    postcss: "npm:^8.4.21"
+    strip-json-comments: "npm:^3.1.1"
+  bin:
+    rtlcss: bin/rtlcss.js
+  checksum: 10/0a1e6b566b027e2b6ea1f436b67bd1c19cda48c2d768fecef821f53264c3e62947b7535a8221492056ea471df0596af1cd79c59dc0c7b14f184049707667c452
   languageName: node
   linkType: hard
 
