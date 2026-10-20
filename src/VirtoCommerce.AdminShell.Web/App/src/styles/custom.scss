@@ -14,7 +14,7 @@
   --blade-header-button-color: var(--color-neutral-400);
   --blade-header-button-color-hover: var(--color-primary-500);
 
-  /* toolbar buttons: #404040 icon + 12px/500 label, primary on hover; disabled ones below (no tile, faded) */
+  /* toolbar buttons: #404040 icon + 12px/500 label, primary on hover; enabled vs disabled below */
   --blade-toolbar-base-button-title-color: var(--color-neutral-700);
   --blade-toolbar-base-button-icon-color: var(--color-neutral-700);
   --blade-toolbar-base-button-hover-color: var(--color-primary-500);
@@ -56,22 +56,21 @@
 
 /* ---- toolbar: enabled vs disabled ----
    Disabled controls are exempt from contrast minimums (WCAG 1.4.3), but they must differ from enabled ones by more than a
-   shade (1.4.1). An enabled action is a soft button (a tinted tile with a hairline), a disabled one has no tile, is faded
-   to 38 % and shows a not-allowed pointer: the shape tells them apart without color (grayscale, color blindness, zoom).
-   vc-shell's own rules keep the hover color and give disabled buttons aria-disabled. */
+   shade (1.4.1). An enabled action is in the full text color, a disabled one is faded to 32 % and shows a not-allowed
+   pointer, so the two stand clearly apart in every theme; hovering an enabled one still turns it the theme's color.
+   vc-shell's own rules give disabled buttons aria-disabled. */
 .vc-blade-toolbar-base-button.vc-blade-toolbar-base-button {
-  border-radius: 8px;
-  margin: 0 2px;
-  padding-bottom: 4px;
-  padding-top: 4px;
-
   &:not(.vc-blade-toolbar-base-button--disabled) {
-    background: var(--color-neutral-100);
-    box-shadow: inset 0 0 0 1px var(--color-neutral-200);
+    .vc-blade-toolbar-base-button__icon,
+    .vc-blade-toolbar-base-button__title {
+      color: var(--color-neutral-900);
+    }
 
     &:hover {
-      background: var(--color-primary-50);
-      box-shadow: inset 0 0 0 1px var(--color-primary-200);
+      .vc-blade-toolbar-base-button__icon,
+      .vc-blade-toolbar-base-button__title {
+        color: var(--blade-toolbar-base-button-hover-color);
+      }
     }
   }
 
@@ -81,7 +80,7 @@
     .vc-blade-toolbar-base-button__icon,
     .vc-blade-toolbar-base-button__title {
       color: var(--color-neutral-700);
-      opacity: 0.38;
+      opacity: 0.32;
     }
   }
 }
