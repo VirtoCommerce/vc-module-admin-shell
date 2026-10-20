@@ -9,8 +9,11 @@ The Admin Shell module is the Vue admin of the Virto Commerce platform, built on
 * **Module plugins:** modules ship their UI in `plugins/admin-shell/`. The platform lists installed plugins in the app manifest and the shell loads them at runtime, with their screens, menu items, search providers and widgets.
 * **Seamless migration:**
   * menu items open Vue screens, AngularJS screens (the classic admin in a persistent embedded frame), platform apps (embedded) or external links;
-  * a module's Vue screen `replaces` its AngularJS item and keeps its place, group, pins and user settings.
+  * a default menu item opens its module's Vue screen once the module's Admin Shell plugin is installed, and its AngularJS screen until then, keeping its place, group, pins and user settings.
 * **Server-driven, layered menu:** the default menu (`default-menu.json`, installed apps, plugin contributions) → a global patch → role patches → each user's pins and hidden items. The result is filtered by permission, and a section or item stays visible when any role keeps it.
+* **Admin Shell Menu Editor (Configuration › Monitoring & Tools):** drag sections and items (mouse, touch or keyboard) to reorder them or move them to another section or group, rename (per language), hide, add sections and links, saved as the global patch; *Edit as JSON* to view, download, upload and edit the changes for backup and restore; choose what users may personalize (pin, hide, reorder: turning one off stops applying users' changes without deleting them); find the AngularJS admin's screens and add the ones the menu doesn't have.
+* **Nothing missing from the menu:** a workspace blade that no menu entry opens is listed in *More*, as is a contribution to a section the menu doesn't have.
+* **Translated menu:** section, group and item titles in 15 languages from the menu's own locale files (`App/src/locales/menu`), plugin keys and the platform's server texts; renames by language from the editor.
 * **Menu counters:** menu items show what waits (new orders, returns requested, reviews to moderate). Each module registers its counter from its plugin, and the shell polls them every minute while the tab is visible.
 * **Recent and Pinned:**
   * the panel lists the pages a user opens most (frequency with a 7-day half-life);
@@ -43,6 +46,9 @@ The Admin Shell module is the Vue admin of the Virto Commerce platform, built on
 | Setting | Type | Default | Description |
 |---------|------|---------|-------------|
 | `AdminShell.Menu.Global` | Json | `{}` | Global menu patch for everyone: add, rename, move, reorder or hide sections and items |
+| `AdminShell.Menu.AllowPin` | Boolean | `true` | Users may pin menu items; off, their pins stop showing until it's on again |
+| `AdminShell.Menu.AllowHide` | Boolean | `true` | Users may hide menu items; off, the items they hid show again until it's on again |
+| `AdminShell.Menu.AllowReorder` | Boolean | `true` | Users' own order of menu items applies |
 | `AdminShell.Menu.Role` | Json (per role) | `{}` | A role's menu patch; an item is hidden only if every role of the user hides it |
 | `AdminShell.Menu.User` | Json (per user, hidden) | `{}` | The user's pinned and hidden items, set from the shell (and an item order, API only) |
 | `AdminShell.Menu.Recent` | Json (per user, hidden) | `[]` | Usage scores behind *Recent*, recorded by the shell |
@@ -92,7 +98,7 @@ The module hosts the Admin Shell app and composes its menu; the platform serves 
    * `Content/default-menu.json`, without items of modules that aren't installed;
    * installed apps with `MainMenu` placement;
    * `contributions.menu` from each module's `plugins/admin-shell/plugin.json`.
-2. `MenuComposer` applies replacements: a Vue item takes the place of the AngularJS item it `replaces`, and old ids are mapped to new ones.
+2. `MenuComposer` applies replacements: an item takes the place of the item it `replaces`, and old ids (replaced ones and an item's `aliases`) are mapped to new ones.
 3. The global patch and the role patches are applied; hiding is a union over the user's roles.
 4. The user's preferences are applied; items and sections without permission are removed.
 5. The result is sorted, grouped, and returned with *Pinned* and *Recent*.

@@ -15,6 +15,9 @@ public static class ModuleConstants
     /// <summary>The Home section of the default menu, where Recent shows</summary>
     public const string HomeSectionId = "dashboard";
 
+    /// <summary>The section that collects what no menu places: contributions without a known section, discovered blades</summary>
+    public const string MoreSectionId = "more";
+
     /// <summary>Recent: the uses kept per user, and the days after which an unused page's score has halved</summary>
     public const int MaxRecentTracked = 30;
     public const double RecentHalfLifeDays = 7;
@@ -47,6 +50,35 @@ public static class ModuleConstants
             ValueType = SettingValueType.Json,
             DefaultValue = "{}",
         };
+
+        /// <summary>Whether users may pin menu items (off: their pins stop showing, and come back when it's on again)</summary>
+        public static SettingDescriptor AllowPin { get; } = new()
+        {
+            Name = "AdminShell.Menu.AllowPin",
+            GroupName = "Admin Shell|Menu",
+            ValueType = SettingValueType.Boolean,
+            DefaultValue = true,
+        };
+
+        /// <summary>Whether users may hide menu items (off: the items they hid show again, until it's on again)</summary>
+        public static SettingDescriptor AllowHide { get; } = new()
+        {
+            Name = "AdminShell.Menu.AllowHide",
+            GroupName = "Admin Shell|Menu",
+            ValueType = SettingValueType.Boolean,
+            DefaultValue = true,
+        };
+
+        /// <summary>Whether users' own order of menu items applies</summary>
+        public static SettingDescriptor AllowReorder { get; } = new()
+        {
+            Name = "AdminShell.Menu.AllowReorder",
+            GroupName = "Admin Shell|Menu",
+            ValueType = SettingValueType.Boolean,
+            DefaultValue = true,
+        };
+
+        public static IEnumerable<SettingDescriptor> PersonalizationSettings => [AllowPin, AllowHide, AllowReorder];
 
         /// <summary>Per-role menu patch (tenant type "Role", object id = role id)</summary>
         public static SettingDescriptor RoleMenu { get; } = new()
@@ -241,7 +273,7 @@ public static class ModuleConstants
             SignInShowcase, SignInSlides, HomeWelcome, DefaultTheme, DefaultAppearance, ThemeUserChoice,
         ];
 
-        public static IEnumerable<SettingDescriptor> ModuleSettings => [GlobalMenu, .. BrandingSettings];
+        public static IEnumerable<SettingDescriptor> ModuleSettings => [GlobalMenu, .. PersonalizationSettings, .. BrandingSettings];
         public static IEnumerable<SettingDescriptor> RoleSettings => [RoleMenu];
         public static IEnumerable<SettingDescriptor> UserSettings => [UserMenu, UserRecent, UserAppearance, UserTheme];
     }

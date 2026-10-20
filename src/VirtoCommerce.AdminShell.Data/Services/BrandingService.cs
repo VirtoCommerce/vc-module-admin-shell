@@ -12,10 +12,11 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using VirtoCommerce.AdminShell.Core;
 using VirtoCommerce.AdminShell.Core.Models;
+using VirtoCommerce.AdminShell.Core.Services;
 using VirtoCommerce.Platform.Core.Settings;
 using Settings = VirtoCommerce.AdminShell.Core.ModuleConstants.Settings;
 
-namespace VirtoCommerce.AdminShell.Web.Services;
+namespace VirtoCommerce.AdminShell.Data.Services;
 
 /// <summary>
 /// The installation's white-labeling (docs/branding.md): the branding settings, and the theme files of the themes
@@ -26,7 +27,7 @@ public partial class BrandingService(
     IConfiguration configuration,
     IWebHostEnvironment environment,
     IMemoryCache memoryCache,
-    ILogger<BrandingService> logger)
+    ILogger<BrandingService> logger) : IBrandingService
 {
     /// <summary>The palette colors a theme file may set (styles/_themes.scss)</summary>
     public static readonly string[] PaletteKeys =

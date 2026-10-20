@@ -1,7 +1,7 @@
 {
   "permissions": {
     "admin-shell:access": "Avaa Admin Shell",
-    "admin-shell:menu:manage": "Hallinnoi Admin Shellin valikkoa (yleinen ja roolikohtainen taso)"
+    "admin-shell:menu:manage": "Hallinnoi Admin Shellin valikkoa: valikkoeditori, yleinen ja roolikohtainen taso sekä se, mitä käyttäjät saavat muuttaa"
   },
   "settings": {
     "AdminShell": {
@@ -17,6 +17,18 @@
         "User": {
           "title": "Valikkoasetukset",
           "description": "Käyttäjän kiinnittämät ja piilottamat Admin Shellin valikon kohteet"
+        },
+        "AllowPin": {
+          "title": "Käyttäjät saavat kiinnittää valikon kohteita",
+          "description": "Pois: käyttäjät eivät voi kiinnittää kohteita, eivätkä heidän kiinnittämänsä kohteet näy Kiinnitetyissä; ne palaavat, kun asetus otetaan taas käyttöön"
+        },
+        "AllowHide": {
+          "title": "Käyttäjät saavat piilottaa valikon kohteita",
+          "description": "Pois: käyttäjät eivät voi piilottaa kohteita, ja heidän piilottamansa kohteet näkyvät taas; ne piilotetaan uudelleen, kun asetus otetaan taas käyttöön"
+        },
+        "AllowReorder": {
+          "title": "Käyttäjät saavat järjestää valikon kohteita",
+          "description": "Pois: käyttäjien omaa valikon kohteiden järjestystä ei käytetä; se on taas käytössä, kun asetus otetaan taas käyttöön"
         }
       },
       "UI": {

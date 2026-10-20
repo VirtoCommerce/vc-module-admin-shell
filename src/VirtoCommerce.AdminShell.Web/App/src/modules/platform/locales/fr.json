@@ -411,6 +411,96 @@
       "ERROR_FILE": "L'activation a échoué. Vérifiez le fichier de licence.",
       "ERROR_FILE_TYPE": "Choisissez un fichier de licence .lic.",
       "ERROR_EXPIRED": "L'activation a échoué. Cette licence a expiré."
+    },
+    "MENU_EDITOR": {
+      "TITLE": "Éditeur de menu Admin Shell",
+      "TABS": {
+        "MENU": "Menu",
+        "PERSONALIZATION": "Personnalisation",
+        "LEGACY": "Écrans AngularJS"
+      },
+      "INTRO": "Vos modifications s'appliquent à tous, par-dessus le menu de Virto Commerce, qui s'améliore à chaque version. Elles sont enregistrées dans le paramètre de plateforme AdminShell.Menu.Global.",
+      "MORE_NOTE": "« Plus » liste les écrans des modules installés qu'aucune entrée du menu n'ouvre. Déplacez-les là où ils doivent être.",
+      "ADD_SECTION": "Ajouter une section",
+      "ADD_LINK": "Ajouter un lien",
+      "UNDO_ALL": "Annuler toutes les modifications",
+      "UNDO_ALL_CONFIRM": "Annuler toutes les modifications du menu ? Le menu de Virto Commerce s'appliquera de nouveau après l'enregistrement.",
+      "UNSAVED": "Modifications non enregistrées",
+      "SAVED": "Le menu est enregistré",
+      "LOAD_FAILED": "Impossible de charger le menu : {error}",
+      "BADGES": {
+        "HIDDEN": "Masqué",
+        "CHANGED": "Modifié",
+        "ADDED": "Ajouté",
+        "DISCOVERED": "Détecté automatiquement"
+      },
+      "ACTIONS": {
+        "RENAME": "Renommer",
+        "HIDE": "Masquer",
+        "SHOW": "Afficher",
+        "UNDO": "Annuler les modifications",
+        "REMOVE": "Retirer",
+        "DRAG": "Faire glisser pour déplacer (ou utiliser les flèches)"
+      },
+      "RENAME": {
+        "IN_LANGUAGE": "Titre en {language}",
+        "IN_ENGLISH": "Titre en anglais",
+        "HINT": "Laissez vide pour conserver le titre par défaut",
+        "APPLY": "Appliquer",
+        "CANCEL": "Annuler"
+      },
+      "LINK": {
+        "TITLE": "Titre",
+        "URL": "Adresse",
+        "URL_HINT": "S'ouvre dans un nouvel onglet",
+        "ADD": "Ajouter",
+        "HEADING": "Nouveau lien"
+      },
+      "SECTION": {
+        "TITLE": "Titre de la section",
+        "ADD": "Ajouter",
+        "HEADING": "Nouvelle section"
+      },
+      "PERSONALIZATION": {
+        "INTRO": "Ce que les utilisateurs peuvent modifier dans leur propre menu. Désactiver une option cesse d'appliquer les modifications de ce type faites par les utilisateurs ; elles reviennent quand l'option est réactivée.",
+        "PIN": "Les utilisateurs peuvent épingler des éléments",
+        "HIDE": "Les utilisateurs peuvent masquer des éléments",
+        "REORDER": "Les utilisateurs peuvent réorganiser les éléments"
+      },
+      "LEGACY": {
+        "INTRO": "Écrans du menu de l'administration AngularJS. Ajoutez ceux qui ne sont pas encore dans le menu ; ils s'ouvrent dans l'administration AngularJS, à l'intérieur du shell.",
+        "FIND": "Rechercher les écrans AngularJS",
+        "FINDING": "Démarrage de l'administration AngularJS…",
+        "NONE": "Aucun écran AngularJS trouvé",
+        "IN_MENU": "Dans le menu",
+        "ADD_TO": "Ajouter à",
+        "ADD": "Ajouter",
+        "FAILED": "Impossible de lire les écrans AngularJS : {error}",
+        "SUMMARY": "{count} écrans, dont {missing} pas encore dans le menu",
+        "SHOW_IN_MENU": "Afficher {count} écrans déjà dans le menu",
+        "HIDE_IN_MENU": "Masquer les écrans déjà dans le menu",
+        "ALL_IN_MENU": "Tous les écrans AngularJS sont dans le menu"
+      },
+      "CANCEL": "Annuler",
+      "CLOSE": "Fermer",
+      "JSON": {
+        "INTRO": "La valeur du paramètre de plateforme AdminShell.Menu.Global, avec les modifications non enregistrées de l'éditeur. Téléchargez-la pour garder une sauvegarde ou transférer le menu vers un autre environnement. Pour en restaurer une, importez-la ou collez-la puis appliquez-la : l'éditeur du menu affiche le résultat et son Enregistrer le stocke.",
+        "APPLY": "Appliquer",
+        "RESET": "Annuler les modifications",
+        "DOWNLOAD": "Télécharger",
+        "UPLOAD": "Importer",
+        "COPY": "Copier",
+        "COPIED": "Copié dans le presse-papiers",
+        "APPLIED": "Appliqué. Vérifiez l'onglet Menu et enregistrez pour conserver les modifications.",
+        "INVALID": "Le document n'est pas valide : {error}",
+        "SHAPE": "Un objet avec sections, items, addSections et addItems est attendu",
+        "LABEL": "Modifications du menu (JSON)",
+        "TITLE": "Modifications du menu en JSON",
+        "SUBTITLE": "AdminShell.Menu.Global"
+      },
+      "DRAG_HINT": "Faites glisser les sections et les éléments pour les réordonner, ou déposez un élément dans un autre groupe ou une autre section. Sur un écran tactile, appuyez longuement d'abord.",
+      "DROP_HERE": "Déposez des éléments ici",
+      "DROP_NO_GROUP": "Déposez ici pour aucun groupe"
     }
   }
 }

@@ -1,7 +1,7 @@
 {
   "permissions": {
     "admin-shell:access": "Admin Shell を開く",
-    "admin-shell:menu:manage": "Admin Shell のメニューを管理 (グローバル層とロール層)"
+    "admin-shell:menu:manage": "Admin Shell のメニューを管理: メニューエディター、グローバル層とロール層、ユーザーが変更できる内容"
   },
   "settings": {
     "AdminShell": {
@@ -17,6 +17,18 @@
         "User": {
           "title": "メニューの設定",
           "description": "ユーザーがピン留めまたは非表示にした Admin Shell のメニュー項目"
+        },
+        "AllowPin": {
+          "title": "ユーザーによるメニュー項目のピン留め",
+          "description": "オフ: ユーザーは項目をピン留めできず、ピン留めした項目は「ピン留め済み」に表示されなくなります。再びオンにすると元に戻ります"
+        },
+        "AllowHide": {
+          "title": "ユーザーによるメニュー項目の非表示",
+          "description": "オフ: ユーザーは項目を非表示にできず、非表示にした項目は再び表示されます。再びオンにすると、また非表示になります"
+        },
+        "AllowReorder": {
+          "title": "ユーザーによるメニュー項目の並べ替え",
+          "description": "オフ: ユーザー独自のメニュー項目の順序は適用されません。再びオンにすると、また適用されます"
         }
       },
       "UI": {

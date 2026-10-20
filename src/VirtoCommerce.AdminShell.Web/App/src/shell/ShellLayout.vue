@@ -110,6 +110,7 @@ import { useEventListener } from "@vueuse/core";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useAdminMenu } from "../composables/useAdminMenu";
+import { useBladeDiscovery } from "./bladeDiscovery";
 import { startMenuCounters, waitingOn } from "./menuCounters";
 import { drawerOpen, searchSheetOpen } from "./navState";
 import { globalSearch, useGlobalSearchSetup } from "./search";
@@ -123,7 +124,9 @@ const props = defineProps<{ mobile: boolean; avatar?: string }>();
 const router = useRouter();
 const route = useRoute();
 const { blades, activeBlade } = useBladeStack();
-const { menu, load, activeTitle, trackUses } = useAdminMenu();
+const { menu, load, activeTitle, trackUses, setDiscovered } = useAdminMenu();
+// the workspace blades no menu entry opens go to More once the plugins have loaded (nothing installed is missing)
+useBladeDiscovery(setDiscovered);
 const { hasAccess } = usePermissions();
 // the menu, its counters and Recent's use count live with the layout, which is always there (the phone drawer mounts
 // its nav on opening)

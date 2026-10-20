@@ -1,7 +1,7 @@
 {
   "permissions": {
     "admin-shell:access": "Otwieranie Admin Shell",
-    "admin-shell:menu:manage": "Zarządzanie menu Admin Shell (warstwy globalna i ról)"
+    "admin-shell:menu:manage": "Zarządzanie menu Admin Shell: edytor menu, warstwy globalna i ról, co mogą zmieniać użytkownicy"
   },
   "settings": {
     "AdminShell": {
@@ -17,6 +17,18 @@
         "User": {
           "title": "Preferencje menu",
           "description": "Przypięte i ukryte przez użytkownika elementy menu Admin Shell"
+        },
+        "AllowPin": {
+          "title": "Użytkownicy mogą przypinać elementy menu",
+          "description": "Wyłączone: użytkownicy nie mogą przypinać elementów, a przypięte przez nich elementy przestają być widoczne w sekcji Przypięte; wracają po ponownym włączeniu"
+        },
+        "AllowHide": {
+          "title": "Użytkownicy mogą ukrywać elementy menu",
+          "description": "Wyłączone: użytkownicy nie mogą ukrywać elementów, a ukryte przez nich elementy znów są widoczne; zostaną ponownie ukryte po ponownym włączeniu"
+        },
+        "AllowReorder": {
+          "title": "Użytkownicy mogą zmieniać kolejność elementów menu",
+          "description": "Wyłączone: własna kolejność elementów menu ustawiona przez użytkowników nie jest stosowana; zostanie ponownie zastosowana po ponownym włączeniu"
         }
       },
       "UI": {

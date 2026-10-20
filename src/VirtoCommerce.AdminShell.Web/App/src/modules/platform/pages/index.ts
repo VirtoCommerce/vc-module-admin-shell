@@ -8,6 +8,8 @@ export { default as PlatformDynamicProperties } from "./dynamic-properties/types
 export { default as PlatformDeveloperTools } from "./developer-tools/main.vue";
 export { default as PlatformUserProfile } from "./user-profile/main.vue";
 export { default as PlatformLicense } from "./license/main.vue";
+export { default as PlatformMenuEditor } from "./menu/editor.vue";
+export { default as PlatformMenuEditorJson } from "./menu/json.vue";
 export { default as PlatformSecurityUsers } from "./security/users.vue";
 export { default as PlatformSecurityUserDetails } from "./security/user-details.vue";
 export { default as PlatformSecurityUserPassword } from "./security/user-password.vue";

@@ -1,7 +1,7 @@
 {
   "permissions": {
     "admin-shell:access": "Abrir o Admin Shell",
-    "admin-shell:menu:manage": "Gerenciar o menu do Admin Shell (camadas global e por função)"
+    "admin-shell:menu:manage": "Gerenciar o menu do Admin Shell: o editor de menu, as camadas global e por função, o que os usuários podem alterar"
   },
   "settings": {
     "AdminShell": {
@@ -17,6 +17,18 @@
         "User": {
           "title": "Preferências do menu",
           "description": "Itens do menu do Admin Shell fixados e ocultos pelo usuário"
+        },
+        "AllowPin": {
+          "title": "Usuários podem fixar itens do menu",
+          "description": "Desativado: os usuários não podem fixar itens, e os itens que fixaram deixam de aparecer em Fixados; eles voltam quando isto for ativado novamente"
+        },
+        "AllowHide": {
+          "title": "Usuários podem ocultar itens do menu",
+          "description": "Desativado: os usuários não podem ocultar itens, e os itens que ocultaram voltam a aparecer; eles são ocultados de novo quando isto for ativado novamente"
+        },
+        "AllowReorder": {
+          "title": "Usuários podem reordenar itens do menu",
+          "description": "Desativado: a ordem dos itens do menu definida pelos próprios usuários não se aplica; volta a se aplicar quando isto for ativado novamente"
         }
       },
       "UI": {

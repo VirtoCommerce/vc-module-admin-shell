@@ -411,6 +411,96 @@
       "ERROR_FILE": "Attivazione non riuscita. Verificare il file di licenza.",
       "ERROR_FILE_TYPE": "Scegliere un file di licenza .lic.",
       "ERROR_EXPIRED": "Attivazione non riuscita. Questa licenza è scaduta."
+    },
+    "MENU_EDITOR": {
+      "TITLE": "Editor del menu di Admin Shell",
+      "TABS": {
+        "MENU": "Menu",
+        "PERSONALIZATION": "Personalizzazione",
+        "LEGACY": "Schermate AngularJS"
+      },
+      "INTRO": "Le modifiche valgono per tutti e si applicano sopra il menu di Virto Commerce, che migliora a ogni versione. Vengono salvate nell'impostazione della piattaforma AdminShell.Menu.Global.",
+      "MORE_NOTE": "\"Altro\" elenca le schermate dei moduli installati che nessuna voce del menu apre. Spostarle dove devono stare.",
+      "ADD_SECTION": "Aggiungi sezione",
+      "ADD_LINK": "Aggiungi link",
+      "UNDO_ALL": "Annulla tutte le modifiche",
+      "UNDO_ALL_CONFIRM": "Annullare tutte le modifiche al menu? Dopo il salvataggio si applica di nuovo il menu di Virto Commerce.",
+      "UNSAVED": "Modifiche non salvate",
+      "SAVED": "Il menu è stato salvato",
+      "LOAD_FAILED": "Impossibile caricare il menu: {error}",
+      "BADGES": {
+        "HIDDEN": "Nascosto",
+        "CHANGED": "Modificato",
+        "ADDED": "Aggiunto",
+        "DISCOVERED": "Rilevato automaticamente"
+      },
+      "ACTIONS": {
+        "RENAME": "Rinomina",
+        "HIDE": "Nascondi",
+        "SHOW": "Mostra",
+        "UNDO": "Annulla modifiche",
+        "REMOVE": "Rimuovi",
+        "DRAG": "Trascina per spostare (o usa i tasti freccia)"
+      },
+      "RENAME": {
+        "IN_LANGUAGE": "Titolo in {language}",
+        "IN_ENGLISH": "Titolo in inglese",
+        "HINT": "Lasciare vuoto per mantenere il titolo predefinito",
+        "APPLY": "Applica",
+        "CANCEL": "Annulla"
+      },
+      "LINK": {
+        "TITLE": "Titolo",
+        "URL": "Indirizzo",
+        "URL_HINT": "Si apre in una nuova scheda",
+        "ADD": "Aggiungi",
+        "HEADING": "Nuovo link"
+      },
+      "SECTION": {
+        "TITLE": "Titolo della sezione",
+        "ADD": "Aggiungi",
+        "HEADING": "Nuova sezione"
+      },
+      "PERSONALIZATION": {
+        "INTRO": "Che cosa possono modificare gli utenti nel proprio menu. Disattivando un'opzione, le modifiche di quel tipo fatte dagli utenti non vengono più applicate; tornano quando l'opzione viene riattivata.",
+        "PIN": "Gli utenti possono fissare elementi",
+        "HIDE": "Gli utenti possono nascondere elementi",
+        "REORDER": "Gli utenti possono riordinare gli elementi"
+      },
+      "LEGACY": {
+        "INTRO": "Schermate del menu dell'amministrazione AngularJS. Aggiungere quelle che il menu non ha ancora; si aprono nell'amministrazione AngularJS all'interno della shell.",
+        "FIND": "Trova schermate AngularJS",
+        "FINDING": "Avvio dell'amministrazione AngularJS…",
+        "NONE": "Nessuna schermata AngularJS trovata",
+        "IN_MENU": "Nel menu",
+        "ADD_TO": "Aggiungi a",
+        "ADD": "Aggiungi",
+        "FAILED": "Impossibile leggere le schermate AngularJS: {error}",
+        "SUMMARY": "{count} schermate, {missing} non ancora nel menu",
+        "SHOW_IN_MENU": "Mostra {count} schermate già nel menu",
+        "HIDE_IN_MENU": "Nascondi le schermate già nel menu",
+        "ALL_IN_MENU": "Tutte le schermate AngularJS sono nel menu"
+      },
+      "CANCEL": "Annulla",
+      "CLOSE": "Chiudi",
+      "JSON": {
+        "INTRO": "Il valore dell'impostazione di piattaforma AdminShell.Menu.Global, con le modifiche non salvate dell'editor. Scaricalo per conservare un backup o portare il menu in un altro ambiente. Per ripristinarne uno, caricalo o incollalo e applicalo: l'editor del menu mostra il risultato e il suo Salva lo memorizza.",
+        "APPLY": "Applica",
+        "RESET": "Scarta le modifiche",
+        "DOWNLOAD": "Scarica",
+        "UPLOAD": "Carica",
+        "COPY": "Copia",
+        "COPIED": "Copiato negli appunti",
+        "APPLIED": "Applicato. Controlla la scheda Menu e salva per mantenere le modifiche.",
+        "INVALID": "Il documento non è valido: {error}",
+        "SHAPE": "È previsto un oggetto con sections, items, addSections e addItems",
+        "LABEL": "Modifiche del menu (JSON)",
+        "TITLE": "Modifiche del menu in JSON",
+        "SUBTITLE": "AdminShell.Menu.Global"
+      },
+      "DRAG_HINT": "Trascina sezioni ed elementi per riordinarli, o rilascia un elemento in un altro gruppo o sezione. Su uno schermo touch, tieni premuto prima.",
+      "DROP_HERE": "Rilascia gli elementi qui",
+      "DROP_NO_GROUP": "Rilascia qui per nessun gruppo"
     }
   }
 }

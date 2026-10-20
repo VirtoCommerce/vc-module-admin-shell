@@ -1,7 +1,7 @@
 {
   "permissions": {
     "admin-shell:access": "Open the Admin Shell",
-    "admin-shell:menu:manage": "Manage the Admin Shell menu (global and role layers)"
+    "admin-shell:menu:manage": "Manage the Admin Shell menu: the menu editor, the global and role layers, what users may change"
   },
   "settings": {
     "AdminShell": {
@@ -17,6 +17,18 @@
         "User": {
           "title": "Menu preferences",
           "description": "The user's pinned and hidden Admin Shell menu items"
+        },
+        "AllowPin": {
+          "title": "Users may pin menu items",
+          "description": "Off: users can't pin items, and the items they pinned stop showing in Pinned; they come back when this is turned on again"
+        },
+        "AllowHide": {
+          "title": "Users may hide menu items",
+          "description": "Off: users can't hide items, and the items they hid show again; they are hidden again when this is turned on again"
+        },
+        "AllowReorder": {
+          "title": "Users may reorder menu items",
+          "description": "Off: the users' own order of menu items doesn't apply; it applies again when this is turned on again"
         }
       },
       "UI": {

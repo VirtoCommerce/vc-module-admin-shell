@@ -411,6 +411,96 @@
       "ERROR_FILE": "Aktivointi epäonnistui. Tarkista lisenssitiedosto.",
       "ERROR_FILE_TYPE": "Valitse .lic-lisenssitiedosto.",
       "ERROR_EXPIRED": "Aktivointi epäonnistui. Lisenssi on vanhentunut."
+    },
+    "MENU_EDITOR": {
+      "TITLE": "Admin Shellin valikkoeditori",
+      "TABS": {
+        "MENU": "Valikko",
+        "PERSONALIZATION": "Mukauttaminen",
+        "LEGACY": "AngularJS-näkymät"
+      },
+      "INTRO": "Muutoksesi koskevat kaikkia, ja ne tehdään Virto Commerce -valikon päälle; valikko paranee jokaisessa julkaisussa. Muutokset tallennetaan alustan asetukseen AdminShell.Menu.Global.",
+      "MORE_NOTE": "Kohdassa \"Lisää\" luetellaan asennettujen moduulien näkymät, joihin mikään valikon kohta ei vie. Siirrä ne oikeille paikoilleen.",
+      "ADD_SECTION": "Lisää osio",
+      "ADD_LINK": "Lisää linkki",
+      "UNDO_ALL": "Kumoa kaikki muutokset",
+      "UNDO_ALL_CONFIRM": "Kumotaanko kaikki valikon muutokset? Virto Commerce -valikko on taas käytössä, kun tallennat.",
+      "UNSAVED": "Tallentamattomia muutoksia",
+      "SAVED": "Valikko on tallennettu",
+      "LOAD_FAILED": "Valikon lataaminen epäonnistui: {error}",
+      "BADGES": {
+        "HIDDEN": "Piilotettu",
+        "CHANGED": "Muokattu",
+        "ADDED": "Lisätty",
+        "DISCOVERED": "Löydetty automaattisesti"
+      },
+      "ACTIONS": {
+        "RENAME": "Nimeä uudelleen",
+        "HIDE": "Piilota",
+        "SHOW": "Näytä",
+        "UNDO": "Kumoa muutokset",
+        "REMOVE": "Poista",
+        "DRAG": "Vedä siirtääksesi (tai käytä nuolinäppäimiä)"
+      },
+      "RENAME": {
+        "IN_LANGUAGE": "Nimi ({language})",
+        "IN_ENGLISH": "Nimi englanniksi",
+        "HINT": "Jätä tyhjäksi, niin oletusnimi säilyy",
+        "APPLY": "Käytä",
+        "CANCEL": "Peruuta"
+      },
+      "LINK": {
+        "TITLE": "Nimi",
+        "URL": "Osoite",
+        "URL_HINT": "Avautuu uuteen välilehteen",
+        "ADD": "Lisää",
+        "HEADING": "Uusi linkki"
+      },
+      "SECTION": {
+        "TITLE": "Osion nimi",
+        "ADD": "Lisää",
+        "HEADING": "Uusi osio"
+      },
+      "PERSONALIZATION": {
+        "INTRO": "Mitä käyttäjät saavat muuttaa omassa valikossaan. Kun asetus poistetaan käytöstä, käyttäjien tekemiä tällaisia muutoksia ei enää käytetä; ne palaavat, kun asetus otetaan taas käyttöön.",
+        "PIN": "Käyttäjät saavat kiinnittää kohteita",
+        "HIDE": "Käyttäjät saavat piilottaa kohteita",
+        "REORDER": "Käyttäjät saavat järjestää kohteita uudelleen"
+      },
+      "LEGACY": {
+        "INTRO": "AngularJS-hallinnan valikon näkymät. Lisää ne, joita valikossa ei vielä ole; ne avautuvat AngularJS-hallinnassa tämän käyttöliittymän sisällä.",
+        "FIND": "Etsi AngularJS-näkymät",
+        "FINDING": "Käynnistetään AngularJS-hallintaa…",
+        "NONE": "AngularJS-näkymiä ei löytynyt",
+        "IN_MENU": "Valikossa",
+        "ADD_TO": "Lisää kohteeseen",
+        "ADD": "Lisää",
+        "FAILED": "AngularJS-näkymien lukeminen epäonnistui: {error}",
+        "SUMMARY": "Näkymiä {count}, joista {missing} ei vielä ole valikossa",
+        "SHOW_IN_MENU": "Näytä valikossa jo olevat näkymät ({count})",
+        "HIDE_IN_MENU": "Piilota valikossa jo olevat näkymät",
+        "ALL_IN_MENU": "Kaikki AngularJS-näkymät ovat valikossa"
+      },
+      "CANCEL": "Peruuta",
+      "CLOSE": "Sulje",
+      "JSON": {
+        "INTRO": "Alustan asetuksen AdminShell.Menu.Global arvo editorin tallentamattomine muutoksineen. Lataa se varmuuskopioksi tai siirtääksesi valikon toiseen ympäristöön. Palauta varmuuskopio lähettämällä tai liittämällä se ja ottamalla se käyttöön: valikkoeditori näyttää tuloksen, ja sen Tallenna tallentaa sen.",
+        "APPLY": "Ota käyttöön",
+        "RESET": "Hylkää muokkaukset",
+        "DOWNLOAD": "Lataa",
+        "UPLOAD": "Lähetä",
+        "COPY": "Kopioi",
+        "COPIED": "Kopioitu leikepöydälle",
+        "APPLIED": "Otettu käyttöön. Tarkista Valikko-välilehti ja tallenna säilyttääksesi muutokset.",
+        "INVALID": "Dokumentti ei kelpaa: {error}",
+        "SHAPE": "Odotettiin objektia, jossa on sections, items, addSections ja addItems",
+        "LABEL": "Valikon muutokset (JSON)",
+        "TITLE": "Valikon muutokset JSON-muodossa",
+        "SUBTITLE": "AdminShell.Menu.Global"
+      },
+      "DRAG_HINT": "Vedä osioita ja kohteita järjestääksesi ne uudelleen, tai pudota kohde toiseen ryhmään tai osioon. Kosketusnäytöllä paina ensin pitkään.",
+      "DROP_HERE": "Pudota kohteet tähän",
+      "DROP_NO_GROUP": "Pudota tähän ilman ryhmää"
     }
   }
 }

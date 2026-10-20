@@ -411,6 +411,96 @@
       "ERROR_FILE": "有効化に失敗しました。ライセンスファイルを確認してください。",
       "ERROR_FILE_TYPE": ".lic ライセンスファイルを選択してください。",
       "ERROR_EXPIRED": "有効化に失敗しました。このライセンスは期限切れです。"
+    },
+    "MENU_EDITOR": {
+      "TITLE": "Admin Shell メニューエディター",
+      "TABS": {
+        "MENU": "メニュー",
+        "PERSONALIZATION": "パーソナライズ",
+        "LEGACY": "AngularJS の画面"
+      },
+      "INTRO": "変更内容はすべてのユーザーに適用され、リリースごとに改善される Virto Commerce のメニューに上乗せされます。変更はプラットフォーム設定 AdminShell.Menu.Global に保存されます。",
+      "MORE_NOTE": "「その他」には、どのメニュー項目からも開かれない、インストール済みモジュールの画面が表示されます。適切な場所に移動してください。",
+      "ADD_SECTION": "セクションを追加",
+      "ADD_LINK": "リンクを追加",
+      "UNDO_ALL": "すべての変更を元に戻す",
+      "UNDO_ALL_CONFIRM": "メニューへの変更をすべて元に戻しますか？保存すると、Virto Commerce のメニューが再び適用されます。",
+      "UNSAVED": "未保存の変更があります",
+      "SAVED": "メニューを保存しました",
+      "LOAD_FAILED": "メニューを読み込めませんでした: {error}",
+      "BADGES": {
+        "HIDDEN": "非表示",
+        "CHANGED": "変更済み",
+        "ADDED": "追加済み",
+        "DISCOVERED": "自動検出"
+      },
+      "ACTIONS": {
+        "RENAME": "名前を変更",
+        "HIDE": "非表示にする",
+        "SHOW": "表示する",
+        "UNDO": "変更を元に戻す",
+        "REMOVE": "削除",
+        "DRAG": "ドラッグして移動 (または矢印キー)"
+      },
+      "RENAME": {
+        "IN_LANGUAGE": "{language}のタイトル",
+        "IN_ENGLISH": "英語のタイトル",
+        "HINT": "既定のタイトルを使う場合は空欄のままにします",
+        "APPLY": "適用",
+        "CANCEL": "キャンセル"
+      },
+      "LINK": {
+        "TITLE": "タイトル",
+        "URL": "アドレス",
+        "URL_HINT": "新しいタブで開きます",
+        "ADD": "追加",
+        "HEADING": "新しいリンク"
+      },
+      "SECTION": {
+        "TITLE": "セクションのタイトル",
+        "ADD": "追加",
+        "HEADING": "新しいセクション"
+      },
+      "PERSONALIZATION": {
+        "INTRO": "ユーザーが自分のメニューで変更できる内容です。オプションをオフにすると、ユーザーが行ったその種類の変更は適用されなくなり、再びオンにすると元に戻ります。",
+        "PIN": "ユーザーは項目をピン留めできます",
+        "HIDE": "ユーザーは項目を非表示にできます",
+        "REORDER": "ユーザーは項目を並べ替えできます"
+      },
+      "LEGACY": {
+        "INTRO": "AngularJS 管理画面のメニューにある画面です。まだメニューにないものを追加してください。追加した画面は、シェル内の AngularJS 管理画面で開きます。",
+        "FIND": "AngularJS の画面を検索",
+        "FINDING": "AngularJS 管理画面を起動しています…",
+        "NONE": "AngularJS の画面が見つかりません",
+        "IN_MENU": "メニューにあります",
+        "ADD_TO": "追加先",
+        "ADD": "追加",
+        "FAILED": "AngularJS の画面を読み取れませんでした: {error}",
+        "SUMMARY": "{count} 画面、うち {missing} 画面はまだメニューにありません",
+        "SHOW_IN_MENU": "メニューにある画面を表示 ({count})",
+        "HIDE_IN_MENU": "メニューにある画面を非表示",
+        "ALL_IN_MENU": "すべての AngularJS 画面がメニューにあります"
+      },
+      "CANCEL": "キャンセル",
+      "CLOSE": "閉じる",
+      "JSON": {
+        "INTRO": "プラットフォーム設定 AdminShell.Menu.Global の値です (エディターの未保存の変更を含みます)。バックアップの保存や別の環境へのメニューの移行にはダウンロードしてください。復元するには、アップロードまたは貼り付けて適用します。メニューエディターに結果が表示され、エディターの保存で保存されます。",
+        "APPLY": "適用",
+        "RESET": "編集を破棄",
+        "DOWNLOAD": "ダウンロード",
+        "UPLOAD": "アップロード",
+        "COPY": "コピー",
+        "COPIED": "クリップボードにコピーしました",
+        "APPLIED": "適用しました。メニュータブを確認し、変更を残すには保存してください。",
+        "INVALID": "ドキュメントが無効です: {error}",
+        "SHAPE": "sections、items、addSections、addItems を持つオブジェクトが必要です",
+        "LABEL": "メニューの変更 (JSON)",
+        "TITLE": "メニューの変更 (JSON)",
+        "SUBTITLE": "AdminShell.Menu.Global"
+      },
+      "DRAG_HINT": "セクションや項目をドラッグして並べ替えるか、項目を別のグループやセクションにドロップします。タッチスクリーンでは、まず長押ししてください。",
+      "DROP_HERE": "ここに項目をドロップ",
+      "DROP_NO_GROUP": "グループなしにするにはここにドロップ"
     }
   }
 }

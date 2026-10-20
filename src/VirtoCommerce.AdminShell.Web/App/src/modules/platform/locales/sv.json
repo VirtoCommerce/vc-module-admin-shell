@@ -411,6 +411,96 @@
       "ERROR_FILE": "Aktiveringen misslyckades. Kontrollera licensfilen.",
       "ERROR_FILE_TYPE": "Välj en .lic-licensfil.",
       "ERROR_EXPIRED": "Aktiveringen misslyckades. Licensen har gått ut."
+    },
+    "MENU_EDITOR": {
+      "TITLE": "Menyredigerare för Admin Shell",
+      "TABS": {
+        "MENU": "Meny",
+        "PERSONALIZATION": "Anpassning",
+        "LEGACY": "AngularJS-vyer"
+      },
+      "INTRO": "Dina ändringar gäller för alla och läggs ovanpå menyn från Virto Commerce, som förbättras med varje version. De sparas i plattformsinställningen AdminShell.Menu.Global.",
+      "MORE_NOTE": "\"Mer\" visar vyerna från installerade moduler som inget menyalternativ öppnar. Flytta dem dit de hör hemma.",
+      "ADD_SECTION": "Lägg till avsnitt",
+      "ADD_LINK": "Lägg till länk",
+      "UNDO_ALL": "Ångra alla ändringar",
+      "UNDO_ALL_CONFIRM": "Vill du ångra alla ändringar i menyn? Menyn från Virto Commerce gäller igen när du sparar.",
+      "UNSAVED": "Osparade ändringar",
+      "SAVED": "Menyn har sparats",
+      "LOAD_FAILED": "Det gick inte att läsa in menyn: {error}",
+      "BADGES": {
+        "HIDDEN": "Dold",
+        "CHANGED": "Ändrad",
+        "ADDED": "Tillagd",
+        "DISCOVERED": "Hittad automatiskt"
+      },
+      "ACTIONS": {
+        "RENAME": "Byt namn",
+        "HIDE": "Dölj",
+        "SHOW": "Visa",
+        "UNDO": "Ångra ändringar",
+        "REMOVE": "Ta bort",
+        "DRAG": "Dra för att flytta (eller använd piltangenterna)"
+      },
+      "RENAME": {
+        "IN_LANGUAGE": "Titel på {language}",
+        "IN_ENGLISH": "Titel på engelska",
+        "HINT": "Lämna tomt för att behålla standardtiteln",
+        "APPLY": "Tillämpa",
+        "CANCEL": "Avbryt"
+      },
+      "LINK": {
+        "TITLE": "Titel",
+        "URL": "Adress",
+        "URL_HINT": "Öppnas i en ny flik",
+        "ADD": "Lägg till",
+        "HEADING": "Ny länk"
+      },
+      "SECTION": {
+        "TITLE": "Avsnittets titel",
+        "ADD": "Lägg till",
+        "HEADING": "Nytt avsnitt"
+      },
+      "PERSONALIZATION": {
+        "INTRO": "Vad användarna får ändra i sin egen meny. När ett alternativ stängs av tillämpas inte längre de ändringar av det slaget som användarna har gjort; de kommer tillbaka när det slås på igen.",
+        "PIN": "Användare får fästa objekt",
+        "HIDE": "Användare får dölja objekt",
+        "REORDER": "Användare får ändra ordning på objekt"
+      },
+      "LEGACY": {
+        "INTRO": "Vyer från menyn i AngularJS-admin. Lägg till dem som menyn inte har ännu; de öppnas i AngularJS-admin i det här gränssnittet.",
+        "FIND": "Hitta AngularJS-vyer",
+        "FINDING": "Startar AngularJS-admin…",
+        "NONE": "Inga AngularJS-vyer hittades",
+        "IN_MENU": "I menyn",
+        "ADD_TO": "Lägg till i",
+        "ADD": "Lägg till",
+        "FAILED": "Det gick inte att läsa AngularJS-vyerna: {error}",
+        "SUMMARY": "{count} vyer, {missing} finns inte i menyn ännu",
+        "SHOW_IN_MENU": "Visa {count} vyer som redan finns i menyn",
+        "HIDE_IN_MENU": "Dölj vyerna som redan finns i menyn",
+        "ALL_IN_MENU": "Alla AngularJS-vyer finns i menyn"
+      },
+      "CANCEL": "Avbryt",
+      "CLOSE": "Stäng",
+      "JSON": {
+        "INTRO": "Värdet av plattformsinställningen AdminShell.Menu.Global, med redigerarens osparade ändringar. Ladda ned det för att spara en säkerhetskopia eller flytta menyn till en annan miljö. För att återställa en, ladda upp eller klistra in den och tillämpa den: menyredigeraren visar resultatet och dess Spara lagrar det.",
+        "APPLY": "Tillämpa",
+        "RESET": "Ignorera ändringar",
+        "DOWNLOAD": "Ladda ned",
+        "UPLOAD": "Ladda upp",
+        "COPY": "Kopiera",
+        "COPIED": "Kopierat till urklipp",
+        "APPLIED": "Tillämpat. Kontrollera fliken Meny och spara för att behålla ändringarna.",
+        "INVALID": "Dokumentet är ogiltigt: {error}",
+        "SHAPE": "Ett objekt med sections, items, addSections och addItems förväntades",
+        "LABEL": "Menyändringar (JSON)",
+        "TITLE": "Menyändringar som JSON",
+        "SUBTITLE": "AdminShell.Menu.Global"
+      },
+      "DRAG_HINT": "Dra avsnitt och objekt för att ordna om dem, eller släpp ett objekt i en annan grupp eller ett annat avsnitt. På en pekskärm, tryck och håll först.",
+      "DROP_HERE": "Släpp objekt här",
+      "DROP_NO_GROUP": "Släpp här för ingen grupp"
     }
   }
 }

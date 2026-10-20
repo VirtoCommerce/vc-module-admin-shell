@@ -1,7 +1,7 @@
 {
   "permissions": {
     "admin-shell:access": "Öppna Admin Shell",
-    "admin-shell:menu:manage": "Hantera Admin Shell-menyn (global nivå och rollnivå)"
+    "admin-shell:menu:manage": "Hantera Admin Shell-menyn: menyredigeraren, global nivå och rollnivå, vad användare får ändra"
   },
   "settings": {
     "AdminShell": {
@@ -17,6 +17,18 @@
         "User": {
           "title": "Menypreferenser",
           "description": "Användarens fästa och dolda objekt i Admin Shell-menyn"
+        },
+        "AllowPin": {
+          "title": "Användare får fästa menyobjekt",
+          "description": "Av: användare kan inte fästa objekt, och objekten de har fäst visas inte längre under Fästa; de kommer tillbaka när detta slås på igen"
+        },
+        "AllowHide": {
+          "title": "Användare får dölja menyobjekt",
+          "description": "Av: användare kan inte dölja objekt, och objekten de har dolt visas igen; de döljs igen när detta slås på igen"
+        },
+        "AllowReorder": {
+          "title": "Användare får ändra ordning på menyobjekt",
+          "description": "Av: användarnas egen ordning på menyobjekten gäller inte; den gäller igen när detta slås på igen"
         }
       },
       "UI": {

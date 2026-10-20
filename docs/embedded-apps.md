@@ -6,7 +6,7 @@ Platform **apps** are separate front-ends a module ships (Tasks, News, Builder.i
 
 Embedding is the fallback for an app that isn't an Admin Shell plugin yet. A vc-shell app that becomes a plugin gets real Vue screens instead (see [Plugins](plugins.md)).
 
-Source: `src/VirtoCommerce.AdminShell.Web/App/src/pages/FramePage.vue` (the frame), `src/VirtoCommerce.AdminShell.Web/Services/DefaultMenuBuilder.cs` (apps in the menu), `src/shell/search/providers/platform.ts` (the *Apps* search group).
+Source: `src/VirtoCommerce.AdminShell.Web/App/src/pages/FramePage.vue` (the frame), `src/VirtoCommerce.AdminShell.Data/Services/DefaultMenuBuilder.cs` (apps in the menu), `src/shell/search/providers/platform.ts` (the *Apps* search group).
 
 ## How an app gets into the shell
 

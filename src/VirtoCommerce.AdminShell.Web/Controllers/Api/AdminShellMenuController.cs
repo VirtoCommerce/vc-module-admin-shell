@@ -2,19 +2,24 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VirtoCommerce.AdminShell.Core.Models;
-using VirtoCommerce.AdminShell.Web.Services;
+using VirtoCommerce.AdminShell.Core.Services;
 using VirtoCommerce.Platform.Core.Security;
 using Permissions = VirtoCommerce.AdminShell.Core.ModuleConstants.Security.Permissions;
 
 namespace VirtoCommerce.AdminShell.Web.Controllers.Api;
 
 [Route("api/admin-shell/menu")]
-public class AdminShellMenuController(AdminMenuService menuService) : Controller
+public class AdminShellMenuController(IAdminMenuService menuService) : Controller
 {
     /// <summary>Effective menu for the current user: default → global → roles → personal, filtered by permissions</summary>
     [HttpGet("")]
     [Authorize(Permissions.Access)]
     public Task<EffectiveMenu> GetMenu() => menuService.GetEffectiveMenuAsync(User);
+
+    /// <summary>The same, with the workspace blades the client found that no menu entry opens (they go to More)</summary>
+    [HttpPost("")]
+    [Authorize(Permissions.Access)]
+    public Task<EffectiveMenu> GetMenu([FromBody] MenuRequest request) => menuService.GetEffectiveMenuAsync(User, request?.Discovered);
 
     [HttpGet("me/prefs")]
     [Authorize(Permissions.Access)]
@@ -41,6 +46,28 @@ public class AdminShellMenuController(AdminMenuService menuService) : Controller
     [HttpGet("default")]
     [Authorize(Permissions.MenuManage)]
     public ActionResult<MenuDocument> GetDefault() => menuService.GetDefaultMenu();
+
+    /// <summary>The default menu with the client's discovered blades in More</summary>
+    [HttpPost("default")]
+    [Authorize(Permissions.MenuManage)]
+    public ActionResult<MenuDocument> GetDefault([FromBody] MenuRequest request) => menuService.GetDefaultMenu(request?.Discovered);
+
+    /// <summary>The menu editor's view: the default menu with the given patch (else the stored global one), hidden items marked</summary>
+    [HttpPost("editor")]
+    [Authorize(Permissions.MenuManage)]
+    public Task<MenuDocument> GetEditorMenu([FromBody] MenuEditorRequest request) => menuService.GetEditorMenuAsync(request);
+
+    [HttpGet("personalization")]
+    [Authorize(Permissions.MenuManage)]
+    public Task<MenuPersonalization> GetPersonalization() => menuService.GetPersonalizationAsync();
+
+    [HttpPut("personalization")]
+    [Authorize(Permissions.MenuManage)]
+    public async Task<ActionResult> SavePersonalization([FromBody] MenuPersonalization personalization)
+    {
+        await menuService.SavePersonalizationAsync(personalization ?? new MenuPersonalization());
+        return NoContent();
+    }
 
     [HttpGet("global")]
     [Authorize(Permissions.MenuManage)]

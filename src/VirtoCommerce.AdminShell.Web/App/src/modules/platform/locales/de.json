@@ -411,6 +411,96 @@
       "ERROR_FILE": "Aktivierung fehlgeschlagen. Prüfen Sie die Lizenzdatei.",
       "ERROR_FILE_TYPE": "Wählen Sie eine .lic-Lizenzdatei aus.",
       "ERROR_EXPIRED": "Aktivierung fehlgeschlagen. Diese Lizenz ist abgelaufen."
+    },
+    "MENU_EDITOR": {
+      "TITLE": "Admin Shell Menü-Editor",
+      "TABS": {
+        "MENU": "Menü",
+        "PERSONALIZATION": "Personalisierung",
+        "LEGACY": "AngularJS-Seiten"
+      },
+      "INTRO": "Ihre Änderungen gelten für alle und werden auf das Menü von Virto Commerce angewendet, das mit jedem Release weiter verbessert wird. Sie werden in der Plattformeinstellung AdminShell.Menu.Global gespeichert.",
+      "MORE_NOTE": "„Mehr“ listet die Seiten installierter Module auf, die über keinen Menüeintrag erreichbar sind. Verschieben Sie sie an die passende Stelle.",
+      "ADD_SECTION": "Bereich hinzufügen",
+      "ADD_LINK": "Link hinzufügen",
+      "UNDO_ALL": "Alle Änderungen rückgängig machen",
+      "UNDO_ALL_CONFIRM": "Alle Änderungen am Menü rückgängig machen? Nach dem Speichern gilt wieder das Menü von Virto Commerce.",
+      "UNSAVED": "Nicht gespeicherte Änderungen",
+      "SAVED": "Das Menü wurde gespeichert",
+      "LOAD_FAILED": "Das Menü konnte nicht geladen werden: {error}",
+      "BADGES": {
+        "HIDDEN": "Ausgeblendet",
+        "CHANGED": "Geändert",
+        "ADDED": "Hinzugefügt",
+        "DISCOVERED": "Automatisch gefunden"
+      },
+      "ACTIONS": {
+        "RENAME": "Umbenennen",
+        "HIDE": "Ausblenden",
+        "SHOW": "Einblenden",
+        "UNDO": "Änderungen rückgängig machen",
+        "REMOVE": "Entfernen",
+        "DRAG": "Zum Verschieben ziehen (oder Pfeiltasten verwenden)"
+      },
+      "RENAME": {
+        "IN_LANGUAGE": "Titel auf {language}",
+        "IN_ENGLISH": "Titel auf Englisch",
+        "HINT": "Leer lassen, um den Standardtitel zu behalten",
+        "APPLY": "Übernehmen",
+        "CANCEL": "Abbrechen"
+      },
+      "LINK": {
+        "TITLE": "Titel",
+        "URL": "Adresse",
+        "URL_HINT": "Wird in einem neuen Tab geöffnet",
+        "ADD": "Hinzufügen",
+        "HEADING": "Neuer Link"
+      },
+      "SECTION": {
+        "TITLE": "Titel des Bereichs",
+        "ADD": "Hinzufügen",
+        "HEADING": "Neuer Bereich"
+      },
+      "PERSONALIZATION": {
+        "INTRO": "Was Benutzer in ihrem eigenen Menü ändern dürfen. Wenn Sie eine Option ausschalten, werden die Änderungen dieser Art, die Benutzer vorgenommen haben, nicht mehr angewendet; sobald sie wieder eingeschaltet wird, gelten sie erneut.",
+        "PIN": "Benutzer dürfen Elemente anheften",
+        "HIDE": "Benutzer dürfen Elemente ausblenden",
+        "REORDER": "Benutzer dürfen die Reihenfolge der Elemente ändern"
+      },
+      "LEGACY": {
+        "INTRO": "Seiten aus dem Menü der AngularJS-Admin-Oberfläche. Fügen Sie die hinzu, die im Menü noch fehlen; sie werden in der AngularJS-Admin-Oberfläche innerhalb der Shell geöffnet.",
+        "FIND": "AngularJS-Seiten suchen",
+        "FINDING": "AngularJS-Admin-Oberfläche wird gestartet…",
+        "NONE": "Keine AngularJS-Seiten gefunden",
+        "IN_MENU": "Im Menü",
+        "ADD_TO": "Hinzufügen zu",
+        "ADD": "Hinzufügen",
+        "FAILED": "Die AngularJS-Seiten konnten nicht gelesen werden: {error}",
+        "SUMMARY": "{count} Seiten, davon {missing} noch nicht im Menü",
+        "SHOW_IN_MENU": "{count} Bildschirme anzeigen, die schon im Menü sind",
+        "HIDE_IN_MENU": "Bildschirme ausblenden, die schon im Menü sind",
+        "ALL_IN_MENU": "Alle AngularJS-Bildschirme sind im Menü"
+      },
+      "CANCEL": "Abbrechen",
+      "CLOSE": "Schließen",
+      "JSON": {
+        "INTRO": "Der Wert der Plattformeinstellung AdminShell.Menu.Global mit den ungespeicherten Änderungen des Editors. Laden Sie ihn herunter, um eine Sicherung zu behalten oder das Menü in eine andere Umgebung zu übernehmen. Zum Wiederherstellen laden Sie ein Dokument hoch oder fügen es ein und übernehmen es: Der Menü-Editor zeigt das Ergebnis, sein Speichern speichert es.",
+        "APPLY": "Übernehmen",
+        "RESET": "Bearbeitung verwerfen",
+        "DOWNLOAD": "Herunterladen",
+        "UPLOAD": "Hochladen",
+        "COPY": "Kopieren",
+        "COPIED": "In die Zwischenablage kopiert",
+        "APPLIED": "Übernommen. Prüfen Sie den Tab Menü und speichern Sie, um die Änderungen zu behalten.",
+        "INVALID": "Das Dokument ist ungültig: {error}",
+        "SHAPE": "Erwartet wird ein Objekt mit sections, items, addSections und addItems",
+        "LABEL": "Menüänderungen (JSON)",
+        "TITLE": "Menüänderungen als JSON",
+        "SUBTITLE": "AdminShell.Menu.Global"
+      },
+      "DRAG_HINT": "Ziehen Sie Bereiche und Einträge, um sie neu anzuordnen, oder legen Sie einen Eintrag in einer anderen Gruppe oder einem anderen Bereich ab. Auf einem Touchscreen zuerst gedrückt halten.",
+      "DROP_HERE": "Einträge hier ablegen",
+      "DROP_NO_GROUP": "Hier ablegen für keine Gruppe"
     }
   }
 }

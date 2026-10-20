@@ -411,6 +411,96 @@
       "ERROR_FILE": "No se pudo activar. Compruebe el archivo de licencia.",
       "ERROR_FILE_TYPE": "Elija un archivo de licencia .lic.",
       "ERROR_EXPIRED": "No se pudo activar. Esta licencia ha vencido."
+    },
+    "MENU_EDITOR": {
+      "TITLE": "Editor de menú de Admin Shell",
+      "TABS": {
+        "MENU": "Menú",
+        "PERSONALIZATION": "Personalización",
+        "LEGACY": "Pantallas de AngularJS"
+      },
+      "INTRO": "Sus cambios se aplican a todos, sobre el menú de Virto Commerce, que mejora con cada versión. Se guardan en el ajuste de la plataforma AdminShell.Menu.Global.",
+      "MORE_NOTE": "«Más» muestra las pantallas de los módulos instalados a las que no lleva ninguna entrada del menú. Muévalas a donde correspondan.",
+      "ADD_SECTION": "Añadir sección",
+      "ADD_LINK": "Añadir enlace",
+      "UNDO_ALL": "Deshacer todos los cambios",
+      "UNDO_ALL_CONFIRM": "¿Deshacer todos los cambios del menú? El menú de Virto Commerce volverá a aplicarse al guardar.",
+      "UNSAVED": "Cambios sin guardar",
+      "SAVED": "El menú se ha guardado",
+      "LOAD_FAILED": "No se pudo cargar el menú: {error}",
+      "BADGES": {
+        "HIDDEN": "Oculto",
+        "CHANGED": "Modificado",
+        "ADDED": "Añadido",
+        "DISCOVERED": "Detectado automáticamente"
+      },
+      "ACTIONS": {
+        "RENAME": "Cambiar nombre",
+        "HIDE": "Ocultar",
+        "SHOW": "Mostrar",
+        "UNDO": "Deshacer cambios",
+        "REMOVE": "Quitar",
+        "DRAG": "Arrastre para mover (o use las teclas de flecha)"
+      },
+      "RENAME": {
+        "IN_LANGUAGE": "Título en {language}",
+        "IN_ENGLISH": "Título en inglés",
+        "HINT": "Déjelo vacío para mantener el título predeterminado",
+        "APPLY": "Aplicar",
+        "CANCEL": "Cancelar"
+      },
+      "LINK": {
+        "TITLE": "Título",
+        "URL": "Dirección",
+        "URL_HINT": "Se abre en una pestaña nueva",
+        "ADD": "Añadir",
+        "HEADING": "Nuevo enlace"
+      },
+      "SECTION": {
+        "TITLE": "Título de la sección",
+        "ADD": "Añadir",
+        "HEADING": "Nueva sección"
+      },
+      "PERSONALIZATION": {
+        "INTRO": "Lo que los usuarios pueden cambiar en su propio menú. Al desactivar una opción, dejan de aplicarse los cambios de ese tipo que hicieron los usuarios; vuelven a aplicarse cuando se activa de nuevo.",
+        "PIN": "Los usuarios pueden anclar elementos",
+        "HIDE": "Los usuarios pueden ocultar elementos",
+        "REORDER": "Los usuarios pueden reordenar elementos"
+      },
+      "LEGACY": {
+        "INTRO": "Pantallas del menú de la administración de AngularJS. Añada las que aún no están en el menú; se abren en la administración de AngularJS dentro del shell.",
+        "FIND": "Buscar pantallas de AngularJS",
+        "FINDING": "Iniciando la administración de AngularJS…",
+        "NONE": "No se encontraron pantallas de AngularJS",
+        "IN_MENU": "En el menú",
+        "ADD_TO": "Añadir a",
+        "ADD": "Añadir",
+        "FAILED": "No se pudieron leer las pantallas de AngularJS: {error}",
+        "SUMMARY": "{count} pantallas, {missing} aún no están en el menú",
+        "SHOW_IN_MENU": "Mostrar {count} pantallas que ya están en el menú",
+        "HIDE_IN_MENU": "Ocultar las pantallas que ya están en el menú",
+        "ALL_IN_MENU": "Todas las pantallas de AngularJS están en el menú"
+      },
+      "CANCEL": "Cancelar",
+      "CLOSE": "Cerrar",
+      "JSON": {
+        "INTRO": "El valor del ajuste de la plataforma AdminShell.Menu.Global, con los cambios del editor sin guardar. Descárguelo para guardar una copia de seguridad o llevar el menú a otro entorno. Para restaurar uno, súbalo o péguelo y aplíquelo: el editor del menú muestra el resultado y su Guardar lo almacena.",
+        "APPLY": "Aplicar",
+        "RESET": "Descartar ediciones",
+        "DOWNLOAD": "Descargar",
+        "UPLOAD": "Subir",
+        "COPY": "Copiar",
+        "COPIED": "Copiado al portapapeles",
+        "APPLIED": "Aplicado. Revise la pestaña Menú y guarde para conservar los cambios.",
+        "INVALID": "El documento no es válido: {error}",
+        "SHAPE": "Se espera un objeto con sections, items, addSections y addItems",
+        "LABEL": "Cambios del menú (JSON)",
+        "TITLE": "Cambios del menú en JSON",
+        "SUBTITLE": "AdminShell.Menu.Global"
+      },
+      "DRAG_HINT": "Arrastre secciones y elementos para reordenarlos, o suelte un elemento en otro grupo o sección. En una pantalla táctil, mantenga pulsado primero.",
+      "DROP_HERE": "Suelte elementos aquí",
+      "DROP_NO_GROUP": "Suelte aquí para no tener grupo"
     }
   }
 }

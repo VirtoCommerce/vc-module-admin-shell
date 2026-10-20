@@ -1,7 +1,7 @@
 {
   "permissions": {
     "admin-shell:access": "Aprire Admin Shell",
-    "admin-shell:menu:manage": "Gestire il menu di Admin Shell (livelli globale e per ruolo)"
+    "admin-shell:menu:manage": "Gestire il menu di Admin Shell: l'editor del menu, i livelli globale e per ruolo, ciò che gli utenti possono modificare"
   },
   "settings": {
     "AdminShell": {
@@ -17,6 +17,18 @@
         "User": {
           "title": "Preferenze del menu",
           "description": "Le voci del menu di Admin Shell fissate e nascoste dall'utente"
+        },
+        "AllowPin": {
+          "title": "Gli utenti possono fissare le voci del menu",
+          "description": "Disattivato: gli utenti non possono fissare voci, e quelle che hanno fissato non compaiono più in Fissati; tornano quando l'impostazione viene riattivata"
+        },
+        "AllowHide": {
+          "title": "Gli utenti possono nascondere le voci del menu",
+          "description": "Disattivato: gli utenti non possono nascondere voci, e quelle che hanno nascosto tornano visibili; vengono nascoste di nuovo quando l'impostazione viene riattivata"
+        },
+        "AllowReorder": {
+          "title": "Gli utenti possono riordinare le voci del menu",
+          "description": "Disattivato: l'ordine personale delle voci del menu degli utenti non si applica; si applica di nuovo quando l'impostazione viene riattivata"
         }
       },
       "UI": {

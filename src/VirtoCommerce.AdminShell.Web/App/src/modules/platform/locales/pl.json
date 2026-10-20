@@ -411,6 +411,96 @@
       "ERROR_FILE": "Aktywacja nie powiodła się. Sprawdź plik licencji.",
       "ERROR_FILE_TYPE": "Wybierz plik licencji .lic.",
       "ERROR_EXPIRED": "Aktywacja nie powiodła się. Ta licencja wygasła."
+    },
+    "MENU_EDITOR": {
+      "TITLE": "Edytor menu Admin Shell",
+      "TABS": {
+        "MENU": "Menu",
+        "PERSONALIZATION": "Personalizacja",
+        "LEGACY": "Ekrany AngularJS"
+      },
+      "INTRO": "Twoje zmiany obowiązują wszystkich i są nakładane na menu Virto Commerce, które jest ulepszane z każdym wydaniem. Są zapisywane w ustawieniu platformy AdminShell.Menu.Global.",
+      "MORE_NOTE": "Sekcja „Więcej” zawiera ekrany zainstalowanych modułów, których nie otwiera żaden element menu. Przenieś je tam, gdzie powinny się znaleźć.",
+      "ADD_SECTION": "Dodaj sekcję",
+      "ADD_LINK": "Dodaj link",
+      "UNDO_ALL": "Cofnij wszystkie zmiany",
+      "UNDO_ALL_CONFIRM": "Cofnąć wszystkie zmiany w menu? Po zapisaniu znów będzie obowiązywać menu Virto Commerce.",
+      "UNSAVED": "Niezapisane zmiany",
+      "SAVED": "Menu zostało zapisane",
+      "LOAD_FAILED": "Nie udało się wczytać menu: {error}",
+      "BADGES": {
+        "HIDDEN": "Ukryte",
+        "CHANGED": "Zmienione",
+        "ADDED": "Dodane",
+        "DISCOVERED": "Wykryte automatycznie"
+      },
+      "ACTIONS": {
+        "RENAME": "Zmień nazwę",
+        "HIDE": "Ukryj",
+        "SHOW": "Pokaż",
+        "UNDO": "Cofnij zmiany",
+        "REMOVE": "Usuń",
+        "DRAG": "Przeciągnij, aby przenieść (lub użyj strzałek)"
+      },
+      "RENAME": {
+        "IN_LANGUAGE": "Nazwa ({language})",
+        "IN_ENGLISH": "Nazwa po angielsku",
+        "HINT": "Pozostaw puste, aby zachować domyślną nazwę",
+        "APPLY": "Zastosuj",
+        "CANCEL": "Anuluj"
+      },
+      "LINK": {
+        "TITLE": "Nazwa",
+        "URL": "Adres",
+        "URL_HINT": "Otwiera się w nowej karcie",
+        "ADD": "Dodaj",
+        "HEADING": "Nowy link"
+      },
+      "SECTION": {
+        "TITLE": "Nazwa sekcji",
+        "ADD": "Dodaj",
+        "HEADING": "Nowa sekcja"
+      },
+      "PERSONALIZATION": {
+        "INTRO": "Co użytkownicy mogą zmieniać we własnym menu. Po wyłączeniu opcji zmiany tego rodzaju wprowadzone przez użytkowników przestają być stosowane; wracają po jej ponownym włączeniu.",
+        "PIN": "Użytkownicy mogą przypinać elementy",
+        "HIDE": "Użytkownicy mogą ukrywać elementy",
+        "REORDER": "Użytkownicy mogą zmieniać kolejność elementów"
+      },
+      "LEGACY": {
+        "INTRO": "Ekrany z menu panelu administracyjnego AngularJS. Dodaj te, których jeszcze nie ma w menu; otwierają się w panelu administracyjnym AngularJS wewnątrz powłoki.",
+        "FIND": "Znajdź ekrany AngularJS",
+        "FINDING": "Uruchamianie panelu administracyjnego AngularJS…",
+        "NONE": "Nie znaleziono ekranów AngularJS",
+        "IN_MENU": "W menu",
+        "ADD_TO": "Dodaj do",
+        "ADD": "Dodaj",
+        "FAILED": "Nie udało się odczytać ekranów AngularJS: {error}",
+        "SUMMARY": "Ekrany: {count}, jeszcze nie w menu: {missing}",
+        "SHOW_IN_MENU": "Pokaż ekrany, które już są w menu ({count})",
+        "HIDE_IN_MENU": "Ukryj ekrany, które już są w menu",
+        "ALL_IN_MENU": "Wszystkie ekrany AngularJS są w menu"
+      },
+      "CANCEL": "Anuluj",
+      "CLOSE": "Zamknij",
+      "JSON": {
+        "INTRO": "Wartość ustawienia platformy AdminShell.Menu.Global wraz z niezapisanymi zmianami edytora. Pobierz ją, aby zachować kopię zapasową lub przenieść menu do innego środowiska. Aby przywrócić kopię, wgraj ją lub wklej i zastosuj: edytor menu pokaże wynik, a jego Zapisz go zapisze.",
+        "APPLY": "Zastosuj",
+        "RESET": "Odrzuć edycję",
+        "DOWNLOAD": "Pobierz",
+        "UPLOAD": "Wgraj",
+        "COPY": "Kopiuj",
+        "COPIED": "Skopiowano do schowka",
+        "APPLIED": "Zastosowano. Sprawdź kartę Menu i zapisz, aby zachować zmiany.",
+        "INVALID": "Dokument jest nieprawidłowy: {error}",
+        "SHAPE": "Oczekiwano obiektu z sections, items, addSections i addItems",
+        "LABEL": "Zmiany menu (JSON)",
+        "TITLE": "Zmiany menu jako JSON",
+        "SUBTITLE": "AdminShell.Menu.Global"
+      },
+      "DRAG_HINT": "Przeciągaj sekcje i elementy, aby zmienić ich kolejność, lub upuść element w innej grupie lub sekcji. Na ekranie dotykowym najpierw naciśnij i przytrzymaj.",
+      "DROP_HERE": "Upuść elementy tutaj",
+      "DROP_NO_GROUP": "Upuść tutaj, aby bez grupy"
     }
   }
 }

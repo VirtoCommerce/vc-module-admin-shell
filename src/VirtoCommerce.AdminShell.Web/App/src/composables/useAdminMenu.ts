@@ -2,9 +2,29 @@ import { useLatestRequest } from "@vc-shell/framework";
 import { computed, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { adminMenuApi, type EffectiveMenu, type MenuItem, type MenuTarget, type UserMenuPrefs } from "../api/adminMenu";
+import { loadServerTexts, localizeMenu, menuLocale } from "../shell/menuTitles";
 
-// one shared state for the whole app (menu + legacy frame read it)
-const menu = ref<EffectiveMenu>({ sections: [], pinned: [], recent: [], hidden: [] });
+const EVERYTHING_ALLOWED = { allowPin: true, allowHide: true, allowReorder: true };
+
+// one shared state for the whole app (menu + legacy frame read it): the server's menu (English titles and keys) and
+// the same menu in the user's language, which is what everything shows
+const serverMenu = ref<EffectiveMenu>({
+  sections: [],
+  pinned: [],
+  recent: [],
+  hidden: [],
+  personalization: EVERYTHING_ALLOWED,
+});
+const menu = ref<EffectiveMenu>({
+  sections: [],
+  pinned: [],
+  recent: [],
+  hidden: [],
+  personalization: EVERYTHING_ALLOWED,
+});
+
+/** The workspace blades no menu entry opens (bladeDiscovery.ts); sent with each menu request, the server puts them in More */
+const discovered = ref<MenuItem[]>([]);
 
 // load() runs from several places at once; only the latest request may set the menu
 const menuRequest = useLatestRequest();
@@ -27,13 +47,45 @@ function stableRecent(shown: MenuItem[], ranked: MenuItem[]): MenuItem[] {
   return [...kept, ...added].slice(0, RECENT_SIZE);
 }
 
+function localize() {
+  const locale = menuLocale();
+  const { menu: shown, serverTextsNeeded } = localizeMenu(serverMenu.value, locale);
+  menu.value = {
+    ...shown,
+    personalization: shown.personalization ?? EVERYTHING_ALLOWED,
+    recent: stableRecent(menu.value.recent, shown.recent),
+  };
+  // a title key of the platform's server texts (an AngularJS screen's): they load once per language, then titles redo
+  if (serverTextsNeeded) {
+    loadServerTexts(locale)
+      .then((loaded) => loaded && menuLocale() === locale && localize())
+      .catch(() => undefined);
+  }
+}
+
+// the titles follow a language switch without asking the server again
+watch(
+  () => menuLocale(),
+  () => localize(),
+);
+
 export function useAdminMenu() {
   const router = useRouter();
   const route = useRoute();
 
   async function load() {
-    const next = await menuRequest.latest(adminMenuApi.getMenu());
-    if (next) menu.value = { ...next, recent: stableRecent(menu.value.recent, next.recent) };
+    const next = await menuRequest.latest(adminMenuApi.getMenu(discovered.value));
+    if (next) {
+      serverMenu.value = next;
+      localize();
+    }
+  }
+
+  /** The workspace blades found once the plugins loaded: a new list loads the menu with them */
+  function setDiscovered(items: MenuItem[]) {
+    if (JSON.stringify(items) === JSON.stringify(discovered.value)) return;
+    discovered.value = items;
+    load();
   }
 
   /** "/modules?view=updates" -> the path and its query: a screen's views as menu items (Modules · Updates) */
@@ -52,7 +104,11 @@ export function useAdminMenu() {
         return { name: "Legacy", query: { url: target.legacyUrl ?? "/workspace" } };
       case "app":
         // route: a page inside the app (News' lists)
-        return { name: "EmbeddedApp", params: { appId: target.appId }, query: target.route ? { path: target.route } : {} };
+        return {
+          name: "EmbeddedApp",
+          params: { appId: target.appId },
+          query: target.route ? { path: target.route } : {},
+        };
       default:
         return undefined;
     }
@@ -118,7 +174,8 @@ export function useAdminMenu() {
   // when the page can fill a free slot: it isn't shown yet, and not pinned (the server leaves pinned pages out)
   function recordUse(itemId: string) {
     const recent = menu.value.recent;
-    const fillsSlot = recent.length < RECENT_SIZE && !pinnedIds.value.has(itemId) && !recent.some((x) => x.id === itemId);
+    const fillsSlot =
+      recent.length < RECENT_SIZE && !pinnedIds.value.has(itemId) && !recent.some((x) => x.id === itemId);
     adminMenuApi
       .addRecent(itemId)
       .then(() => (fillsSlot ? load() : undefined))
@@ -157,7 +214,9 @@ export function useAdminMenu() {
 
   const togglePin = (item: MenuItem) =>
     updatePrefs((prefs) => {
-      prefs.pinned = pinnedIds.value.has(item.id) ? prefs.pinned.filter((x) => x !== item.id) : [...prefs.pinned, item.id];
+      prefs.pinned = pinnedIds.value.has(item.id)
+        ? prefs.pinned.filter((x) => x !== item.id)
+        : [...prefs.pinned, item.id];
     });
 
   const hide = (item: MenuItem) =>
@@ -170,5 +229,23 @@ export function useAdminMenu() {
       prefs.hidden = [];
     });
 
-  return { menu, load, open, isActive, active, activeTitle, togglePin, hide, restoreHidden, pinnedIds, trackUses };
+  /** What the user may change (pin, hide, reorder): the SI's choice in Configuration › Menu › Personalization */
+  const personalization = computed(() => menu.value.personalization ?? EVERYTHING_ALLOWED);
+
+  return {
+    menu,
+    load,
+    open,
+    isActive,
+    active,
+    activeTitle,
+    togglePin,
+    hide,
+    restoreHidden,
+    pinnedIds,
+    trackUses,
+    setDiscovered,
+    discovered,
+    personalization,
+  };
 }

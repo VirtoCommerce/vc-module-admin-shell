@@ -1,7 +1,7 @@
 {
   "permissions": {
     "admin-shell:access": "Abrir Admin Shell",
-    "admin-shell:menu:manage": "Gestionar el menú de Admin Shell (niveles global y de rol)"
+    "admin-shell:menu:manage": "Gestionar el menú de Admin Shell: el editor del menú, los niveles global y de rol, y lo que los usuarios pueden cambiar"
   },
   "settings": {
     "AdminShell": {
@@ -17,6 +17,18 @@
         "User": {
           "title": "Preferencias del menú",
           "description": "Los elementos del menú de Admin Shell que el usuario ha anclado y ocultado"
+        },
+        "AllowPin": {
+          "title": "Los usuarios pueden anclar elementos del menú",
+          "description": "Desactivado: los usuarios no pueden anclar elementos, y los que anclaron dejan de mostrarse en Anclados; vuelven a aparecer al activarlo de nuevo"
+        },
+        "AllowHide": {
+          "title": "Los usuarios pueden ocultar elementos del menú",
+          "description": "Desactivado: los usuarios no pueden ocultar elementos, y los que ocultaron vuelven a mostrarse; se ocultan otra vez al activarlo de nuevo"
+        },
+        "AllowReorder": {
+          "title": "Los usuarios pueden reordenar elementos del menú",
+          "description": "Desactivado: no se aplica el orden propio de los elementos del menú de los usuarios; vuelve a aplicarse al activarlo de nuevo"
         }
       },
       "UI": {

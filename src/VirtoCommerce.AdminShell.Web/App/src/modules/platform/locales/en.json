@@ -411,6 +411,96 @@
       "ERROR_FILE": "Activation failed. Check the license file.",
       "ERROR_FILE_TYPE": "Choose a .lic license file.",
       "ERROR_EXPIRED": "Activation failed. This license has expired."
+    },
+    "MENU_EDITOR": {
+      "TITLE": "Admin Shell Menu Editor",
+      "TABS": {
+        "MENU": "Menu",
+        "PERSONALIZATION": "Personalization",
+        "LEGACY": "AngularJS screens"
+      },
+      "INTRO": "Your changes apply to everyone, on top of the Virto Commerce menu, which keeps improving with each release. They are saved in the platform setting AdminShell.Menu.Global.",
+      "MORE_NOTE": "More lists the screens of installed modules that no menu entry opened. Move them where they belong.",
+      "ADD_SECTION": "Add section",
+      "ADD_LINK": "Add link",
+      "UNDO_ALL": "Undo all changes",
+      "UNDO_ALL_CONFIRM": "Undo all changes to the menu? The Virto Commerce menu applies again once you save.",
+      "UNSAVED": "Unsaved changes",
+      "SAVED": "The menu is saved",
+      "LOAD_FAILED": "The menu couldn't be loaded: {error}",
+      "BADGES": {
+        "HIDDEN": "Hidden",
+        "CHANGED": "Changed",
+        "ADDED": "Added",
+        "DISCOVERED": "Found automatically"
+      },
+      "ACTIONS": {
+        "RENAME": "Rename",
+        "HIDE": "Hide",
+        "SHOW": "Show",
+        "UNDO": "Undo changes",
+        "REMOVE": "Remove",
+        "DRAG": "Drag to move (or use the arrow keys)"
+      },
+      "RENAME": {
+        "IN_LANGUAGE": "Title in {language}",
+        "IN_ENGLISH": "Title in English",
+        "HINT": "Leave empty to keep the default title",
+        "APPLY": "Apply",
+        "CANCEL": "Cancel"
+      },
+      "LINK": {
+        "TITLE": "Title",
+        "URL": "Address",
+        "URL_HINT": "Opens in a new browser tab",
+        "ADD": "Add",
+        "HEADING": "New link"
+      },
+      "SECTION": {
+        "TITLE": "Section title",
+        "ADD": "Add",
+        "HEADING": "New section"
+      },
+      "PERSONALIZATION": {
+        "INTRO": "What users may change in their own menu. Turning an option off stops applying the changes users made of that kind; they come back when it is turned on again.",
+        "PIN": "Users may pin items",
+        "HIDE": "Users may hide items",
+        "REORDER": "Users may reorder items"
+      },
+      "LEGACY": {
+        "INTRO": "Screens of the AngularJS admin's menu. Add the ones the menu doesn't have yet; they open in the AngularJS admin inside the shell.",
+        "FIND": "Find AngularJS screens",
+        "FINDING": "Starting the AngularJS admin…",
+        "NONE": "No AngularJS screens found",
+        "IN_MENU": "In the menu",
+        "ADD_TO": "Add to",
+        "ADD": "Add",
+        "FAILED": "The AngularJS screens couldn't be read: {error}",
+        "SUMMARY": "{count} screens, {missing} not in the menu yet",
+        "SHOW_IN_MENU": "Show {count} screens already in the menu",
+        "HIDE_IN_MENU": "Hide the screens already in the menu",
+        "ALL_IN_MENU": "Every AngularJS screen is in the menu"
+      },
+      "CANCEL": "Cancel",
+      "CLOSE": "Close",
+      "JSON": {
+        "INTRO": "The value of the platform setting AdminShell.Menu.Global, with the editor's unsaved changes. Download it to keep a backup or to move the menu to another environment. To restore one, upload or paste it and apply it: the menu editor shows the result, and its Save stores it.",
+        "APPLY": "Apply",
+        "RESET": "Discard edits",
+        "DOWNLOAD": "Download",
+        "UPLOAD": "Upload",
+        "COPY": "Copy",
+        "COPIED": "Copied to the clipboard",
+        "APPLIED": "Applied. Check the Menu tab and save to keep the changes.",
+        "INVALID": "The document isn't valid: {error}",
+        "SHAPE": "Expected an object with sections, items, addSections and addItems",
+        "LABEL": "Menu changes (JSON)",
+        "TITLE": "Menu changes as JSON",
+        "SUBTITLE": "AdminShell.Menu.Global"
+      },
+      "DRAG_HINT": "Drag sections and items to reorder them, or drop an item into another group or section. On a touch screen, press and hold first.",
+      "DROP_HERE": "Drop items here",
+      "DROP_NO_GROUP": "Drop here for no group"
     }
   }
 }

@@ -411,6 +411,96 @@
       "ERROR_FILE": "Aktiveringen mislyktes. Sjekk lisensfilen.",
       "ERROR_FILE_TYPE": "Velg en .lic-lisensfil.",
       "ERROR_EXPIRED": "Aktiveringen mislyktes. Denne lisensen er utløpt."
+    },
+    "MENU_EDITOR": {
+      "TITLE": "Menyredigering for Admin Shell",
+      "TABS": {
+        "MENU": "Meny",
+        "PERSONALIZATION": "Tilpasning",
+        "LEGACY": "AngularJS-skjermbilder"
+      },
+      "INTRO": "Endringene dine gjelder for alle og legges oppå menyen fra Virto Commerce, som blir bedre for hver versjon. De lagres i plattforminnstillingen AdminShell.Menu.Global.",
+      "MORE_NOTE": "«Mer» viser skjermbildene fra installerte moduler som ingen menyoppføring åpner. Flytt dem dit de hører hjemme.",
+      "ADD_SECTION": "Legg til seksjon",
+      "ADD_LINK": "Legg til lenke",
+      "UNDO_ALL": "Angre alle endringer",
+      "UNDO_ALL_CONFIRM": "Vil du angre alle endringer i menyen? Menyen fra Virto Commerce gjelder igjen når du lagrer.",
+      "UNSAVED": "Endringer som ikke er lagret",
+      "SAVED": "Menyen er lagret",
+      "LOAD_FAILED": "Kunne ikke laste inn menyen: {error}",
+      "BADGES": {
+        "HIDDEN": "Skjult",
+        "CHANGED": "Endret",
+        "ADDED": "Lagt til",
+        "DISCOVERED": "Funnet automatisk"
+      },
+      "ACTIONS": {
+        "RENAME": "Gi nytt navn",
+        "HIDE": "Skjul",
+        "SHOW": "Vis",
+        "UNDO": "Angre endringer",
+        "REMOVE": "Fjern",
+        "DRAG": "Dra for å flytte (eller bruk piltastene)"
+      },
+      "RENAME": {
+        "IN_LANGUAGE": "Tittel på {language}",
+        "IN_ENGLISH": "Tittel på engelsk",
+        "HINT": "La stå tomt for å beholde standardtittelen",
+        "APPLY": "Bruk",
+        "CANCEL": "Avbryt"
+      },
+      "LINK": {
+        "TITLE": "Tittel",
+        "URL": "Adresse",
+        "URL_HINT": "Åpnes i en ny fane",
+        "ADD": "Legg til",
+        "HEADING": "Ny lenke"
+      },
+      "SECTION": {
+        "TITLE": "Seksjonstittel",
+        "ADD": "Legg til",
+        "HEADING": "Ny seksjon"
+      },
+      "PERSONALIZATION": {
+        "INTRO": "Hva brukerne kan endre i sin egen meny. Når et alternativ slås av, brukes ikke lenger endringene av den typen som brukerne har gjort; de kommer tilbake når det slås på igjen.",
+        "PIN": "Brukere kan feste elementer",
+        "HIDE": "Brukere kan skjule elementer",
+        "REORDER": "Brukere kan endre rekkefølgen på elementer"
+      },
+      "LEGACY": {
+        "INTRO": "Skjermbilder fra menyen i AngularJS-admin. Legg til dem menyen ikke har ennå; de åpnes i AngularJS-admin inne i dette grensesnittet.",
+        "FIND": "Finn AngularJS-skjermbilder",
+        "FINDING": "Starter AngularJS-admin…",
+        "NONE": "Fant ingen AngularJS-skjermbilder",
+        "IN_MENU": "I menyen",
+        "ADD_TO": "Legg til i",
+        "ADD": "Legg til",
+        "FAILED": "Kunne ikke lese AngularJS-skjermbildene: {error}",
+        "SUMMARY": "{count} skjermbilder, {missing} er ikke i menyen ennå",
+        "SHOW_IN_MENU": "Vis {count} skjermbilder som allerede er i menyen",
+        "HIDE_IN_MENU": "Skjul skjermbildene som allerede er i menyen",
+        "ALL_IN_MENU": "Alle AngularJS-skjermbilder er i menyen"
+      },
+      "CANCEL": "Avbryt",
+      "CLOSE": "Lukk",
+      "JSON": {
+        "INTRO": "Verdien av plattforminnstillingen AdminShell.Menu.Global, med redigeringsprogrammets ulagrede endringer. Last den ned for å ta vare på en sikkerhetskopi eller flytte menyen til et annet miljø. For å gjenopprette en, last den opp eller lim den inn og bruk den: menyredigeringen viser resultatet, og dens Lagre lagrer det.",
+        "APPLY": "Bruk",
+        "RESET": "Forkast redigeringer",
+        "DOWNLOAD": "Last ned",
+        "UPLOAD": "Last opp",
+        "COPY": "Kopier",
+        "COPIED": "Kopiert til utklippstavlen",
+        "APPLIED": "Brukt. Sjekk fanen Meny og lagre for å beholde endringene.",
+        "INVALID": "Dokumentet er ugyldig: {error}",
+        "SHAPE": "Forventet et objekt med sections, items, addSections og addItems",
+        "LABEL": "Menyendringer (JSON)",
+        "TITLE": "Menyendringer som JSON",
+        "SUBTITLE": "AdminShell.Menu.Global"
+      },
+      "DRAG_HINT": "Dra seksjoner og elementer for å endre rekkefølgen, eller slipp et element i en annen gruppe eller seksjon. På en berøringsskjerm, trykk og hold først.",
+      "DROP_HERE": "Slipp elementer her",
+      "DROP_NO_GROUP": "Slipp her for ingen gruppe"
     }
   }
 }

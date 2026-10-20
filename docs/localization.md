@@ -28,6 +28,7 @@ A screen's texts come from five places. A language is complete when all five hav
 | 2 | **The shell** (navigation, search, user menu, dashboard, sign-in page, branding) | `App/src/locales/<code>.json` | `main.ts` (`$mergeLocaleMessage`) |
 | 3 | **Platform screens** (Settings, Security, Modules, Dynamic properties, License, Profile, Developer tools) | `App/src/modules/platform/locales/<code>.json` | the platform module (`defineAppModule({ locales })`) |
 | 4 | **Module plugins** (each module's screens and widgets) | `{module}/src/*.Web/vue/src/modules/locales/<code>.json` | the plugin (`defineAppModule({ locales })`) when it loads |
+| 2b | **The menu** (section, group and item titles) | `App/src/locales/menu/<code>.json` | `main.ts`, with the shell's texts; see *Menu* below |
 | 5 | **Server texts** (setting titles and descriptions, permission names) | `Localizations/<code>.VirtoCommerce.<Module>.json` of the platform and of each module, including `Localizations/<code>.VirtoCommerce.AdminShell.json` here | the platform (`GET api/platform/localization?lang=`), read by the Settings screen and the AngularJS admin |
 
 Each `locales` folder has an `index.ts` that exports one object per language:
@@ -40,6 +41,17 @@ export { en, de, es, fi, fr, it, ja, no, pl, pt, ru, sv, zh };
 ```
 
 The language menu lists every language that has a `language_name` in the shell's file (#2): `"language_name": "Deutsch"`. That one key decides whether a language is offered.
+
+### Menu
+
+The menu's titles have files of their own: `App/src/locales/menu/<code>.json`, merged at startup like the shell's texts. The server sends each section, group and item with its English title and, optionally, a `titleKey`; the shell shows, in this order:
+
+1. a title the [menu editor](menu-layers.md#the-menu-editor-configuration--menu) gave in the user's language (`titles` of the global patch), else its English one;
+2. the entry's `titleKey`: a key of the shell's texts or of a plugin's (`defineAppModule({ locales })`), else of the platform's server texts (#5), which is where an AngularJS screen's `main-menu-title` lives (they load only when such a key is asked for);
+3. the menu's file, by id: `MENU.SECTIONS.<sectionId>`, `MENU.GROUPS.<sectionId>_<groupId>`, `MENU.ITEMS.<itemId>`, with every character but letters and digits as `_` (`legacy.catalog` → `MENU.ITEMS.legacy_catalog`);
+4. the English title.
+
+`MENU.RAIL.<sectionId>` gives a short rail label where the first word of the section's title doesn't do (`configuration` → "Settings"). The titles follow a language switch at once, without asking the server again. A module whose items aren't in the menu's file gives a `titleKey` from its own locales in its [contribution](menu-contributions.md); a discovered blade takes its `menuItem.title` key. Source: `App/src/shell/menuTitles.ts`.
 
 ### vc-shell's English defaults
 

@@ -223,6 +223,7 @@
               </button>
               <span class="as-item__actions">
                 <button
+                  v-if="personalization.allowPin"
                   type="button"
                   class="as-item__action"
                   :title="pinnedIds.has(item.id) ? $t('SHELL.NAV.UNPIN') : $t('SHELL.NAV.PIN')"
@@ -232,7 +233,7 @@
                   <VcIcon :icon="pinnedIds.has(item.id) ? 'lucide-pin-off' : 'lucide-pin'" />
                 </button>
                 <button
-                  v-if="!group.shortcut"
+                  v-if="!group.shortcut && personalization.allowHide"
                   type="button"
                   class="as-item__action"
                   :title="$t('SHELL.NAV.HIDE_ITEM')"
@@ -271,7 +272,7 @@
         </div>
 
         <button
-          v-if="menu.hidden.length"
+          v-if="menu.hidden.length && personalization.allowHide"
           type="button"
           class="as-panel__restore"
           @click="restoreHidden"
@@ -309,7 +310,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{ (e: "navigate"): void; (e: "close"): void }>();
 
-const { menu, open, isActive, active, togglePin, hide, restoreHidden, pinnedIds } = useAdminMenu();
+const { menu, open, isActive, active, togglePin, hide, restoreHidden, pinnedIds, personalization } = useAdminMenu();
 const router = useRouter();
 const route = useRoute();
 const { t, te } = useI18n({ useScope: "global" });

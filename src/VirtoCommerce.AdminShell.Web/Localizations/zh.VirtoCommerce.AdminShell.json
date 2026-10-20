@@ -1,7 +1,7 @@
 {
   "permissions": {
     "admin-shell:access": "打开 Admin Shell",
-    "admin-shell:menu:manage": "管理 Admin Shell 菜单（全局层和角色层）"
+    "admin-shell:menu:manage": "管理 Admin Shell 菜单：菜单编辑器、全局层和角色层，以及用户可以更改的内容"
   },
   "settings": {
     "AdminShell": {
@@ -17,6 +17,18 @@
         "User": {
           "title": "菜单偏好",
           "description": "用户在 Admin Shell 菜单中固定和隐藏的菜单项"
+        },
+        "AllowPin": {
+          "title": "允许用户固定菜单项",
+          "description": "关闭：用户无法固定菜单项，已固定的菜单项不再显示在“已固定”中；重新开启后会恢复"
+        },
+        "AllowHide": {
+          "title": "允许用户隐藏菜单项",
+          "description": "关闭：用户无法隐藏菜单项，已隐藏的菜单项会重新显示；重新开启后会再次隐藏"
+        },
+        "AllowReorder": {
+          "title": "允许用户调整菜单项顺序",
+          "description": "关闭：用户自定义的菜单项顺序不生效；重新开启后会再次生效"
         }
       },
       "UI": {

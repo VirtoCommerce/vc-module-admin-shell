@@ -411,6 +411,96 @@
       "ERROR_FILE": "Falha na ativação. Verifique o arquivo de licença.",
       "ERROR_FILE_TYPE": "Escolha um arquivo de licença .lic.",
       "ERROR_EXPIRED": "Falha na ativação. Esta licença expirou."
+    },
+    "MENU_EDITOR": {
+      "TITLE": "Editor de menu do Admin Shell",
+      "TABS": {
+        "MENU": "Menu",
+        "PERSONALIZATION": "Personalização",
+        "LEGACY": "Telas do AngularJS"
+      },
+      "INTRO": "Suas alterações valem para todos e são aplicadas sobre o menu do Virto Commerce, que melhora a cada versão. Elas são salvas na configuração da plataforma AdminShell.Menu.Global.",
+      "MORE_NOTE": "\"Mais\" lista as telas dos módulos instalados que nenhuma entrada do menu abre. Mova-as para onde devem ficar.",
+      "ADD_SECTION": "Adicionar seção",
+      "ADD_LINK": "Adicionar link",
+      "UNDO_ALL": "Desfazer todas as alterações",
+      "UNDO_ALL_CONFIRM": "Desfazer todas as alterações do menu? O menu do Virto Commerce volta a valer depois de salvar.",
+      "UNSAVED": "Alterações não salvas",
+      "SAVED": "O menu foi salvo",
+      "LOAD_FAILED": "Não foi possível carregar o menu: {error}",
+      "BADGES": {
+        "HIDDEN": "Oculto",
+        "CHANGED": "Alterado",
+        "ADDED": "Adicionado",
+        "DISCOVERED": "Encontrado automaticamente"
+      },
+      "ACTIONS": {
+        "RENAME": "Renomear",
+        "HIDE": "Ocultar",
+        "SHOW": "Mostrar",
+        "UNDO": "Desfazer alterações",
+        "REMOVE": "Remover",
+        "DRAG": "Arraste para mover (ou use as setas)"
+      },
+      "RENAME": {
+        "IN_LANGUAGE": "Título em {language}",
+        "IN_ENGLISH": "Título em inglês",
+        "HINT": "Deixe em branco para manter o título padrão",
+        "APPLY": "Aplicar",
+        "CANCEL": "Cancelar"
+      },
+      "LINK": {
+        "TITLE": "Título",
+        "URL": "Endereço",
+        "URL_HINT": "Abre em uma nova aba",
+        "ADD": "Adicionar",
+        "HEADING": "Novo link"
+      },
+      "SECTION": {
+        "TITLE": "Título da seção",
+        "ADD": "Adicionar",
+        "HEADING": "Nova seção"
+      },
+      "PERSONALIZATION": {
+        "INTRO": "O que os usuários podem alterar no próprio menu. Desativar uma opção deixa de aplicar as alterações desse tipo feitas pelos usuários; elas voltam quando a opção é reativada.",
+        "PIN": "Os usuários podem fixar itens",
+        "HIDE": "Os usuários podem ocultar itens",
+        "REORDER": "Os usuários podem reordenar itens"
+      },
+      "LEGACY": {
+        "INTRO": "Telas do menu da administração AngularJS. Adicione as que ainda não estão no menu; elas abrem na administração AngularJS dentro do shell.",
+        "FIND": "Procurar telas do AngularJS",
+        "FINDING": "Iniciando a administração AngularJS…",
+        "NONE": "Nenhuma tela do AngularJS encontrada",
+        "IN_MENU": "No menu",
+        "ADD_TO": "Adicionar a",
+        "ADD": "Adicionar",
+        "FAILED": "Não foi possível ler as telas do AngularJS: {error}",
+        "SUMMARY": "{count} telas, {missing} ainda fora do menu",
+        "SHOW_IN_MENU": "Mostrar {count} telas que já estão no menu",
+        "HIDE_IN_MENU": "Ocultar as telas que já estão no menu",
+        "ALL_IN_MENU": "Todas as telas AngularJS estão no menu"
+      },
+      "CANCEL": "Cancelar",
+      "CLOSE": "Fechar",
+      "JSON": {
+        "INTRO": "O valor da configuração da plataforma AdminShell.Menu.Global, com as alterações não salvas do editor. Baixe-o para manter um backup ou levar o menu para outro ambiente. Para restaurar um, envie-o ou cole-o e aplique-o: o editor do menu mostra o resultado e o seu Salvar o armazena.",
+        "APPLY": "Aplicar",
+        "RESET": "Descartar edições",
+        "DOWNLOAD": "Baixar",
+        "UPLOAD": "Enviar",
+        "COPY": "Copiar",
+        "COPIED": "Copiado para a área de transferência",
+        "APPLIED": "Aplicado. Confira a aba Menu e salve para manter as alterações.",
+        "INVALID": "O documento não é válido: {error}",
+        "SHAPE": "Esperado um objeto com sections, items, addSections e addItems",
+        "LABEL": "Alterações do menu (JSON)",
+        "TITLE": "Alterações do menu em JSON",
+        "SUBTITLE": "AdminShell.Menu.Global"
+      },
+      "DRAG_HINT": "Arraste seções e itens para reordená-los, ou solte um item em outro grupo ou seção. Em uma tela sensível ao toque, pressione e segure primeiro.",
+      "DROP_HERE": "Solte itens aqui",
+      "DROP_NO_GROUP": "Solte aqui para nenhum grupo"
     }
   }
 }

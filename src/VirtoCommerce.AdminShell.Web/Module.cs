@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using VirtoCommerce.AdminShell.Core;
 using VirtoCommerce.AdminShell.Web.Middlewares;
-using VirtoCommerce.AdminShell.Web.Services;
+using VirtoCommerce.AdminShell.Core.Services;
+using VirtoCommerce.AdminShell.Data.Services;
 using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
@@ -16,9 +17,9 @@ public class Module : IModule
 
     public void Initialize(IServiceCollection serviceCollection)
     {
-        serviceCollection.AddTransient<DefaultMenuBuilder>();
-        serviceCollection.AddTransient<AdminMenuService>();
-        serviceCollection.AddTransient<BrandingService>();
+        serviceCollection.AddTransient<IDefaultMenuBuilder, DefaultMenuBuilder>();
+        serviceCollection.AddTransient<IAdminMenuService, AdminMenuService>();
+        serviceCollection.AddTransient<IBrandingService, BrandingService>();
         // the host page is revalidated, so an updated module's build reaches browsers at once
         serviceCollection.AddTransient<IStartupFilter, AppIndexNoCacheStartupFilter>();
     }

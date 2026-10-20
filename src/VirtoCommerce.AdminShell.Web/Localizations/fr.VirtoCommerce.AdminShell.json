@@ -1,7 +1,7 @@
 {
   "permissions": {
     "admin-shell:access": "Ouvrir l'Admin Shell",
-    "admin-shell:menu:manage": "Gérer le menu de l'Admin Shell (niveaux global et par rôle)"
+    "admin-shell:menu:manage": "Gérer le menu de l'Admin Shell : l'éditeur de menu, les niveaux global et par rôle, ce que les utilisateurs peuvent modifier"
   },
   "settings": {
     "AdminShell": {
@@ -17,6 +17,18 @@
         "User": {
           "title": "Préférences du menu",
           "description": "Les éléments du menu de l'Admin Shell épinglés et masqués par l'utilisateur"
+        },
+        "AllowPin": {
+          "title": "Les utilisateurs peuvent épingler des éléments du menu",
+          "description": "Désactivé : les utilisateurs ne peuvent pas épingler d'éléments, et ceux qu'ils ont épinglés n'apparaissent plus dans Épinglés ; ils reviennent quand ce paramètre est réactivé"
+        },
+        "AllowHide": {
+          "title": "Les utilisateurs peuvent masquer des éléments du menu",
+          "description": "Désactivé : les utilisateurs ne peuvent pas masquer d'éléments, et ceux qu'ils ont masqués réapparaissent ; ils sont de nouveau masqués quand ce paramètre est réactivé"
+        },
+        "AllowReorder": {
+          "title": "Les utilisateurs peuvent réorganiser les éléments du menu",
+          "description": "Désactivé : l'ordre des éléments du menu propre à chaque utilisateur ne s'applique pas ; il s'applique de nouveau quand ce paramètre est réactivé"
         }
       },
       "UI": {

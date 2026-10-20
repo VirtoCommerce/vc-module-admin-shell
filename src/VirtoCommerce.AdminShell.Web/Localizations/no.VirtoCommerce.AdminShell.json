@@ -1,7 +1,7 @@
 {
   "permissions": {
     "admin-shell:access": "Åpne Admin Shell",
-    "admin-shell:menu:manage": "Administrer Admin Shell-menyen (globalt nivå og rollenivå)"
+    "admin-shell:menu:manage": "Administrer Admin Shell-menyen: menyredigeringen, globalt nivå og rollenivå, hva brukere kan endre"
   },
   "settings": {
     "AdminShell": {
@@ -17,6 +17,18 @@
         "User": {
           "title": "Menypreferanser",
           "description": "Brukerens festede og skjulte elementer i Admin Shell-menyen"
+        },
+        "AllowPin": {
+          "title": "Brukere kan feste menyelementer",
+          "description": "Av: brukere kan ikke feste elementer, og elementene de har festet, vises ikke lenger under Festet; de kommer tilbake når dette slås på igjen"
+        },
+        "AllowHide": {
+          "title": "Brukere kan skjule menyelementer",
+          "description": "Av: brukere kan ikke skjule elementer, og elementene de har skjult, vises igjen; de skjules igjen når dette slås på igjen"
+        },
+        "AllowReorder": {
+          "title": "Brukere kan endre rekkefølgen på menyelementer",
+          "description": "Av: brukernes egen rekkefølge på menyelementene gjelder ikke; den gjelder igjen når dette slås på igjen"
         }
       },
       "UI": {

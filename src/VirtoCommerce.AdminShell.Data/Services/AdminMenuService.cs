@@ -13,24 +13,30 @@ using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
 using Settings = VirtoCommerce.AdminShell.Core.ModuleConstants.Settings;
 
-namespace VirtoCommerce.AdminShell.Web.Services;
+namespace VirtoCommerce.AdminShell.Data.Services;
 
 /// <summary>Reads and writes the menu layers (platform settings) and composes the effective menu for a user</summary>
 public class AdminMenuService(
-    DefaultMenuBuilder defaultMenuBuilder,
+    IDefaultMenuBuilder defaultMenuBuilder,
     ISettingsManager settingsManager,
     UserManager<ApplicationUser> userManager,
-    IDistributedLock distributedLock)
+    IDistributedLock distributedLock) : IAdminMenuService
 {
-    public MenuDocument GetDefaultMenu() => defaultMenuBuilder.Build();
+    /// <summary>The default menu; <paramref name="discovered"/> (workspace blades the client found) go to More where nothing opens them</summary>
+    public MenuDocument GetDefaultMenu(IEnumerable<MenuItem> discovered = null) => defaultMenuBuilder.Build(discovered);
 
-    public async Task<EffectiveMenu> GetEffectiveMenuAsync(ClaimsPrincipal principal)
+    /// <summary>The editor's menu: the default menu with the patch being edited (else the stored global patch), nothing filtered</summary>
+    public async Task<MenuDocument> GetEditorMenuAsync(MenuEditorRequest request) =>
+        MenuComposer.ComposeForEditor(GetDefaultMenu(request?.Discovered), request?.Patch ?? await GetGlobalPatchAsync());
+
+    public async Task<EffectiveMenu> GetEffectiveMenuAsync(ClaimsPrincipal principal, IEnumerable<MenuItem> discovered = null)
     {
         var userId = principal.GetUserId();
         // the reads that don't need the user's roles run while the user loads
         var globalPatch = GetGlobalPatchAsync();
         var userPrefs = GetUserPrefsAsync(userId);
         var recent = ReadUsesAsync(userId);
+        var personalization = GetPersonalizationAsync();
         var user = await userManager.FindByIdAsync(userId);
         var roles = (user?.Roles ?? []).OrderBy(x => x.Name).ToList();
 
@@ -39,12 +45,28 @@ public class AdminMenuService(
 
         // administrators pass too, as for the endpoints' [Authorize]
         return MenuComposer.Compose(
-            GetDefaultMenu(),
+            GetDefaultMenu(discovered),
             await globalPatch,
             await rolePatches,
             await userPrefs,
             principal.HasGlobalPermission,
-            (await recent).Select(x => x.Id).ToList());
+            (await recent).Select(x => x.Id).ToList(),
+            await personalization);
+    }
+
+    /// <summary>What users may change in their menu (platform settings, so they can also be set per environment)</summary>
+    public async Task<MenuPersonalization> GetPersonalizationAsync() => new()
+    {
+        AllowPin = await settingsManager.GetValueAsync<bool>(Settings.AllowPin),
+        AllowHide = await settingsManager.GetValueAsync<bool>(Settings.AllowHide),
+        AllowReorder = await settingsManager.GetValueAsync<bool>(Settings.AllowReorder),
+    };
+
+    public async Task SavePersonalizationAsync(MenuPersonalization personalization)
+    {
+        await settingsManager.SetValueAsync(Settings.AllowPin.Name, personalization.AllowPin);
+        await settingsManager.SetValueAsync(Settings.AllowHide.Name, personalization.AllowHide);
+        await settingsManager.SetValueAsync(Settings.AllowReorder.Name, personalization.AllowReorder);
     }
 
     // the uses as stored, which is best first: RecordUse ranks them, and the shared half-life keeps that order over time.

@@ -6,6 +6,8 @@ import { registerRemoteModules } from "@vc-shell/mf-host";
 import { createApp } from "vue";
 import { router } from "./router";
 import * as locales from "./locales";
+// the menu's titles, in a file of their own per language (docs/localization.md, "Menu")
+import * as menuLocales from "./locales/menu";
 // vc-shell's texts in the languages it doesn't ship (docs/localization.md)
 import * as frameworkLocales from "./locales/framework";
 import { translateFrameworkDefaults } from "./locales/framework/defaults";
@@ -56,7 +58,7 @@ async function startApp() {
   app.use(router);
 
   // vc-shell's texts first, then the shell's own (a key in both is the shell's)
-  [frameworkLocales, locales].forEach((source) =>
+  [frameworkLocales, locales, menuLocales].forEach((source) =>
     Object.entries(source).forEach(([key, message]) => {
       app.config.globalProperties.$mergeLocaleMessage(key, message);
     }),

@@ -1,7 +1,7 @@
 {
   "permissions": {
     "admin-shell:access": "Admin Shell öffnen",
-    "admin-shell:menu:manage": "Menü der Admin Shell verwalten (globale und Rollenebene)"
+    "admin-shell:menu:manage": "Menü der Admin Shell verwalten: Menü-Editor, globale und Rollenebene, was Benutzer ändern dürfen"
   },
   "settings": {
     "AdminShell": {
@@ -17,6 +17,18 @@
         "User": {
           "title": "Menüeinstellungen",
           "description": "Die angehefteten und ausgeblendeten Menüeinträge des Benutzers in der Admin Shell"
+        },
+        "AllowPin": {
+          "title": "Benutzer dürfen Menüeinträge anheften",
+          "description": "Aus: Benutzer können keine Einträge anheften, und die angehefteten Einträge erscheinen nicht mehr unter Angeheftet; sie kehren zurück, wenn dies wieder eingeschaltet wird"
+        },
+        "AllowHide": {
+          "title": "Benutzer dürfen Menüeinträge ausblenden",
+          "description": "Aus: Benutzer können keine Einträge ausblenden, und die ausgeblendeten Einträge werden wieder angezeigt; sie werden wieder ausgeblendet, wenn dies wieder eingeschaltet wird"
+        },
+        "AllowReorder": {
+          "title": "Benutzer dürfen Menüeinträge neu anordnen",
+          "description": "Aus: Die eigene Reihenfolge der Menüeinträge der Benutzer gilt nicht; sie gilt wieder, wenn dies wieder eingeschaltet wird"
         }
       },
       "UI": {

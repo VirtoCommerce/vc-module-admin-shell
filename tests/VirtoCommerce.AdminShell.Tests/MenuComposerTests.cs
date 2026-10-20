@@ -322,4 +322,137 @@ public class MenuComposerTests
 
         Assert.Equal(["legacy.catalog"], menu.Recent.Select(x => x.Id));
     }
+
+    private static MenuItem Vue(string id, string route) => new()
+    {
+        Id = id, Title = id, Target = new MenuTarget { Type = MenuTargetTypes.Vue, Route = route },
+    };
+
+    [Fact]
+    public void Personalization_that_is_turned_off_stops_applying_the_users_changes_without_dropping_them()
+    {
+        var user = new UserMenuPrefs { Pinned = ["legacy.catalog"], Hidden = ["legacy.pricing"], Order = { ["orders"] = ["legacy.customers"] } };
+        var none = new MenuPersonalization { AllowPin = false, AllowHide = false, AllowReorder = false };
+
+        var limited = MenuComposer.Compose(Default(), null, null, user, _ => true, null, none);
+        Assert.Empty(limited.Pinned);
+        Assert.Empty(limited.Hidden);
+        Assert.Equal(["legacy.catalog", "legacy.pricing"], Ids(limited, "catalog"));
+        Assert.Equal(["vue.orders", "legacy.customers"], Ids(limited, "orders"));
+        Assert.False(limited.Personalization.AllowHide);
+
+        // the same prefs apply again once allowed: nothing was deleted
+        var allowed = MenuComposer.Compose(Default(), null, null, user, _ => true, null, new MenuPersonalization());
+        Assert.Equal(["legacy.catalog"], allowed.Pinned.Select(x => x.Id));
+        Assert.Equal(["legacy.catalog"], Ids(allowed, "catalog"));
+        Assert.Equal(["legacy.customers", "vue.orders"], Ids(allowed, "orders"));
+    }
+
+    [Fact]
+    public void Titles_by_language_win_over_the_key_and_english_names_the_item()
+    {
+        var defaultMenu = Default();
+        defaultMenu.Sections[0].TitleKey = "MENU.SECTIONS.orders";
+        defaultMenu.Sections[0].Items[1].TitleKey = "MENU.ITEMS.legacy_customers";
+        var global = new MenuPatch
+        {
+            Sections = { ["orders"] = new SectionPatch { Title = "Sales" } },
+            Items = { ["legacy.customers"] = new ItemPatch { Titles = new() { ["en"] = "Accounts", ["de"] = "Konten" } } },
+        };
+
+        var menu = MenuComposer.Compose(defaultMenu, global, null, null, _ => true);
+
+        var orders = menu.Sections.Single(x => x.Id == "orders");
+        Assert.Equal("Sales", orders.Title);
+        Assert.Null(orders.TitleKey); // a single title is the title in every language
+        var customers = orders.Items.Single(x => x.Id == "legacy.customers");
+        Assert.Equal("Accounts", customers.Title);
+        Assert.Equal("Konten", customers.Titles["de"]);
+        Assert.Equal("MENU.ITEMS.legacy_customers", customers.TitleKey); // languages without a title fall back to English, not to the key
+    }
+
+    [Fact]
+    public void Discovered_blades_that_no_item_opens_go_to_More()
+    {
+        var defaultMenu = new MenuDocument
+        {
+            Sections = [new MenuSection { Id = "configuration", Title = "Configuration", Priority = 90, Items = [Vue("platform.modules", "/modules?view=installed")] }],
+        };
+
+        MenuComposer.AddDiscovered(defaultMenu,
+        [
+            Vue("blade.PlatformModules", "/modules"), // opened by Modules already
+            Vue("blade.AcmeReports", "/acme-reports"),
+            Vue("blade.AcmeReports", "/acme-reports-2"), // same id twice
+            new MenuItem { Id = "blade.NoRoute", Title = "No route" },
+        ]);
+
+        var more = defaultMenu.Sections.Single(x => x.Id == ModuleConstants.MoreSectionId);
+        Assert.Equal(["blade.AcmeReports"], more.Items.Select(x => x.Id));
+        Assert.Equal("discovered", more.Items[0].Source);
+        Assert.True(more.Priority > 90);
+
+        // a patch places a discovered blade like any item
+        var global = new MenuPatch { Items = { ["blade.AcmeReports"] = new ItemPatch { SectionId = "configuration", Priority = 100 } } };
+        var menu = MenuComposer.Compose(defaultMenu, global, null, null, _ => true);
+        Assert.Equal(["platform.modules", "blade.AcmeReports"], Ids(menu, "configuration"));
+        Assert.DoesNotContain(menu.Sections, x => x.Id == ModuleConstants.MoreSectionId); // More left empty is gone
+    }
+
+    [Fact]
+    public void The_editor_keeps_what_the_patch_hides_marked_and_marks_what_it_adds()
+    {
+        var global = new MenuPatch
+        {
+            Sections = { ["catalog"] = new SectionPatch { Hidden = true } },
+            Items = { ["legacy.customers"] = new ItemPatch { Hidden = true, Group = "" } },
+            AddItems = [new MenuItem { Id = "acme.wiki", SectionId = "orders", Title = "Wiki", Target = new MenuTarget { Type = MenuTargetTypes.Url, Url = "https://wiki" } }],
+        };
+
+        var menu = MenuComposer.ComposeForEditor(Default(), global);
+
+        Assert.True(menu.Sections.Single(x => x.Id == "catalog").Hidden);
+        var orders = menu.Sections.Single(x => x.Id == "orders").Items;
+        var customers = orders.Single(x => x.Id == "legacy.customers");
+        Assert.True(customers.Hidden);
+        Assert.Equal("", customers.Group);
+        Assert.Equal("added", orders.Single(x => x.Id == "acme.wiki").Source);
+        Assert.DoesNotContain(orders, x => x.Id == "legacy.orders"); // replaced, as in the effective menu
+    }
+    [Fact]
+    public void An_items_former_ids_carry_pins_hides_patches_Recent_and_group_lists_over()
+    {
+        // the default menu names a screen by its own id and lists the AngularJS item's id as a former one
+        MenuDocument Menu() => new()
+        {
+            Sections =
+            [
+                new MenuSection
+                {
+                    Id = "orders", Title = "Orders", Priority = 20,
+                    Groups = [new MenuGroup { Id = "sales", Title = "Sales", Items = ["legacy.orders"] }],
+                    Items = [Aliased(Vue("orders", "/orders"), "legacy.orders"), Item("legacy.customers", 20)],
+                },
+            ],
+        };
+        var prefs = new UserMenuPrefs { Pinned = ["legacy.orders"], Order = new() { ["orders"] = ["legacy.customers", "legacy.orders"] } };
+        var global = new MenuPatch { Items = new() { ["legacy.orders"] = new ItemPatch { Title = "Sales orders" } } };
+
+        var menu = MenuComposer.Compose(Menu(), global, null, prefs, _ => true, ["legacy.orders"]);
+
+        var orders = menu.Sections.Single().Items.Single(x => x.Id == "orders");
+        Assert.Equal(["orders"], menu.Pinned.Select(x => x.Id));
+        Assert.Equal("Sales orders", orders.Title);
+        Assert.Equal("Sales", orders.Group);
+        Assert.Equal(["legacy.customers", "orders"], Ids(menu, "orders"));
+        Assert.Empty(menu.Recent); // the use moved to orders, which is pinned
+
+        Assert.Equal(["orders"], MenuComposer.WithCurrentIds(Menu(), new UserMenuPrefs { Hidden = ["legacy.orders"] }).Hidden);
+    }
+
+    private static MenuItem Aliased(MenuItem item, params string[] aliases)
+    {
+        item.Aliases = [.. aliases];
+        return item;
+    }
 }

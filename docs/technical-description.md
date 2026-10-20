@@ -6,8 +6,9 @@ This document describes how the Admin Shell is built and how its parts work toge
 
 | Path | What it is |
 |---|---|
-| `src/VirtoCommerce.AdminShell.Core` | Menu model (`Models/MenuModels.cs`), the pure menu composer (`Services/MenuComposer.cs`), settings and permissions (`ModuleConstants.cs`). |
-| `src/VirtoCommerce.AdminShell.Web` | The module: `Module.cs`, `module.manifest`, the menu API (`Controllers/Api/AdminShellMenuController.cs`), `Services/DefaultMenuBuilder.cs` and `Services/AdminMenuService.cs`, `Middlewares/AppIndexNoCacheStartupFilter.cs`, `Content/default-menu.json`. |
+| `src/VirtoCommerce.AdminShell.Core` | Menu and branding models (`Models/`), the pure menu composer (`Services/MenuComposer.cs`), the service interfaces (`Services/IAdminMenuService.cs`, `IDefaultMenuBuilder.cs`, `IBrandingService.cs`), settings and permissions (`ModuleConstants.cs`). |
+| `src/VirtoCommerce.AdminShell.Data` | The services: `Services/DefaultMenuBuilder.cs` (the default menu from what is installed), `Services/AdminMenuService.cs` (menu layers in platform settings, the effective menu), `Services/BrandingService.cs` (white-labeling). |
+| `src/VirtoCommerce.AdminShell.Web` | The module: `Module.cs`, `module.manifest`, the menu and branding APIs (`Controllers/Api/`), the services registered against their Core interfaces, `Middlewares/AppIndexNoCacheStartupFilter.cs`, `Content/default-menu.json`. |
 | `src/VirtoCommerce.AdminShell.Web/App` | The host application (Vue 3, vc-shell). Built into `Content/admin-shell`, which the platform serves at `/apps/admin-shell/`. |
 | `tests/VirtoCommerce.AdminShell.Tests` | Menu composition tests (`MenuComposerTests.cs`). |
 | `docs` | This documentation. |
@@ -69,7 +70,7 @@ There is no UI for the global and role layers yet; they are managed through this
 
 **Effective menu** (`MenuComposer.Compose`, a pure function covered by tests):
 
-1. Replacements: an item with `replaces` takes the replaced item's section, priority and group, and the replaced item is removed. Old ids are mapped to new ones, so patches, pins, hidden items and *Recent* recorded on the AngularJS item follow the Vue screen.
+1. Replacements: an item with `replaces` takes the replaced item's section, priority and group, and the replaced item is removed. Old ids (replaced items, and the former ids an item lists in `aliases`) are mapped to new ones, so patches, pins, hidden items, *Recent* and group lists recorded on `legacy.orders` follow `orders`.
 2. Global patch.
 3. Role patches, one per role of the user, in role-name order. A section or item is hidden only if every role hides it.
 4. User preferences: hidden items, item order per section.

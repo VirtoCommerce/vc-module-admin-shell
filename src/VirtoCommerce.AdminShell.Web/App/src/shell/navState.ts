@@ -1,5 +1,6 @@
 import { useStorage } from "@vueuse/core";
 import { ref } from "vue";
+import { railLabelOf } from "./menuTitles";
 
 // Shared by the rail, the header and the phone drawer: which section's panel shows and whether the panel is open.
 // The open state is a per-browser convenience; a default is not stored, so changing it later reaches everyone who never chose.
@@ -21,13 +22,9 @@ export const drawerOpen = ref(false);
 /** Phones: the full-screen search sheet */
 export const searchSheetOpen = ref(false);
 
-/** Short rail labels where the section title's first word doesn't do; the panel shows the full title */
-const RAIL_LABELS: Record<string, string> = {
-  configuration: "Settings",
-};
-
-export const railLabel = (section: { id: string; title: string }) =>
-  RAIL_LABELS[section.id] ?? section.title.split(/[\s&]+/)[0];
+/** A section's rail label: the menu's short one where the title's first word doesn't do (MENU.RAIL.configuration is
+ * "Settings"), else the first word of its title in the user's language; the panel shows the full title */
+export const railLabel = (section: { id: string; title: string }) => railLabelOf(section);
 
 /**
  * A section's headed groups, in the section's order, each with its items in the menu's order (the server sets an
