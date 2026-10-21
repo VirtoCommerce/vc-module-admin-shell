@@ -186,7 +186,19 @@
   white-space: nowrap;
 }
 
-/* search row: 54px white strip, full-width 36px #F4F7F9 input with 4px radius */
+/* ---- search and filter bar: one look wherever a list is searched ----
+   [search, full width] [quick filter chips, optional] [Filters button with its panel, optional]
+   The tables' search row (vc-shell's VcDataTable) and the settings-style screens (.ps__bar: Settings, Dynamic
+   Properties) both read these. The field is white with the form fields' border, so it reads as editable, never as a
+   disabled one; the Filters button is an outlined square of the same height. */
+:root:root {
+  --search-bar-padding: 9px 18px;
+  --search-field-height: 36px;
+  --search-field-radius: 6px;
+  --search-field-border: var(--color-neutral-300);
+  --search-field-bg: var(--color-neutral-0);
+}
+
 .vc-table-search-header.vc-table-search-header {
   background-color: var(--color-neutral-0);
   border-color: var(--color-neutral-200);
@@ -195,13 +207,13 @@
 /* the filters wrap under the search when they don't fit beside it (phones, narrow blades) */
 .vc-table-search-header__toolbar.vc-table-search-header__toolbar {
   flex-wrap: wrap;
-  gap: 8px 16px;
+  gap: 8px 12px;
   height: auto;
   min-height: 54px;
-  padding: 9px 18px;
+  padding: var(--search-bar-padding);
 }
 
-/* search first and full width, then the filter funnel (22px #737373) with a count badge */
+/* search first and full width, then the Filters button */
 .vc-table-search-header__spacer.vc-table-search-header__spacer {
   display: none;
 }
@@ -210,58 +222,76 @@
   flex-grow: 0;
   order: 1;
 
-  .vc-button {
-    background: transparent;
-    border-color: transparent;
-    box-shadow: none;
-    color: var(--color-neutral-500);
-    min-width: 24px;
-    padding: 0;
-    position: relative;
-  }
-
-  .vc-button:hover {
-    color: var(--color-primary-500);
-  }
-
-  .vc-button .vc-icon,
-  .vc-button svg {
-    height: 22px;
-    width: 22px;
-  }
-
   .vc-global-filters-button__label {
     display: none;
-  }
-
-  .vc-global-filters-button__badge {
-    align-items: center;
-    background: var(--color-primary-500);
-    border: 1.5px solid var(--color-neutral-0);
-    border-radius: 999px;
-    color: var(--color-neutral-0);
-    display: inline-flex;
-    font-size: 10px;
-    font-weight: 700;
-    height: 18px;
-    justify-content: center;
-    line-height: 13px;
-    min-width: 18px;
-    padding: 0 4px;
-    position: absolute;
-    right: -6px;
-    top: -4px;
   }
 }
 
 .vc-table-search-header__search.vc-table-search-header__search {
   flex: 1 1 200px;
   max-width: none;
-  --input-height-small: 36px;
-  --input-border-radius: 4px;
-  --input-border-color: var(--color-neutral-200);
-  --input-background-color: var(--color-secondary-50);
+  --input-height-small: var(--search-field-height);
+  --input-border-radius: var(--search-field-radius);
+  --input-border-color: var(--search-field-border);
+  --input-background-color: var(--search-field-bg);
   --input-text-color: var(--color-neutral-900);
+}
+
+/* the Filters button (and any other button beside the search): an outlined square, the field's height and border;
+   .as-filter-button gives a settings-style screen's button the same look */
+.vc-table-search-header__actions .vc-button.vc-button,
+.as-filter-button.vc-button.vc-button {
+  /* vc-shell's small button sets its height and side padding with !important, through these */
+  --button-sm-height: var(--search-field-height);
+  --button-sm-padding-hor: 0;
+  position: relative;
+  justify-content: center;
+  width: var(--search-field-height);
+  min-width: var(--search-field-height);
+  height: var(--search-field-height);
+  padding: 0;
+  color: var(--color-neutral-600);
+  background: var(--search-field-bg);
+  border: 1px solid var(--search-field-border);
+  border-radius: var(--search-field-radius);
+  box-shadow: none;
+
+  &:hover {
+    color: var(--color-primary-500);
+    border-color: var(--color-primary-500);
+  }
+
+  &[aria-expanded="true"] {
+    color: var(--color-primary-500);
+    border-color: var(--color-primary-500);
+  }
+
+  .vc-icon,
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* the count of the filters in force, on the button's corner */
+  .vc-global-filters-button__badge {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    margin: 0;
+    padding: 0 4px;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 13px;
+    color: var(--color-neutral-0);
+    background: var(--color-primary-500);
+    border: 1.5px solid var(--color-neutral-0);
+    border-radius: 999px;
+  }
 }
 
 /* ---- status pill: 4px 12px 4px 10px, 8px gap, 10px dot ---- */

@@ -64,16 +64,61 @@
             />
             {{ $t("PLATFORM.SETTINGS.LIST.TENANT") }}
           </button>
-          <VcSelect
-            v-model="moduleId"
-            class="ps__module"
-            size="small"
-            :options="modules"
-            :placeholder="$t('PLATFORM.SETTINGS.LIST.ALL_MODULES')"
-            clearable
-            searchable
-          />
         </div>
+        <!-- the module filter in a panel behind the Filters button, as on vc-shell's tables -->
+        <span ref="filterAnchor">
+          <VcButton
+            class="as-filter-button"
+            variant="secondary"
+            size="sm"
+            icon="lucide-funnel"
+            :title="$t('COMPONENTS.ORGANISMS.VC_TABLE.GLOBAL_FILTERS.BUTTON')"
+            :aria-label="$t('COMPONENTS.ORGANISMS.VC_TABLE.GLOBAL_FILTERS.BUTTON')"
+            :aria-expanded="filtersOpen"
+            @click="openFilters"
+          >
+            <span
+              v-if="moduleId"
+              class="vc-global-filters-button__badge"
+              >1</span
+            >
+          </VcButton>
+        </span>
+        <VcPopover
+          v-model:show="filtersOpen"
+          :anchor-ref="filterAnchor"
+          :title="$t('COMPONENTS.ORGANISMS.VC_TABLE.GLOBAL_FILTERS.TITLE')"
+          placement="bottom-end"
+        >
+          <div class="vc-global-filters-panel__content">
+            <div class="vc-global-filters-panel__filter">
+              <label class="vc-global-filters-panel__label">{{ $t("PLATFORM.MODULES.MODULE") }}</label>
+              <VcSelect
+                v-model="draftModuleId"
+                size="small"
+                :options="modules"
+                :placeholder="$t('PLATFORM.SETTINGS.LIST.ALL_MODULES')"
+                clearable
+                searchable
+              />
+            </div>
+          </div>
+          <template #footer>
+            <VcButton
+              variant="outline"
+              size="sm"
+              @click="clearModuleFilter"
+            >
+              {{ $t("COMPONENTS.ORGANISMS.VC_TABLE.COLUMN_FILTER.CLEAR") }}
+            </VcButton>
+            <VcButton
+              size="sm"
+              @click="applyModuleFilter"
+            >
+              {{ $t("COMPONENTS.ORGANISMS.VC_TABLE.COLUMN_FILTER.APPLY") }}
+            </VcButton>
+          </template>
+        </VcPopover>
       </div>
 
       <div class="ps__body">
@@ -451,6 +496,7 @@ import {
   VcDatePicker,
   VcIcon,
   VcInput,
+  VcPopover,
   VcSelect,
   VcSwitch,
   VcTextarea,
@@ -664,6 +710,26 @@ function clearFilters() {
   keyword.value = "";
   modifiedOnly.value = false;
   moduleId.value = undefined;
+}
+
+// the Filters panel edits a draft of the module filter; Apply puts it in force, as in vc-shell's table filters
+const filterAnchor = ref<HTMLElement | null>(null);
+const filtersOpen = ref(false);
+const draftModuleId = ref<string>();
+
+function openFilters() {
+  draftModuleId.value = moduleId.value;
+  filtersOpen.value = !filtersOpen.value;
+}
+
+function applyModuleFilter() {
+  moduleId.value = draftModuleId.value || undefined;
+  filtersOpen.value = false;
+}
+
+function clearModuleFilter() {
+  moduleId.value = undefined;
+  filtersOpen.value = false;
 }
 
 /* ---- the tree: the groups of the visible settings ---- */
@@ -988,7 +1054,7 @@ watch(settingFocus, (focus) => {
     flex-wrap: wrap;
     align-items: center;
     gap: 8px 12px;
-    padding: 12px 16px;
+    padding: var(--search-bar-padding);
     border-bottom: 1px solid var(--color-neutral-200);
   }
   &__search {
@@ -996,11 +1062,11 @@ watch(settingFocus, (focus) => {
     display: flex;
     align-items: center;
     gap: 8px;
-    height: 36px;
+    height: var(--search-field-height);
     padding: 0 6px 0 12px;
-    border: 1px solid var(--color-neutral-300);
-    border-radius: 8px;
-    background: var(--color-neutral-0);
+    border: 1px solid var(--search-field-border);
+    border-radius: var(--search-field-radius);
+    background: var(--search-field-bg);
     color: var(--color-neutral-500);
     cursor: text;
     &:focus-within {
@@ -1030,9 +1096,6 @@ watch(settingFocus, (focus) => {
     flex-wrap: wrap;
     align-items: center;
     gap: 8px;
-  }
-  &__module {
-    width: 220px;
   }
   &__icon-btn {
     display: inline-flex;
@@ -1127,10 +1190,6 @@ watch(settingFocus, (focus) => {
       display: none;
       padding: 0 16px 40px;
       scroll-padding-top: 100px;
-    }
-    .ps__module {
-      flex: 1 1 160px;
-      width: auto;
     }
     .ps-node {
       min-height: 44px;

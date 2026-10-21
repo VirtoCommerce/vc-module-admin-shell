@@ -44,6 +44,7 @@
         <span ref="filterAnchor">
           <!-- icon only: the name is for screen readers and the tooltip; the badge counts the filters in force -->
           <VcButton
+            class="as-filter-button"
             variant="secondary"
             size="sm"
             icon="lucide-funnel"
