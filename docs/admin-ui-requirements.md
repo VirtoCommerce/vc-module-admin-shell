@@ -145,8 +145,8 @@ All are blades in the workspace with a URL, and require the permission listed.
 | **Modules** | Modules (workspace) | `platform:module:access` | Installed, browse all, not installed, updates, with errors; group filter; select several to install, update, uninstall. |
 | | Module details | `platform:module:access` | Version, latest version, required platform, authors, license, dependencies (required and optional), release notes; install, update, uninstall. |
 | | Progress | `platform:module:manage` | Live progress and log; restart the platform; reconnect afterwards. |
-| **Dynamic properties** | Object types (workspace) | `platform:dynamic_properties:access` | The types that support dynamic properties. |
-| | Properties, details | `platform:dynamic_properties:access` | List, add, edit (type, multi-value, multilingual, dictionary, display names), delete. |
+| **Dynamic properties** | Dynamic properties (workspace) | `platform:dynamic_properties:access` | Laid out as Settings: the object types as a tree by module (Orders › Customer order) with property counts, and the properties of the chosen module or type as cards with their value type and flags; search over names, display names, descriptions and value types; Required, Dictionary, Multilingual, Multivalue and With properties filters. Types without properties are a row of chips under a module or All; one chosen on its own offers Add property. On a phone, the tree, then the properties. |
+| | Property details | `platform:dynamic_properties:access` | Add, edit (type, multi-value, multilingual, dictionary, display names), delete; opens beside the list from a card or Add property. |
 | | Dictionary | `platform:dynamic_properties:access` | Dictionary items with translations. |
 | **License** | License (workspace) | `platform:module:manage` | Current license state; activation by code or by file with review. |
 | **Developer tools** | Developer tools (workspace) | `platform:developer-tools:access` | The platform's tools (API explorers) inside the admin or in a new tab. |

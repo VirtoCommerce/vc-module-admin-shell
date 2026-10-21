@@ -9,54 +9,43 @@
   >
     <VcContainer>
       <VcForm class="platform-form">
-        <VcRow class="tw-gap-4">
-          <VcCol>
-            <VcInput
-              v-model="item.name"
-              :label="$t('PLATFORM.DYNAMIC.NAME')"
-              required
-              :error-message="item.name ? undefined : $t('PLATFORM.COMMON.REQUIRED')"
-            />
-          </VcCol>
-          <VcCol>
-            <VcSelect
-              v-model="item.valueType"
-              :label="$t('PLATFORM.DYNAMIC.VALUE_TYPE')"
-              :options="valueTypes"
-              :clearable="false"
-              :disabled="!isNew"
-            />
-          </VcCol>
-        </VcRow>
-        <VcRow class="tw-gap-4">
-          <VcCol>
-            <VcSwitch
-              v-model="item.isRequired"
-              :label="$t('PLATFORM.DYNAMIC.REQUIRED')"
-            />
-          </VcCol>
-          <VcCol>
-            <VcSwitch
-              v-model="item.isArray"
-              :label="$t('PLATFORM.DYNAMIC.MULTIVALUE')"
-              :disabled="!isNew || !allowed('isArray')"
-            />
-          </VcCol>
-          <VcCol>
-            <VcSwitch
-              v-model="item.isMultilingual"
-              :label="$t('PLATFORM.DYNAMIC.MULTILINGUAL')"
-              :disabled="!isNew || !allowed('isMultilingual')"
-            />
-          </VcCol>
-          <VcCol>
-            <VcSwitch
-              v-model="item.isDictionary"
-              :label="$t('PLATFORM.DYNAMIC.DICTIONARY')"
-              :disabled="!isNew || !allowed('isDictionary')"
-            />
-          </VcCol>
-        </VcRow>
+        <!-- grids that wrap by the blade's width: two fields (or four switches) side by side when there is room -->
+        <div class="pdp-fields pdp-fields--wide">
+          <VcInput
+            v-model="item.name"
+            :label="$t('PLATFORM.DYNAMIC.NAME')"
+            required
+            :error-message="item.name ? undefined : $t('PLATFORM.COMMON.REQUIRED')"
+          />
+          <VcSelect
+            v-model="item.valueType"
+            :label="$t('PLATFORM.DYNAMIC.VALUE_TYPE')"
+            :options="valueTypes"
+            :clearable="false"
+            :disabled="!isNew"
+          />
+        </div>
+        <div class="pdp-fields">
+          <VcSwitch
+            v-model="item.isRequired"
+            :label="$t('PLATFORM.DYNAMIC.REQUIRED')"
+          />
+          <VcSwitch
+            v-model="item.isArray"
+            :label="$t('PLATFORM.DYNAMIC.MULTIVALUE')"
+            :disabled="!isNew || !allowed('isArray')"
+          />
+          <VcSwitch
+            v-model="item.isMultilingual"
+            :label="$t('PLATFORM.DYNAMIC.MULTILINGUAL')"
+            :disabled="!isNew || !allowed('isMultilingual')"
+          />
+          <VcSwitch
+            v-model="item.isDictionary"
+            :label="$t('PLATFORM.DYNAMIC.DICTIONARY')"
+            :disabled="!isNew || !allowed('isDictionary')"
+          />
+        </div>
         <VcInput
           v-model="item.displayOrder"
           type="integer"
@@ -96,7 +85,7 @@ import {
   type DynamicProperty,
   type IBladeToolbar,
 } from "@vc-shell/framework";
-import { VcBlade, VcCard, VcCol, VcContainer, VcForm, VcInput, VcRow, VcSelect, VcSwitch, VcTextarea } from "@vc-shell/framework/ui";
+import { VcBlade, VcCard, VcContainer, VcForm, VcInput, VcSelect, VcSwitch, VcTextarea } from "@vc-shell/framework/ui";
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { saveResetItems, usePlatformBladeForm } from "../../composables/blade";
@@ -242,3 +231,15 @@ load();
 // the dictionary blade changes only the item count: unsaved edits here stay
 exposeToChildren({ reload: () => countDictionary() });
 </script>
+
+<style lang="scss">
+.pdp-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px 16px;
+
+  &--wide {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+</style>

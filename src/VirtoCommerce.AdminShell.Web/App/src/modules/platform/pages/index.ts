@@ -26,6 +26,5 @@ export { default as PlatformSecuritySignInLog } from "./security/signin-log.vue"
 export { default as PlatformSecuritySignInLogDetails } from "./security/signin-log-details.vue";
 export { default as PlatformModuleDetails } from "./modules/details.vue";
 export { default as PlatformModulesProgress } from "./modules/progress.vue";
-export { default as PlatformDynamicPropertyList } from "./dynamic-properties/properties.vue";
 export { default as PlatformDynamicPropertyDetails } from "./dynamic-properties/property-details.vue";
 export { default as PlatformDynamicPropertyDictionary } from "./dynamic-properties/dictionary.vue";
