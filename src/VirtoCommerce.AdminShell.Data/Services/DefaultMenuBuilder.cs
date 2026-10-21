@@ -113,33 +113,36 @@ public class DefaultMenuBuilder(IModuleService moduleService, ILogger<DefaultMen
 
     private void AddContributions(MenuDocument menu, IEnumerable<ManifestModuleInfo> modules)
     {
-        foreach (var module in modules)
+        foreach (var (module, item) in modules.SelectMany(module => ReadContributions(module).Select(item => (module, item))))
         {
-            foreach (var item in ReadContributions(module))
+            // a screen the seed places: the seed owns its title, place and route; the contribution's id names it too
+            var placed = PlacedItem(menu, item);
+            if (placed != null)
             {
-                // a screen the seed places: the seed owns its title, place and route; the contribution's id names it too
-                var placed = PlacedItem(menu, item);
-                if (placed != null)
-                {
-                    if (!string.Equals(placed.Id, item.Id, StringComparison.OrdinalIgnoreCase))
-                    {
-                        placed.Aliases = [.. placed.Aliases ?? [], item.Id];
-                    }
-                    if (placed.Target?.Type != MenuTargetTypes.Vue && !string.IsNullOrEmpty(item.Route))
-                    {
-                        placed.Fallback = placed.Target;
-                        placed.Target = new MenuTarget { Type = MenuTargetTypes.Vue, Route = item.Route };
-                    }
-                    continue;
-                }
-
-                item.ModuleId ??= module.Id;
-                item.Target ??= new MenuTarget { Type = MenuTargetTypes.Vue, Route = item.Route };
-                item.Route = null;
-
-                // a section the menu doesn't have (or none given): More, so the item still shows and patches can move it
-                SectionOrMore(menu, item.SectionId).Items.Add(item);
+                MergeIntoPlaced(placed, item);
+                continue;
             }
+
+            item.ModuleId ??= module.Id;
+            item.Target ??= new MenuTarget { Type = MenuTargetTypes.Vue, Route = item.Route };
+            item.Route = null;
+
+            // a section the menu doesn't have (or none given): More, so the item still shows and patches can move it
+            SectionOrMore(menu, item.SectionId).Items.Add(item);
+        }
+    }
+
+    // the seed's item keeps its own; it answers to the contribution's id too and opens the plugin's Vue route
+    private static void MergeIntoPlaced(MenuItem placed, MenuItem contribution)
+    {
+        if (!string.Equals(placed.Id, contribution.Id, StringComparison.OrdinalIgnoreCase))
+        {
+            placed.Aliases = [.. placed.Aliases ?? [], contribution.Id];
+        }
+        if (placed.Target?.Type != MenuTargetTypes.Vue && !string.IsNullOrEmpty(contribution.Route))
+        {
+            placed.Fallback = placed.Target;
+            placed.Target = new MenuTarget { Type = MenuTargetTypes.Vue, Route = contribution.Route };
         }
     }
 

@@ -670,6 +670,12 @@ async function undoAll() {
   patch.value = emptyPatch();
 }
 
+/** Drops the changes made since the last save (or load): the stored menu and personalization show again */
+function reset() {
+  patch.value = clean({ ...emptyPatch(), ...JSON.parse(storedPatch.value) } as MenuPatch);
+  personalization.value = JSON.parse(storedPersonalization.value);
+}
+
 const toolbar = computed<IBladeToolbar[]>(() => [
   {
     id: "save",
@@ -679,15 +685,11 @@ const toolbar = computed<IBladeToolbar[]>(() => [
     clickHandler: () => save(),
   },
   {
-    id: "undo-all",
-    title: t("PLATFORM.MENU_EDITOR.UNDO_ALL"),
+    id: "reset",
+    title: t("PLATFORM.COMMON.RESET"),
     icon: "lucide-undo-2",
-    disabled:
-      !Object.keys(clean(patch.value).items).length &&
-      !Object.keys(clean(patch.value).sections).length &&
-      !patch.value.addItems.length &&
-      !patch.value.addSections.length,
-    clickHandler: () => undoAll(),
+    disabled: !dirty.value,
+    clickHandler: () => reset(),
   },
   refreshItem(() => load()),
   {
@@ -696,6 +698,17 @@ const toolbar = computed<IBladeToolbar[]>(() => [
     title: t("PLATFORM.SETTINGS.LIST.EDIT_JSON"),
     icon: "lucide-braces",
     clickHandler: () => openBlade({ name: "PlatformMenuEditorJson" }),
+  },
+  {
+    id: "undo-all",
+    title: t("PLATFORM.MENU_EDITOR.UNDO_ALL"),
+    icon: "lucide-rotate-ccw",
+    disabled:
+      !Object.keys(clean(patch.value).items).length &&
+      !Object.keys(clean(patch.value).sections).length &&
+      !patch.value.addItems.length &&
+      !patch.value.addSections.length,
+    clickHandler: () => undoAll(),
   },
 ]);
 
@@ -772,7 +785,7 @@ function place(id: string, sectionId: string, group: string, index: number) {
 /** the arrow keys on an item's grip: a step up or down, into the next group or section at the end of one */
 function stepItem(id: string, step: number) {
   const all = shown.value.sections.flatMap((section) =>
-    listsOf(section).map((list) => ({ sectionId: section.id, list })),
+    listsOf(section).map((group) => ({ sectionId: section.id, list: group })),
   );
   const at = all.findIndex((x) => x.list.items.some((item) => item.id === id));
   if (at < 0) return;
@@ -821,7 +834,10 @@ function dropped() {
 }
 
 function dropSection(event: SortableJS.SortableEvent) {
-  if (event.oldIndex === event.newIndex) return void (dragging.value = false);
+  if (event.oldIndex === event.newIndex) {
+    dragging.value = false;
+    return;
+  }
   const ids = [...event.to.children].map((x) => (x as HTMLElement).dataset.section).filter((x): x is string => !!x);
   renumber(ids, sectionPatch);
   dropped();
@@ -830,7 +846,10 @@ function dropSection(event: SortableJS.SortableEvent) {
 function dropItem(event: SortableJS.SortableEvent) {
   const id = event.item.dataset.id;
   const to = event.to;
-  if (!id || (event.from === to && event.oldIndex === event.newIndex)) return void (dragging.value = false);
+  if (!id || (event.from === to && event.oldIndex === event.newIndex)) {
+    dragging.value = false;
+    return;
+  }
   place(id, to.dataset.section ?? "", to.dataset.group ?? "", event.newDraggableIndex ?? event.newIndex ?? 0);
   dropped();
 }
@@ -1140,8 +1159,6 @@ const showPresent = ref(false);
 const legacyMissing = computed(() => (legacyScreens.value ?? []).filter((x) => !inMenu(x)));
 const legacyPresent = computed(() => (legacyScreens.value ?? []).filter((x) => inMenu(x)));
 const legacyShown = computed(() => [...legacyMissing.value, ...(showPresent.value ? legacyPresent.value : [])]);
-// the platform's server texts hold the AngularJS titles; titles redo once they are loaded
-const textsReady = ref(0);
 
 const normalizeUrl = (url?: string) => (url ?? "").replace(/\/+$/, "").toLowerCase();
 
@@ -1185,7 +1202,6 @@ const legacySections = computed(() => {
 });
 
 function legacyTitle(screen: LegacyScreen, lang = locale.value) {
-  void textsReady.value;
   const title = titleOfItem(
     { id: "", title: screen.titleKey, titleKey: screen.titleKey, priority: 0, children: [] },
     lang,
@@ -1197,13 +1213,13 @@ async function findLegacy() {
   legacyBusy.value = true;
   legacyError.value = "";
   try {
+    // the platform's server texts hold the AngularJS titles: loaded before the list is set, so its titles come translated
     const [screens] = await Promise.all([
       discoverLegacyScreens(),
       loadServerTexts(locale.value),
       loadServerTexts("en"),
     ]);
     legacyScreens.value = screens.sort((a, b) => legacyTitle(a).localeCompare(legacyTitle(b)));
-    textsReady.value++;
     screens.forEach((screen) => (legacyTargets.value[screen.state] ??= MORE));
   } catch (error) {
     legacyError.value = (error as Error).message;

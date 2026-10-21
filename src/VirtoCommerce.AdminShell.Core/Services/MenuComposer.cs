@@ -33,7 +33,7 @@ public static class MenuComposer
         // what users may change is the SI's choice: a kind of change that isn't allowed is left out here, not deleted, so
         // it applies again once it is allowed
         personalization ??= new MenuPersonalization();
-        userPrefs = Allowed(Aliased(userPrefs ?? new UserMenuPrefs(), aliases), personalization);
+        userPrefs = WithinPersonalization(Aliased(userPrefs ?? new UserMenuPrefs(), aliases), personalization);
         var userHidden = new HashSet<string>(userPrefs.Hidden, StringComparer.OrdinalIgnoreCase);
         ApplyUserPrefs(menu, userPrefs, userHidden, hasPermission);
 
@@ -57,7 +57,7 @@ public static class MenuComposer
         };
     }
 
-    private static UserMenuPrefs Allowed(UserMenuPrefs prefs, MenuPersonalization personalization) => new()
+    private static UserMenuPrefs WithinPersonalization(UserMenuPrefs prefs, MenuPersonalization personalization) => new()
     {
         Pinned = personalization.AllowPin ? prefs.Pinned : [],
         Hidden = personalization.AllowHide ? prefs.Hidden : [],
@@ -96,9 +96,9 @@ public static class MenuComposer
         var routes = new HashSet<string>(items.Select(x => RoutePath(x.Target)).Where(x => x != null), StringComparer.OrdinalIgnoreCase);
         var ids = new HashSet<string>(items.Select(x => x.Id), StringComparer.OrdinalIgnoreCase);
 
-        foreach (var item in discovered ?? [])
+        foreach (var item in (discovered ?? []).Where(x => x != null))
         {
-            var route = RoutePath(item?.Target);
+            var route = RoutePath(item.Target);
             if (route == null || string.IsNullOrEmpty(item.Id) || routes.Contains(route) || ids.Contains(item.Id))
             {
                 continue;
@@ -227,12 +227,9 @@ public static class MenuComposer
         var aliases = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         foreach (var item in menu.Sections.SelectMany(x => Flatten(x.Items)))
         {
-            foreach (var alias in item.Aliases ?? [])
+            foreach (var alias in (item.Aliases ?? []).Where(x => !string.IsNullOrEmpty(x) && !string.Equals(x, item.Id, StringComparison.OrdinalIgnoreCase)))
             {
-                if (!string.IsNullOrEmpty(alias) && !string.Equals(alias, item.Id, StringComparison.OrdinalIgnoreCase))
-                {
-                    aliases[alias] = item.Id;
-                }
+                aliases[alias] = item.Id;
             }
         }
         foreach (var x in replacements)
@@ -367,12 +364,7 @@ public static class MenuComposer
                 continue;
             }
 
-            var (title, titles, clearKey) = PatchTitle(section.Title, section.Titles, sectionPatch.Title, sectionPatch.Titles);
-            section.Title = title;
-            section.Titles = titles;
-            section.TitleKey = clearKey ? null : section.TitleKey;
-            section.Icon = sectionPatch.Icon ?? section.Icon;
-            section.Priority = sectionPatch.Priority ?? section.Priority;
+            PatchSection(section, sectionPatch);
 
             if (sectionPatch.Hidden == true && hidden == HiddenMode.Remove)
             {
@@ -383,6 +375,16 @@ public static class MenuComposer
                 section.Hidden = true;
             }
         }
+    }
+
+    private static void PatchSection(MenuSection section, SectionPatch sectionPatch)
+    {
+        var (title, titles, clearKey) = PatchTitle(section.Title, section.Titles, sectionPatch.Title, sectionPatch.Titles);
+        section.Title = title;
+        section.Titles = titles;
+        section.TitleKey = clearKey ? null : section.TitleKey;
+        section.Icon = sectionPatch.Icon ?? section.Icon;
+        section.Priority = sectionPatch.Priority ?? section.Priority;
     }
 
     private static void PatchItems(MenuDocument menu, Dictionary<string, ItemPatch> patches, HiddenMode hidden)
