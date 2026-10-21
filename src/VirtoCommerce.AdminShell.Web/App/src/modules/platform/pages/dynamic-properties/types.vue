@@ -671,12 +671,12 @@ function selectType(id: string) {
 
 /* ---- opening a property (or a new one) in its own blade ---- */
 
-function openProperty(objectType: string, id?: string) {
+function openProperty(typeId: string, id?: string) {
   activeId.value = id;
   openBlade({
     name: "PlatformDynamicPropertyDetails",
     param: id,
-    options: { objectType },
+    options: { objectType: typeId },
     onClose: () => {
       activeId.value = undefined;
       load();
