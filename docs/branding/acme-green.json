@@ -1,0 +1,12 @@
+{
+  "name": "Acme Green",
+  "base": "indigo",
+  "light": {
+    "primary": "#0f7a55",
+    "link": "#0b6b4a"
+  },
+  "dark": {
+    "primary": "#4cc59a",
+    "link": "#6fd3ad"
+  }
+}

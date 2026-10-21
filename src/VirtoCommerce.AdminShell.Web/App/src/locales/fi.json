@@ -1,0 +1,212 @@
+{
+  "language_name": "Suomi",
+  "SHELL": {
+    "NAV": {
+      "SECTIONS": "Osiot",
+      "HOME": "{name}, etusivu",
+      "MENU": "Valikko",
+      "NOTIFICATIONS": "Ilmoitukset",
+      "ACCOUNT": "Tili",
+      "CLASSIC_ADMIN": "Avaa perinteinen hallinta",
+      "HIDE_MENU": "Piilota valikko",
+      "KEEP_OPEN": "Pidä valikko auki",
+      "SHOW_MENU": "Näytä valikko",
+      "PIN": "Kiinnitä",
+      "UNPIN": "Irrota",
+      "HIDE_ITEM": "Piilota valikosta",
+      "PINNED": "Kiinnitetyt",
+      "RECENT": "Viimeisimmät",
+      "SHOW_HIDDEN": "Näytä piilotetut kohteet ({count})",
+      "OPEN_BLADES": "Avoimet paneelit",
+      "NEW_TAB": "Avautuu uuteen välilehteen"
+    },
+    "USER_MENU": {
+      "LICENSE": "Lisenssi",
+      "LICENSE_NONE": "Ei aktivoitu",
+      "LICENSE_NONE_HINT": "Tälle alustalle ei ole aktivoitu kaupallista lisenssiä",
+      "LICENSE_EXPIRED": "Vanhentunut",
+      "LICENSE_UNTIL": "{date} asti",
+      "LICENSE_ACTIVATE": "Aktivoi",
+      "LICENSE_DETAILS": "Tiedot",
+      "LANGUAGE": "Kieli",
+      "THEME": "Ulkoasu",
+      "THEME_SYSTEM": "Järjestelmän mukaan",
+      "COLOR_THEME": "Teema",
+      "COLOR_THEMES": {
+        "VIRTO": "Virto",
+        "WARM": "Lämmin",
+        "BLUE": "Sininen",
+        "INDIGO": "Indigo"
+      },
+      "SIGN_OUT": "Kirjaudu ulos",
+      "BUILD": "Koontiversio {version}"
+    },
+    "BADGES": {
+      "TASKS": "Avoimia tehtäviä: {count}",
+      "MODULE_UPDATES": "Moduulipäivityksiä: {count}",
+      "MODULES_INSTALLED": "Asennettuja moduuleja: {count}",
+      "MODULES_AVAILABLE": "Moduuleja: {count}"
+    },
+    "FRAME": {
+      "REFRESH": "Päivitä",
+      "NEW_TAB": "Avaa uudessa välilehdessä"
+    },
+    "DASHBOARD": {
+      "WELCOME": {
+        "TITLE": "Tervetuloa"
+      },
+      "RESET_LAYOUT": "Nollaa asettelu",
+      "RESET_LAYOUT_CONFIRM": "Palautetaanko kaikki widgetit oletuspaikkaansa ja -kokoonsa?",
+      "VIEW_ALL": "Näytä kaikki",
+      "DISMISS": "Hylkää",
+      "ALERTS": {
+        "TITLE": "Hälytykset ja ilmoitukset",
+        "EMPTY": "Olet ajan tasalla",
+        "EMPTY_HINT": "Taustatöiden, tuontien ja vientien tulokset sekä järjestelmäviestit näkyvät täällä."
+      },
+      "ACTIVITY": {
+        "TITLE": "Viimeaikainen toiminta",
+        "EMPTY": "Muutoksia ei ole vielä tallennettu",
+        "ADDED": "luotu",
+        "MODIFIED": "päivitetty",
+        "DELETED": "poistettu"
+      },
+      "SIGN_INS": {
+        "TITLE": "Kirjautumisaktiivisuus",
+        "TOTAL": "Kirjautumiset, viimeiset 7 päivää",
+        "FAILED": "Epäonnistuneet kirjautumiset",
+        "USERS": "Kirjautuneet käyttäjät",
+        "DISABLED": "Kirjautumisten tallennus on poissa käytöstä"
+      }
+    },
+    "AUTH": {
+      "LIGHT_THEME": "Vaihda vaaleaan teemaan",
+      "DARK_THEME": "Vaihda tummaan teemaan",
+      "SHOWCASE": {
+        "LABEL": "Tietoa Virto Commercesta",
+        "GO_TO": "Näytä: {name}",
+        "MORE": "Lue lisää osoitteessa VirtoCommerce.com",
+        "PLATFORM": {
+          "CHIP": "Virto Commerce Virto Cloudissa",
+          "TITLE": "Hallinnoitu composable commerce vaativaan B2B-kauppaan",
+          "BODY": "Avoimen lähdekoodin API-first-alusta .NETillä, jota Virto Cloud ylläpitää puolestasi. Aloita siitä, mitä tarvitset, ja lisää moduuleja liiketoiminnan kasvaessa.",
+          "POINT_1": "Virto Cloud ylläpitää, skaalaa, päivittää ja valvoo ympäristöjäsi",
+          "POINT_2": "Yli 100 moduulia, jotka asennat, päivität tai vaihdat yksi kerrallaan",
+          "POINT_3": "Yhdistä mikä tahansa verkkokauppa, ERP tai markkinapaikka avoimien API-rajapintojen kautta"
+        },
+        "CATALOG": {
+          "CHIP": "Katalogi ja hinnoittelu",
+          "TITLE": "Yksi katalogi kaikille kanaville ja hinnastoille",
+          "BODY": "Hallinnoi fyysisiä, digitaalisia ja konfiguroitavia tuotteita kerran ja julkaise ne kuhunkin kauppaan sen omalla valikoimalla ja hinnoilla.",
+          "POINT_1": "Virtuaalikatalogit, jotka hyödyntävät samoja tuotteita eri kaupoissa ja kanavissa",
+          "POINT_2": "Hinnastot määräportailla, voimassaoloajoilla ja asiakassegmenttisäännöillä",
+          "POINT_3": "Varastosaldot eri varastoissa ja jakelukeskuksissa"
+        },
+        "B2B": {
+          "CHIP": "B2B-ostaminen",
+          "TITLE": "Tehty yritysten tapaan ostaa",
+          "BODY": "Yritystilit, ostajat ja sopimukset sekä tarjoukset ja toistuvat tilaukset, joihin B2B-kauppa perustuu.",
+          "POINT_1": "Organisaatiot ostajineen, rooleineen ja osoitteineen",
+          "POINT_2": "Asiakaskohtaisesti neuvotellut tarjoukset ja sopimushinnat",
+          "POINT_3": "Kestotilaukset, jotka tilataan uudelleen aikataulun mukaan"
+        },
+        "API": {
+          "CHIP": "API:t ja tekoälyagentit",
+          "TITLE": "Avoin, API-first ja valmis agenteille",
+          "BODY": "Jokainen toiminto on API: rakenna mikä tahansa käyttöliittymä, anna tekoälyagenttien ostaa ja toimia puolestasi ja laajenna alustaa omilla moduuleilla.",
+          "POINT_1": "GraphQL xAPI verkkokaupoille, sovelluksille ja integraatioille",
+          "POINT_2": "Agentic Access MCP:n kautta tekoälyavustajille ja agenteille",
+          "POINT_3": "Sisäänrakennettu tuki UCP- ja OnX-protokollille"
+        }
+      },
+      "HELP": "Ohje",
+      "LINKS": {
+        "HELP": "Ohje",
+        "SUPPORT": "Tuki",
+        "PRIVACY": "Tietosuoja",
+        "TERMS": "Käyttöehdot"
+      },
+      "SLIDES_LABEL": "Tietoa: {name}"
+    },
+    "LOGIN": {
+      "SUBTITLE": "Jatka kirjautumalla palveluun {name}",
+      "CONTINUE_WITH": "Jatka palvelulla {name}",
+      "CONTINUE_WITH_SSO": "Jatka kertakirjautumisella",
+      "OR": "tai",
+      "LOGIN": "Sähköposti tai käyttäjätunnus",
+      "LOGIN_PLACEHOLDER": "Anna sähköposti tai käyttäjätunnus",
+      "SIGNING_IN": "Kirjaudutaan…",
+      "ERRORS": {
+        "LOCKED_OUT": "Tili on lukittu liian monen epäonnistuneen yrityksen jälkeen. Yritä myöhemmin uudelleen tai ota yhteyttä järjestelmänvalvojaan.",
+        "NOT_ALLOWED": "Tilillä ei voi vielä kirjautua. Ota yhteyttä järjestelmänvalvojaan."
+      }
+    },
+    "SEARCH": {
+      "LABEL": "Haku",
+      "PLACEHOLDER": "Hae tai siirry…",
+      "CLEAR": "Tyhjennä",
+      "CLOSE": "Sulje haku",
+      "RESULTS": "Hakutulokset",
+      "SEARCH_IN": "Hae kohteesta",
+      "SEARCHING_IN": "Haetaan kohteesta",
+      "SEARCH_EVERYWHERE": "Hae kaikkialta",
+      "TYPE_TO_SEARCH": "Kirjoita, mitä etsit",
+      "TIP_SCOPE": "Aloita ryhmän nimellä, esimerkiksi {example}, niin haku rajataan siihen.",
+      "SEARCHING": "Haetaan…",
+      "FAILED": "Haku epäonnistui",
+      "RETRY": "Yritä uudelleen",
+      "NO_RESULTS": "Ei tuloksia haulle ”{query}”",
+      "NO_RESULTS_HINT": "Tarkista kirjoitusasu tai kokeile vähemmillä sanoilla.",
+      "NO_RESULTS_SCOPED": "Tarkista kirjoitusasu tai hae kaikkialta.",
+      "SHOW_ALL": "Näytä kaikki {count} ryhmästä {group}",
+      "OPEN_FAILED": "Tulosta ei voitu avata",
+      "KEYS_MOVE": "siirtyäksesi",
+      "KEYS_OPEN": "avataksesi",
+      "KEYS_CLOSE": "sulkeaksesi",
+      "GROUPS": {
+        "MENU": "Valikko",
+        "APPS": "Sovellukset",
+        "SETTINGS": "Asetukset",
+        "USERS": "Käyttäjät",
+        "ROLES": "Roolit"
+      },
+      "BADGES": {
+        "ADMIN": "Admin",
+        "LOCKED": "Lukittu"
+      }
+    },
+    "FRAMEWORK": {
+      "PROGRESS": "Edistyminen",
+      "CLOSE_SIDEBAR": "Sulje sivupalkki",
+      "DASHBOARD_GRID": "Koontinäytön pienoisohjelmat. Vedä pienoisohjelmaa tai valitse se ja paina Enter järjestääksesi sen nuolinäppäimillä.",
+      "DATE_PICKER": {
+        "TOGGLE_OVERLAY": "Näytä tai piilota valitsin",
+        "MENU": "Päivämäärävalitsimen valikko",
+        "INPUT": "Päivämääräkenttä",
+        "OPEN_TIME_PICKER": "Avaa ajan valitsin",
+        "CLOSE_TIME_PICKER": "Sulje ajan valitsin",
+        "INCREMENT": "Suurenna: {unit}",
+        "DECREMENT": "Pienennä: {unit}",
+        "OPEN_TIME_OVERLAY": "Valitse: {unit}",
+        "AM_PM": "Vaihda AM/PM",
+        "OPEN_YEARS": "Valitse vuosi",
+        "OPEN_MONTHS": "Valitse kuukausi",
+        "NEXT_MONTH": "Seuraava kuukausi",
+        "PREV_MONTH": "Edellinen kuukausi",
+        "NEXT_YEAR": "Seuraava vuosi",
+        "PREV_YEAR": "Edellinen vuosi",
+        "CLEAR": "Tyhjennä arvo",
+        "CALENDAR_ICON": "Avaa kalenteri",
+        "TIME_PICKER": "Ajan valitsin",
+        "MONTH_PICKER": "Kuukauden valitsin",
+        "YEAR_PICKER": "Vuoden valitsin",
+        "TIME_OVERLAY": "Valitsin: {unit}",
+        "UNITS": {
+          "hours": "tunnit",
+          "minutes": "minuutit",
+          "seconds": "sekunnit"
+        }
+      }
+    }
+  }
+}

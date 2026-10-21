@@ -1,0 +1,1407 @@
+/* The shell of the new design (concept D, design canvas "D · Clickable prototype"): icon rail + section panel, a header
+   with the blade path, blades as cards. Sizes are the prototype's; spec-check.js measures them. */
+:root {
+  --as-bg: #f3f5f8;
+  --as-rail: #19243a;
+  --as-rail-tile: rgba(255, 255, 255, 0.08);
+  --as-rail-text: #a9b6c6;
+  --as-rail-active-bg: rgba(255, 255, 255, 0.1);
+  --as-rail-active: #ffffff;
+  --as-rail-bar: #ffb224;
+  --as-panel: #ffffff;
+  --as-panel-edge: inset -1px 0 0 #e3e8ee;
+  --as-panel-text: #3a4550;
+  --as-nav-bg: rgba(49, 158, 212, 0.12);
+  --as-nav-text: #1b5c7e;
+  --as-nav-ring: none;
+  --as-surface: #ffffff;
+  --as-ring: 0 0 0 1px #e3e8ee, 0 1px 2px rgba(16, 24, 40, 0.04);
+  --as-text: #16202a;
+  --as-muted: #5b6773;
+  --as-faint: #8c97a3;
+  --as-divider: #edf1f5;
+  --as-chip: #eef2f6;
+  --as-hover: rgba(127, 127, 127, 0.1);
+  --as-env-text: #265b3b;
+  --as-env-bg: #ecf6f0;
+  --as-accent: #319ed4;
+  --as-accent-soft: rgba(49, 158, 212, 0.1);
+  --as-accent-text: #1f6890;
+  --as-shadow: rgba(16, 24, 40, 0.18);
+  --as-menu-shadow: 0 0 0 1px #e3e8ee, 0 18px 40px -16px rgba(16, 24, 40, 0.3);
+}
+
+/* dark: concept C, the logo's amber as the accent */
+:root[data-theme="dark"] {
+  --as-bg: #0d1015;
+  --as-rail: #0a0c10;
+  --as-rail-tile: #151a21;
+  --as-rail-text: #8c95a3;
+  --as-rail-active-bg: #171c24;
+  --as-rail-active: #ffb224;
+  --as-panel: #0f1318;
+  --as-panel-edge: inset -1px 0 0 #1c222b;
+  --as-panel-text: #c7cdd6;
+  --as-nav-bg: #12161c;
+  --as-nav-text: #e7eaee;
+  --as-nav-ring: 0 0 0 1px #1f252e;
+  --as-surface: #12161c;
+  --as-ring: 0 0 0 1px #1f252e;
+  --as-text: #e7eaee;
+  --as-muted: #8c95a3;
+  --as-faint: #6f7886;
+  --as-divider: #1a2028;
+  --as-chip: #1c222b;
+  --as-env-text: #3dd68c;
+  --as-env-bg: rgba(61, 214, 140, 0.12);
+  --as-accent: #ffb224;
+  --as-accent-soft: rgba(255, 178, 36, 0.14);
+  --as-accent-text: #ffc75a;
+  --as-shadow: rgba(0, 0, 0, 0.7);
+  --as-menu-shadow: 0 0 0 1px #2a313c, 0 24px 48px -16px rgba(0, 0, 0, 0.8);
+}
+
+:root:root {
+  --app-background: var(--as-bg);
+}
+
+/* ---- rail + panel ---- */
+.as-nav {
+  display: flex;
+  flex: none;
+  height: 100%;
+  min-height: 0;
+  position: relative;
+}
+
+.as-rail {
+  align-items: center;
+  background: var(--as-rail);
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 0 76px;
+  flex-direction: column;
+  gap: 4px;
+  overflow-y: auto;
+  padding: 14px 0;
+  scrollbar-width: none;
+
+  &__logo {
+    align-items: center;
+    background: var(--as-rail-tile);
+    border: 0;
+    border-radius: 13px;
+    cursor: pointer;
+    display: flex;
+    flex: none;
+    height: 46px;
+    justify-content: center;
+    margin-bottom: 12px;
+    width: 46px;
+
+    // a company's mark (white-labeling) keeps its proportions in the tile
+    img {
+      height: 26px;
+      object-fit: contain;
+      width: 24px;
+    }
+  }
+
+  &__item {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: 12px;
+    color: var(--as-rail-text);
+    cursor: pointer;
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    font-family: inherit;
+    font-size: 10.5px;
+    font-weight: 600;
+    gap: 5px;
+    line-height: 13px;
+    padding: 9px 0 8px;
+    position: relative;
+    width: 62px;
+
+    &:hover {
+      background: var(--as-rail-active-bg);
+    }
+
+    &--active,
+    &--active:hover {
+      background: var(--as-rail-active-bg);
+      color: var(--as-rail-active);
+    }
+
+    /* the logo's amber marks the open section */
+    &--active::before {
+      background: var(--as-rail-bar);
+      border-radius: 0 3px 3px 0;
+      content: "";
+      height: 24px;
+      left: -7px;
+      position: absolute;
+      top: 12px;
+      width: 3px;
+    }
+  }
+
+  &__icon.vc-icon {
+    font-size: 22px;
+    height: 22px;
+    width: 22px;
+  }
+
+  &__label {
+    max-width: 58px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__spacer {
+    flex: 1;
+  }
+
+  &__button {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: 10px;
+    color: var(--as-rail-text);
+    cursor: pointer;
+    display: flex;
+    flex: none;
+    font-size: 20px;
+    height: 40px;
+    justify-content: center;
+    position: relative;
+    width: 44px;
+
+    &:hover {
+      background: var(--as-rail-active-bg);
+      color: var(--as-rail-active);
+    }
+  }
+
+  /* a section's counter, at its icon's top right (on the bell: unread notifications) */
+  &__badge {
+    left: calc(50% + 3px);
+    position: absolute;
+    top: 3px;
+
+    &--bell {
+      left: calc(50% + 2px);
+      top: 2px;
+    }
+  }
+
+  &__user {
+    background: transparent;
+    border: 0;
+    border-radius: 999px;
+    cursor: pointer;
+    flex: none;
+    height: 36px;
+    margin-top: 6px;
+    padding: 0;
+    width: 36px;
+
+    img {
+      border-radius: 999px;
+      display: block;
+      height: 36px;
+      width: 36px;
+    }
+
+    &:hover,
+    &[aria-expanded="true"] {
+      box-shadow: 0 0 0 3px var(--as-rail-active-bg);
+    }
+  }
+}
+
+.as-panel {
+  background: var(--as-panel);
+  box-shadow: var(--as-panel-edge);
+  box-sizing: border-box;
+  color: var(--as-text);
+  display: flex;
+  flex: 0 0 248px;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 0;
+  overflow: hidden;
+  padding: 14px 12px;
+  width: 248px;
+
+  /* everything under the title row; it alone scrolls */
+  &__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0 -12px -14px;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 0 12px 14px;
+    scrollbar-width: thin;
+  }
+
+  /* the logo, and the fold / keep-open / close button */
+  /* the logo at its own size (137x46; its mark sits 9px in from the top and bottom, hence the negative margins) */
+  /* full width with a line under it, as tall as the header beside it (60px), so the two lines meet */
+  &__top {
+    align-items: center;
+    border-bottom: 1px solid var(--as-divider);
+    box-sizing: border-box;
+    display: flex;
+    flex: none;
+    gap: 6px;
+    height: 60px;
+    justify-content: space-between;
+    margin: -14px -12px 0;
+    padding: 0 14px 0 22px;
+
+    &--logo {
+      padding-left: 16px;
+    }
+  }
+
+  &__logo {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    display: flex;
+    padding: 0;
+
+    img {
+      display: block;
+      height: 46px;
+      object-fit: contain;
+      object-position: left center;
+      width: 137px;
+    }
+  }
+
+  /* folded: the section's items over the page, beside the rail */
+  &--flyout {
+    bottom: 0;
+    box-shadow:
+      var(--as-panel-edge),
+      24px 0 48px -24px var(--as-shadow);
+    left: 76px;
+    position: absolute;
+    top: 0;
+    z-index: 60;
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__title {
+    color: var(--as-text);
+    flex: 1;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 22px;
+    margin: 0;
+    min-width: 0;
+  }
+
+  &__hide {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+    color: var(--as-muted);
+    cursor: pointer;
+    display: flex;
+    flex: none;
+    font-size: 16px;
+    height: 30px;
+    justify-content: center;
+    width: 30px;
+
+    &:hover {
+      background: var(--as-hover);
+      color: var(--as-text);
+    }
+  }
+
+  &__label {
+    color: var(--as-muted);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 0 10px 4px;
+
+    /* a group heading folds its group */
+    &--toggle {
+      align-items: center;
+      background: transparent;
+      border: 0;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      font-family: inherit;
+      justify-content: space-between;
+      text-align: left;
+      width: 100%;
+
+      &:hover {
+        color: var(--as-text);
+      }
+    }
+  }
+
+  &__label-chevron.vc-icon {
+    color: var(--as-faint);
+    font-size: 12px;
+  }
+
+  /* consecutive groups of one section sit closer than the panel's 16px between blocks */
+  &__group + &__group:has(> &__label) {
+    margin-top: -6px;
+  }
+
+  &__restore {
+    align-self: flex-start;
+    background: transparent;
+    border: 0;
+    color: var(--as-muted);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 12px;
+    padding: 0 10px;
+
+    &:hover {
+      color: var(--as-accent-text);
+    }
+  }
+}
+
+/* menu items */
+.as-item {
+  align-items: center;
+  border-radius: 10px;
+  display: flex;
+  height: 38px;
+  position: relative;
+
+  &:hover {
+    background: var(--as-hover);
+  }
+
+  &--active,
+  &--active:hover {
+    background: var(--as-nav-bg);
+    box-shadow: var(--as-nav-ring);
+  }
+
+  &__main {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    color: var(--as-panel-text);
+    cursor: pointer;
+    display: flex;
+    flex: 1;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    gap: 10px;
+    height: 100%;
+    min-width: 0;
+    padding: 0 10px;
+    text-align: left;
+
+    .as-item--active &,
+    .as-item--inside & {
+      color: var(--as-text);
+      font-weight: 700;
+    }
+
+    .as-item--active & {
+      color: var(--as-nav-text);
+    }
+  }
+
+  &--pinned {
+    height: 34px;
+  }
+
+  &__icon {
+    align-items: center;
+    display: inline-flex;
+    flex: none;
+    font-size: 18px;
+    height: 18px;
+    justify-content: center;
+    width: 18px;
+
+    img {
+      height: 16px;
+      object-fit: contain;
+      width: 16px;
+    }
+  }
+
+  &__label {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__chevron.vc-icon,
+  &__external.vc-icon {
+    color: var(--as-faint);
+    font-size: 14px;
+  }
+
+  /* an item's counter; the pin/hide actions take its place on hover */
+  &__count {
+    background: var(--as-accent-soft);
+    border-radius: 999px;
+    color: var(--as-accent-text);
+    flex: none;
+    font-size: 11.5px;
+    font-weight: 700;
+    line-height: 20px;
+    min-width: 20px;
+    padding: 0 6px;
+    text-align: center;
+
+    .as-item:hover & {
+      display: none;
+    }
+
+    /* a plain total (Modules · Installed): a muted number, not a badge asking for attention */
+    &--total {
+      background: transparent;
+      color: var(--as-faint);
+      font-weight: 500;
+    }
+  }
+
+  &__where {
+    color: var(--as-muted);
+    flex: none;
+    font-size: 11.5px;
+    font-weight: 400;
+  }
+
+  &__actions {
+    display: none;
+    gap: 2px;
+    padding-right: 4px;
+
+    .as-item:hover & {
+      display: inline-flex;
+    }
+  }
+
+  &__action {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: 6px;
+    color: var(--as-muted);
+    cursor: pointer;
+    display: inline-flex;
+    font-size: 13px;
+    height: 24px;
+    justify-content: center;
+    width: 24px;
+
+    &:hover {
+      color: var(--as-accent-text);
+    }
+  }
+}
+
+/* an app's own pages, under its item */
+.as-sub {
+  box-shadow: inset 1px 0 0 var(--as-divider);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 2px 0 4px 19px;
+  padding-left: 10px;
+
+  &__item {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+    color: var(--as-panel-text);
+    cursor: pointer;
+    display: flex;
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 500;
+    height: 32px;
+    padding: 0 10px;
+    text-align: left;
+
+    &:hover {
+      background: var(--as-hover);
+    }
+
+    &--active,
+    &--active:hover {
+      background: var(--as-nav-bg);
+      color: var(--as-nav-text);
+      font-weight: 700;
+    }
+  }
+
+  &__label {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+/* ---- header above the blades ---- */
+.as-workspace.as-workspace {
+  background: var(--as-bg);
+  flex-direction: column;
+}
+
+.as-header {
+  align-items: center;
+  box-sizing: border-box;
+  color: var(--as-text);
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  gap: 12px;
+  min-height: 60px;
+  padding: 12px 16px;
+
+  &__spacer {
+    flex: 1;
+  }
+
+  &__menu {
+    align-items: center;
+    background: var(--as-surface);
+    border: 0;
+    border-radius: 9px;
+    box-shadow: var(--as-ring);
+    color: var(--as-text);
+    cursor: pointer;
+    display: flex;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    gap: 7px;
+    height: 34px;
+    padding: 0 10px;
+
+    .vc-icon {
+      font-size: 16px;
+    }
+  }
+}
+
+.as-crumbs {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  min-width: 0;
+
+  &__sep.vc-icon {
+    color: var(--as-faint);
+    font-size: 14px;
+  }
+
+  &__item {
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+    color: var(--as-muted);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 500;
+    line-height: 18px;
+    padding: 4px 8px;
+
+    &:hover {
+      background: var(--as-hover);
+    }
+
+    &--shown {
+      color: var(--as-text);
+      font-weight: 600;
+    }
+
+    &--current,
+    &--current:hover {
+      background: var(--as-surface);
+      box-shadow: var(--as-ring);
+      cursor: default;
+      font-weight: 700;
+    }
+  }
+}
+
+/* global search: see _search.scss */
+
+/* the environment: a yellow corner ribbon (as in Buyer24) instead of vc-shell's banner */
+.vc-environment-banner.vc-environment-banner {
+  display: none;
+}
+
+/* the environment (from the host name): a color per kind at 70%, dark text; production on the dark theme takes light
+   text, as its red darkens over the dark page */
+.as-ribbon {
+  align-items: center;
+  background: var(--as-ribbon-bg);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  color: var(--as-ribbon-fg);
+  display: flex;
+  font-size: 11px;
+  font-weight: 800;
+  gap: 6px;
+  justify-content: center;
+  letter-spacing: 0.08em;
+  line-height: 22px;
+  pointer-events: none;
+  position: fixed;
+  right: -44px;
+  text-transform: uppercase;
+  top: 37px;
+  transform: rotate(45deg);
+  white-space: nowrap;
+  width: 200px;
+  z-index: 1100;
+
+  --as-ribbon-bg: rgba(180, 178, 169, 0.7);
+  --as-ribbon-fg: rgba(44, 44, 42, 0.85);
+
+  &--dev {
+    --as-ribbon-bg: rgba(255, 190, 40, 0.7);
+    --as-ribbon-fg: rgba(61, 42, 0, 0.85);
+  }
+
+  &--test {
+    --as-ribbon-bg: rgba(55, 138, 221, 0.7);
+    --as-ribbon-fg: rgba(4, 44, 83, 0.85);
+  }
+
+  &--staging {
+    --as-ribbon-bg: rgba(127, 119, 221, 0.7);
+    --as-ribbon-fg: rgba(38, 33, 92, 0.85);
+  }
+
+  &--demo {
+    --as-ribbon-bg: rgba(29, 158, 117, 0.7);
+    --as-ribbon-fg: rgba(4, 52, 44, 0.85);
+  }
+
+  &--prod {
+    --as-ribbon-bg: rgba(226, 75, 74, 0.7);
+    --as-ribbon-fg: rgba(80, 19, 19, 0.85);
+
+    [data-theme="dark"] & {
+      --as-ribbon-fg: rgba(255, 255, 255, 0.8);
+    }
+  }
+}
+
+/* production's recording light */
+.as-ribbon__live {
+  animation: as-ribbon-live 1.4s ease-in-out infinite;
+  background: currentColor;
+  border-radius: 50%;
+  flex: none;
+  height: 7px;
+  width: 7px;
+}
+
+@keyframes as-ribbon-live {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .as-ribbon__live {
+    animation: none;
+  }
+}
+
+/* room for it at the end of the header */
+.vc-app__main-content:has(> .as-ribbon) .as-header {
+  padding-right: 112px;
+}
+
+/* phones: the corner holds the menu button, so a small tag at the top */
+.vc-app--mobile .as-ribbon {
+  border-radius: 0 0 8px 8px;
+  font-size: 10px;
+  left: 50%;
+  line-height: 16px;
+  padding: 0 10px;
+  right: auto;
+  top: 0;
+  transform: translateX(-50%);
+  width: auto;
+}
+
+/* ---- blades as cards (desktop) ---- */
+.vc-app:not(.vc-app--mobile) .as-workspace {
+  .vc-blade-navigation > .tw-flex {
+    gap: 8px;
+    padding: 0 8px 8px;
+  }
+
+  .vc-blade {
+    border: 0;
+    border-radius: 14px;
+    box-shadow: var(--as-ring);
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* maximized: vc-shell pins it over the row (absolute, !important); keep it inside the cards' margins */
+  .vc-blade--maximized {
+    bottom: 8px !important;
+    left: 8px !important;
+    width: calc(100% - 16px) !important;
+  }
+
+  /* the header path replaces the in-blade list of hidden blades */
+  .vc-blade__breadcrumbs {
+    display: none;
+  }
+}
+
+/* the current blade, while its parent is beside it: an accent ring and top edge */
+.vc-app:not(.vc-app--mobile) .as-workspace--stacked .vc-blade--expanded {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--as-accent) 45%, transparent),
+    0 18px 40px -18px var(--as-shadow);
+
+  &::before {
+    background: var(--as-accent);
+    content: "";
+    height: 3px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 2;
+  }
+}
+
+/* ---- an app in the workspace ---- */
+.as-frame {
+  background: var(--as-surface);
+  border-radius: 14px;
+  box-shadow: var(--as-ring);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin: 0 8px 8px;
+  min-height: 0;
+  overflow: hidden;
+
+  &__head {
+    align-items: center;
+    border-bottom: 1px solid var(--as-divider);
+    display: flex;
+    flex: none;
+    gap: 6px;
+    padding: 12px 14px 12px 18px;
+  }
+
+  &__titles {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  &__kicker {
+    color: var(--as-muted);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  &__title {
+    color: var(--as-text);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+    margin: 0;
+  }
+
+  &__tool {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: 9px;
+    color: var(--as-text);
+    cursor: pointer;
+    display: flex;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    gap: 6px;
+    height: 32px;
+    padding: 0 11px;
+    text-decoration: none;
+
+    .vc-icon {
+      font-size: 15px;
+    }
+
+    &:hover {
+      background: var(--as-hover);
+      color: var(--as-text);
+    }
+  }
+}
+
+.frame-page {
+  border: 0;
+  display: block;
+  flex: 1;
+  height: 100%;
+  min-height: 0;
+  width: 100%;
+}
+
+/* the stack moves focus to the blade it opens (a region, not a control): no ring around the whole card */
+.vc-app .vc-blade:focus {
+  outline: none;
+}
+
+.vc-app--mobile .as-frame {
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0;
+}
+
+/* ---- phones: top bar and the menu drawer ---- */
+.as-mbar {
+  align-items: center;
+  background: var(--as-surface);
+  box-shadow: 0 1px 0 var(--as-divider);
+  box-sizing: border-box;
+  display: flex;
+  flex: none;
+  gap: 10px;
+  height: 56px;
+  padding: 0 6px 0 12px;
+
+  &__logo {
+    align-items: center;
+    background: var(--as-rail);
+    border: 0;
+    border-radius: 11px;
+    cursor: pointer;
+    display: flex;
+    flex: none;
+    height: 38px;
+    justify-content: center;
+    width: 38px;
+
+    img {
+      height: 22px;
+      object-fit: contain;
+      width: 20px;
+    }
+  }
+
+  &__title {
+    color: var(--as-text);
+    flex: 1;
+    font-size: 17px;
+    font-weight: 700;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__menu,
+  &__search {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: 10px;
+    color: var(--as-text);
+    cursor: pointer;
+    display: flex;
+    flex: none;
+    height: 44px;
+    justify-content: center;
+    position: relative;
+    width: 44px;
+
+    &:active,
+    &:hover {
+      background: var(--as-hover);
+    }
+  }
+}
+
+.as-drawer {
+  inset: 0;
+  position: fixed;
+  z-index: 1000;
+
+  &__scrim {
+    background: rgba(5, 7, 10, 0.45);
+    inset: 0;
+    position: absolute;
+  }
+
+  &__body {
+    bottom: 0;
+    box-shadow: 24px 0 48px -24px rgba(0, 0, 0, 0.5);
+    left: 0;
+    max-width: 100%;
+    position: absolute;
+    top: 0;
+
+    .as-panel {
+      max-width: calc(100vw - 76px);
+    }
+  }
+}
+
+.as-drawer-enter-active,
+.as-drawer-leave-active {
+  transition: opacity var(--dur-base) var(--ease-out);
+
+  .as-drawer__body {
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+}
+
+.as-drawer-enter-from,
+.as-drawer-leave-to {
+  opacity: 0;
+
+  .as-drawer__body {
+    transform: translateX(-24px);
+  }
+}
+
+/* ---- the avatar's menu ---- */
+.as-um {
+  /* the controls on the right (language, appearance, theme) share one width, so their edges line up */
+  --as-um-control: 156px;
+  color: var(--as-text);
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  /* on a phone the menu opens beside the drawer's rail: it keeps to the screen (the popover sizes to its content) */
+  max-width: calc(100vw - 72px);
+
+  &__who {
+    align-items: center;
+    border-bottom: 1px solid var(--as-divider);
+    display: flex;
+    gap: 12px;
+    padding: 14px 14px 12px;
+  }
+
+  &__avatar {
+    border-radius: 999px;
+    flex: none;
+    height: 36px;
+    width: 36px;
+  }
+
+  &__names {
+    min-width: 0;
+  }
+
+  &__name {
+    font-weight: 700;
+    line-height: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__email {
+    color: var(--as-muted);
+    font-size: 12.5px;
+    line-height: 17px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__group {
+    border-bottom: 1px solid var(--as-divider);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 6px;
+  }
+
+  &__row {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+    color: var(--as-text);
+    display: flex;
+    font-family: inherit;
+    font-size: 14px;
+    gap: 10px;
+    min-height: 40px;
+    padding: 0 8px;
+    text-align: left;
+    width: 100%;
+
+    &--action {
+      cursor: pointer;
+      text-decoration: none;
+
+      &:hover {
+        background: var(--as-hover);
+      }
+    }
+  }
+
+  &__icon.vc-icon {
+    color: var(--as-muted);
+    font-size: 16px;
+  }
+
+  &__label {
+    flex: 1;
+  }
+
+  &__link {
+    background: transparent;
+    border: 0;
+    border-radius: 6px;
+    color: var(--as-accent-text);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 2px 4px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__chip {
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 18px;
+    min-width: 0;
+    overflow: hidden;
+    padding: 2px 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &--active {
+      background: var(--as-env-bg);
+      color: var(--as-env-text);
+    }
+
+    &--expired {
+      background: var(--color-danger-50);
+      color: var(--color-danger-700);
+    }
+
+    &--none {
+      background: var(--as-chip);
+      color: var(--as-muted);
+    }
+  }
+
+  /* a field like vc-shell's select in a blade (small size, its --select-* colors, so it follows the theme): border, inner
+     chevron, focus ring; the native select keeps the keyboard and the phone's own picker */
+  &__select {
+    align-items: center;
+    background: var(--select-background-color);
+    border: 1px solid var(--select-border-color);
+    border-radius: var(--select-border-radius);
+    color: var(--select-text-color);
+    display: flex;
+    flex: none;
+    gap: 8px;
+    height: var(--select-height-small);
+    padding: 0 8px 0 10px;
+    position: relative;
+    transition:
+      border-color 0.15s,
+      box-shadow 0.15s;
+    width: var(--as-um-control);
+
+    .vc-icon {
+      color: var(--select-chevron-color);
+      font-size: 15px;
+    }
+
+    &:hover {
+      border-color: var(--neutrals-400);
+
+      .as-um__select-chevron.vc-icon {
+        color: var(--select-chevron-color-hover);
+      }
+    }
+
+    &:focus-within {
+      border-color: var(--select-border-color-focus);
+      box-shadow: 0 0 0 3px var(--select-focus-ring-color);
+    }
+
+    select {
+      appearance: none;
+      background: transparent;
+      border: 0;
+      color: inherit;
+      cursor: pointer;
+      flex: 1;
+      font-family: inherit;
+      font-size: 14px;
+      height: 100%;
+      min-width: 0;
+      outline: none;
+      padding: 0 22px 0 0;
+    }
+
+    option {
+      background: var(--select-dropdown-bg);
+      color: var(--select-text-color);
+    }
+  }
+
+  &__select-chevron.vc-icon {
+    pointer-events: none;
+    position: absolute;
+    right: 8px;
+  }
+
+  /* a color theme's mark: its main color in the light appearance (upper left) and in the dark one (lower right); Virto's,
+     the default, is the logo's coral and amber */
+  &__swatch {
+    --as-swatch-light: #ff5a5f;
+    --as-swatch-dark: #ffb224;
+    background: linear-gradient(135deg, var(--as-swatch-light) 50%, var(--as-swatch-dark) 50%);
+    border-radius: 50%;
+    box-shadow:
+      inset 0 0 0 1px rgba(0, 0, 0, 0.14),
+      0 0 0 1px rgba(255, 255, 255, 0.08);
+    flex: none;
+    height: 14px;
+    width: 14px;
+
+    &--warm {
+      --as-swatch-light: #7a4a2a;
+      --as-swatch-dark: #c8a17d;
+    }
+
+    &--blue {
+      --as-swatch-light: #237aa5;
+      --as-swatch-dark: #5fb3e0;
+    }
+
+    &--indigo {
+      --as-swatch-light: #4a63e0;
+      --as-swatch-dark: #61afef;
+    }
+  }
+
+  /* the same width and height as the selects */
+  &__seg {
+    background: var(--as-chip);
+    border-radius: var(--select-border-radius);
+    display: flex;
+    flex: none;
+    gap: 2px;
+    height: var(--select-height-small);
+    padding: 2px;
+    width: var(--as-um-control);
+  }
+
+  &__seg-button {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: calc(var(--select-border-radius) - 2px);
+    color: var(--as-muted);
+    cursor: pointer;
+    display: flex;
+    flex: 1;
+    font-size: 15px;
+    justify-content: center;
+
+    &:hover {
+      color: var(--as-text);
+    }
+
+    &--on,
+    &--on:hover {
+      background: var(--as-surface);
+      box-shadow: var(--as-ring);
+      color: var(--as-text);
+    }
+  }
+
+  &__build {
+    color: var(--as-muted);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 10px 14px 12px;
+  }
+}
+
+/* the avatar's menu's select (shell/MenuSelect.vue): the field above, and vc-shell's select list (--select-* colors) */
+.as-ms {
+  flex: none;
+  position: relative;
+
+  &__field {
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    text-align: left;
+
+    &:focus-visible {
+      border-color: var(--select-border-color-focus);
+      box-shadow: 0 0 0 3px var(--select-focus-ring-color);
+    }
+  }
+
+  &--open &__field {
+    border-color: var(--select-border-color-focus);
+    box-shadow: 0 0 0 3px var(--select-focus-ring-color);
+  }
+
+  &__value {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    padding-right: 18px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__list {
+    background: var(--select-dropdown-bg);
+    border: 1px solid var(--select-dropdown-border);
+    border-radius: var(--select-border-radius);
+    box-shadow: var(--select-dropdown-shadow);
+    list-style: none;
+    margin: 0;
+    max-height: 248px;
+    outline: none;
+    overflow-y: auto;
+    padding: 4px;
+    /* placed by the component under or over the field, above the popover it opens from */
+    position: fixed;
+    z-index: 10000;
+  }
+
+  &__option {
+    align-items: center;
+    border-radius: calc(var(--select-border-radius) - 2px);
+    color: var(--select-text-color);
+    cursor: pointer;
+    display: flex;
+    font-size: 14px;
+    gap: 8px;
+    min-height: 32px;
+    padding: 0 8px;
+    white-space: nowrap;
+
+    &[aria-selected="true"] {
+      background: var(--select-option-background-color-selected);
+      font-weight: 600;
+    }
+
+    &--active,
+    &--active[aria-selected="true"] {
+      background: var(--select-option-background-color-hover);
+    }
+  }
+
+  &__label {
+    flex: 1;
+  }
+
+  &__check.vc-icon {
+    color: var(--select-option-check-color);
+    font-size: 15px;
+  }
+}
+
+
+/* counter badge (Buyer24's): the logo's coral, ringed by what it sits on */
+.as-badge {
+  background: #ff5a5f;
+  border-radius: 999px;
+  box-shadow: 0 0 0 2px var(--as-rail);
+  box-sizing: border-box;
+  color: #ffffff;
+  font-size: 10.5px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  height: 18px;
+  line-height: 18px;
+  min-width: 18px;
+  padding: 0 5px;
+  pointer-events: none;
+  text-align: center;
+}
+
+/* after .as-badge, whose ring it replaces */
+.as-mbar__badge {
+  box-shadow: 0 0 0 2px var(--as-surface);
+  position: absolute;
+  right: 2px;
+  top: 4px;
+}
+
+/* a select in a narrow column (two fields side by side in a blade): vc-shell's field doesn't shrink below its value
+   (min-width: auto), so a long value spilled over the next column and its hint. The field takes the column's width and
+   the value is cut instead, left to right and right to left alike */
+.vc-select__control,
+.vc-select__field-wrapper,
+.vc-select__field,
+.vc-select__field-inner,
+.vc-select__field-content,
+.vc-select__field-main {
+  min-width: 0;
+}
+
+/* a chosen value of a multiple select (a chip) is cut too rather than widening the field */
+.vc-select__multiple-item {
+  max-width: 100%;
+  min-width: 0;
+
+  > span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

@@ -1,0 +1,212 @@
+{
+  "language_name": "Português",
+  "SHELL": {
+    "NAV": {
+      "SECTIONS": "Seções",
+      "HOME": "{name}, início",
+      "MENU": "Menu",
+      "NOTIFICATIONS": "Notificações",
+      "ACCOUNT": "Conta",
+      "CLASSIC_ADMIN": "Abrir a administração clássica",
+      "HIDE_MENU": "Ocultar menu",
+      "KEEP_OPEN": "Manter menu aberto",
+      "SHOW_MENU": "Mostrar menu",
+      "PIN": "Fixar",
+      "UNPIN": "Desafixar",
+      "HIDE_ITEM": "Ocultar do menu",
+      "PINNED": "Fixados",
+      "RECENT": "Recentes",
+      "SHOW_HIDDEN": "Mostrar itens ocultos ({count})",
+      "OPEN_BLADES": "Painéis abertos",
+      "NEW_TAB": "Abre em uma nova aba"
+    },
+    "USER_MENU": {
+      "LICENSE": "Licença",
+      "LICENSE_NONE": "Não ativada",
+      "LICENSE_NONE_HINT": "Nenhuma licença comercial está ativada nesta plataforma",
+      "LICENSE_EXPIRED": "Expirada",
+      "LICENSE_UNTIL": "até {date}",
+      "LICENSE_ACTIVATE": "Ativar",
+      "LICENSE_DETAILS": "Detalhes",
+      "LANGUAGE": "Idioma",
+      "THEME": "Aparência",
+      "THEME_SYSTEM": "Igual ao sistema",
+      "COLOR_THEME": "Tema",
+      "COLOR_THEMES": {
+        "VIRTO": "Virto",
+        "WARM": "Quente",
+        "BLUE": "Azul",
+        "INDIGO": "Índigo"
+      },
+      "SIGN_OUT": "Sair",
+      "BUILD": "Compilação {version}"
+    },
+    "BADGES": {
+      "TASKS": "Tarefas abertas: {count}",
+      "MODULE_UPDATES": "Atualizações de módulos: {count}",
+      "MODULES_INSTALLED": "Módulos instalados: {count}",
+      "MODULES_AVAILABLE": "Módulos: {count}"
+    },
+    "FRAME": {
+      "REFRESH": "Atualizar",
+      "NEW_TAB": "Abrir em nova aba"
+    },
+    "DASHBOARD": {
+      "WELCOME": {
+        "TITLE": "Boas-vindas"
+      },
+      "RESET_LAYOUT": "Redefinir layout",
+      "RESET_LAYOUT_CONFIRM": "Restaurar a posição e o tamanho padrão de todos os widgets?",
+      "VIEW_ALL": "Ver tudo",
+      "DISMISS": "Dispensar",
+      "ALERTS": {
+        "TITLE": "Alertas e notificações",
+        "EMPTY": "Tudo em dia",
+        "EMPTY_HINT": "Os resultados de tarefas em segundo plano, de importações e exportações e as mensagens do sistema aparecem aqui."
+      },
+      "ACTIVITY": {
+        "TITLE": "Atividade recente",
+        "EMPTY": "Nenhuma alteração registrada ainda",
+        "ADDED": "criado",
+        "MODIFIED": "atualizado",
+        "DELETED": "excluído"
+      },
+      "SIGN_INS": {
+        "TITLE": "Atividade de acesso",
+        "TOTAL": "Acessos, últimos 7 dias",
+        "FAILED": "Acessos com falha",
+        "USERS": "Usuários que entraram",
+        "DISABLED": "O registro de acessos está desativado"
+      }
+    },
+    "AUTH": {
+      "LIGHT_THEME": "Mudar para o tema claro",
+      "DARK_THEME": "Mudar para o tema escuro",
+      "SHOWCASE": {
+        "LABEL": "Sobre a Virto Commerce",
+        "GO_TO": "Mostrar: {name}",
+        "MORE": "Saiba mais em VirtoCommerce.com",
+        "PLATFORM": {
+          "CHIP": "Virto Commerce na Virto Cloud",
+          "TITLE": "Composable Commerce gerenciado para B2B complexo",
+          "BODY": "Uma plataforma open source e API-first em .NET, operada na Virto Cloud. Comece pelo que precisa e adicione módulos à medida que o negócio cresce.",
+          "POINT_1": "A Virto Cloud hospeda, escala, atualiza e monitora os seus ambientes",
+          "POINT_2": "Mais de 100 módulos para instalar, atualizar ou substituir um de cada vez",
+          "POINT_3": "Conecte qualquer loja virtual, ERP ou marketplace por meio de APIs abertas"
+        },
+        "CATALOG": {
+          "CHIP": "Catálogo e preços",
+          "TITLE": "Um só catálogo para todos os canais e listas de preços",
+          "BODY": "Gerencie produtos físicos, digitais e configuráveis uma única vez e publique-os em cada loja com sortimento e preços próprios.",
+          "POINT_1": "Catálogos virtuais que reutilizam produtos entre lojas e canais",
+          "POINT_2": "Listas de preços com faixas por quantidade, datas e regras por segmento de clientes",
+          "POINT_3": "Estoque em vários armazéns e centros de distribuição"
+        },
+        "B2B": {
+          "CHIP": "Compras B2B",
+          "TITLE": "Feito para a forma como as empresas compram",
+          "BODY": "Contas corporativas, compradores e contratos, com as cotações e os pedidos recorrentes de que os negócios B2B dependem.",
+          "POINT_1": "Organizações com os seus compradores, funções e endereços",
+          "POINT_2": "Cotações e preços contratuais negociados por cliente",
+          "POINT_3": "Assinaturas que repetem pedidos de forma programada"
+        },
+        "API": {
+          "CHIP": "APIs e agentes de IA",
+          "TITLE": "Aberto, API-first e pronto para agentes",
+          "BODY": "Cada recurso é uma API: crie qualquer front-end, deixe agentes de IA comprarem e agirem em seu nome e estenda a plataforma com os seus próprios módulos.",
+          "POINT_1": "GraphQL xAPI para lojas virtuais, apps e integrações",
+          "POINT_2": "Agentic Access via MCP para assistentes e agentes de IA",
+          "POINT_3": "Suporte nativo aos protocolos UCP e OnX"
+        }
+      },
+      "HELP": "Ajuda",
+      "LINKS": {
+        "HELP": "Ajuda",
+        "SUPPORT": "Suporte",
+        "PRIVACY": "Privacidade",
+        "TERMS": "Termos"
+      },
+      "SLIDES_LABEL": "Sobre {name}"
+    },
+    "LOGIN": {
+      "SUBTITLE": "Entre em {name} para continuar",
+      "CONTINUE_WITH": "Continuar com {name}",
+      "CONTINUE_WITH_SSO": "Continuar com login único",
+      "OR": "ou",
+      "LOGIN": "E-mail ou nome de usuário",
+      "LOGIN_PLACEHOLDER": "Digite o seu e-mail ou nome de usuário",
+      "SIGNING_IN": "Entrando…",
+      "ERRORS": {
+        "LOCKED_OUT": "Esta conta foi bloqueada após muitas tentativas sem sucesso. Tente novamente mais tarde ou contate o administrador.",
+        "NOT_ALLOWED": "Esta conta ainda não tem permissão para entrar. Contate o administrador."
+      }
+    },
+    "SEARCH": {
+      "LABEL": "Pesquisar",
+      "PLACEHOLDER": "Pesquisar ou ir para…",
+      "CLEAR": "Limpar",
+      "CLOSE": "Fechar pesquisa",
+      "RESULTS": "Resultados da pesquisa",
+      "SEARCH_IN": "Pesquisar em",
+      "SEARCHING_IN": "Pesquisando em",
+      "SEARCH_EVERYWHERE": "Pesquisar em tudo",
+      "TYPE_TO_SEARCH": "Digite o que procura",
+      "TIP_SCOPE": "Comece pelo nome de um grupo, como {example}, para pesquisar só nele.",
+      "SEARCHING": "Pesquisando…",
+      "FAILED": "Falha na pesquisa",
+      "RETRY": "Tentar novamente",
+      "NO_RESULTS": "Nenhum resultado para “{query}”",
+      "NO_RESULTS_HINT": "Verifique a ortografia ou use menos palavras.",
+      "NO_RESULTS_SCOPED": "Verifique a ortografia ou pesquise em tudo.",
+      "SHOW_ALL": "Mostrar todos ({count}) em {group}",
+      "OPEN_FAILED": "Não foi possível abrir o resultado",
+      "KEYS_MOVE": "navegar",
+      "KEYS_OPEN": "abrir",
+      "KEYS_CLOSE": "fechar",
+      "GROUPS": {
+        "MENU": "Menu",
+        "APPS": "Apps",
+        "SETTINGS": "Configurações",
+        "USERS": "Usuários",
+        "ROLES": "Funções"
+      },
+      "BADGES": {
+        "ADMIN": "Admin",
+        "LOCKED": "Bloqueado"
+      }
+    },
+    "FRAMEWORK": {
+      "PROGRESS": "Progresso",
+      "CLOSE_SIDEBAR": "Fechar barra lateral",
+      "DASHBOARD_GRID": "Widgets do painel. Arraste um widget, ou selecione-o e pressione Enter para reorganizá-lo com as teclas de seta.",
+      "DATE_PICKER": {
+        "TOGGLE_OVERLAY": "Mostrar ou ocultar o seletor",
+        "MENU": "Menu do seletor de data",
+        "INPUT": "Campo de data",
+        "OPEN_TIME_PICKER": "Abrir seletor de hora",
+        "CLOSE_TIME_PICKER": "Fechar seletor de hora",
+        "INCREMENT": "Aumentar {unit}",
+        "DECREMENT": "Diminuir {unit}",
+        "OPEN_TIME_OVERLAY": "Escolher {unit}",
+        "AM_PM": "Alternar AM/PM",
+        "OPEN_YEARS": "Escolher ano",
+        "OPEN_MONTHS": "Escolher mês",
+        "NEXT_MONTH": "Próximo mês",
+        "PREV_MONTH": "Mês anterior",
+        "NEXT_YEAR": "Próximo ano",
+        "PREV_YEAR": "Ano anterior",
+        "CLEAR": "Limpar valor",
+        "CALENDAR_ICON": "Abrir calendário",
+        "TIME_PICKER": "Seletor de hora",
+        "MONTH_PICKER": "Seletor de mês",
+        "YEAR_PICKER": "Seletor de ano",
+        "TIME_OVERLAY": "Seletor: {unit}",
+        "UNITS": {
+          "hours": "horas",
+          "minutes": "minutos",
+          "seconds": "segundos"
+        }
+      }
+    }
+  }
+}

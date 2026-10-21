@@ -1,0 +1,212 @@
+{
+  "language_name": "Español",
+  "SHELL": {
+    "NAV": {
+      "SECTIONS": "Secciones",
+      "HOME": "{name}, inicio",
+      "MENU": "Menú",
+      "NOTIFICATIONS": "Notificaciones",
+      "ACCOUNT": "Cuenta",
+      "CLASSIC_ADMIN": "Abrir la administración clásica",
+      "HIDE_MENU": "Ocultar menú",
+      "KEEP_OPEN": "Mantener el menú abierto",
+      "SHOW_MENU": "Mostrar menú",
+      "PIN": "Anclar",
+      "UNPIN": "Desanclar",
+      "HIDE_ITEM": "Ocultar del menú",
+      "PINNED": "Anclados",
+      "RECENT": "Recientes",
+      "SHOW_HIDDEN": "Mostrar {count} elemento(s) oculto(s)",
+      "OPEN_BLADES": "Paneles abiertos",
+      "NEW_TAB": "Se abre en una pestaña nueva"
+    },
+    "USER_MENU": {
+      "LICENSE": "Licencia",
+      "LICENSE_NONE": "No activada",
+      "LICENSE_NONE_HINT": "No hay ninguna licencia comercial activada en esta plataforma",
+      "LICENSE_EXPIRED": "Vencida",
+      "LICENSE_UNTIL": "hasta el {date}",
+      "LICENSE_ACTIVATE": "Activar",
+      "LICENSE_DETAILS": "Detalles",
+      "LANGUAGE": "Idioma",
+      "THEME": "Apariencia",
+      "THEME_SYSTEM": "Igual que el sistema",
+      "COLOR_THEME": "Tema",
+      "COLOR_THEMES": {
+        "VIRTO": "Virto",
+        "WARM": "Cálido",
+        "BLUE": "Azul",
+        "INDIGO": "Índigo"
+      },
+      "SIGN_OUT": "Cerrar sesión",
+      "BUILD": "Build {version}"
+    },
+    "BADGES": {
+      "TASKS": "{count} tareas abiertas",
+      "MODULE_UPDATES": "{count} actualizaciones de módulos",
+      "MODULES_INSTALLED": "{count} módulos instalados",
+      "MODULES_AVAILABLE": "{count} módulos"
+    },
+    "FRAME": {
+      "REFRESH": "Actualizar",
+      "NEW_TAB": "Abrir en una pestaña nueva"
+    },
+    "DASHBOARD": {
+      "WELCOME": {
+        "TITLE": "Bienvenido"
+      },
+      "RESET_LAYOUT": "Restablecer diseño",
+      "RESET_LAYOUT_CONFIRM": "¿Devolver cada widget a su posición y tamaño predeterminados?",
+      "VIEW_ALL": "Ver todo",
+      "DISMISS": "Descartar",
+      "ALERTS": {
+        "TITLE": "Alertas y notificaciones",
+        "EMPTY": "Está todo al día",
+        "EMPTY_HINT": "Aquí aparecen los resultados de las tareas en segundo plano, las importaciones y exportaciones, y los mensajes del sistema."
+      },
+      "ACTIVITY": {
+        "TITLE": "Actividad reciente",
+        "EMPTY": "Aún no hay cambios registrados",
+        "ADDED": "creado",
+        "MODIFIED": "actualizado",
+        "DELETED": "eliminado"
+      },
+      "SIGN_INS": {
+        "TITLE": "Actividad de inicio de sesión",
+        "TOTAL": "Inicios de sesión, últimos 7 días",
+        "FAILED": "Inicios de sesión fallidos",
+        "USERS": "Usuarios que iniciaron sesión",
+        "DISABLED": "El registro de inicios de sesión está desactivado"
+      }
+    },
+    "AUTH": {
+      "LIGHT_THEME": "Cambiar al tema claro",
+      "DARK_THEME": "Cambiar al tema oscuro",
+      "SHOWCASE": {
+        "LABEL": "Acerca de Virto Commerce",
+        "GO_TO": "Mostrar: {name}",
+        "MORE": "Más información en VirtoCommerce.com",
+        "PLATFORM": {
+          "CHIP": "Virto Commerce en Virto Cloud",
+          "TITLE": "Composable Commerce gestionado para B2B complejo",
+          "BODY": "Una plataforma de código abierto y API-first en .NET, operada para usted en Virto Cloud. Empiece con lo que necesita y añada módulos a medida que crece el negocio.",
+          "POINT_1": "Virto Cloud aloja, escala, actualiza y supervisa sus entornos",
+          "POINT_2": "Más de 100 módulos que se instalan, actualizan o sustituyen de uno en uno",
+          "POINT_3": "Conecte cualquier tienda online, ERP o marketplace mediante API abiertas"
+        },
+        "CATALOG": {
+          "CHIP": "Catálogo y precios",
+          "TITLE": "Un catálogo para todos los canales y listas de precios",
+          "BODY": "Gestione una sola vez productos físicos, digitales y configurables, y publíquelos en cada tienda con su propio surtido y sus propios precios.",
+          "POINT_1": "Catálogos virtuales que reutilizan productos entre tiendas y canales",
+          "POINT_2": "Listas de precios con escalas por cantidad, fechas y reglas por segmento de clientes",
+          "POINT_3": "Inventario en almacenes y centros logísticos"
+        },
+        "B2B": {
+          "CHIP": "Compras B2B",
+          "TITLE": "Pensado para la forma en que compran las empresas",
+          "BODY": "Cuentas de empresa, compradores y contratos, con los presupuestos y pedidos recurrentes de los que dependen las operaciones B2B.",
+          "POINT_1": "Organizaciones con sus compradores, roles y direcciones",
+          "POINT_2": "Presupuestos y precios contractuales negociados por cliente",
+          "POINT_3": "Suscripciones que repiten pedidos según una programación"
+        },
+        "API": {
+          "CHIP": "API y agentes de IA",
+          "TITLE": "Abierto, API-first y preparado para agentes",
+          "BODY": "Cada funcionalidad es una API: cree cualquier front-end, deje que agentes de IA compren y actúen en su nombre, y amplíe la plataforma con sus propios módulos.",
+          "POINT_1": "GraphQL xAPI para tiendas online, aplicaciones e integraciones",
+          "POINT_2": "Agentic Access mediante MCP para asistentes y agentes de IA",
+          "POINT_3": "Compatibilidad nativa con los protocolos UCP y OnX"
+        }
+      },
+      "HELP": "Ayuda",
+      "LINKS": {
+        "HELP": "Ayuda",
+        "SUPPORT": "Soporte",
+        "PRIVACY": "Privacidad",
+        "TERMS": "Condiciones"
+      },
+      "SLIDES_LABEL": "Acerca de {name}"
+    },
+    "LOGIN": {
+      "SUBTITLE": "Inicie sesión en {name} para continuar",
+      "CONTINUE_WITH": "Continuar con {name}",
+      "CONTINUE_WITH_SSO": "Continuar con inicio de sesión único",
+      "OR": "o",
+      "LOGIN": "Correo electrónico o nombre de usuario",
+      "LOGIN_PLACEHOLDER": "Introduzca su correo electrónico o nombre de usuario",
+      "SIGNING_IN": "Iniciando sesión…",
+      "ERRORS": {
+        "LOCKED_OUT": "Esta cuenta se ha bloqueado tras demasiados intentos fallidos. Vuelva a intentarlo más tarde o póngase en contacto con su administrador.",
+        "NOT_ALLOWED": "Esta cuenta aún no tiene permiso para iniciar sesión. Póngase en contacto con su administrador."
+      }
+    },
+    "SEARCH": {
+      "LABEL": "Buscar",
+      "PLACEHOLDER": "Buscar o ir a…",
+      "CLEAR": "Limpiar",
+      "CLOSE": "Cerrar búsqueda",
+      "RESULTS": "Resultados de búsqueda",
+      "SEARCH_IN": "Buscar en",
+      "SEARCHING_IN": "Buscando en",
+      "SEARCH_EVERYWHERE": "Buscar en todo",
+      "TYPE_TO_SEARCH": "Escriba lo que busca",
+      "TIP_SCOPE": "Empiece por el nombre de un grupo, como {example}, para buscar solo ahí.",
+      "SEARCHING": "Buscando…",
+      "FAILED": "La búsqueda ha fallado",
+      "RETRY": "Reintentar",
+      "NO_RESULTS": "No hay resultados para «{query}»",
+      "NO_RESULTS_HINT": "Compruebe la ortografía o pruebe con menos palabras.",
+      "NO_RESULTS_SCOPED": "Compruebe la ortografía o busque en todo.",
+      "SHOW_ALL": "Mostrar los {count} de {group}",
+      "OPEN_FAILED": "No se ha podido abrir el resultado",
+      "KEYS_MOVE": "para moverse",
+      "KEYS_OPEN": "para abrir",
+      "KEYS_CLOSE": "para cerrar",
+      "GROUPS": {
+        "MENU": "Menú",
+        "APPS": "Aplicaciones",
+        "SETTINGS": "Ajustes",
+        "USERS": "Usuarios",
+        "ROLES": "Roles"
+      },
+      "BADGES": {
+        "ADMIN": "Admin",
+        "LOCKED": "Bloqueado"
+      }
+    },
+    "FRAMEWORK": {
+      "PROGRESS": "Progreso",
+      "CLOSE_SIDEBAR": "Cerrar barra lateral",
+      "DASHBOARD_GRID": "Widgets del panel. Arrastre un widget, o selecciónelo y pulse Intro para reorganizarlo con las teclas de flecha.",
+      "DATE_PICKER": {
+        "TOGGLE_OVERLAY": "Mostrar u ocultar el selector",
+        "MENU": "Menú del selector de fecha",
+        "INPUT": "Campo de fecha",
+        "OPEN_TIME_PICKER": "Abrir selector de hora",
+        "CLOSE_TIME_PICKER": "Cerrar selector de hora",
+        "INCREMENT": "Aumentar {unit}",
+        "DECREMENT": "Disminuir {unit}",
+        "OPEN_TIME_OVERLAY": "Elegir {unit}",
+        "AM_PM": "Cambiar AM/PM",
+        "OPEN_YEARS": "Elegir año",
+        "OPEN_MONTHS": "Elegir mes",
+        "NEXT_MONTH": "Mes siguiente",
+        "PREV_MONTH": "Mes anterior",
+        "NEXT_YEAR": "Año siguiente",
+        "PREV_YEAR": "Año anterior",
+        "CLEAR": "Borrar valor",
+        "CALENDAR_ICON": "Abrir calendario",
+        "TIME_PICKER": "Selector de hora",
+        "MONTH_PICKER": "Selector de mes",
+        "YEAR_PICKER": "Selector de año",
+        "TIME_OVERLAY": "Selector de {unit}",
+        "UNITS": {
+          "hours": "horas",
+          "minutes": "minutos",
+          "seconds": "segundos"
+        }
+      }
+    }
+  }
+}

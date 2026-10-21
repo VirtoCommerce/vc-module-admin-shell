@@ -1,0 +1,212 @@
+{
+  "language_name": "日本語",
+  "SHELL": {
+    "NAV": {
+      "SECTIONS": "セクション",
+      "HOME": "{name}、ホーム",
+      "MENU": "メニュー",
+      "NOTIFICATIONS": "通知",
+      "ACCOUNT": "アカウント",
+      "CLASSIC_ADMIN": "従来の管理画面を開く",
+      "HIDE_MENU": "メニューを隠す",
+      "KEEP_OPEN": "メニューを開いたままにする",
+      "SHOW_MENU": "メニューを表示",
+      "PIN": "ピン留め",
+      "UNPIN": "ピン留めを解除",
+      "HIDE_ITEM": "メニューから非表示",
+      "PINNED": "ピン留め済み",
+      "RECENT": "最近使用",
+      "SHOW_HIDDEN": "非表示の項目を表示 ({count})",
+      "OPEN_BLADES": "開いているパネル",
+      "NEW_TAB": "新しいタブで開きます"
+    },
+    "USER_MENU": {
+      "LICENSE": "ライセンス",
+      "LICENSE_NONE": "未有効化",
+      "LICENSE_NONE_HINT": "このプラットフォームでは商用ライセンスが有効化されていません",
+      "LICENSE_EXPIRED": "期限切れ",
+      "LICENSE_UNTIL": "{date} まで",
+      "LICENSE_ACTIVATE": "有効化",
+      "LICENSE_DETAILS": "詳細",
+      "LANGUAGE": "言語",
+      "THEME": "外観",
+      "THEME_SYSTEM": "システムに合わせる",
+      "COLOR_THEME": "テーマ",
+      "COLOR_THEMES": {
+        "VIRTO": "Virto",
+        "WARM": "ウォーム",
+        "BLUE": "ブルー",
+        "INDIGO": "インディゴ"
+      },
+      "SIGN_OUT": "サインアウト",
+      "BUILD": "ビルド {version}"
+    },
+    "BADGES": {
+      "TASKS": "未完了のタスク {count} 件",
+      "MODULE_UPDATES": "モジュールの更新 {count} 件",
+      "MODULES_INSTALLED": "インストール済みモジュール {count} 件",
+      "MODULES_AVAILABLE": "モジュール {count} 件"
+    },
+    "FRAME": {
+      "REFRESH": "更新",
+      "NEW_TAB": "新しいタブで開く"
+    },
+    "DASHBOARD": {
+      "WELCOME": {
+        "TITLE": "ようこそ"
+      },
+      "RESET_LAYOUT": "レイアウトをリセット",
+      "RESET_LAYOUT_CONFIRM": "すべてのウィジェットを既定の位置とサイズに戻しますか？",
+      "VIEW_ALL": "すべて表示",
+      "DISMISS": "閉じる",
+      "ALERTS": {
+        "TITLE": "アラートと通知",
+        "EMPTY": "新しい通知はありません",
+        "EMPTY_HINT": "バックグラウンドジョブ、インポートとエクスポートの結果、システムメッセージがここに表示されます。"
+      },
+      "ACTIVITY": {
+        "TITLE": "最近のアクティビティ",
+        "EMPTY": "変更はまだ記録されていません",
+        "ADDED": "作成",
+        "MODIFIED": "更新",
+        "DELETED": "削除"
+      },
+      "SIGN_INS": {
+        "TITLE": "サインインアクティビティ",
+        "TOTAL": "サインイン数 (過去 7 日間)",
+        "FAILED": "失敗したサインイン",
+        "USERS": "サインインしたユーザー",
+        "DISABLED": "サインインの記録は無効になっています"
+      }
+    },
+    "AUTH": {
+      "LIGHT_THEME": "ライトテーマに切り替え",
+      "DARK_THEME": "ダークテーマに切り替え",
+      "SHOWCASE": {
+        "LABEL": "Virto Commerce について",
+        "GO_TO": "表示: {name}",
+        "MORE": "詳しくは VirtoCommerce.com へ",
+        "PLATFORM": {
+          "CHIP": "Virto Cloud 上の Virto Commerce",
+          "TITLE": "複雑な B2B のためのマネージド Composable Commerce",
+          "BODY": "Virto Cloud で運用される、.NET ベースのオープンソース API ファーストプラットフォームです。必要な機能から始め、ビジネスの成長に合わせてモジュールを追加できます。",
+          "POINT_1": "Virto Cloud が環境のホスティング、スケーリング、更新、監視を担当",
+          "POINT_2": "1 つずつインストール、更新、置き換えできる 100 以上のモジュール",
+          "POINT_3": "オープン API でストアフロント、ERP、マーケットプレイスと連携"
+        },
+        "CATALOG": {
+          "CHIP": "カタログと価格",
+          "TITLE": "すべてのチャネルと価格表に対応する単一のカタログ",
+          "BODY": "物理商品、デジタル商品、構成可能な商品を一元管理し、ストアごとに独自の品揃えと価格で公開できます。",
+          "POINT_1": "ストアやチャネルをまたいで商品を再利用できる仮想カタログ",
+          "POINT_2": "数量別の価格帯、期間、顧客セグメントのルールを設定できる価格表",
+          "POINT_3": "複数の倉庫とフルフィルメントセンターにまたがる在庫管理"
+        },
+        "B2B": {
+          "CHIP": "B2B 購買",
+          "TITLE": "企業の購買スタイルに合わせた設計",
+          "BODY": "企業アカウント、購買担当者、契約に加え、B2B 取引に欠かせない見積もりと定期注文に対応します。",
+          "POINT_1": "購買担当者、ロール、住所を持つ組織",
+          "POINT_2": "顧客ごとに交渉する見積もりと契約価格",
+          "POINT_3": "スケジュールに沿って自動で再注文するサブスクリプション"
+        },
+        "API": {
+          "CHIP": "API と AI エージェント",
+          "TITLE": "オープンで API ファースト、エージェント対応",
+          "BODY": "すべての機能が API です。任意のフロントエンドを構築し、AI エージェントに購入や操作を任せ、独自のモジュールでプラットフォームを拡張できます。",
+          "POINT_1": "ストアフロント、アプリ、連携のための GraphQL xAPI",
+          "POINT_2": "AI アシスタントとエージェントのための MCP による Agentic Access",
+          "POINT_3": "UCP および OnX プロトコルのネイティブサポート"
+        }
+      },
+      "HELP": "ヘルプ",
+      "LINKS": {
+        "HELP": "ヘルプ",
+        "SUPPORT": "サポート",
+        "PRIVACY": "プライバシー",
+        "TERMS": "利用規約"
+      },
+      "SLIDES_LABEL": "{name} について"
+    },
+    "LOGIN": {
+      "SUBTITLE": "続行するには {name} にサインインしてください",
+      "CONTINUE_WITH": "{name} で続行",
+      "CONTINUE_WITH_SSO": "シングルサインオンで続行",
+      "OR": "または",
+      "LOGIN": "メールアドレスまたはユーザー名",
+      "LOGIN_PLACEHOLDER": "メールアドレスまたはユーザー名を入力してください",
+      "SIGNING_IN": "サインイン中…",
+      "ERRORS": {
+        "LOCKED_OUT": "失敗した試行が多すぎるため、このアカウントはロックされています。しばらくしてから再度お試しいただくか、管理者にお問い合わせください。",
+        "NOT_ALLOWED": "このアカウントはまだサインインできません。管理者にお問い合わせください。"
+      }
+    },
+    "SEARCH": {
+      "LABEL": "検索",
+      "PLACEHOLDER": "検索またはジャンプ…",
+      "CLEAR": "クリア",
+      "CLOSE": "検索を閉じる",
+      "RESULTS": "検索結果",
+      "SEARCH_IN": "検索対象",
+      "SEARCHING_IN": "検索範囲",
+      "SEARCH_EVERYWHERE": "すべてを検索",
+      "TYPE_TO_SEARCH": "検索する内容を入力してください",
+      "TIP_SCOPE": "{example} のようにグループ名から入力すると、そのグループ内だけを検索します。",
+      "SEARCHING": "検索中…",
+      "FAILED": "検索に失敗しました",
+      "RETRY": "再試行",
+      "NO_RESULTS": "「{query}」に一致する結果はありません",
+      "NO_RESULTS_HINT": "スペルを確認するか、キーワードを減らしてください。",
+      "NO_RESULTS_SCOPED": "スペルを確認するか、すべてを対象に検索してください。",
+      "SHOW_ALL": "{group} の {count} 件をすべて表示",
+      "OPEN_FAILED": "結果を開けませんでした",
+      "KEYS_MOVE": "移動",
+      "KEYS_OPEN": "開く",
+      "KEYS_CLOSE": "閉じる",
+      "GROUPS": {
+        "MENU": "メニュー",
+        "APPS": "アプリ",
+        "SETTINGS": "設定",
+        "USERS": "ユーザー",
+        "ROLES": "ロール"
+      },
+      "BADGES": {
+        "ADMIN": "管理者",
+        "LOCKED": "ロック中"
+      }
+    },
+    "FRAMEWORK": {
+      "PROGRESS": "進行状況",
+      "CLOSE_SIDEBAR": "サイドバーを閉じる",
+      "DASHBOARD_GRID": "ダッシュボードのウィジェット。ウィジェットをドラッグするか、選択して Enter キーを押し、矢印キーで並べ替えます。",
+      "DATE_PICKER": {
+        "TOGGLE_OVERLAY": "選択画面の表示を切り替え",
+        "MENU": "日付選択メニュー",
+        "INPUT": "日付の入力",
+        "OPEN_TIME_PICKER": "時刻選択を開く",
+        "CLOSE_TIME_PICKER": "時刻選択を閉じる",
+        "INCREMENT": "{unit}を増やす",
+        "DECREMENT": "{unit}を減らす",
+        "OPEN_TIME_OVERLAY": "{unit}を選択",
+        "AM_PM": "午前/午後を切り替え",
+        "OPEN_YEARS": "年を選択",
+        "OPEN_MONTHS": "月を選択",
+        "NEXT_MONTH": "次の月",
+        "PREV_MONTH": "前の月",
+        "NEXT_YEAR": "次の年",
+        "PREV_YEAR": "前の年",
+        "CLEAR": "値をクリア",
+        "CALENDAR_ICON": "カレンダーを開く",
+        "TIME_PICKER": "時刻選択",
+        "MONTH_PICKER": "月の選択",
+        "YEAR_PICKER": "年の選択",
+        "TIME_OVERLAY": "{unit}の選択",
+        "UNITS": {
+          "hours": "時",
+          "minutes": "分",
+          "seconds": "秒"
+        }
+      }
+    }
+  }
+}

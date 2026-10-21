@@ -1,0 +1,114 @@
+{
+  "permissions": {
+    "admin-shell:access": "Åpne Admin Shell",
+    "admin-shell:menu:manage": "Administrer Admin Shell-menyen: menyredigeringen, globalt nivå og rollenivå, hva brukere kan endre"
+  },
+  "settings": {
+    "AdminShell": {
+      "Menu": {
+        "Global": {
+          "title": "Global menypatch",
+          "description": "JSON-patch som brukes på standardmenyen i Admin Shell for alle: skjul, gi nytt navn til eller flytt seksjoner og elementer, eller legg til nye"
+        },
+        "Role": {
+          "title": "Menypatch for rolle",
+          "description": "JSON-patch som brukes på Admin Shell-menyen for brukere med denne rollen; et element forblir synlig hvis noen av brukerens roller beholder det"
+        },
+        "User": {
+          "title": "Menypreferanser",
+          "description": "Brukerens festede og skjulte elementer i Admin Shell-menyen"
+        },
+        "AllowPin": {
+          "title": "Brukere kan feste menyelementer",
+          "description": "Av: brukere kan ikke feste elementer, og elementene de har festet, vises ikke lenger under Festet; de kommer tilbake når dette slås på igjen"
+        },
+        "AllowHide": {
+          "title": "Brukere kan skjule menyelementer",
+          "description": "Av: brukere kan ikke skjule elementer, og elementene de har skjult, vises igjen; de skjules igjen når dette slås på igjen"
+        },
+        "AllowReorder": {
+          "title": "Brukere kan endre rekkefølgen på menyelementer",
+          "description": "Av: brukernes egen rekkefølge på menyelementene gjelder ikke; den gjelder igjen når dette slås på igjen"
+        }
+      },
+      "UI": {
+        "Appearance": {
+          "title": "Utseende",
+          "description": "Lyst, mørkt eller operativsystemets utseende for Admin Shell"
+        },
+        "Theme": {
+          "title": "Tema",
+          "description": "Fargene i Admin Shell: Virto, Varm, Blå, Indigo eller et egendefinert tema"
+        }
+      },
+      "Branding": {
+        "CompanyName": {
+          "title": "Firmanavn",
+          "description": "Vises i nettleserfanen, på innloggingssiden og i bunnteksten der. Tomt: Virto Commerce"
+        },
+        "LogoUrl": {
+          "title": "Logo",
+          "description": "Logoen på lyse bakgrunner (innloggingssiden, startsiden): en bilde-URL, for eksempel fra Ressurser. SVG eller PNG, ca. 200 x 48 px"
+        },
+        "LogoDarkUrl": {
+          "title": "Logo for mørkt utseende",
+          "description": "Logoen på mørke bakgrunner. Tomt: logoen over"
+        },
+        "MarkUrl": {
+          "title": "Logosymbol",
+          "description": "Et kvadratisk ikon for menylinjen og den øverste linjen på mobil: en bilde-URL. SVG eller PNG, minst 64 x 64 px"
+        },
+        "FaviconUrl": {
+          "title": "Ikon for nettleserfanen",
+          "description": "Favikonet: en bilde-URL (ICO, PNG eller SVG). Tomt: logosymbolet"
+        },
+        "HelpUrl": {
+          "title": "Hjelpelenke",
+          "description": "Hvor Hjelp på innloggingssiden og i brukermenyen fører. Tomt: ingen hjelpelenke"
+        },
+        "SupportUrl": {
+          "title": "Støttelenke",
+          "description": "En støtteside eller mailto:-adresse, i bunnteksten på innloggingssiden og i brukermenyen"
+        },
+        "PrivacyUrl": {
+          "title": "Lenke til personvernerklæring",
+          "description": "Vises i bunnteksten på innloggingssiden"
+        },
+        "TermsUrl": {
+          "title": "Lenke til bruksvilkår",
+          "description": "Vises i bunnteksten på innloggingssiden"
+        }
+      },
+      "SignIn": {
+        "Showcase": {
+          "title": "Panel på innloggingssiden",
+          "description": "Panelet ved siden av innloggingsskjemaet (fra 1024 px bredde): virto viser lysbildene til Virto Commerce, custom lysbildene nedenfor, none bare skjemaet"
+        },
+        "Slides": {
+          "title": "Lysbilder på innloggingssiden",
+          "description": "JSON-liste med lysbilder: [{ \"chip\", \"title\", \"body\", \"points\": [], \"image\", \"imageDark\", \"alt\", \"link\": { \"text\", \"url\" } }]. En tekst kan være en streng eller { \"en\": \"...\", \"de\": \"...\" }"
+        }
+      },
+      "Home": {
+        "Welcome": {
+          "title": "Velkomstkort på startsiden",
+          "description": "JSON: { \"title\", \"body\", \"image\", \"imageDark\", \"links\": [{ \"text\", \"url\" }] }, vises først på startsiden. {} skjuler det"
+        }
+      },
+      "Theme": {
+        "Default": {
+          "title": "Standardtema",
+          "description": "Temaet for innloggingssiden og for brukere som ikke har valgt et: virto, warm, blue, indigo eller ID-en til en temafil"
+        },
+        "Appearance": {
+          "title": "Standardutseende",
+          "description": "Lyst, mørkt eller operativsystemets utseende for innloggingssiden og for brukere som ikke har valgt et"
+        },
+        "UserChoice": {
+          "title": "Brukere velger sitt eget tema",
+          "description": "Av: alle har standardtemaet, og temavelgerne er skjult"
+        }
+      }
+    }
+  }
+}

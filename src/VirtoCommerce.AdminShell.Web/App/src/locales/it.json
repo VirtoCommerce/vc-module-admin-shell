@@ -1,0 +1,212 @@
+{
+  "language_name": "Italiano",
+  "SHELL": {
+    "NAV": {
+      "SECTIONS": "Sezioni",
+      "HOME": "{name}, home",
+      "MENU": "Menu",
+      "NOTIFICATIONS": "Notifiche",
+      "ACCOUNT": "Account",
+      "CLASSIC_ADMIN": "Apri l'amministrazione classica",
+      "HIDE_MENU": "Nascondi menu",
+      "KEEP_OPEN": "Mantieni il menu aperto",
+      "SHOW_MENU": "Mostra menu",
+      "PIN": "Fissa",
+      "UNPIN": "Sblocca",
+      "HIDE_ITEM": "Nascondi dal menu",
+      "PINNED": "Fissati",
+      "RECENT": "Recenti",
+      "SHOW_HIDDEN": "Mostra elementi nascosti ({count})",
+      "OPEN_BLADES": "Pannelli aperti",
+      "NEW_TAB": "Si apre in una nuova scheda"
+    },
+    "USER_MENU": {
+      "LICENSE": "Licenza",
+      "LICENSE_NONE": "Non attivata",
+      "LICENSE_NONE_HINT": "Nessuna licenza commerciale è attivata su questa piattaforma",
+      "LICENSE_EXPIRED": "Scaduta",
+      "LICENSE_UNTIL": "fino al {date}",
+      "LICENSE_ACTIVATE": "Attiva",
+      "LICENSE_DETAILS": "Dettagli",
+      "LANGUAGE": "Lingua",
+      "THEME": "Aspetto",
+      "THEME_SYSTEM": "Come il sistema",
+      "COLOR_THEME": "Tema",
+      "COLOR_THEMES": {
+        "VIRTO": "Virto",
+        "WARM": "Caldo",
+        "BLUE": "Blu",
+        "INDIGO": "Indaco"
+      },
+      "SIGN_OUT": "Esci",
+      "BUILD": "Build {version}"
+    },
+    "BADGES": {
+      "TASKS": "{count} attività aperte",
+      "MODULE_UPDATES": "{count} aggiornamenti dei moduli",
+      "MODULES_INSTALLED": "{count} moduli installati",
+      "MODULES_AVAILABLE": "{count} moduli"
+    },
+    "FRAME": {
+      "REFRESH": "Aggiorna",
+      "NEW_TAB": "Apri in una nuova scheda"
+    },
+    "DASHBOARD": {
+      "WELCOME": {
+        "TITLE": "Benvenuto"
+      },
+      "RESET_LAYOUT": "Reimposta layout",
+      "RESET_LAYOUT_CONFIRM": "Riportare ogni widget alla posizione e alle dimensioni predefinite?",
+      "VIEW_ALL": "Visualizza tutto",
+      "DISMISS": "Ignora",
+      "ALERTS": {
+        "TITLE": "Avvisi e notifiche",
+        "EMPTY": "Nessuna novità",
+        "EMPTY_HINT": "Qui vengono visualizzati i risultati dei processi in background, delle importazioni ed esportazioni e i messaggi di sistema."
+      },
+      "ACTIVITY": {
+        "TITLE": "Attività recente",
+        "EMPTY": "Nessuna modifica registrata finora",
+        "ADDED": "creato",
+        "MODIFIED": "aggiornato",
+        "DELETED": "eliminato"
+      },
+      "SIGN_INS": {
+        "TITLE": "Attività di accesso",
+        "TOTAL": "Accessi, ultimi 7 giorni",
+        "FAILED": "Accessi non riusciti",
+        "USERS": "Utenti che hanno effettuato l'accesso",
+        "DISABLED": "La registrazione degli accessi è disattivata"
+      }
+    },
+    "AUTH": {
+      "LIGHT_THEME": "Passa al tema chiaro",
+      "DARK_THEME": "Passa al tema scuro",
+      "SHOWCASE": {
+        "LABEL": "Informazioni su Virto Commerce",
+        "GO_TO": "Mostra: {name}",
+        "MORE": "Scopri di più su VirtoCommerce.com",
+        "PLATFORM": {
+          "CHIP": "Virto Commerce su Virto Cloud",
+          "TITLE": "Composable Commerce gestito per il B2B complesso",
+          "BODY": "Una piattaforma open source e API-first su .NET, gestita interamente su Virto Cloud. Si parte da ciò che serve e si aggiungono moduli man mano che l'attività cresce.",
+          "POINT_1": "Virto Cloud ospita, scala, aggiorna e monitora gli ambienti",
+          "POINT_2": "Oltre 100 moduli da installare, aggiornare o sostituire uno alla volta",
+          "POINT_3": "Qualsiasi storefront, ERP o marketplace collegato tramite API aperte"
+        },
+        "CATALOG": {
+          "CHIP": "Catalogo e prezzi",
+          "TITLE": "Un unico catalogo per ogni canale e listino prezzi",
+          "BODY": "Prodotti fisici, digitali e configurabili gestiti una sola volta e pubblicati in ogni negozio con il proprio assortimento e i propri prezzi.",
+          "POINT_1": "Cataloghi virtuali che riutilizzano i prodotti tra negozi e canali",
+          "POINT_2": "Listini prezzi con scaglioni di quantità, date e regole per segmento di clienti",
+          "POINT_3": "Inventario tra magazzini e centri di evasione ordini"
+        },
+        "B2B": {
+          "CHIP": "Acquisti B2B",
+          "TITLE": "Pensato per il modo in cui acquistano le aziende",
+          "BODY": "Account aziendali, acquirenti e contratti, con i preventivi e gli ordini ricorrenti su cui si basano le trattative B2B.",
+          "POINT_1": "Organizzazioni con i loro acquirenti, ruoli e indirizzi",
+          "POINT_2": "Preventivi e prezzi contrattuali negoziati per cliente",
+          "POINT_3": "Abbonamenti che riordinano secondo una pianificazione"
+        },
+        "API": {
+          "CHIP": "API e agenti IA",
+          "TITLE": "Aperto, API-first e pronto per gli agenti",
+          "BODY": "Ogni funzionalità è un'API: è possibile creare qualsiasi front-end, affidare acquisti e operazioni ad agenti IA ed estendere la piattaforma con moduli propri.",
+          "POINT_1": "GraphQL xAPI per storefront, app e integrazioni",
+          "POINT_2": "Agentic Access tramite MCP per assistenti e agenti IA",
+          "POINT_3": "Supporto nativo per i protocolli UCP e OnX"
+        }
+      },
+      "HELP": "Aiuto",
+      "LINKS": {
+        "HELP": "Aiuto",
+        "SUPPORT": "Supporto",
+        "PRIVACY": "Privacy",
+        "TERMS": "Termini"
+      },
+      "SLIDES_LABEL": "Informazioni su {name}"
+    },
+    "LOGIN": {
+      "SUBTITLE": "Accedere a {name} per continuare",
+      "CONTINUE_WITH": "Continua con {name}",
+      "CONTINUE_WITH_SSO": "Continua con Single Sign-On",
+      "OR": "oppure",
+      "LOGIN": "Email o nome utente",
+      "LOGIN_PLACEHOLDER": "Inserire l'email o il nome utente",
+      "SIGNING_IN": "Accesso in corso…",
+      "ERRORS": {
+        "LOCKED_OUT": "Questo account è stato bloccato dopo troppi tentativi non riusciti. Riprovare più tardi o contattare l'amministratore.",
+        "NOT_ALLOWED": "Questo account non è ancora autorizzato ad accedere. Contattare l'amministratore."
+      }
+    },
+    "SEARCH": {
+      "LABEL": "Cerca",
+      "PLACEHOLDER": "Cerca o vai a…",
+      "CLEAR": "Cancella",
+      "CLOSE": "Chiudi ricerca",
+      "RESULTS": "Risultati della ricerca",
+      "SEARCH_IN": "Cerca in",
+      "SEARCHING_IN": "Ricerca in",
+      "SEARCH_EVERYWHERE": "Cerca ovunque",
+      "TYPE_TO_SEARCH": "Digitare cosa cercare",
+      "TIP_SCOPE": "Iniziare con il nome di un gruppo, ad esempio {example}, per cercare solo lì.",
+      "SEARCHING": "Ricerca in corso…",
+      "FAILED": "Ricerca non riuscita",
+      "RETRY": "Riprova",
+      "NO_RESULTS": "Nessun risultato per «{query}»",
+      "NO_RESULTS_HINT": "Controllare l'ortografia o provare con meno parole.",
+      "NO_RESULTS_SCOPED": "Controllare l'ortografia o cercare ovunque.",
+      "SHOW_ALL": "Mostra tutti i {count} in {group}",
+      "OPEN_FAILED": "Impossibile aprire il risultato",
+      "KEYS_MOVE": "per spostarsi",
+      "KEYS_OPEN": "per aprire",
+      "KEYS_CLOSE": "per chiudere",
+      "GROUPS": {
+        "MENU": "Menu",
+        "APPS": "App",
+        "SETTINGS": "Impostazioni",
+        "USERS": "Utenti",
+        "ROLES": "Ruoli"
+      },
+      "BADGES": {
+        "ADMIN": "Admin",
+        "LOCKED": "Bloccato"
+      }
+    },
+    "FRAMEWORK": {
+      "PROGRESS": "Avanzamento",
+      "CLOSE_SIDEBAR": "Chiudi barra laterale",
+      "DASHBOARD_GRID": "Widget della dashboard. Trascina un widget, oppure selezionalo e premi Invio per riordinarlo con i tasti freccia.",
+      "DATE_PICKER": {
+        "TOGGLE_OVERLAY": "Mostra o nascondi il selettore",
+        "MENU": "Menu del selettore data",
+        "INPUT": "Campo data",
+        "OPEN_TIME_PICKER": "Apri selettore ora",
+        "CLOSE_TIME_PICKER": "Chiudi selettore ora",
+        "INCREMENT": "Aumenta {unit}",
+        "DECREMENT": "Diminuisci {unit}",
+        "OPEN_TIME_OVERLAY": "Scegli {unit}",
+        "AM_PM": "Cambia AM/PM",
+        "OPEN_YEARS": "Scegli l'anno",
+        "OPEN_MONTHS": "Scegli il mese",
+        "NEXT_MONTH": "Mese successivo",
+        "PREV_MONTH": "Mese precedente",
+        "NEXT_YEAR": "Anno successivo",
+        "PREV_YEAR": "Anno precedente",
+        "CLEAR": "Cancella valore",
+        "CALENDAR_ICON": "Apri calendario",
+        "TIME_PICKER": "Selettore ora",
+        "MONTH_PICKER": "Selettore mese",
+        "YEAR_PICKER": "Selettore anno",
+        "TIME_OVERLAY": "Selettore: {unit}",
+        "UNITS": {
+          "hours": "ore",
+          "minutes": "minuti",
+          "seconds": "secondi"
+        }
+      }
+    }
+  }
+}

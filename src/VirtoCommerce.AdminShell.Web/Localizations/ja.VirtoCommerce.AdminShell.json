@@ -1,0 +1,114 @@
+{
+  "permissions": {
+    "admin-shell:access": "Admin Shell を開く",
+    "admin-shell:menu:manage": "Admin Shell のメニューを管理: メニューエディター、グローバル層とロール層、ユーザーが変更できる内容"
+  },
+  "settings": {
+    "AdminShell": {
+      "Menu": {
+        "Global": {
+          "title": "グローバルメニューパッチ",
+          "description": "全員の Admin Shell 既定メニューに適用される JSON パッチです。セクションや項目の非表示、名前の変更、移動、新規追加ができます"
+        },
+        "Role": {
+          "title": "ロールメニューパッチ",
+          "description": "このロールのユーザーの Admin Shell メニューに適用される JSON パッチです。ユーザーのいずれかのロールで残されている項目は表示されたままになります"
+        },
+        "User": {
+          "title": "メニューの設定",
+          "description": "ユーザーがピン留めまたは非表示にした Admin Shell のメニュー項目"
+        },
+        "AllowPin": {
+          "title": "ユーザーによるメニュー項目のピン留め",
+          "description": "オフ: ユーザーは項目をピン留めできず、ピン留めした項目は「ピン留め済み」に表示されなくなります。再びオンにすると元に戻ります"
+        },
+        "AllowHide": {
+          "title": "ユーザーによるメニュー項目の非表示",
+          "description": "オフ: ユーザーは項目を非表示にできず、非表示にした項目は再び表示されます。再びオンにすると、また非表示になります"
+        },
+        "AllowReorder": {
+          "title": "ユーザーによるメニュー項目の並べ替え",
+          "description": "オフ: ユーザー独自のメニュー項目の順序は適用されません。再びオンにすると、また適用されます"
+        }
+      },
+      "UI": {
+        "Appearance": {
+          "title": "外観",
+          "description": "Admin Shell の外観: ライト、ダーク、またはオペレーティングシステムに合わせる"
+        },
+        "Theme": {
+          "title": "テーマ",
+          "description": "Admin Shell の配色: Virto、ウォーム、ブルー、インディゴ、またはカスタムテーマ"
+        }
+      },
+      "Branding": {
+        "CompanyName": {
+          "title": "会社名",
+          "description": "ブラウザーのタブ、サインインページとそのフッターに表示されます。空の場合: Virto Commerce"
+        },
+        "LogoUrl": {
+          "title": "ロゴ",
+          "description": "明るい背景 (サインインページ、ホーム) に表示するロゴ: 画像の URL (Assets の画像など)。SVG または PNG、約 200 x 48 px"
+        },
+        "LogoDarkUrl": {
+          "title": "ダーク外観用ロゴ",
+          "description": "暗い背景に表示するロゴ。空の場合: 上のロゴ"
+        },
+        "MarkUrl": {
+          "title": "ロゴマーク",
+          "description": "メニューバーとスマートフォンの上部バーに表示する正方形のアイコン: 画像の URL。SVG または PNG、64 x 64 px 以上"
+        },
+        "FaviconUrl": {
+          "title": "ブラウザータブのアイコン",
+          "description": "ファビコン: 画像の URL (ICO、PNG または SVG)。空の場合: ロゴマーク"
+        },
+        "HelpUrl": {
+          "title": "ヘルプのリンク",
+          "description": "サインインページとユーザーメニューの「ヘルプ」のリンク先。空の場合: ヘルプのリンクなし"
+        },
+        "SupportUrl": {
+          "title": "サポートのリンク",
+          "description": "サインインページのフッターとユーザーメニューに表示するサポートページまたは mailto: アドレス"
+        },
+        "PrivacyUrl": {
+          "title": "プライバシーポリシーのリンク",
+          "description": "サインインページのフッターに表示されます"
+        },
+        "TermsUrl": {
+          "title": "利用規約のリンク",
+          "description": "サインインページのフッターに表示されます"
+        }
+      },
+      "SignIn": {
+        "Showcase": {
+          "title": "サインインページのパネル",
+          "description": "サインインフォームの横のパネル (幅 1024 px 以上): virto は Virto Commerce のスライド、custom は下のスライド、none はフォームのみを表示します"
+        },
+        "Slides": {
+          "title": "サインインページのスライド",
+          "description": "スライドの JSON リスト: [{ \"chip\", \"title\", \"body\", \"points\": [], \"image\", \"imageDark\", \"alt\", \"link\": { \"text\", \"url\" } }]。テキストは文字列または { \"en\": \"...\", \"de\": \"...\" } で指定できます"
+        }
+      },
+      "Home": {
+        "Welcome": {
+          "title": "ホームのウェルカムカード",
+          "description": "JSON: { \"title\", \"body\", \"image\", \"imageDark\", \"links\": [{ \"text\", \"url\" }] }。ホームの先頭に表示されます。{} で非表示になります"
+        }
+      },
+      "Theme": {
+        "Default": {
+          "title": "既定のテーマ",
+          "description": "サインインページと、テーマを選択していないユーザーのテーマ: virto、warm、blue、indigo、またはテーマファイルの ID"
+        },
+        "Appearance": {
+          "title": "既定の外観",
+          "description": "サインインページと、外観を選択していないユーザーの外観: ライト、ダーク、またはオペレーティングシステムに合わせる"
+        },
+        "UserChoice": {
+          "title": "ユーザーによるテーマの選択",
+          "description": "オフ: 全員が既定のテーマを使用し、テーマの選択欄は表示されません"
+        }
+      }
+    }
+  }
+}
