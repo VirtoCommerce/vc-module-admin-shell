@@ -19,5 +19,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\VirtoCommerce.AdminShell.Core\VirtoCommerce.AdminShell.Core.csproj" />
+    <ProjectReference Include="..\..\src\VirtoCommerce.AdminShell.Web\VirtoCommerce.AdminShell.Web.csproj" />
   </ItemGroup>
 </Project>

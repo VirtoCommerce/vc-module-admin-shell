@@ -29,7 +29,12 @@ public class AdminShellMenuController(IAdminMenuService menuService) : Controlle
     [Authorize(Permissions.Access)]
     public async Task<ActionResult> SaveMyPrefs([FromBody] UserMenuPrefs prefs)
     {
-        await menuService.SaveUserPrefsAsync(User.GetUserId(), prefs ?? new UserMenuPrefs());
+        if (NotBound(prefs))
+        {
+            return ValidationProblem(ModelState);
+        }
+
+        await menuService.SaveUserPrefsAsync(User.GetUserId(), prefs);
         return NoContent();
     }
 
@@ -65,7 +70,12 @@ public class AdminShellMenuController(IAdminMenuService menuService) : Controlle
     [Authorize(Permissions.MenuManage)]
     public async Task<ActionResult> SavePersonalization([FromBody] MenuPersonalization personalization)
     {
-        await menuService.SavePersonalizationAsync(personalization ?? new MenuPersonalization());
+        if (NotBound(personalization))
+        {
+            return ValidationProblem(ModelState);
+        }
+
+        await menuService.SavePersonalizationAsync(personalization);
         return NoContent();
     }
 
@@ -77,7 +87,12 @@ public class AdminShellMenuController(IAdminMenuService menuService) : Controlle
     [Authorize(Permissions.MenuManage)]
     public async Task<ActionResult> SaveGlobal([FromBody] MenuPatch patch)
     {
-        await menuService.SaveGlobalPatchAsync(patch ?? new MenuPatch());
+        if (NotBound(patch))
+        {
+            return ValidationProblem(ModelState);
+        }
+
+        await menuService.SaveGlobalPatchAsync(patch);
         return NoContent();
     }
 
@@ -89,7 +104,32 @@ public class AdminShellMenuController(IAdminMenuService menuService) : Controlle
     [Authorize(Permissions.MenuManage)]
     public async Task<ActionResult> SaveRole([FromRoute] string roleId, [FromBody] MenuPatch patch)
     {
-        await menuService.SaveRolePatchAsync(roleId, patch ?? new MenuPatch());
+        if (NotBound(patch))
+        {
+            return ValidationProblem(ModelState);
+        }
+
+        await menuService.SaveRolePatchAsync(roleId, patch);
         return NoContent();
+    }
+
+    /// <summary>
+    /// A body that didn't bind: none, broken JSON or the wrong shape ("pinned": "x" for a list). The controller isn't an
+    /// [ApiController], so such a body arrives as null; saved, it would replace the stored layer with an empty one and
+    /// wipe it. It is refused with 400 instead, and nothing is written. To clear a layer, send an empty object: {}.
+    /// </summary>
+    private bool NotBound(object body)
+    {
+        if (body != null && ModelState.IsValid)
+        {
+            return false;
+        }
+
+        if (ModelState.IsValid)
+        {
+            ModelState.AddModelError("body", "A JSON object is required; send {} to clear.");
+        }
+
+        return true;
     }
 }
