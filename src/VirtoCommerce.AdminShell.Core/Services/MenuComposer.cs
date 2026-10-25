@@ -312,7 +312,9 @@ public static class MenuComposer
         var result = (Title: current, Titles: currentTitles, ClearKey: false);
         if (!string.IsNullOrEmpty(title))
         {
-            result = (title, null, true);
+            // a plain title is the English one, which every other language falls back to: as a title in the titles it
+            // wins over the menu's own translations of the old name, as an editor rename does
+            result = (title, new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) { ["en"] = title }, true);
         }
 
         var given = (titles ?? []).Where(x => !string.IsNullOrWhiteSpace(x.Key) && !string.IsNullOrWhiteSpace(x.Value)).ToList();

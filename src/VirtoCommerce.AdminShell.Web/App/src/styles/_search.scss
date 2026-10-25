@@ -330,6 +330,16 @@
     }
   }
 
+  /* a group whose search failed, under the results: what failed and its Retry */
+  &__failed {
+    align-items: center;
+    color: var(--as-gs-error);
+    display: flex;
+    font-size: 12px;
+    gap: 6px;
+    padding: 6px 14px;
+  }
+
   &__retry {
     background: transparent;
     border: 0;

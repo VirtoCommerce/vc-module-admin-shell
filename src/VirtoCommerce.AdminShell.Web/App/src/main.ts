@@ -24,6 +24,8 @@ import { installModules } from "./shell/modules";
 import { installSharedWidgets } from "./shell/sharedWidgets";
 // white-labeling: the brand, the sign-in page, Home's welcome card, the theme files
 import { loadBranding } from "./shell/branding";
+// unsaved changes on a screen are asked about before the shell leaves it
+import { installLeaveGuards } from "./shell/leaveGuard";
 
 import "@vc-shell/framework/dist/index.css";
 
@@ -39,6 +41,9 @@ async function startApp() {
   const { currentLocale, setLocale } = useLanguages();
 
   const app = createApp(RouterView);
+
+  // before vc-shell's own guard, which opens the next screen in place of one with unsaved changes
+  installLeaveGuards(router);
 
   app.use(VirtoShellFramework, {
     router,

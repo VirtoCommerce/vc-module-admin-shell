@@ -83,6 +83,10 @@ const listId = "as-search-sheet-results";
 const input = ref<HTMLInputElement>();
 const panel = ref<InstanceType<typeof SearchPanel>>();
 
+// the control that opened the sheet (the header's search button): focus returns there when the sheet closes, rather
+// than to the page as the sheet's own input goes
+let opener: HTMLElement | null = null;
+
 function close() {
   searchSheetOpen.value = false;
 }
@@ -97,7 +101,14 @@ function clear() {
 // the keyboard comes up with the sheet; the page under it doesn't scroll
 watch(searchSheetOpen, async (isOpen) => {
   document.documentElement.classList.toggle("as-gs-sheet-open", isOpen);
-  if (!isOpen) return;
+  if (!isOpen) {
+    const back = opener;
+    opener = null;
+    await nextTick();
+    if (back?.isConnected) back.focus();
+    return;
+  }
+  opener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
   await nextTick();
   input.value?.focus();
 });

@@ -365,6 +365,8 @@ public class MenuComposerTests
         var orders = menu.Sections.Single(x => x.Id == "orders");
         Assert.Equal("Sales", orders.Title);
         Assert.Null(orders.TitleKey); // a single title is the title in every language
+        // as the English title, so the client shows it in every language instead of its own translation of the old name
+        Assert.Equal("Sales", orders.Titles["en"]);
         var customers = orders.Items.Single(x => x.Id == "legacy.customers");
         Assert.Equal("Accounts", customers.Title);
         Assert.Equal("Konten", customers.Titles["de"]);

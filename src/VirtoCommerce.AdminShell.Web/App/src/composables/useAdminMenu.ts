@@ -1,5 +1,5 @@
-import { useLatestRequest } from "@vc-shell/framework";
-import { computed, ref, watch } from "vue";
+import { useLatestRequest, useUser } from "@vc-shell/framework";
+import { computed, effectScope, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { adminMenuApi, type EffectiveMenu, type MenuItem, type MenuTarget, type UserMenuPrefs } from "../api/adminMenu";
 import { loadServerTexts, localizeMenu, menuLocale } from "../shell/menuTitles";
@@ -69,17 +69,58 @@ watch(
   () => localize(),
 );
 
+const emptyMenu = (): EffectiveMenu => ({
+  sections: [],
+  pinned: [],
+  recent: [],
+  hidden: [],
+  personalization: EVERYTHING_ALLOWED,
+});
+
+/** The signed-in user, read where the menu loads: an answer for someone who has signed out since is dropped */
+let currentUserId: () => string | undefined = () => undefined;
+let followingUser = false;
+
+/**
+ * The menu and Recent on screen belong to one user. Another user signing in in the same tab (after a sign-out, or
+ * after an expired session) must not see them, not even while their own menu loads, and Recent must not keep the
+ * previous user's pages in its places: both go as soon as the user changes, then the new user's menu loads.
+ */
+function followUser(load: () => Promise<void>) {
+  if (followingUser) return;
+  followingUser = true;
+  const { user } = useUser();
+  currentUserId = () => user.value?.id ?? undefined;
+  // detached: the first component to use the menu may come and go, the shared menu stays
+  effectScope(true).run(() =>
+    watch(
+      () => user.value?.id,
+      (id, previous) => {
+        if (id === previous) return;
+        serverMenu.value = emptyMenu();
+        menu.value = emptyMenu();
+        prefsQueue = Promise.resolve();
+        if (id) load();
+      },
+    ),
+  );
+}
+
 export function useAdminMenu() {
   const router = useRouter();
   const route = useRoute();
 
   async function load() {
+    const owner = currentUserId();
     const next = await menuRequest.latest(adminMenuApi.getMenu(discovered.value));
-    if (next) {
+    // the user changed while it loaded: that menu is someone else's
+    if (next && owner === currentUserId()) {
       serverMenu.value = next;
       localize();
     }
   }
+
+  followUser(load);
 
   /** The workspace blades found once the plugins loaded: a new list loads the menu with them */
   function setDiscovered(items: MenuItem[]) {

@@ -73,9 +73,13 @@ export const titleOfGroup = (sectionId: string, group: MenuGroup, locale = menuL
   (group.id ? translated(groupKey(sectionId, group.id), locale) : undefined) ??
   group.title;
 
-/** A rail label: the menu's short one (MENU.RAIL.configuration), else the first word of the section's title */
-export function railLabelOf(section: { id: string; title: string }) {
-  return translated(railKey(section.id), menuLocale()) ?? section.title.split(/[\s&]+/)[0];
+/**
+ * A rail label: a renamed section's new title (the rename is the name people chose, short labels are the default
+ * names'), else the menu's short one (MENU.RAIL.configuration), else the first word of the section's title
+ */
+export function railLabelOf(section: { id: string; title: string; titles?: MenuTitles }) {
+  const locale = menuLocale();
+  return pick(section.titles, locale) ?? translated(railKey(section.id), locale) ?? section.title.split(/[\s&]+/)[0];
 }
 
 const localizeItem = (item: MenuItem, locale: string, groupTitles?: Map<string, string>): MenuItem => ({

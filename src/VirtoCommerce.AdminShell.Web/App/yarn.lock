@@ -3513,7 +3513,7 @@ __metadata:
 
 "@vc-shell/framework@patch:@vc-shell/framework@npm%3A2.6.3-rc.0#~/.yarn/patches/@vc-shell-framework-npm-2.6.3-rc.0-f4eef86bf1.patch":
   version: 2.6.3-rc.0
-  resolution: "@vc-shell/framework@patch:@vc-shell/framework@npm%3A2.6.3-rc.0#~/.yarn/patches/@vc-shell-framework-npm-2.6.3-rc.0-f4eef86bf1.patch::version=2.6.3-rc.0&hash=b498d1"
+  resolution: "@vc-shell/framework@patch:@vc-shell/framework@npm%3A2.6.3-rc.0#~/.yarn/patches/@vc-shell-framework-npm-2.6.3-rc.0-f4eef86bf1.patch::version=2.6.3-rc.0&hash=36bdb7"
   dependencies:
     "@floating-ui/dom": "npm:^1.7.4"
     "@floating-ui/vue": "npm:^1.0.6"
@@ -3580,7 +3580,7 @@ __metadata:
       optional: false
   bin:
     vc-check-locales: dist/scripts/check-locales.cjs
-  checksum: 10/236c07f422fb086ac6c8d5267d0a676b7b4dad690af43e9fb6a39098ac0c0364d451a07fb39ac4e996db7d8ae50cccb5543448dd7aee08e551bcc213ff4f6cbb
+  checksum: 10/d3b33feb03aee7daea424c528d230fd114e6f60cc8f080faba0c7723202de2c39aa3b8e915d57c5ed6b223df06cbe29fffac1e8cacaf2e5c0d9e4fec10ea2a4d
   languageName: node
   linkType: hard
 

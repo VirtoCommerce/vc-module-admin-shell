@@ -83,7 +83,7 @@ import { onClickOutside, useElementBounding, useEventListener, useWindowSize } f
 import { computed, onMounted, ref, watch } from "vue";
 import { globalSearch } from "./search/globalSearch";
 import SearchPanel from "./search/SearchPanel.vue";
-import { useSearchBox } from "./search/useSearchBox";
+import { useSearchBox, type SearchCloseReason } from "./search/useSearchBox";
 
 /** shortcut: Ctrl/Cmd+K focuses this box (the header's); trigger: render the button that opens the phone sheet */
 const props = defineProps<{ shortcut?: boolean; trigger?: boolean }>();
@@ -128,9 +128,23 @@ const dropStyle = computed(() => {
   };
 });
 
-function close() {
+// where focus was when Ctrl+K brought it to the box: Escape returns it there
+let returnFocus: HTMLElement | null = null;
+
+/**
+ * Escape closes the dropdown and keeps focus: back where Ctrl+K took it from, else in the box (the combobox keeps it,
+ * as the ARIA pattern has it). A chosen result or a press outside lets focus go with the user.
+ */
+function close(reason: SearchCloseReason | "outside" = "outside") {
   open.value = false;
-  input.value?.blur();
+  const back = returnFocus;
+  returnFocus = null;
+  if (reason !== "escape") {
+    input.value?.blur();
+    return;
+  }
+  if (back?.isConnected && back !== input.value) back.focus();
+  else input.value?.focus();
 }
 
 const box = useSearchBox({ onClose: close });
@@ -163,13 +177,16 @@ const shortcutLabel = formatShortcut(hotkey.mod.k).parts.join(" ");
 useEventListener(window, "keydown", (event: KeyboardEvent) => {
   // the box handles its own keys; Escape elsewhere (focus moved off the box) still closes the open dropdown
   if (event.key === "Escape" && open.value && document.activeElement !== input.value) {
-    close();
+    close("escape");
     return;
   }
   if (!props.shortcut || !available.value || !matchesEvent(hotkey.mod.k, event, isMac)) return;
   // an editor's own Ctrl+K (insert link) stays the editor's
   if (isTextInputFocused() && document.activeElement !== input.value) return;
   event.preventDefault();
+  if (document.activeElement !== input.value && document.activeElement instanceof HTMLElement) {
+    returnFocus = document.activeElement;
+  }
   open.value = true;
   input.value?.focus();
   input.value?.select();

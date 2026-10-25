@@ -95,6 +95,7 @@
               <label class="vc-global-filters-panel__label">{{ $t("PLATFORM.MODULES.MODULE") }}</label>
               <VcSelect
                 v-model="draftModuleId"
+                v-combobox-name="$t('PLATFORM.MODULES.MODULE')"
                 size="small"
                 :options="modules"
                 :placeholder="$t('PLATFORM.SETTINGS.LIST.ALL_MODULES')"
@@ -377,6 +378,7 @@
                 <VcSelect
                   v-else-if="s.allowedValues?.length"
                   v-model="item[s.name]"
+                  v-combobox-name="settingTitle(s)"
                   :options="s.allowedValues.map((x) => ({ id: x, title: String(x) }))"
                   :required="s.isRequired"
                   :disabled="readonly(s)"
@@ -505,6 +507,8 @@ import { useElementSize, useEventListener } from "@vueuse/core";
 import { computed, nextTick, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
+import { vComboboxName } from "../../../../shell/comboboxName";
+import { useLeaveGuard } from "../../../../shell/leaveGuard";
 import { refreshItem, saveResetItems, usePlatformBladeForm } from "../../composables/blade";
 import {
   exportDocument,
@@ -613,6 +617,9 @@ const form = usePlatformBladeForm({
   data: item,
   canSaveOverride: computed(() => changed.value.length > 0 && valid.value && canUpdate.value),
 });
+
+// leaving Settings for another screen, or closing the tab, with edits not saved asks first
+useLeaveGuard(form.isModified, "/settings", () => t("PLATFORM.COMMON.CLOSE_CONFIRMATION"));
 
 /** The editors from the stored values; `keepEdits` keeps the unsaved ones (a reload under them) */
 function fill(keepEdits = false) {

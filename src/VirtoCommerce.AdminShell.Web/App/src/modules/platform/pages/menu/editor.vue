@@ -3,6 +3,7 @@
     :title="$t('PLATFORM.MENU_EDITOR.TITLE')"
     :toolbar-items="toolbar"
     :loading="loading"
+    :modified="dirty"
     :width="jsonOpen ? '50%' : '100%'"
   >
     <div class="menu-editor">
@@ -530,6 +531,7 @@ import {
   type MenuSection,
 } from "../../../../api/adminMenu";
 import { useAdminMenu } from "../../../../composables/useAdminMenu";
+import { useLeaveGuard } from "../../../../shell/leaveGuard";
 import { discoverLegacyScreens, type LegacyScreen } from "../../../../shell/legacyDiscovery";
 import { loadServerTexts, localizeMenu, menuLocale, titleOfItem } from "../../../../shell/menuTitles";
 import { refreshItem } from "../../composables/blade";
@@ -581,6 +583,9 @@ const dirty = computed(
     JSON.stringify(clean(patch.value)) !== storedPatch.value ||
     JSON.stringify(personalization.value) !== storedPersonalization.value,
 );
+
+// leaving the editor for another screen, or closing the tab, with changes not saved asks first
+useLeaveGuard(dirty, "/menu-editor", () => t("PLATFORM.COMMON.CLOSE_CONFIRMATION"));
 
 // the language the editor renames in: the user's, with English beside it
 const locale = computed(() => menuLocale());

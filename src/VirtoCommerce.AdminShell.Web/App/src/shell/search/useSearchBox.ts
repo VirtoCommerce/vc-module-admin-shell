@@ -17,7 +17,10 @@ export interface SearchEntry {
  * the highlighted row and the keys. The highlighted row is kept by key, so it stays on the same item while later groups
  * arrive; a group keeps its place (provider order), so the list doesn't jump.
  */
-export function useSearchBox(options: { onClose?: () => void } = {}) {
+/** Why the box closes: Escape (the user stays where they were) or a result chosen (the shell moves on) */
+export type SearchCloseReason = "escape" | "select";
+
+export function useSearchBox(options: { onClose?: (reason: SearchCloseReason) => void } = {}) {
   const query = ref("");
   const groups = shallowRef<SearchGroup[]>([]);
   const loading = ref(false);
@@ -120,7 +123,7 @@ export function useSearchBox(options: { onClose?: () => void } = {}) {
     query.value = "";
     groups.value = [];
     loading.value = false;
-    options.onClose?.();
+    options.onClose?.("select");
     try {
       await (entry.showAll ? entry.group.showAll?.() : entry.item?.execute());
     } catch (error) {
@@ -172,7 +175,7 @@ export function useSearchBox(options: { onClose?: () => void } = {}) {
       case "Escape":
         event.preventDefault();
         if (query.value) clear();
-        else options.onClose?.();
+        else options.onClose?.("escape");
         return true;
       default:
         return false;
