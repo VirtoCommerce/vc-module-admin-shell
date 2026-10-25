@@ -370,6 +370,13 @@
     margin-top: -6px;
   }
 
+  /* Pinned sits above the section's items, which may have no heading: a divider keeps them apart */
+  &__group--shortcut + &__group:not(&__group--shortcut) {
+    border-top: 1px solid var(--as-divider);
+    margin-top: -4px;
+    padding-top: 12px;
+  }
+
   &__restore {
     align-self: flex-start;
     background: transparent;

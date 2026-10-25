@@ -146,11 +146,12 @@
           trigger
           @open-sheet="openSearchSheet"
         />
-        <!-- a busy section reads as headed groups (each folds), any other as one list; then Pinned, and on Home Recent -->
+        <!-- Pinned first; then the section, as headed groups (each folds) when busy, else one list; on Home, Recent -->
         <div
           v-for="group in groups"
           :key="group.key"
           class="as-panel__group"
+          :class="{ 'as-panel__group--shortcut': group.shortcut }"
         >
           <button
             v-if="group.title"
@@ -371,9 +372,11 @@ const shown = computed(
 /** shortcut: a Pinned or Recent group, whose items are copies of items elsewhere in the menu */
 type Group = { key: string; title: string; items: MenuItem[]; shortcut?: boolean };
 const groups = computed(() => {
-  const list: Group[] = groupItems(shown.value).map((group) => ({ ...group, key: `${shown.value?.id}:${group.title}` }));
+  const list: Group[] = [];
+  // Pinned on top: the user's own shortcuts come before the section's items
   if (menu.value.pinned.length) list.push({ key: ":pinned", title: t("SHELL.NAV.PINNED"), items: menu.value.pinned, shortcut: true });
-  // Home also lists the pages used most, below Pinned (the server leaves out pinned items and Home's own)
+  list.push(...groupItems(shown.value).map((group) => ({ ...group, key: `${shown.value?.id}:${group.title}` })));
+  // Home also lists the pages used most, after its own items (the server leaves out pinned items and Home's own)
   if (isHome.value && menu.value.recent.length) {
     list.push({ key: ":recent", title: t("SHELL.NAV.RECENT"), items: menu.value.recent, shortcut: true });
   }
