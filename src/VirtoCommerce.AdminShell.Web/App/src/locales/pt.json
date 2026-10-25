@@ -141,6 +141,12 @@
         "NOT_ALLOWED": "Esta conta ainda não tem permissão para entrar. Contate o administrador."
       }
     },
+    "ACCESS_DENIED": {
+      "TITLE": "Acesso negado",
+      "MESSAGE": "Sua conta não tem acesso a {name}. Entre em contato com o administrador.",
+      "SIGNED_IN_AS": "Conectado como {name}",
+      "SWITCH_ACCOUNT": "Entrar com outra conta"
+    },
     "SEARCH": {
       "LABEL": "Pesquisar",
       "PLACEHOLDER": "Pesquisar ou ir para…",

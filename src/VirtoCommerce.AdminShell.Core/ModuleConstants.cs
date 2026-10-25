@@ -33,10 +33,9 @@ public static class ModuleConstants
     {
         public static class Permissions
         {
-            public const string Access = "admin-shell:access";
             public const string MenuManage = "admin-shell:menu:manage";
 
-            public static string[] AllPermissions { get; } = [Access, MenuManage];
+            public static string[] AllPermissions { get; } = [MenuManage];
         }
     }
 

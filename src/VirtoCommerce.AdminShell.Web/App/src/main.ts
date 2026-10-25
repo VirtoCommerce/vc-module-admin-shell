@@ -26,6 +26,8 @@ import { installSharedWidgets } from "./shell/sharedWidgets";
 import { loadBranding } from "./shell/branding";
 // unsaved changes on a screen are asked about before the shell leaves it
 import { installLeaveGuards } from "./shell/leaveGuard";
+// who may enter: the platform's PlatformUI:Access rules (canAccessAdminUI)
+import { installAdminUIAccessGuard } from "./shell/adminUIAccess";
 
 import "@vc-shell/framework/dist/index.css";
 
@@ -42,7 +44,9 @@ async function startApp() {
 
   const app = createApp(RouterView);
 
-  // before vc-shell's own guard, which opens the next screen in place of one with unsaved changes
+  // before vc-shell's own guards: a user the platform keeps out of the admin UI gets no screen, and unsaved changes are
+  // asked about before vc-shell opens the next screen in place of theirs
+  installAdminUIAccessGuard(router);
   installLeaveGuards(router);
 
   app.use(VirtoShellFramework, {

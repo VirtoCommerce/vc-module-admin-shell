@@ -141,6 +141,12 @@
         "NOT_ALLOWED": "Questo account non è ancora autorizzato ad accedere. Contattare l'amministratore."
       }
     },
+    "ACCESS_DENIED": {
+      "TITLE": "Accesso negato",
+      "MESSAGE": "Il tuo account non ha accesso a {name}. Contatta l'amministratore.",
+      "SIGNED_IN_AS": "Accesso effettuato come {name}",
+      "SWITCH_ACCOUNT": "Accedi con un altro account"
+    },
     "SEARCH": {
       "LABEL": "Cerca",
       "PLACEHOLDER": "Cerca o vai a…",

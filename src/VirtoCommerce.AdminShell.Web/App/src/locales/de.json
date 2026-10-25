@@ -141,6 +141,12 @@
         "NOT_ALLOWED": "Dieses Konto darf sich noch nicht anmelden. Wenden Sie sich an Ihren Administrator."
       }
     },
+    "ACCESS_DENIED": {
+      "TITLE": "Zugriff verweigert",
+      "MESSAGE": "Ihr Konto hat keinen Zugriff auf {name}. Wenden Sie sich an Ihren Administrator.",
+      "SIGNED_IN_AS": "Angemeldet als {name}",
+      "SWITCH_ACCOUNT": "Mit einem anderen Konto anmelden"
+    },
     "SEARCH": {
       "LABEL": "Suche",
       "PLACEHOLDER": "Suchen oder springen zu…",

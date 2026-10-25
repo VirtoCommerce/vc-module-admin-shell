@@ -141,6 +141,12 @@
         "NOT_ALLOWED": "This account isn't allowed to sign in yet. Contact your administrator."
       }
     },
+    "ACCESS_DENIED": {
+      "TITLE": "Access denied",
+      "MESSAGE": "Your account doesn't have access to {name}. Contact your administrator.",
+      "SIGNED_IN_AS": "Signed in as {name}",
+      "SWITCH_ACCOUNT": "Sign in with another account"
+    },
     "SEARCH": {
       "LABEL": "Search",
       "PLACEHOLDER": "Search or jump to…",

@@ -141,6 +141,12 @@
         "NOT_ALLOWED": "Kontot får inte logga in ännu. Kontakta administratören."
       }
     },
+    "ACCESS_DENIED": {
+      "TITLE": "Åtkomst nekad",
+      "MESSAGE": "Ditt konto har inte åtkomst till {name}. Kontakta administratören.",
+      "SIGNED_IN_AS": "Inloggad som {name}",
+      "SWITCH_ACCOUNT": "Logga in med ett annat konto"
+    },
     "SEARCH": {
       "LABEL": "Sök",
       "PLACEHOLDER": "Sök eller gå till…",

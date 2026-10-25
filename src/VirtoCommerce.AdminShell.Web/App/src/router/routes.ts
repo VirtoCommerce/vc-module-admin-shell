@@ -3,6 +3,7 @@ import { defineComponent, h, type Component } from "vue";
 import App from "../pages/App.vue";
 import AuthShell from "../pages/AuthShell.vue";
 import Login from "../pages/Login.vue";
+import AccessDenied from "../pages/AccessDenied.vue";
 import FramePage from "../pages/FramePage.vue";
 import Dashboard from "../pages/Dashboard.vue";
 import { Invite, ResetPassword, ForgotPassword, ChangePasswordPage } from "@vc-shell/framework";
@@ -43,6 +44,12 @@ export const routes: RouteRecordRaw[] = [
     name: "Login",
     path: "/login",
     component: Login,
+  },
+  {
+    // a signed-in user the platform's PlatformUI:Access rules keep out of the admin UI (shell/adminUIAccess.ts)
+    name: "AccessDenied",
+    path: "/access-denied",
+    component: AccessDenied,
   },
   {
     name: "Invite",

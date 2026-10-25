@@ -141,6 +141,12 @@
         "NOT_ALLOWED": "Kontoen kan ikke logge inn ennå. Kontakt administratoren."
       }
     },
+    "ACCESS_DENIED": {
+      "TITLE": "Tilgang nektet",
+      "MESSAGE": "Kontoen din har ikke tilgang til {name}. Kontakt administratoren.",
+      "SIGNED_IN_AS": "Logget på som {name}",
+      "SWITCH_ACCOUNT": "Logg på med en annen konto"
+    },
     "SEARCH": {
       "LABEL": "Søk",
       "PLACEHOLDER": "Søk eller gå til…",

@@ -19,7 +19,7 @@ The module has no database tables: everything it stores is in platform settings.
 
 ### 2.1 The module and the app
 
-`module.manifest` declares the module `VirtoCommerce.AdminShell` and the app `admin-shell` (`<permission>admin-shell:access</permission>`, `<placement>AppMenu</placement>`, so it appears in the platform's Apps dropdown). The platform serves the app's static files from `Content/admin-shell` at `/apps/admin-shell/`; the module must ship that folder, or the platform refuses to start the module.
+`module.manifest` declares the module `VirtoCommerce.AdminShell` and the app `admin-shell` (`<placement>AppMenu</placement>`, so it appears in the platform's Apps dropdown; with no `<permission>`, as Commerce Manager). The platform serves the app's static files from `Content/admin-shell` at `/apps/admin-shell/`; the module must ship that folder, or the platform refuses to start the module.
 
 `Module.cs`:
 
@@ -31,8 +31,9 @@ The module has no database tables: everything it stores is in platform settings.
 
 | Permission | Meaning |
 |---|---|
-| `admin-shell:access` | Open the Admin Shell and read your own menu. |
 | `admin-shell:menu:manage` | Read and change the global and role menu layers through the API. |
+
+Who may open the Admin Shell is the platform's admin UI access policy, `VirtoCommerce:PlatformUI:Access` in the platform's appsettings (administrators, required permissions, account types, allowed and denied permission masks; https://github.com/VirtoCommerce/vc-platform/pull/3092), the same rules as the AngularJS admin. A user it denies sees an *Access denied* page with a button to sign in with another account. The client reads the decision from `canAccessAdminUI` on `GET api/platform/security/currentuser` (`App/src/shell/adminUIAccess.ts`).
 
 | Setting (group `Admin Shell\|Menu`, JSON) | Stored for | Default | Content |
 |---|---|---|---|
@@ -51,9 +52,9 @@ A setting that isn't valid JSON is treated as empty and doesn't take the menu do
 
 | Verb and route | Permission | Purpose |
 |---|---|---|
-| `GET /` | `admin-shell:access` | The effective menu of the current user: `{ sections, pinned, recent, hidden }`. |
-| `GET /me/prefs`, `PUT /me/prefs` | `admin-shell:access` | The user's own pins, hidden items and order. |
-| `POST /me/recent/{itemId}` | `admin-shell:access` | Records a use of a menu item (for *Recent*). |
+| `GET /` | signed in | The effective menu of the current user: `{ sections, pinned, recent, hidden }`. |
+| `GET /me/prefs`, `PUT /me/prefs` | signed in | The user's own pins, hidden items and order. |
+| `POST /me/recent/{itemId}` | signed in | Records a use of a menu item (for *Recent*). |
 | `GET /default` | `admin-shell:menu:manage` | The default menu before any patch. |
 | `GET /global`, `PUT /global` | `admin-shell:menu:manage` | The global patch. |
 | `GET /roles/{roleId}`, `PUT /roles/{roleId}` | `admin-shell:menu:manage` | A role's patch. |

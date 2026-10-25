@@ -1,6 +1,5 @@
 {
   "permissions": {
-    "admin-shell:access": "Открытие Admin Shell",
     "admin-shell:menu:manage": "Управление меню Admin Shell: редактор меню, глобальный уровень и уровень ролей, что могут менять пользователи"
   },
   "settings": {

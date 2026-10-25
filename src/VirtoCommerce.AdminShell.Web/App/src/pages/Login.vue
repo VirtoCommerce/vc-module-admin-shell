@@ -186,6 +186,7 @@ import { useRouter } from "vue-router";
 import AuthShell from "./AuthShell.vue";
 import { rootedUrl } from "../utils/url";
 import { companyName } from "../shell/branding";
+import { canAccessAdminUI } from "../shell/adminUIAccess";
 
 interface Provider {
   type: string;
@@ -259,6 +260,11 @@ async function signInWithPassword() {
   const result = (await signIn(form.username.trim(), form.password)) as SignInResult & { status?: number; error?: string };
 
   if (result.succeeded) {
+    // as the AngularJS admin: a user the platform keeps out of the admin UI isn't sent through a password change first
+    if (!canAccessAdminUI(user.value)) {
+      await router.push({ name: "AccessDenied" });
+      return;
+    }
     if (user.value?.passwordExpired) {
       await router.push({ name: "ChangePassword" });
       return;

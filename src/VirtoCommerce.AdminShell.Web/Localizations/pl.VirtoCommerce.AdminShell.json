@@ -1,6 +1,5 @@
 {
   "permissions": {
-    "admin-shell:access": "Otwieranie Admin Shell",
     "admin-shell:menu:manage": "Zarządzanie menu Admin Shell: edytor menu, warstwy globalna i ról, co mogą zmieniać użytkownicy"
   },
   "settings": {

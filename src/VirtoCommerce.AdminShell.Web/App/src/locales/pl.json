@@ -141,6 +141,12 @@
         "NOT_ALLOWED": "To konto nie może się jeszcze logować. Skontaktuj się z administratorem."
       }
     },
+    "ACCESS_DENIED": {
+      "TITLE": "Odmowa dostępu",
+      "MESSAGE": "Twoje konto nie ma dostępu do {name}. Skontaktuj się z administratorem.",
+      "SIGNED_IN_AS": "Zalogowano jako {name}",
+      "SWITCH_ACCOUNT": "Zaloguj się na inne konto"
+    },
     "SEARCH": {
       "LABEL": "Szukaj",
       "PLACEHOLDER": "Szukaj lub przejdź do…",

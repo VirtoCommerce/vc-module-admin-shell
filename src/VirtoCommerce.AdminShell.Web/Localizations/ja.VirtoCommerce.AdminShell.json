@@ -1,6 +1,5 @@
 {
   "permissions": {
-    "admin-shell:access": "Admin Shell を開く",
     "admin-shell:menu:manage": "Admin Shell のメニューを管理: メニューエディター、グローバル層とロール層、ユーザーが変更できる内容"
   },
   "settings": {

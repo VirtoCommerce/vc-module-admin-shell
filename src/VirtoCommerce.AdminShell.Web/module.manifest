@@ -22,7 +22,6 @@
       <title>Admin Shell</title>
       <description>Virto Commerce admin</description>
       <iconUrl>Modules/$(VirtoCommerce.AdminShell)/Content/logo.svg</iconUrl>
-      <permission>admin-shell:access</permission>
       <placement>AppMenu</placement>
     </app>
   </apps>

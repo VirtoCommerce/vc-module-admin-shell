@@ -141,6 +141,12 @@
         "NOT_ALLOWED": "Esta cuenta aún no tiene permiso para iniciar sesión. Póngase en contacto con su administrador."
       }
     },
+    "ACCESS_DENIED": {
+      "TITLE": "Acceso denegado",
+      "MESSAGE": "Tu cuenta no tiene acceso a {name}. Ponte en contacto con tu administrador.",
+      "SIGNED_IN_AS": "Sesión iniciada como {name}",
+      "SWITCH_ACCOUNT": "Iniciar sesión con otra cuenta"
+    },
     "SEARCH": {
       "LABEL": "Buscar",
       "PLACEHOLDER": "Buscar o ir a…",

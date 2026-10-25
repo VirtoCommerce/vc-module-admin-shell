@@ -33,7 +33,7 @@ Roles are personas. Access is granted by platform permissions assigned through r
 
 | Role | Responsibilities in the admin UI | Typical permissions |
 |---|---|---|
-| **Business user** (merchandiser, order manager, marketer, support agent) | Daily work in module screens: catalogs, orders, customers, promotions. Uses search, the dashboard, notifications and menu counters to find work. | Module permissions; `admin-shell:access` |
+| **Business user** (merchandiser, order manager, marketer, support agent) | Daily work in module screens: catalogs, orders, customers, promotions. Uses search, the dashboard, notifications and menu counters to find work. | Module permissions; allowed by the platform's `PlatformUI:Access` policy |
 | **Platform administrator** | Configures the platform: settings, modules, license, dynamic properties, cache; watches background jobs and the environment. | `platform:setting:*`, `platform:module:*`, `platform:dynamic_properties:*`, `cache:reset` |
 | **Security administrator** | Manages users, roles, permissions with scopes, API keys, OAuth applications, sessions; audits sign-ins and changes. | `platform:security:*`, `platform:security:sign_in_log:read` |
 | **Developer / integrator** | Explores APIs and tools, creates API keys and OAuth apps for integrations, reads logs and diagnostics. | `platform:developer-tools:access`, `platform:security:*` |

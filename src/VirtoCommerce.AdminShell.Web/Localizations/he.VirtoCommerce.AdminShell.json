@@ -1,6 +1,5 @@
 {
   "permissions": {
-    "admin-shell:access": "פתיחת Admin Shell",
     "admin-shell:menu:manage": "ניהול התפריט של Admin Shell: עורך התפריט, השכבה הגלובלית ושכבת התפקידים, ומה המשתמשים רשאים לשנות"
   },
   "settings": {

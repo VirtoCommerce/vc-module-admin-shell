@@ -1,6 +1,5 @@
 {
   "permissions": {
-    "admin-shell:access": "打开 Admin Shell",
     "admin-shell:menu:manage": "管理 Admin Shell 菜单：菜单编辑器、全局层和角色层，以及用户可以更改的内容"
   },
   "settings": {

@@ -141,6 +141,12 @@
         "NOT_ALLOWED": "Ce compte n'est pas encore autorisé à se connecter. Contactez votre administrateur."
       }
     },
+    "ACCESS_DENIED": {
+      "TITLE": "Accès refusé",
+      "MESSAGE": "Votre compte n'a pas accès à {name}. Contactez votre administrateur.",
+      "SIGNED_IN_AS": "Connecté en tant que {name}",
+      "SWITCH_ACCOUNT": "Se connecter avec un autre compte"
+    },
     "SEARCH": {
       "LABEL": "Rechercher",
       "PLACEHOLDER": "Rechercher ou accéder à…",

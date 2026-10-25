@@ -1,6 +1,5 @@
 {
   "permissions": {
-    "admin-shell:access": "Avaa Admin Shell",
     "admin-shell:menu:manage": "Hallinnoi Admin Shellin valikkoa: valikkoeditori, yleinen ja roolikohtainen taso sekä se, mitä käyttäjät saavat muuttaa"
   },
   "settings": {

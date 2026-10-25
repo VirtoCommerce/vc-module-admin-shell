@@ -1,6 +1,5 @@
 {
   "permissions": {
-    "admin-shell:access": "فتح Admin Shell",
     "admin-shell:menu:manage": "إدارة قائمة Admin Shell: محرر القائمة، والطبقة العامة وطبقة الأدوار، وما يمكن للمستخدمين تغييره"
   },
   "settings": {

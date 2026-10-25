@@ -61,8 +61,9 @@ A setting that isn't valid JSON is ignored, so one typo can't take the menu down
 
 | Permission | Description |
 |------------|-------------|
-| `admin-shell:access` | Open the Admin Shell and read your own menu |
 | `admin-shell:menu:manage` | Read and change the global and role menu layers through the API |
+
+Who may open the Admin Shell is the platform's admin UI access policy, `VirtoCommerce:PlatformUI:Access` in the platform's appsettings (administrators, required permissions, account types, allowed and denied permission masks; https://github.com/VirtoCommerce/vc-platform/pull/3092), the same rules as the AngularJS admin. A user it denies sees an *Access denied* page with a button to sign in with another account.
 
 ## Architecture
 

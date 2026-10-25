@@ -8,25 +8,30 @@ using Permissions = VirtoCommerce.AdminShell.Core.ModuleConstants.Security.Permi
 
 namespace VirtoCommerce.AdminShell.Web.Controllers.Api;
 
+/// <remarks>
+/// A user's own menu and preferences need only a signed-in user: who may enter the admin UI is the platform's
+/// VirtoCommerce:PlatformUI:Access policy (canAccessAdminUI on the current user), checked by the client as the
+/// AngularJS admin does, and the menu shows only what the user's permissions open.
+/// </remarks>
 [Route("api/admin-shell/menu")]
 public class AdminShellMenuController(IAdminMenuService menuService) : Controller
 {
     /// <summary>Effective menu for the current user: default → global → roles → personal, filtered by permissions</summary>
     [HttpGet("")]
-    [Authorize(Permissions.Access)]
+    [Authorize]
     public Task<EffectiveMenu> GetMenu() => menuService.GetEffectiveMenuAsync(User);
 
     /// <summary>The same, with the workspace blades the client found that no menu entry opens (they go to More)</summary>
     [HttpPost("")]
-    [Authorize(Permissions.Access)]
+    [Authorize]
     public Task<EffectiveMenu> GetMenu([FromBody] MenuRequest request) => menuService.GetEffectiveMenuAsync(User, request?.Discovered);
 
     [HttpGet("me/prefs")]
-    [Authorize(Permissions.Access)]
+    [Authorize]
     public Task<UserMenuPrefs> GetMyPrefs() => menuService.GetUserPrefsForEditAsync(User.GetUserId());
 
     [HttpPut("me/prefs")]
-    [Authorize(Permissions.Access)]
+    [Authorize]
     public async Task<ActionResult> SaveMyPrefs([FromBody] UserMenuPrefs prefs)
     {
         if (NotBound(prefs))
@@ -40,7 +45,7 @@ public class AdminShellMenuController(IAdminMenuService menuService) : Controlle
 
     /// <summary>Counts a use of a menu item toward the user's Recent</summary>
     [HttpPost("me/recent/{itemId}")]
-    [Authorize(Permissions.Access)]
+    [Authorize]
     public async Task<ActionResult> AddRecent([FromRoute] string itemId)
     {
         await menuService.AddRecentAsync(User.GetUserId(), itemId);

@@ -141,6 +141,12 @@
         "NOT_ALLOWED": "此账户暂不允许登录。请联系管理员。"
       }
     },
+    "ACCESS_DENIED": {
+      "TITLE": "访问被拒绝",
+      "MESSAGE": "您的帐户无权访问 {name}。请联系管理员。",
+      "SIGNED_IN_AS": "已登录为 {name}",
+      "SWITCH_ACCOUNT": "使用其他帐户登录"
+    },
     "SEARCH": {
       "LABEL": "搜索",
       "PLACEHOLDER": "搜索或跳转到…",

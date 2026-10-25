@@ -141,6 +141,12 @@
         "NOT_ALLOWED": "Tilillä ei voi vielä kirjautua. Ota yhteyttä järjestelmänvalvojaan."
       }
     },
+    "ACCESS_DENIED": {
+      "TITLE": "Pääsy estetty",
+      "MESSAGE": "Tililläsi ei ole pääsyä kohteeseen {name}. Ota yhteyttä järjestelmänvalvojaan.",
+      "SIGNED_IN_AS": "Kirjautuneena käyttäjänä {name}",
+      "SWITCH_ACCOUNT": "Kirjaudu toisella tilillä"
+    },
     "SEARCH": {
       "LABEL": "Haku",
       "PLACEHOLDER": "Hae tai siirry…",
