@@ -51,9 +51,8 @@ export function useLeaveGuard(dirty: Ref<boolean>, basePath: string, message: ()
 
   const onUnload = (event: BeforeUnloadEvent) => {
     if (!dirty.value) return;
+    // the browser's own "leave site?" prompt (Chrome and Edge 119+, Firefox, Safari); the deprecated returnValue isn't needed
     event.preventDefault();
-    // older browsers show the prompt only when returnValue is set
-    event.returnValue = "";
   };
   window.addEventListener("beforeunload", onUnload);
 
