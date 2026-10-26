@@ -88,7 +88,7 @@ The plugin list doesn't come from this module. The platform's `GET /api/apps/adm
 
 ### 3.1 Stack
 
-Vue 3.5, vue-router 5 (hash history under `/apps/admin-shell/`), `@vc-shell/framework` 2.6.3-rc.0 with a Yarn patch (`App/.yarn/patches`: login redirect, empty user as signed out, blade/toolbar/table fixes), `@vc-shell/mf-host` for Module Federation, Tailwind with the `tw-` prefix.
+Vue 3.5, vue-router 5 (hash history under `/apps/admin-shell/`), `@vc-shell/framework` 2.7.0 with a Yarn patch (`App/.yarn/patches`: the phone back button is one named button), `@vc-shell/mf-host` for Module Federation, Tailwind with the `tw-` prefix.
 
 ### 3.2 Startup (`App/src/main.ts`)
 

@@ -101,9 +101,10 @@ function themeBridge(doc: Document, host: CSSStyleDeclaration) {
   return `:root{${colors.join(";")}}`;
 }
 
-// ponytail: an app (Tasks, News) is fitted from outside (same origin): this shell's colours and theme, and, when its
-// pages are in this menu, no navigation of its own (the sidebar, or the logo bar that opens its menu on a phone);
-// drop once the app is a module of this shell
+// ponytail: an app (Tasks, News) is fitted from outside (same origin): this shell's colours and theme, no environment
+// banner of its own (vc-shell 2.7 shows one; the shell's ribbon already says it), and, when its pages are in this menu,
+// no navigation of its own (the sidebar, or the logo bar that opens its menu on a phone); drop once the app is a module
+// of this shell
 function fitEmbedded() {
   try {
     const doc = frame.value?.contentDocument;
@@ -111,6 +112,7 @@ function fitEmbedded() {
     const style = doc.getElementById("as-embedded") ?? doc.head.appendChild(doc.createElement("style"));
     style.id = "as-embedded";
     style.textContent =
+      ".vc-environment-banner{display:none!important}" +
       (navigatesFromMenu.value
         ? ".desktop-layout,.desktop-layout__spacer,.mobile-layout{display:none!important}"
         : "") +

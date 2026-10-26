@@ -1,0 +1,28 @@
+diff --git a/dist/chunks/VcScheduler.vue_vue_type_script_setup_true_lang-0d1Dle1T.js b/dist/chunks/VcScheduler.vue_vue_type_script_setup_true_lang-0d1Dle1T.js
+index b8efdff09c57565b34d6becd6fdc12ea287c8c59..5616f2547223890381d16d290c2215486e4c798c 100644
+--- a/dist/chunks/VcScheduler.vue_vue_type_script_setup_true_lang-0d1Dle1T.js
++++ b/dist/chunks/VcScheduler.vue_vue_type_script_setup_true_lang-0d1Dle1T.js
+@@ -1409,6 +1409,7 @@ const lu = as, nu = /* @__PURE__ */ Q({
+     onBack: { type: Function }
+   },
+   setup(e) {
++    const { t: backText } = He();
+     const a = e, t = N(), l = N(!1), r = () => {
+       a.onBack();
+     };
+@@ -1428,13 +1429,14 @@ const lu = as, nu = /* @__PURE__ */ Q({
+     }, {
+       trigger: D(({ click: d }) => [
+         L(n(mc), {
+-          as: "button",
++          as: "span",
+           onTrigger: d
+         }, {
+           default: D(() => [
+             L(n(_e), {
+               ref_key: "buttonRef",
+               ref: t,
++              "aria-label": backText("COMPONENTS.MOLECULES.VC_BREADCRUMBS.BACK"),
+               icon: "lucide-arrow-left",
+               "icon-class": "tw-text-neutrals-500",
+               "icon-size": "l",

@@ -1387,28 +1387,3 @@
   right: 2px;
   top: 4px;
 }
-
-/* a select in a narrow column (two fields side by side in a blade): vc-shell's field doesn't shrink below its value
-   (min-width: auto), so a long value spilled over the next column and its hint. The field takes the column's width and
-   the value is cut instead, left to right and right to left alike */
-.vc-select__control,
-.vc-select__field-wrapper,
-.vc-select__field,
-.vc-select__field-inner,
-.vc-select__field-content,
-.vc-select__field-main {
-  min-width: 0;
-}
-
-/* a chosen value of a multiple select (a chip) is cut too rather than widening the field */
-.vc-select__multiple-item {
-  max-width: 100%;
-  min-width: 0;
-
-  > span {
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-}

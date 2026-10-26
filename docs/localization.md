@@ -65,22 +65,22 @@ Arabic, Hebrew, Persian and Urdu are written right to left. For them the whole p
 
 | Part | What it does | Where |
 |---|---|---|
-| Page direction | `<html dir="rtl">` while the UI language is `ar`, `he`, `fa` or `ur` (`dir="ltr"` otherwise); vc-shell keeps `<html lang>` | `App/src/locales/direction.ts` (`RTL_LANGUAGES`) |
+| Page direction | `<html dir="rtl">` while the UI language is written right to left (`ar`, `he`, `fa`, `ur` and others; `dir="ltr"` otherwise), with `<html lang>` | vc-shell's language switch (`useLanguages().setLocale`); `useTextDirection()` and `isRtlElement()` for code that places things itself |
 | Mirrored styles | at build time every left/right rule of the shell, Tailwind and vc-shell's stylesheet gets its mirror under `[dir="rtl"]` (margins, paddings, positions, borders, corners, text alignment, rotations) | `App/postcss.config.cjs` (`postcss-rtlcss`) |
 | Not mirrored | the dashboard grid (gridstack) places widgets itself and has its own right-to-left rules, so its rules are left out | `App/postcss.config.cjs` (`keepGridstack`) |
-| Arrows | arrows that mean forward, back, open or in/out (chevrons, arrows, log in/out, panel) point the way of reading | `App/src/styles/_rtl.scss` |
-| Text with its own direction | data in tables, cards and fields (emails, codes, versions, URLs, amounts) keeps its own direction inside the right-to-left page, so it is cut and ordered from its first letter | `App/src/styles/_rtl.scss` |
+| Arrows | arrows that mean forward, back, open or in/out (chevrons, arrows, log in/out, panel, undo/redo) point the way of reading | vc-shell's stylesheet (`.vc-icon--rtl-mirror` for another icon) |
+| Text with its own direction | data in tables, cards and fields (emails, codes, versions, URLs, amounts) keeps its own direction inside the right-to-left page, so it is cut and ordered from its first letter | vc-shell's stylesheet; code (`pre`, `code`, `kbd`, `samp`) always left to right in `App/src/styles/_rtl.scss` |
 | Arabic and Hebrew letters | Noto Sans Arabic and Noto Sans Hebrew, bundled with the app (no font service), added to the shell's font names for those scripts' code points only | `App/src/styles/_rtl.scss` (`$scripts`), `@fontsource-variable/noto-sans-arabic`, `@fontsource-variable/noto-sans-hebrew` |
 
 Writing a screen that works both ways:
 
 - **Use logical CSS** where you can: `margin-inline-start`, `padding-inline-end`, `inset-inline-start`, `text-align: start`. Physical rules (`margin-left`) still work, mirrored at build time in the shell; a module plugin's own styles aren't mirrored, so they need logical properties.
-- **Icons:** a directional icon from the list in `_rtl.scss` flips by itself. An icon that shows a direction in the world (a chart going up, "open in new tab") doesn't flip; one that shows the way of reading does.
+- **Icons:** a directional Lucide icon (chevrons, arrows, log in/out, panels, undo/redo) flips by itself; give another icon the class `vc-icon--rtl-mirror`. An icon that shows a direction in the world (a chart going up, "open in new tab") doesn't flip; one that shows the way of reading does.
 - **Data:** put codes, emails and URLs in table cells, fields or the mobile card's fields; elsewhere give the element `dir="auto"` (or `dir="ltr"` for code-like values) so they read correctly.
 - **Sentences around fields** (the condition builders) are separate texts: each language orders them in its reading order, so keep them short.
 - **Charts** keep their time axis left to right, as charts in Arabic and Hebrew interfaces usually do.
 
-Adding another right-to-left language (Persian `fa`, Urdu `ur`): the steps of *Adding a new language* below; the direction, styles and arrows already apply (both are in `RTL_LANGUAGES`). A script without a bundled font gets one in `_rtl.scss` (`$scripts`); Urdu's Nastaliq is taller than Naskh, so check line heights.
+Adding another right-to-left language (Persian `fa`, Urdu `ur`): the steps of *Adding a new language* below; the direction, styles and arrows already apply (vc-shell knows both as right to left). A script without a bundled font gets one in `_rtl.scss` (`$scripts`); Urdu's Nastaliq is taller than Naskh, so check line heights.
 
 ## Adding a new language
 

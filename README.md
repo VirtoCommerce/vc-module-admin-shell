@@ -158,7 +158,7 @@ Base route: `api/admin-shell/menu`
 
 * **Server:** `dotnet build`.
 * **Host app:** in `src/VirtoCommerce.AdminShell.Web/App`, run `yarn install` and `yarn build:app`, then copy `dist` to `../Content/admin-shell`; vc-build's `BuildCustomApp` does this in CI.
-* The host applies fixes to `@vc-shell/framework` 2.6.3-rc.0 through a Yarn patch in `App/.yarn/patches`.
+* The host applies one fix to `@vc-shell/framework` 2.7.0 through a Yarn patch in `App/.yarn/patches`: the phone back button is one named button, not a button inside a button.
 
 ## Documentation
 

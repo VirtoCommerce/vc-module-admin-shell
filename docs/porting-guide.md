@@ -1,4 +1,4 @@
-# Porting an AngularJS admin module to the Admin Shell (vc-shell 2.6.3-rc.0)
+# Porting an AngularJS admin module to the Admin Shell (vc-shell 2.7.0)
 
 The Admin Shell (`vc-module-admin-shell`, app id `admin-shell`, served at `http://localhost:10645/apps/admin-shell/`)
 is a vc-shell host. Each platform module contributes its **Vue admin UI** — a vc-shell *dynamic module*
@@ -18,7 +18,7 @@ In `src/<Module>.Web/vue/` create (copy and rename):
 
 | File | Notes |
 |---|---|
-| `package.json` | name `<module>-admin`; keep every `@vc-shell/*` at **exactly `2.6.3-rc.0`**; `generate-api-client` script lists your module(s): `--APP_PLATFORM_MODULES='[VirtoCommerce.X]'` |
+| `package.json` | name `<module>-admin`; keep every `@vc-shell/*` at **exactly `2.7.0`**; `generate-api-client` script lists your module(s): `--APP_PLATFORM_MODULES='[VirtoCommerce.X]'` |
 | `.yarnrc.yml`, `.yarn/releases/yarn-4.9.1.cjs`, empty `yarn.lock`, `.gitignore` | as in Orders |
 | `tsconfig.json`, `index.html` | as in Orders (vite needs index.html) |
 | `vite.config.mts` | `base = "/modules/$(VirtoCommerce.X)/plugins/admin-shell/"`, `process.env.APP_BASE_PATH = base`, `getDynamicModuleConfiguration({ appId: "admin-shell", moduleRoot: path.resolve(__dirname, ".."), entry: "./src/modules/index.ts", remoteName: "<module>_admin", base })` — always pass the options |

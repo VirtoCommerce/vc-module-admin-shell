@@ -11,7 +11,6 @@ import * as menuLocales from "./locales/menu";
 // vc-shell's texts in the languages it doesn't ship (docs/localization.md)
 import * as frameworkLocales from "./locales/framework";
 import { translateFrameworkDefaults } from "./locales/framework/defaults";
-import { syncDocumentDirection } from "./locales/direction";
 import { RouterView } from "vue-router";
 // the platform's own screens (Settings, Security, Modules, ...) ship with the host
 import PlatformModule from "./modules/platform";
@@ -76,7 +75,6 @@ async function startApp() {
   translateFrameworkDefaults(app);
 
   setLocale(currentLocale.value);
-  syncDocumentDirection(currentLocale);
 
   app.config.errorHandler = (err: unknown) => {
     notification.error((err as Error).toString(), {
