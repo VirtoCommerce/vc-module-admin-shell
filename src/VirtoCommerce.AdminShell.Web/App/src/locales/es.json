@@ -138,7 +138,9 @@
       "SIGNING_IN": "Iniciando sesión…",
       "ERRORS": {
         "LOCKED_OUT": "Esta cuenta se ha bloqueado tras demasiados intentos fallidos. Vuelva a intentarlo más tarde o póngase en contacto con su administrador.",
-        "NOT_ALLOWED": "Esta cuenta aún no tiene permiso para iniciar sesión. Póngase en contacto con su administrador."
+        "NOT_ALLOWED": "Esta cuenta aún no tiene permiso para iniciar sesión. Póngase en contacto con su administrador.",
+        "METHOD_FAILED": "No funcionó. Inténtelo de nuevo o use otra forma de iniciar sesión.",
+        "METHOD_NEEDS_PASSWORD": "Esta cuenta requiere un segundo paso de inicio de sesión. Inicie sesión con su contraseña."
       }
     },
     "MFA": {

@@ -138,7 +138,9 @@
       "SIGNING_IN": "Entrando…",
       "ERRORS": {
         "LOCKED_OUT": "Esta conta foi bloqueada após muitas tentativas sem sucesso. Tente novamente mais tarde ou contate o administrador.",
-        "NOT_ALLOWED": "Esta conta ainda não tem permissão para entrar. Contate o administrador."
+        "NOT_ALLOWED": "Esta conta ainda não tem permissão para entrar. Contate o administrador.",
+        "METHOD_FAILED": "Não funcionou. Tente novamente ou use outra forma de entrar.",
+        "METHOD_NEEDS_PASSWORD": "Esta conta exige uma segunda etapa de entrada. Entre com sua senha."
       }
     },
     "MFA": {

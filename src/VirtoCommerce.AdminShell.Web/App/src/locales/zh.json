@@ -138,7 +138,9 @@
       "SIGNING_IN": "正在登录…",
       "ERRORS": {
         "LOCKED_OUT": "此账户因失败次数过多已被锁定。请稍后重试或联系管理员。",
-        "NOT_ALLOWED": "此账户暂不允许登录。请联系管理员。"
+        "NOT_ALLOWED": "此账户暂不允许登录。请联系管理员。",
+        "METHOD_FAILED": "未能成功。请重试或使用其他方式登录。",
+        "METHOD_NEEDS_PASSWORD": "此帐户需要第二步登录验证。请改用密码登录。"
       }
     },
     "MFA": {

@@ -138,7 +138,9 @@
       "SIGNING_IN": "Logowanie…",
       "ERRORS": {
         "LOCKED_OUT": "To konto zostało zablokowane po zbyt wielu nieudanych próbach. Spróbuj ponownie później lub skontaktuj się z administratorem.",
-        "NOT_ALLOWED": "To konto nie może się jeszcze logować. Skontaktuj się z administratorem."
+        "NOT_ALLOWED": "To konto nie może się jeszcze logować. Skontaktuj się z administratorem.",
+        "METHOD_FAILED": "Nie udało się. Spróbuj ponownie lub zaloguj się w inny sposób.",
+        "METHOD_NEEDS_PASSWORD": "To konto wymaga drugiego kroku logowania. Zaloguj się zamiast tego hasłem."
       }
     },
     "MFA": {

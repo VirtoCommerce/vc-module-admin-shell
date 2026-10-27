@@ -21,6 +21,8 @@ import { installMenuCounters } from "./shell/menuCounters";
 // installed modules ($modules.isInstalled, for optional dependencies) and shared widgets ($sharedWidgets)
 import { installModules } from "./shell/modules";
 import { installSharedWidgets } from "./shell/sharedWidgets";
+// sign-in methods: module plugins add theirs (a passkey) through the app ($signInMethods)
+import { installSignInMethods } from "./shell/signInMethods";
 // white-labeling: the brand, the sign-in page, Home's welcome card, the theme files
 import { loadBranding } from "./shell/branding";
 // unsaved changes on a screen are asked about before the shell leaves it
@@ -34,10 +36,7 @@ async function startApp() {
   const { loadUser } = useUser();
 
   // the installation's brand (name, logos, themes) beside the user: the sign-in page shows it too
-  await Promise.all([
-    loadUser().catch((e) => console.log(e)),
-    loadBranding(),
-  ]);
+  await Promise.all([loadUser().catch((e) => console.log(e)), loadBranding()]);
 
   const { currentLocale, setLocale } = useLanguages();
 
@@ -62,6 +61,7 @@ async function startApp() {
   installMenuCounters(app);
   installModules(app);
   installSharedWidgets(app);
+  installSignInMethods(app);
 
   app.use(router);
 

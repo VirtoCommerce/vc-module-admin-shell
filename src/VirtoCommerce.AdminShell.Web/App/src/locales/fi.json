@@ -138,7 +138,9 @@
       "SIGNING_IN": "Kirjaudutaan…",
       "ERRORS": {
         "LOCKED_OUT": "Tili on lukittu liian monen epäonnistuneen yrityksen jälkeen. Yritä myöhemmin uudelleen tai ota yhteyttä järjestelmänvalvojaan.",
-        "NOT_ALLOWED": "Tilillä ei voi vielä kirjautua. Ota yhteyttä järjestelmänvalvojaan."
+        "NOT_ALLOWED": "Tilillä ei voi vielä kirjautua. Ota yhteyttä järjestelmänvalvojaan.",
+        "METHOD_FAILED": "Se ei onnistunut. Yritä uudelleen tai kirjaudu toisella tavalla.",
+        "METHOD_NEEDS_PASSWORD": "Tämä tili vaatii toisen kirjautumisvaiheen. Kirjaudu sen sijaan salasanallasi."
       }
     },
     "MFA": {

@@ -248,7 +248,7 @@ Settings, limits and wording come from the module ([vc-module-mfa README](https:
 - **MFA-9** External providers and API clients are outside this step: the platform applies MFA to password sign-ins only, and the token endpoint has its own two-step grant (`two_factor_required`, then `grant_type=mfa`) for apps that use it.
 - **MFA-10** The texts SHOULD be the module's (the same wording in the AngularJS admin and the main admin). A new UI MAY keep its own translations as long as every error code above has one.
 
-**Who owns the screen.** The code step is part of the main admin, next to the sign-in page, and not a module plugin: it uses the sign-in layout, branding, language and post-sign-in routing of the shell, and it must work before any plugin has loaded. The AngularJS admin keeps the module's own screen (the state the module registers with `data.twoFactorSignIn`). When modules add other sign-in methods (passkeys, an authenticator app), the main admin SHOULD offer a sign-in step contract for plugins rather than growing a screen per method (section 12).
+**Who owns the screen.** The code step is part of the main admin, next to the sign-in page, and not a module plugin: it uses the sign-in layout, branding, language and post-sign-in routing of the shell, and it must work before any plugin has loaded. The AngularJS admin keeps the module's own screen (the state the module registers with `data.twoFactorSignIn`). Sign-in methods that modules add (passkeys) come through a plugin contract instead (EXT-14): the shell owns the screens, the plugin the browser side of its method.
 
 ## 8. Extension contract
 
@@ -269,6 +269,7 @@ Modules depend on these contracts; a new implementation MUST keep them, or ship 
 | EXT-11 | **Embedded apps** | Apps registered in a module's manifest open inside the shell or in a tab. |
 | EXT-12 | **Sign-in page** | An extension point after the sign-in form. |
 | EXT-13 | **Translations and permissions** | Plugins merge their translations and check the user's permissions through the host. |
+| EXT-14 | **Sign-in methods** | `$signInMethods.extend(name, { title, signInTitle, icon, signIn, createKey, createKeyTitle, describeKey, keyIcon })` adds the browser side of a method the platform lists (a passkey): its button on the sign-in page and its "Add" and key rows in the profile's sign-in methods. `signIn(parameters)` signs in with a cookie through any grant type. See [sign-in-page.md](sign-in-page.md#sign-in-methods-passkeys-and-other-module-methods). |
 
 **Dependency rule.** A plugin MAY reference another module's blades, routes, API or widgets only when its `module.manifest` depends on that module, directly or transitively, or declares it as an optional dependency and checks EXT-9 before using it. A module MUST NOT place UI on blades of modules that depend on it; it provides a shared widget instead (EXT-8). An implementation SHOULD verify this rule in CI from the manifests.
 
@@ -280,6 +281,7 @@ The UI MUST use only platform and module APIs; it has no server of its own beyon
 |---|---|
 | Session | Platform sign-in (cookie), current user, external sign-in providers, password and invitation flows |
 | Second factor | `POST api/mfa/signin/send`, `POST api/mfa/signin/verify` (vc-module-mfa, anonymous, two-factor cookie; section 7.10) |
+| Sign-in methods | `GET api/platform/security/sign-in-methods` (anonymous), `GET api/platform/security/currentuser/sign-in-methods`, `PUT`/`DELETE …/currentuser/sign-in-methods/{name}/keys/{id}`, `POST api/platform/security/sign-in` (cookie, any grant type), `POST …/currentuser/changepassword` (sets a password when there is none); passkeys: `api/passkeys` (vc-module-passkeys) |
 | Menu | `GET api/admin-shell/menu` (effective menu), `me/prefs`, `me/recent/{itemId}`, global and role layers (`admin-shell:menu:manage`) |
 | Branding | `GET api/admin-shell/branding` (anonymous) |
 | Plugins and apps | `GET api/apps/admin-shell/manifest` (plugins), `api/platform/apps` |
@@ -340,7 +342,7 @@ The UI MUST use only platform and module APIs; it has no server of its own beyon
 | Should Google Analytics in the AngularJS admin be off by default? | `VirtoCommerce.SendDiagnosticData` is on by default and breaks OPS-1 for embedded legacy screens. |
 | Should disabled actions show on phones? | vc-shell hides them in the phone action list today. |
 | How does the platform choose the main admin served at the root? | Today the AngularJS admin is at `/` and the Admin Shell at `/apps/admin-shell/`. A platform option (for example a redirect from `/` to the chosen admin) also needs the sign-in redirect, external sign-in return URLs and the links in password and invitation emails to follow it (CMP-4). |
-| How do modules add sign-in methods to the main admin? | MFA is built into the shell (section 7.10). Passkeys (vc-module-passkeys) and further methods suggest a plugin contract for sign-in steps: the host routes `requiresTwoFactor` and sign-in methods to steps registered by plugins, and waits for plugins before doing so. |
+| Should module sign-in steps become plugins too? | Sign-in methods are a plugin contract (EXT-14, passkeys), while the MFA code step is built into the shell (section 7.10). A second factor from a module other than vc-module-mfa would need the same: a step a plugin registers, which the host opens on `requiresTwoFactor` once plugins have loaded. |
 
 ## 13. Current implementation
 

@@ -138,7 +138,9 @@
       "SIGNING_IN": "Connexion…",
       "ERRORS": {
         "LOCKED_OUT": "Ce compte est verrouillé après trop de tentatives échouées. Réessayez plus tard ou contactez votre administrateur.",
-        "NOT_ALLOWED": "Ce compte n'est pas encore autorisé à se connecter. Contactez votre administrateur."
+        "NOT_ALLOWED": "Ce compte n'est pas encore autorisé à se connecter. Contactez votre administrateur.",
+        "METHOD_FAILED": "Cela n'a pas fonctionné. Réessayez ou utilisez un autre moyen de connexion.",
+        "METHOD_NEEDS_PASSWORD": "Ce compte exige une deuxième étape de connexion. Connectez-vous plutôt avec votre mot de passe."
       }
     },
     "MFA": {

@@ -138,7 +138,9 @@
       "SIGNING_IN": "Loggar in…",
       "ERRORS": {
         "LOCKED_OUT": "Kontot är låst efter för många misslyckade försök. Försök igen senare eller kontakta administratören.",
-        "NOT_ALLOWED": "Kontot får inte logga in ännu. Kontakta administratören."
+        "NOT_ALLOWED": "Kontot får inte logga in ännu. Kontakta administratören.",
+        "METHOD_FAILED": "Det fungerade inte. Försök igen eller logga in på ett annat sätt.",
+        "METHOD_NEEDS_PASSWORD": "Det här kontot kräver ett andra inloggningssteg. Logga in med ditt lösenord i stället."
       }
     },
     "MFA": {

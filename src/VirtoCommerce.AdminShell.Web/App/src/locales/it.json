@@ -138,7 +138,9 @@
       "SIGNING_IN": "Accesso in corso…",
       "ERRORS": {
         "LOCKED_OUT": "Questo account è stato bloccato dopo troppi tentativi non riusciti. Riprovare più tardi o contattare l'amministratore.",
-        "NOT_ALLOWED": "Questo account non è ancora autorizzato ad accedere. Contattare l'amministratore."
+        "NOT_ALLOWED": "Questo account non è ancora autorizzato ad accedere. Contattare l'amministratore.",
+        "METHOD_FAILED": "Non ha funzionato. Riprova o usa un altro modo per accedere.",
+        "METHOD_NEEDS_PASSWORD": "Questo account richiede un secondo passaggio di accesso. Accedi invece con la password."
       }
     },
     "MFA": {
