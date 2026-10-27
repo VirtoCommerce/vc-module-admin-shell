@@ -4,6 +4,24 @@
 
 The Admin Shell module is the Vue admin of the Virto Commerce platform, built on [vc-shell](https://github.com/VirtoCommerce/vc-shell). It runs at `/apps/admin-shell/` next to the AngularJS admin and gradually replaces it. Modules bring their own UI as Admin Shell plugins (Module Federation remotes) that load at runtime. AngularJS screens and platform apps that have no Vue UI yet keep working inside the shell. The menu is composed on the server per user, from the modules' defaults and the organisation's, roles' and users' changes.
 
+## Screenshots
+
+Home: the section rail, the panel with Pinned and Recent, and the dashboard.
+
+![Home with the menu and the dashboard](docs/images/home.jpg)
+
+An order open beside the Orders list, with its widgets (payments, shipments, addresses) in the toolbar.
+
+![An order open beside the Orders list](docs/images/orders.jpg)
+
+The Admin Shell Menu Editor: sections and items to reorder, rename and hide, saved as the global menu patch.
+
+![The Admin Shell Menu Editor](docs/images/menu-editor.jpg)
+
+The sign-in page, with the installation's brand and a showcase of the platform.
+
+![The sign-in page](docs/images/sign-in.jpg)
+
 ## Key Features
 
 * **Module plugins:** modules ship their UI in `plugins/admin-shell/`. The platform lists installed plugins in the app manifest and the shell loads them at runtime, with their screens, menu items, search providers and widgets.
