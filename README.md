@@ -1,4 +1,4 @@
-# Virto Commerce Admin Shell Module
+# Admin Shell Module
 
 ## Overview
 
