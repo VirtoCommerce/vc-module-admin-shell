@@ -165,6 +165,28 @@
         "UNAVAILABLE": "Esta cuenta requiere un segundo paso de inicio de sesión, pero no está disponible. Póngase en contacto con su administrador."
       }
     },
+    "MFA": {
+      "TITLE": "Introduzca el código de inicio de sesión",
+      "SUBTITLE": "Hemos enviado un código a {destination}.",
+      "SUBTITLE_EMAIL": "Introduzca el código que enviamos a su correo electrónico.",
+      "CODE": "Código",
+      "CODE_PLACEHOLDER": "Introduzca el código de 6 dígitos",
+      "RESEND": "Reenviar código",
+      "RESEND_COUNTDOWN": "Reenviar código en {seconds} s",
+      "BACK": "Volver al inicio de sesión",
+      "CODE_RESENT": "Código enviado de nuevo.",
+      "ERRORS": {
+        "INVALID_CODE": "El código no es válido. Compruébelo e inténtelo de nuevo.",
+        "INVALID_TWO_FACTOR_TOKEN": "Su sesión de inicio de sesión ha caducado. Inicie sesión de nuevo.",
+        "CODE_ATTEMPTS_EXCEEDED": "Demasiados códigos incorrectos. Espere unos minutos y vuelva a iniciar sesión.",
+        "USER_IS_LOCKED_OUT": "Su cuenta ha sido bloqueada. Póngase en contacto con su administrador.",
+        "USER_IS_TEMPORARY_LOCKED_OUT": "Su cuenta ha sido bloqueada temporalmente. Inténtelo de nuevo más tarde.",
+        "SIGN_IN_NOT_ALLOWED": "No puede iniciar sesión en el Backoffice con esta cuenta.",
+        "LOCKOUT_DISABLED": "Esta cuenta no puede iniciar sesión con un código. Póngase en contacto con su administrador.",
+        "MFA_PROVIDER_NOT_AVAILABLE": "No podemos enviar un código a esta cuenta. Confirme su correo o póngase en contacto con su administrador.",
+        "UNAVAILABLE": "Esta cuenta requiere un segundo paso de inicio de sesión, pero no está disponible. Póngase en contacto con su administrador."
+      }
+    },
     "ACCESS_DENIED": {
       "TITLE": "Acceso denegado",
       "MESSAGE": "Tu cuenta no tiene acceso a {name}. Ponte en contacto con tu administrador.",
