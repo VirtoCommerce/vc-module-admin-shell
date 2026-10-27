@@ -106,6 +106,10 @@ The platform lists the ways to sign in, the **sign-in methods** (vc-platform#314
 
 On a platform without sign-in methods, the sign-in page and the profile look as before.
 
+| Sign-in page | Profile > Sign-in methods | Phone |
+|---|---|---|
+| ![The sign-in page with "Sign in with a passkey" above the password form](images/passkey-sign-in.jpg) | ![Sign-in methods: the password, and four passkeys with where each lives and when it was created](images/sign-in-methods.jpg) | ![Sign-in methods at phone width](images/sign-in-methods-phone.jpg) |
+
 A module's plugin adds the browser side of its method, as AngularJS modules do with `signInMethodService.extendSignInMethod`. Source: `src/shell/signInMethods.ts`; the screens are `src/pages/Login.vue` and `src/modules/platform/pages/user-profile/sign-in-methods.vue`.
 
 ```ts
