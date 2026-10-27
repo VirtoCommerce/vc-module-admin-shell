@@ -1,3 +1,5 @@
+@use "sass:list";
+
 /* Right-to-left languages (<html dir="rtl">, set by vc-shell's language switch). The layout's left/right rules are
    mirrored at build time (postcss-rtlcss, postcss.config.cjs); vc-shell 2.7 mirrors its arrow icons and reads inputs
    and table cells in their own direction. This file holds the rest: the letters of these scripts and code. */
@@ -24,8 +26,8 @@ $scripts: (
       font-family: $family;
       font-style: normal;
       font-weight: 100 900;
-      src: nth($font, 1) format("woff2-variations");
-      unicode-range: nth($font, 2);
+      src: list.nth($font, 1) format("woff2-variations");
+      unicode-range: list.nth($font, 2);
     }
   }
 }

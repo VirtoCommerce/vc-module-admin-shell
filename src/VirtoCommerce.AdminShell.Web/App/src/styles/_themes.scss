@@ -13,7 +13,7 @@
    Warm's primary is the palette's espresso brown (light) and a warm sand (dark). */
 
 $themes: (
-  warm: (
+  "warm": (
     light: (
       bg: #f5f1ea, plate: #fffcf7, panel: #faf5ee, sunken: #f1eae0, select: #f3e6da, line: #e2d6c4, line-soft: #efe6d8,
       ink: #312720, ink-2: #3d332b, muted: #6b5f55, faint: #8c7e6c, primary: #7a4a2a, primary-hover: #643c21,
@@ -27,7 +27,7 @@ $themes: (
       shade: rgba(0, 0, 0, 0.7),
     ),
   ),
-  blue: (
+  "blue": (
     light: (
       bg: #dbe4ec, plate: #ffffff, panel: #f7fafc, sunken: #eff7fc, select: #e1f0f9, line: #cad8e4, line-soft: #e3ebf2,
       ink: #262626, ink-2: #333a40, muted: #5f6b77, faint: #7e8a96, primary: #237aa5, primary-hover: #1d6589,
@@ -41,7 +41,7 @@ $themes: (
       shade: rgba(0, 0, 0, 0.7),
     ),
   ),
-  indigo: (
+  "indigo": (
     light: (
       bg: #eaeaeb, plate: #fafafa, panel: #f4f4f5, sunken: #f0f0f1, select: #e4e8fd, line: #dbdbdc, line-soft: #e6e6e7,
       ink: #383a42, ink-2: #44464f, muted: #696c77, faint: #80838c, primary: #4a63e0, primary-hover: #3b52c4,
