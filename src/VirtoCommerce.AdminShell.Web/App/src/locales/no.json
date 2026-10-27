@@ -1,0 +1,218 @@
+{
+  "language_name": "Norsk",
+  "SHELL": {
+    "NAV": {
+      "SECTIONS": "Seksjoner",
+      "HOME": "{name}, startside",
+      "MENU": "Meny",
+      "NOTIFICATIONS": "Varsler",
+      "ACCOUNT": "Konto",
+      "CLASSIC_ADMIN": "Åpne klassisk admin",
+      "HIDE_MENU": "Skjul menyen",
+      "KEEP_OPEN": "Hold menyen åpen",
+      "SHOW_MENU": "Vis menyen",
+      "PIN": "Fest",
+      "UNPIN": "Løsne",
+      "HIDE_ITEM": "Skjul fra menyen",
+      "PINNED": "Festet",
+      "RECENT": "Nylige",
+      "SHOW_HIDDEN": "Vis skjulte elementer ({count})",
+      "OPEN_BLADES": "Åpne paneler",
+      "NEW_TAB": "Åpnes i en ny fane"
+    },
+    "USER_MENU": {
+      "LICENSE": "Lisens",
+      "LICENSE_NONE": "Ikke aktivert",
+      "LICENSE_NONE_HINT": "Ingen kommersiell lisens er aktivert på denne plattformen",
+      "LICENSE_EXPIRED": "Utløpt",
+      "LICENSE_UNTIL": "til {date}",
+      "LICENSE_ACTIVATE": "Aktiver",
+      "LICENSE_DETAILS": "Detaljer",
+      "LANGUAGE": "Språk",
+      "THEME": "Utseende",
+      "THEME_SYSTEM": "Følg systemet",
+      "COLOR_THEME": "Tema",
+      "COLOR_THEMES": {
+        "VIRTO": "Virto",
+        "WARM": "Varm",
+        "BLUE": "Blå",
+        "INDIGO": "Indigo"
+      },
+      "SIGN_OUT": "Logg ut",
+      "BUILD": "Bygg {version}"
+    },
+    "BADGES": {
+      "TASKS": "Åpne oppgaver: {count}",
+      "MODULE_UPDATES": "Moduloppdateringer: {count}",
+      "MODULES_INSTALLED": "Installerte moduler: {count}",
+      "MODULES_AVAILABLE": "Moduler: {count}"
+    },
+    "FRAME": {
+      "REFRESH": "Oppdater",
+      "NEW_TAB": "Åpne i ny fane"
+    },
+    "DASHBOARD": {
+      "WELCOME": {
+        "TITLE": "Velkommen"
+      },
+      "RESET_LAYOUT": "Tilbakestill oppsett",
+      "RESET_LAYOUT_CONFIRM": "Vil du flytte alle widgeter tilbake til standard plassering og størrelse?",
+      "VIEW_ALL": "Vis alle",
+      "DISMISS": "Avvis",
+      "ALERTS": {
+        "TITLE": "Varsler og meldinger",
+        "EMPTY": "Du er helt à jour",
+        "EMPTY_HINT": "Resultater fra bakgrunnsjobber, importer og eksporter samt systemmeldinger vises her."
+      },
+      "ACTIVITY": {
+        "TITLE": "Nylig aktivitet",
+        "EMPTY": "Ingen endringer er registrert ennå",
+        "ADDED": "ble opprettet",
+        "MODIFIED": "ble oppdatert",
+        "DELETED": "ble slettet"
+      },
+      "SIGN_INS": {
+        "TITLE": "Innloggingsaktivitet",
+        "TOTAL": "Innlogginger, siste 7 dager",
+        "FAILED": "Mislykkede innlogginger",
+        "USERS": "Innloggede brukere",
+        "DISABLED": "Registrering av innlogginger er slått av"
+      }
+    },
+    "AUTH": {
+      "LIGHT_THEME": "Bytt til lyst tema",
+      "DARK_THEME": "Bytt til mørkt tema",
+      "SHOWCASE": {
+        "LABEL": "Om Virto Commerce",
+        "GO_TO": "Vis: {name}",
+        "MORE": "Les mer på VirtoCommerce.com",
+        "PLATFORM": {
+          "CHIP": "Virto Commerce i Virto Cloud",
+          "TITLE": "Administrert composable commerce for kompleks B2B",
+          "BODY": "En API-først-plattform med åpen kildekode på .NET, driftet for deg i Virto Cloud. Start med det du trenger, og legg til moduler etter hvert som virksomheten vokser.",
+          "POINT_1": "Virto Cloud drifter, skalerer, oppdaterer og overvåker miljøene dine",
+          "POINT_2": "Over 100 moduler som du installerer, oppdaterer eller bytter ut én om gangen",
+          "POINT_3": "Koble til hvilken som helst nettbutikk, ERP eller markedsplass via åpne API-er"
+        },
+        "CATALOG": {
+          "CHIP": "Katalog og priser",
+          "TITLE": "Én katalog for alle kanaler og prislister",
+          "BODY": "Administrer fysiske, digitale og konfigurerbare produkter én gang, og publiser dem deretter til hver butikk med eget sortiment og egne priser.",
+          "POINT_1": "Virtuelle kataloger som gjenbruker produkter på tvers av butikker og kanaler",
+          "POINT_2": "Prislister med mengdetrinn, datoer og regler for kundesegmenter",
+          "POINT_3": "Lagerbeholdning på tvers av lagre og distribusjonssentre"
+        },
+        "B2B": {
+          "CHIP": "B2B-innkjøp",
+          "TITLE": "Bygget for måten bedrifter kjøper på",
+          "BODY": "Bedriftskontoer, kjøpere og kontrakter, med tilbudene og de gjentakende bestillingene som B2B-handel er avhengig av.",
+          "POINT_1": "Organisasjoner med egne kjøpere, roller og adresser",
+          "POINT_2": "Tilbud og kontraktspriser forhandlet per kunde",
+          "POINT_3": "Abonnementer som bestiller på nytt etter en tidsplan"
+        },
+        "API": {
+          "CHIP": "API-er og AI-agenter",
+          "TITLE": "Åpen, API-først og klar for agenter",
+          "BODY": "Hver funksjon er et API: bygg hvilken som helst frontend, la AI-agenter handle og utføre oppgaver på dine vegne, og utvid plattformen med egne moduler.",
+          "POINT_1": "GraphQL xAPI for nettbutikker, apper og integrasjoner",
+          "POINT_2": "Agentic Access via MCP for AI-assistenter og agenter",
+          "POINT_3": "Innebygd støtte for protokollene UCP og OnX"
+        }
+      },
+      "HELP": "Hjelp",
+      "LINKS": {
+        "HELP": "Hjelp",
+        "SUPPORT": "Brukerstøtte",
+        "PRIVACY": "Personvern",
+        "TERMS": "Vilkår"
+      },
+      "SLIDES_LABEL": "Om {name}"
+    },
+    "LOGIN": {
+      "SUBTITLE": "Logg inn på {name} for å fortsette",
+      "CONTINUE_WITH": "Fortsett med {name}",
+      "CONTINUE_WITH_SSO": "Fortsett med enkel pålogging",
+      "OR": "eller",
+      "LOGIN": "E-post eller brukernavn",
+      "LOGIN_PLACEHOLDER": "Skriv inn e-post eller brukernavn",
+      "SIGNING_IN": "Logger inn…",
+      "ERRORS": {
+        "LOCKED_OUT": "Kontoen er låst etter for mange mislykkede forsøk. Prøv igjen senere eller kontakt administratoren.",
+        "NOT_ALLOWED": "Kontoen kan ikke logge inn ennå. Kontakt administratoren."
+      }
+    },
+    "ACCESS_DENIED": {
+      "TITLE": "Tilgang nektet",
+      "MESSAGE": "Kontoen din har ikke tilgang til {name}. Kontakt administratoren.",
+      "SIGNED_IN_AS": "Logget på som {name}",
+      "SWITCH_ACCOUNT": "Logg på med en annen konto"
+    },
+    "SEARCH": {
+      "LABEL": "Søk",
+      "PLACEHOLDER": "Søk eller gå til…",
+      "CLEAR": "Tøm",
+      "CLOSE": "Lukk søket",
+      "RESULTS": "Søkeresultater",
+      "SEARCH_IN": "Søk i",
+      "SEARCHING_IN": "Søker i",
+      "SEARCH_EVERYWHERE": "Søk overalt",
+      "TYPE_TO_SEARCH": "Skriv hva du leter etter",
+      "TIP_SCOPE": "Start med navnet på en gruppe, for eksempel {example}, for å søke bare der.",
+      "SEARCHING": "Søker…",
+      "FAILED": "Søket mislyktes",
+      "RETRY": "Prøv igjen",
+      "NO_RESULTS": "Ingen resultater for «{query}»",
+      "NO_RESULTS_HINT": "Sjekk stavemåten eller prøv færre ord.",
+      "NO_RESULTS_SCOPED": "Sjekk stavemåten, eller søk overalt.",
+      "SHOW_ALL": "Vis alle {count} i {group}",
+      "OPEN_FAILED": "Kunne ikke åpne resultatet",
+      "KEYS_MOVE": "for å flytte",
+      "KEYS_OPEN": "for å åpne",
+      "KEYS_CLOSE": "for å lukke",
+      "GROUPS": {
+        "MENU": "Meny",
+        "APPS": "Apper",
+        "SETTINGS": "Innstillinger",
+        "USERS": "Brukere",
+        "ROLES": "Roller"
+      },
+      "BADGES": {
+        "ADMIN": "Admin",
+        "LOCKED": "Låst"
+      }
+    },
+    "FRAMEWORK": {
+      "PROGRESS": "Fremdrift",
+      "CLOSE_SIDEBAR": "Lukk sidepanelet",
+      "DASHBOARD_GRID": "Kontrollpanel-widgeter. Dra en widget, eller velg den og trykk Enter for å flytte den med piltastene.",
+      "DATE_PICKER": {
+        "TOGGLE_OVERLAY": "Vis eller skjul velgeren",
+        "MENU": "Meny for datovelger",
+        "INPUT": "Datofelt",
+        "OPEN_TIME_PICKER": "Åpne tidsvelger",
+        "CLOSE_TIME_PICKER": "Lukk tidsvelger",
+        "INCREMENT": "Øk {unit}",
+        "DECREMENT": "Reduser {unit}",
+        "OPEN_TIME_OVERLAY": "Velg {unit}",
+        "AM_PM": "Bytt AM/PM",
+        "OPEN_YEARS": "Velg år",
+        "OPEN_MONTHS": "Velg måned",
+        "NEXT_MONTH": "Neste måned",
+        "PREV_MONTH": "Forrige måned",
+        "NEXT_YEAR": "Neste år",
+        "PREV_YEAR": "Forrige år",
+        "CLEAR": "Tøm verdi",
+        "CALENDAR_ICON": "Åpne kalender",
+        "TIME_PICKER": "Tidsvelger",
+        "MONTH_PICKER": "Månedsvelger",
+        "YEAR_PICKER": "Årsvelger",
+        "TIME_OVERLAY": "Velger: {unit}",
+        "UNITS": {
+          "hours": "timer",
+          "minutes": "minutter",
+          "seconds": "sekunder"
+        }
+      }
+    }
+  }
+}

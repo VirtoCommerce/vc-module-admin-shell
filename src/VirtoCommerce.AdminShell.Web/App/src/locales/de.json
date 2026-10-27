@@ -1,0 +1,218 @@
+{
+  "language_name": "Deutsch",
+  "SHELL": {
+    "NAV": {
+      "SECTIONS": "Bereiche",
+      "HOME": "{name}, Startseite",
+      "MENU": "Menü",
+      "NOTIFICATIONS": "Benachrichtigungen",
+      "ACCOUNT": "Konto",
+      "CLASSIC_ADMIN": "Klassische Admin-Oberfläche öffnen",
+      "HIDE_MENU": "Menü ausblenden",
+      "KEEP_OPEN": "Menü geöffnet lassen",
+      "SHOW_MENU": "Menü einblenden",
+      "PIN": "Anheften",
+      "UNPIN": "Lösen",
+      "HIDE_ITEM": "Im Menü ausblenden",
+      "PINNED": "Angeheftet",
+      "RECENT": "Zuletzt verwendet",
+      "SHOW_HIDDEN": "{count} ausgeblendete(s) Element(e) anzeigen",
+      "OPEN_BLADES": "Geöffnete Fenster",
+      "NEW_TAB": "Wird in einem neuen Tab geöffnet"
+    },
+    "USER_MENU": {
+      "LICENSE": "Lizenz",
+      "LICENSE_NONE": "Nicht aktiviert",
+      "LICENSE_NONE_HINT": "Auf dieser Plattform ist keine kommerzielle Lizenz aktiviert",
+      "LICENSE_EXPIRED": "Abgelaufen",
+      "LICENSE_UNTIL": "bis {date}",
+      "LICENSE_ACTIVATE": "Aktivieren",
+      "LICENSE_DETAILS": "Details",
+      "LANGUAGE": "Sprache",
+      "THEME": "Darstellung",
+      "THEME_SYSTEM": "Wie im System",
+      "COLOR_THEME": "Design",
+      "COLOR_THEMES": {
+        "VIRTO": "Virto",
+        "WARM": "Warm",
+        "BLUE": "Blau",
+        "INDIGO": "Indigo"
+      },
+      "SIGN_OUT": "Abmelden",
+      "BUILD": "Build {version}"
+    },
+    "BADGES": {
+      "TASKS": "{count} offene Aufgaben",
+      "MODULE_UPDATES": "{count} Modul-Updates",
+      "MODULES_INSTALLED": "{count} Module installiert",
+      "MODULES_AVAILABLE": "{count} Module"
+    },
+    "FRAME": {
+      "REFRESH": "Aktualisieren",
+      "NEW_TAB": "In neuem Tab öffnen"
+    },
+    "DASHBOARD": {
+      "WELCOME": {
+        "TITLE": "Willkommen"
+      },
+      "RESET_LAYOUT": "Layout zurücksetzen",
+      "RESET_LAYOUT_CONFIRM": "Alle Widgets auf ihre Standardposition und -größe zurücksetzen?",
+      "VIEW_ALL": "Alle anzeigen",
+      "DISMISS": "Ausblenden",
+      "ALERTS": {
+        "TITLE": "Meldungen und Benachrichtigungen",
+        "EMPTY": "Sie sind auf dem neuesten Stand",
+        "EMPTY_HINT": "Ergebnisse von Hintergrundaufträgen, Importen und Exporten sowie Systemmeldungen werden hier angezeigt."
+      },
+      "ACTIVITY": {
+        "TITLE": "Letzte Aktivitäten",
+        "EMPTY": "Noch keine Änderungen erfasst",
+        "ADDED": "erstellt",
+        "MODIFIED": "aktualisiert",
+        "DELETED": "gelöscht"
+      },
+      "SIGN_INS": {
+        "TITLE": "Anmeldeaktivität",
+        "TOTAL": "Anmeldungen, letzte 7 Tage",
+        "FAILED": "Fehlgeschlagene Anmeldungen",
+        "USERS": "Angemeldete Benutzer",
+        "DISABLED": "Die Protokollierung von Anmeldungen ist ausgeschaltet"
+      }
+    },
+    "AUTH": {
+      "LIGHT_THEME": "Zum hellen Design wechseln",
+      "DARK_THEME": "Zum dunklen Design wechseln",
+      "SHOWCASE": {
+        "LABEL": "Über Virto Commerce",
+        "GO_TO": "Anzeigen: {name}",
+        "MORE": "Mehr erfahren auf VirtoCommerce.com",
+        "PLATFORM": {
+          "CHIP": "Virto Commerce auf Virto Cloud",
+          "TITLE": "Managed Composable Commerce für komplexes B2B",
+          "BODY": "Eine Open-Source-Plattform nach dem API-first-Prinzip auf .NET, für Sie auf Virto Cloud betrieben. Beginnen Sie mit dem, was Sie brauchen, und fügen Sie Module hinzu, während Ihr Geschäft wächst.",
+          "POINT_1": "Virto Cloud hostet, skaliert, aktualisiert und überwacht Ihre Umgebungen",
+          "POINT_2": "Über 100 Module, die Sie einzeln installieren, aktualisieren oder ersetzen",
+          "POINT_3": "Binden Sie jede Storefront, jedes ERP und jeden Marktplatz über offene APIs an"
+        },
+        "CATALOG": {
+          "CHIP": "Katalog & Preise",
+          "TITLE": "Ein Katalog für alle Kanäle und Preislisten",
+          "BODY": "Verwalten Sie physische, digitale und konfigurierbare Produkte an einer Stelle und veröffentlichen Sie sie in jedem Shop mit eigenem Sortiment und eigenen Preisen.",
+          "POINT_1": "Virtuelle Kataloge, die Produkte in mehreren Shops und Kanälen wiederverwenden",
+          "POINT_2": "Preislisten mit Mengenstaffeln, Gültigkeitszeiträumen und Regeln für Kundensegmente",
+          "POINT_3": "Bestände über Lager und Fulfillment-Center hinweg"
+        },
+        "B2B": {
+          "CHIP": "B2B-Einkauf",
+          "TITLE": "Gemacht für die Art, wie Unternehmen einkaufen",
+          "BODY": "Firmenkonten, Einkäufer und Verträge, dazu die Angebote und wiederkehrenden Bestellungen, auf die B2B-Geschäfte angewiesen sind.",
+          "POINT_1": "Organisationen mit ihren Einkäufern, Rollen und Adressen",
+          "POINT_2": "Angebote und Vertragspreise, individuell pro Kunde verhandelt",
+          "POINT_3": "Abonnements, die nach Zeitplan automatisch nachbestellen"
+        },
+        "API": {
+          "CHIP": "APIs & KI-Agenten",
+          "TITLE": "Offen, API-first und bereit für KI-Agenten",
+          "BODY": "Jede Funktion ist eine API: Bauen Sie ein beliebiges Frontend, lassen Sie KI-Agenten in Ihrem Auftrag einkaufen und handeln, und erweitern Sie die Plattform mit eigenen Modulen.",
+          "POINT_1": "GraphQL xAPI für Storefronts, Apps und Integrationen",
+          "POINT_2": "Agentic Access über MCP für KI-Assistenten und -Agenten",
+          "POINT_3": "Native Unterstützung der Protokolle UCP und OnX"
+        }
+      },
+      "HELP": "Hilfe",
+      "LINKS": {
+        "HELP": "Hilfe",
+        "SUPPORT": "Support",
+        "PRIVACY": "Datenschutz",
+        "TERMS": "Nutzungsbedingungen"
+      },
+      "SLIDES_LABEL": "Über {name}"
+    },
+    "LOGIN": {
+      "SUBTITLE": "Melden Sie sich bei {name} an, um fortzufahren",
+      "CONTINUE_WITH": "Weiter mit {name}",
+      "CONTINUE_WITH_SSO": "Weiter mit Single Sign-On",
+      "OR": "oder",
+      "LOGIN": "E-Mail oder Benutzername",
+      "LOGIN_PLACEHOLDER": "Geben Sie Ihre E-Mail-Adresse oder Ihren Benutzernamen ein",
+      "SIGNING_IN": "Anmeldung läuft…",
+      "ERRORS": {
+        "LOCKED_OUT": "Dieses Konto wurde nach zu vielen fehlgeschlagenen Versuchen gesperrt. Versuchen Sie es später erneut oder wenden Sie sich an Ihren Administrator.",
+        "NOT_ALLOWED": "Dieses Konto darf sich noch nicht anmelden. Wenden Sie sich an Ihren Administrator."
+      }
+    },
+    "ACCESS_DENIED": {
+      "TITLE": "Zugriff verweigert",
+      "MESSAGE": "Ihr Konto hat keinen Zugriff auf {name}. Wenden Sie sich an Ihren Administrator.",
+      "SIGNED_IN_AS": "Angemeldet als {name}",
+      "SWITCH_ACCOUNT": "Mit einem anderen Konto anmelden"
+    },
+    "SEARCH": {
+      "LABEL": "Suche",
+      "PLACEHOLDER": "Suchen oder springen zu…",
+      "CLEAR": "Löschen",
+      "CLOSE": "Suche schließen",
+      "RESULTS": "Suchergebnisse",
+      "SEARCH_IN": "Suchen in",
+      "SEARCHING_IN": "Suche in",
+      "SEARCH_EVERYWHERE": "Überall suchen",
+      "TYPE_TO_SEARCH": "Geben Sie ein, wonach Sie suchen",
+      "TIP_SCOPE": "Beginnen Sie mit dem Namen einer Gruppe, z. B. {example}, um nur dort zu suchen.",
+      "SEARCHING": "Suche läuft…",
+      "FAILED": "Suche fehlgeschlagen",
+      "RETRY": "Erneut versuchen",
+      "NO_RESULTS": "Keine Ergebnisse für „{query}“",
+      "NO_RESULTS_HINT": "Prüfen Sie die Schreibweise oder verwenden Sie weniger Wörter.",
+      "NO_RESULTS_SCOPED": "Prüfen Sie die Schreibweise oder suchen Sie überall.",
+      "SHOW_ALL": "Alle {count} in {group} anzeigen",
+      "OPEN_FAILED": "Das Ergebnis konnte nicht geöffnet werden",
+      "KEYS_MOVE": "zum Navigieren",
+      "KEYS_OPEN": "zum Öffnen",
+      "KEYS_CLOSE": "zum Schließen",
+      "GROUPS": {
+        "MENU": "Menü",
+        "APPS": "Apps",
+        "SETTINGS": "Einstellungen",
+        "USERS": "Benutzer",
+        "ROLES": "Rollen"
+      },
+      "BADGES": {
+        "ADMIN": "Admin",
+        "LOCKED": "Gesperrt"
+      }
+    },
+    "FRAMEWORK": {
+      "PROGRESS": "Fortschritt",
+      "CLOSE_SIDEBAR": "Seitenleiste schließen",
+      "DASHBOARD_GRID": "Dashboard-Widgets. Ziehen Sie ein Widget oder wählen Sie es aus und drücken Sie die Eingabetaste, um es mit den Pfeiltasten neu anzuordnen.",
+      "DATE_PICKER": {
+        "TOGGLE_OVERLAY": "Auswahl ein- oder ausblenden",
+        "MENU": "Menü der Datumsauswahl",
+        "INPUT": "Datumseingabe",
+        "OPEN_TIME_PICKER": "Zeitauswahl öffnen",
+        "CLOSE_TIME_PICKER": "Zeitauswahl schließen",
+        "INCREMENT": "{unit} erhöhen",
+        "DECREMENT": "{unit} verringern",
+        "OPEN_TIME_OVERLAY": "{unit} wählen",
+        "AM_PM": "AM/PM umschalten",
+        "OPEN_YEARS": "Jahr wählen",
+        "OPEN_MONTHS": "Monat wählen",
+        "NEXT_MONTH": "Nächster Monat",
+        "PREV_MONTH": "Vorheriger Monat",
+        "NEXT_YEAR": "Nächstes Jahr",
+        "PREV_YEAR": "Vorheriges Jahr",
+        "CLEAR": "Wert löschen",
+        "CALENDAR_ICON": "Kalender öffnen",
+        "TIME_PICKER": "Zeitauswahl",
+        "MONTH_PICKER": "Monatsauswahl",
+        "YEAR_PICKER": "Jahresauswahl",
+        "TIME_OVERLAY": "Auswahl: {unit}",
+        "UNITS": {
+          "hours": "Stunden",
+          "minutes": "Minuten",
+          "seconds": "Sekunden"
+        }
+      }
+    }
+  }
+}

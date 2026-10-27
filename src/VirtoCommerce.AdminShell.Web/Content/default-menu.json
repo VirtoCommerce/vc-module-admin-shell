@@ -1,0 +1,140 @@
+{
+  "sections": [
+    {
+      "id": "dashboard", "title": "Home", "icon": "lucide-house", "priority": 100,
+      "items": [
+        { "id": "home", "title": "Dashboard", "icon": "lucide-layout-dashboard", "priority": 100, "target": { "type": "vue", "route": "/" } },
+        {
+          "id": "tasks", "title": "Tasks", "icon": "lucide-square-check-big", "priority": 200, "moduleId": "VirtoCommerce.TaskManagement", "permission": "task:access",
+          "target": { "type": "app", "appId": "tasks", "route": "/active" },
+          "children": [
+            { "id": "tasks.active", "title": "All Tasks", "target": { "type": "app", "appId": "tasks", "route": "/active" } },
+            { "id": "tasks.archive", "title": "Archive Tasks", "target": { "type": "app", "appId": "tasks", "route": "/archive" } },
+            { "id": "tasks.my", "title": "My Tasks", "target": { "type": "app", "appId": "tasks", "route": "/my" } },
+            { "id": "tasks.myArchive", "title": "My Archive Tasks", "target": { "type": "app", "appId": "tasks", "route": "/my-archive" } }
+          ]
+        },
+        { "id": "ai", "title": "Virto OZ", "icon": "lucide-bot", "iconUrl": "/Modules/$(VirtoCommerce.AI)/Content/ai-icon.svg", "priority": 300, "moduleId": "VirtoCommerce.AI", "permission": "ai:access", "route": "/ai" }
+      ]
+    },
+    {
+      "id": "catalog", "title": "Products", "icon": "lucide-package", "priority": 200,
+      "items": [
+        { "id": "catalog", "title": "Catalogs", "icon": "lucide-folder", "priority": 100, "moduleId": "VirtoCommerce.Catalog", "permission": "catalog:access", "route": "/catalog", "target": { "type": "legacy", "legacyUrl": "/workspace/catalog" }, "aliases": ["legacy.catalog"] },
+        { "id": "pricing", "title": "Pricing", "icon": "lucide-badge-dollar-sign", "priority": 200, "moduleId": "VirtoCommerce.Pricing", "permission": "pricing:access", "route": "/pricing", "target": { "type": "legacy", "legacyUrl": "/workspace/pricing" }, "aliases": ["legacy.pricing"] },
+        { "id": "inventory", "title": "Inventory", "icon": "lucide-boxes", "priority": 300, "moduleId": "VirtoCommerce.Inventory", "permission": "inventory:access", "route": "/inventory", "target": { "type": "legacy", "legacyUrl": "/workspace/Inventory" }, "aliases": ["legacy.inventory"] }
+      ]
+    },
+    {
+      "id": "orders", "title": "Orders & Customers", "icon": "lucide-shopping-cart", "priority": 300,
+      "groups": [
+        { "id": "sales", "title": "Sales", "items": ["orders", "quotes", "subscriptions", "returns"] },
+        { "id": "customers", "title": "Customers", "items": ["customers", "contracts"] }
+      ],
+      "items": [
+        { "id": "orders", "title": "Orders", "icon": "lucide-file-text", "priority": 100, "moduleId": "VirtoCommerce.Orders", "permission": "order:access", "route": "/orders", "target": { "type": "legacy", "legacyUrl": "/workspace/orders" }, "aliases": ["legacy.orders"] },
+        { "id": "returns", "title": "Returns", "icon": "lucide-arrow-left-right", "priority": 200, "moduleId": "VirtoCommerce.Return", "permission": "return:access", "route": "/returns" },
+        { "id": "customers", "title": "Contacts", "icon": "lucide-contact", "priority": 300, "moduleId": "VirtoCommerce.Customer", "permission": "customer:access", "route": "/customers", "target": { "type": "legacy", "legacyUrl": "/workspace/customers" }, "aliases": ["legacy.customers"] },
+        { "id": "subscriptions", "title": "Subscriptions", "icon": "lucide-repeat", "priority": 400, "moduleId": "VirtoCommerce.Subscription", "permission": "subscription:access", "route": "/subscriptions", "target": { "type": "legacy", "legacyUrl": "/workspace/subscriptions" }, "aliases": ["legacy.subscriptions"] },
+        { "id": "quotes", "title": "Quotes", "icon": "lucide-file-question", "priority": 500, "moduleId": "VirtoCommerce.Quote", "permission": "quote:access", "route": "/quotes" },
+        { "id": "contracts", "title": "Contracts", "icon": "lucide-file-signature", "priority": 600, "moduleId": "VirtoCommerce.Contracts", "permission": "Contract:access", "route": "/contracts" },
+        { "id": "sellers", "title": "Sellers", "icon": "lucide-store", "priority": 700, "moduleId": "VirtoCommerce.MarketplaceVendor", "permission": "operator:resources", "target": { "type": "legacy", "legacyUrl": "/workspace/sellers" }, "aliases": ["legacy.sellers"] },
+        { "id": "seller-orders", "title": "Seller Orders", "icon": "lucide-file-stack", "priority": 800, "moduleId": "VirtoCommerce.MarketplaceVendor", "permission": "operator:resources", "target": { "type": "legacy", "legacyUrl": "/workspace/operator-orders" }, "aliases": ["legacy.operatorOrders"] }
+      ]
+    },
+    {
+      "id": "marketing", "title": "Marketing & Content", "icon": "lucide-megaphone", "priority": 400,
+      "groups": [
+        { "id": "merchandising", "title": "Merchandising", "items": ["marketing", "dynamicAssociations"] },
+        { "id": "content", "title": "Content", "items": ["content", "marketing.dynamicContent", "content.blogs", "content.menus", "news", "builderio"] },
+        { "id": "engagement", "title": "Engagement", "items": ["loyalty", "loyalty.missions", "customerReviews"] }
+      ],
+      "items": [
+        { "id": "marketing", "title": "Promotions", "icon": "lucide-flag", "priority": 100, "moduleId": "VirtoCommerce.Marketing", "permission": "marketing:access", "route": "/marketing", "target": { "type": "legacy", "legacyUrl": "/workspace/marketing" }, "aliases": ["legacy.marketing"] },
+        { "id": "dynamicAssociations", "title": "Dynamic Associations", "icon": "lucide-git-compare-arrows", "priority": 200, "moduleId": "VirtoCommerce.DynamicAssociationsModule", "permission": "dynamic-association:access", "route": "/dynamic-associations" },
+        { "id": "content", "title": "Sites", "icon": "lucide-globe", "priority": 300, "moduleId": "VirtoCommerce.Content", "permission": "content:access", "route": "/content", "target": { "type": "legacy", "legacyUrl": "/workspace/content" }, "aliases": ["legacy.content"] },
+        { "id": "marketing.dynamicContent", "title": "Banners", "icon": "lucide-image", "priority": 400, "moduleId": "VirtoCommerce.Marketing", "permission": "marketing:access", "route": "/dynamic-content" },
+        { "id": "content.blogs", "title": "Blogs", "icon": "lucide-notebook-pen", "priority": 500, "moduleId": "VirtoCommerce.Content", "permission": "content:access", "route": "/content-blogs" },
+        { "id": "content.menus", "title": "Menus", "icon": "lucide-list-tree", "priority": 600, "moduleId": "VirtoCommerce.Content", "permission": "content:access", "route": "/content-menus" },
+        {
+          "id": "news", "title": "News", "icon": "lucide-newspaper", "priority": 700, "moduleId": "VirtoCommerce.News", "permission": "news:access",
+          "target": { "type": "app", "appId": "vc-news", "route": "/list-all" },
+          "children": [
+            { "id": "news.drafts", "title": "Drafts", "target": { "type": "app", "appId": "vc-news", "route": "/list-drafts" } },
+            { "id": "news.scheduled", "title": "Scheduled", "target": { "type": "app", "appId": "vc-news", "route": "/list-scheduled" } },
+            { "id": "news.published", "title": "Published", "target": { "type": "app", "appId": "vc-news", "route": "/list-published" } },
+            { "id": "news.archived", "title": "Archived", "target": { "type": "app", "appId": "vc-news", "route": "/list-archived" } },
+            { "id": "news.all", "title": "All", "target": { "type": "app", "appId": "vc-news", "route": "/list-all" } }
+          ]
+        },
+        { "id": "builderio", "title": "Builder.io", "icon": "lucide-layout-template", "priority": 800, "moduleId": "VirtoCommerce.BuilderIO", "permission": "builderio:access", "target": { "type": "url", "url": "/apps/builderio/" } },
+        { "id": "loyalty", "title": "Loyalty Programs", "icon": "lucide-star", "priority": 900, "moduleId": "VirtoCommerce.Loyalty", "permission": "loyalty:access", "route": "/loyalty" },
+        { "id": "loyalty.missions", "title": "Loyalty Missions", "icon": "lucide-trophy", "priority": 1000, "moduleId": "VirtoCommerce.Loyalty", "permission": "loyalty:access", "route": "/loyalty-missions" },
+        { "id": "customerReviews", "title": "Ratings & Reviews", "icon": "lucide-messages-square", "priority": 1100, "moduleId": "VirtoCommerce.CustomerReviews", "permission": "customerReviews:read", "route": "/customer-reviews" }
+      ]
+    },
+    {
+      "id": "insights", "title": "Insights", "icon": "lucide-chart-column", "priority": 500,
+      "groups": [
+        { "id": "analytics", "title": "Analytics", "items": ["reports", "ga4", "hotjar"] },
+        { "id": "search", "title": "Search", "items": ["algolia", "appsearch"] }
+      ],
+      "items": [
+        { "id": "reports", "title": "Reports", "icon": "lucide-chart-column", "priority": 100, "moduleId": "VirtoCommerce.PowerBiReports", "target": { "type": "app", "appId": "reports" } },
+        { "id": "ga4", "title": "Google Analytics", "icon": "lucide-trending-up", "priority": 200, "moduleId": "VirtoCommerce.GoogleEcommerceAnalytics", "permission": "googleanalytics:access", "target": { "type": "url", "url": "/apps/ga4/" } },
+        { "id": "hotjar", "title": "Hotjar", "icon": "lucide-flame", "priority": 300, "moduleId": "VirtoCommerce.Hotjar", "permission": "hotjar:access", "target": { "type": "url", "url": "/apps/hotjar/" } },
+        { "id": "algolia", "title": "Algolia Search", "icon": "lucide-search", "priority": 400, "moduleId": "VirtoCommerce.AlgoliaSearch", "permission": "algoliasearch:access", "target": { "type": "app", "appId": "algolia_search" } },
+        { "id": "appsearch", "title": "App Search", "icon": "lucide-scan-search", "priority": 500, "moduleId": "VirtoCommerce.ElasticAppSearch", "permission": "elasticappsearch:access", "target": { "type": "app", "appId": "app_search" } }
+      ]
+    },
+    {
+      "id": "configuration", "title": "Configuration", "icon": "lucide-settings", "priority": 600,
+      "groups": [
+        { "id": "store", "title": "Store", "items": ["stores", "nativePaymentMethods", "notifications"] },
+        { "id": "platform", "title": "Platform", "items": ["platform.settings", "platform.modules", "platform.dynamicProperties", "state-machines", "webhooks", "platform.license"] },
+        { "id": "catalogSearch", "title": "Catalog & Search", "items": ["measures", "thumbnails", "search-index", "channels"] },
+        { "id": "securityPrivacy", "title": "Security & Privacy", "items": ["platform.security", "audit-log", "gdpr"] },
+        { "id": "dataFiles", "title": "Data & Files", "items": ["assets", "backup-restore", "generic-export", "environments-compare", "sql-queries"] },
+        { "id": "monitoringTools", "title": "Monitoring & Tools", "items": ["platform.developerTools", "appinsights", "platform.menu"] }
+      ],
+      "items": [
+        { "id": "stores", "title": "Stores", "icon": "lucide-store", "priority": 100, "moduleId": "VirtoCommerce.Store", "permission": "store:access", "route": "/stores", "target": { "type": "legacy", "legacyUrl": "/workspace/store" }, "aliases": ["legacy.stores"] },
+        { "id": "nativePaymentMethods", "title": "Non-Integrative Payment Methods", "icon": "lucide-banknote", "priority": 200, "moduleId": "VirtoCommerce.NativePaymentMethods", "permission": "NativePaymentMethods:access", "route": "/native-payment-methods" },
+        { "id": "notifications", "title": "Notifications", "icon": "lucide-mail", "priority": 300, "moduleId": "VirtoCommerce.Notifications", "permission": "notifications:access", "route": "/notifications", "target": { "type": "legacy", "legacyUrl": "/workspace/notifications" }, "aliases": ["legacy.notifications"] },
+        { "id": "platform.settings", "title": "Settings", "icon": "lucide-settings-2", "priority": 400, "permission": "platform:setting:access", "target": { "type": "vue", "route": "/settings" } },
+        { "id": "platform.security", "title": "Security", "icon": "lucide-key-round", "priority": 500, "permission": "platform:security:access", "target": { "type": "vue", "route": "/security" } },
+        {
+          "id": "platform.modules", "title": "Modules", "icon": "lucide-blocks", "priority": 600, "permission": "platform:module:access", "target": { "type": "vue", "route": "/modules?view=installed" },
+          "children": [
+            { "id": "platform.modules.browse", "title": "Browse", "target": { "type": "vue", "route": "/modules?view=browse" } },
+            { "id": "platform.modules.installed", "title": "Installed", "target": { "type": "vue", "route": "/modules?view=installed" } },
+            { "id": "platform.modules.updates", "title": "Updates", "target": { "type": "vue", "route": "/modules?view=updates" } },
+            { "id": "platform.modules.advanced", "title": "Advanced", "permission": "platform:module:manage", "target": { "type": "vue", "route": "/modules-advanced" } }
+          ]
+        },
+        { "id": "platform.dynamicProperties", "title": "Dynamic Properties", "icon": "lucide-list-plus", "priority": 700, "permission": "platform:dynamic_properties:access", "target": { "type": "vue", "route": "/dynamic-properties" } },
+        { "id": "state-machines", "title": "State Machines", "icon": "lucide-workflow", "priority": 800, "moduleId": "VirtoCommerce.StateMachine", "permission": "statemachine:access", "route": "/state-machines" },
+        { "id": "measures", "title": "Units of Measure", "icon": "lucide-ruler", "priority": 900, "moduleId": "VirtoCommerce.Catalog", "permission": "measures:access", "route": "/measures", "target": { "type": "legacy", "legacyUrl": "/workspace/measures" }, "aliases": ["legacy.measures"] },
+        { "id": "thumbnails", "title": "Thumbnails", "icon": "lucide-images", "priority": 1000, "moduleId": "VirtoCommerce.ImageTools", "permission": "thumbnail:access", "route": "/thumbnails", "target": { "type": "legacy", "legacyUrl": "/workspace/thumbnail" }, "aliases": ["legacy.thumbnail"] },
+        { "id": "search-index", "title": "Search Index", "icon": "lucide-search", "priority": 1100, "moduleId": "VirtoCommerce.Search", "permission": "search:index:access", "route": "/search-index", "target": { "type": "legacy", "legacyUrl": "/workspace/searchIndex" }, "aliases": ["legacy.searchIndex"] },
+        { "id": "channels", "title": "Channels", "icon": "lucide-list-checks", "priority": 1200, "moduleId": "VirtoCommerce.CatalogPublishing", "permission": "channel:access", "route": "/channels", "target": { "type": "legacy", "legacyUrl": "/workspace/catalogPublishing" }, "aliases": ["legacy.channels"] },
+        { "id": "assets", "title": "Assets", "icon": "lucide-image", "priority": 1300, "moduleId": "VirtoCommerce.Assets", "permission": "platform:asset:access", "route": "/assets", "target": { "type": "legacy", "legacyUrl": "/workspace/assets" }, "aliases": ["legacy.assets"] },
+        { "id": "backup-restore", "title": "Backup & Restore", "icon": "lucide-database-backup", "priority": 1400, "moduleId": "VirtoCommerce.BackupRestore", "permission": "platform:backuprestore:access", "route": "/backup-restore", "target": { "type": "legacy", "legacyUrl": "/workspace/exportImport" }, "aliases": ["legacy.exportImport"] },
+        { "id": "generic-export", "title": "Generic Export", "icon": "lucide-database", "priority": 1500, "moduleId": "VirtoCommerce.Export", "permission": "export:access", "route": "/generic-export", "target": { "type": "legacy", "legacyUrl": "/workspace/generic-export" }, "aliases": ["legacy.genericExport"] },
+        { "id": "webhooks", "title": "Webhooks", "icon": "lucide-webhook", "priority": 1600, "moduleId": "VirtoCommerce.WebHooks", "permission": "webhooks:access", "route": "/webhooks" },
+        { "id": "platform.menu", "title": "Admin Shell Menu Editor", "icon": "lucide-panel-left", "priority": 2250, "permission": "admin-shell:menu:manage", "target": { "type": "vue", "route": "/menu-editor" } },
+        { "id": "audit-log", "title": "Audit Log", "icon": "lucide-calendar", "priority": 1800, "moduleId": "VirtoCommerce.AuditLog", "permission": "AuditLog:access", "route": "/audit-log" },
+        { "id": "gdpr", "title": "GDPR", "icon": "lucide-key-round", "priority": 1900, "moduleId": "VirtoCommerce.GDPR", "permission": "gdpr:access", "route": "/gdpr" },
+        { "id": "platform.developerTools", "title": "Developer Tools", "icon": "lucide-terminal", "priority": 2000, "permission": "platform:developer-tools:access", "target": { "type": "vue", "route": "/developer-tools" } },
+        { "id": "sql-queries", "title": "SQL Queries", "icon": "lucide-database-zap", "priority": 2100, "moduleId": "VirtoCommerce.SqlQueries", "permission": "sql-queries:access", "route": "/sql-queries" },
+        { "id": "appinsights", "title": "Application Insights", "icon": "lucide-activity", "priority": 2200, "moduleId": "VirtoCommerce.ApplicationInsights", "permission": "application-insights:access", "target": { "type": "app", "appId": "app-insights" } },
+        { "id": "environments-compare", "title": "Environments Comparison", "icon": "lucide-git-compare-arrows", "priority": 2300, "moduleId": "VirtoCommerce.EnvironmentsCompare", "permission": "environments-compare:access", "route": "/environments-compare" },
+        { "id": "platform.license", "title": "License", "icon": "lucide-badge-check", "priority": 2400, "permission": "platform:module:manage", "target": { "type": "vue", "route": "/license" } }
+      ]
+    },
+    {
+      "id": "apps", "title": "Apps", "icon": "lucide-layout-grid", "priority": 700,
+      "items": []
+    }
+  ]
+}

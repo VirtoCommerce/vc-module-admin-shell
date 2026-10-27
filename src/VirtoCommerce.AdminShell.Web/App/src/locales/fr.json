@@ -1,0 +1,218 @@
+{
+  "language_name": "Français",
+  "SHELL": {
+    "NAV": {
+      "SECTIONS": "Sections",
+      "HOME": "{name}, accueil",
+      "MENU": "Menu",
+      "NOTIFICATIONS": "Notifications",
+      "ACCOUNT": "Compte",
+      "CLASSIC_ADMIN": "Ouvrir l'administration classique",
+      "HIDE_MENU": "Masquer le menu",
+      "KEEP_OPEN": "Garder le menu ouvert",
+      "SHOW_MENU": "Afficher le menu",
+      "PIN": "Épingler",
+      "UNPIN": "Désépingler",
+      "HIDE_ITEM": "Masquer du menu",
+      "PINNED": "Épinglés",
+      "RECENT": "Récents",
+      "SHOW_HIDDEN": "Afficher {count} élément(s) masqué(s)",
+      "OPEN_BLADES": "Panneaux ouverts",
+      "NEW_TAB": "S'ouvre dans un nouvel onglet"
+    },
+    "USER_MENU": {
+      "LICENSE": "Licence",
+      "LICENSE_NONE": "Non activée",
+      "LICENSE_NONE_HINT": "Aucune licence commerciale n'est activée sur cette plateforme",
+      "LICENSE_EXPIRED": "Expirée",
+      "LICENSE_UNTIL": "jusqu'au {date}",
+      "LICENSE_ACTIVATE": "Activer",
+      "LICENSE_DETAILS": "Détails",
+      "LANGUAGE": "Langue",
+      "THEME": "Apparence",
+      "THEME_SYSTEM": "Comme le système",
+      "COLOR_THEME": "Thème",
+      "COLOR_THEMES": {
+        "VIRTO": "Virto",
+        "WARM": "Chaud",
+        "BLUE": "Bleu",
+        "INDIGO": "Indigo"
+      },
+      "SIGN_OUT": "Se déconnecter",
+      "BUILD": "Build {version}"
+    },
+    "BADGES": {
+      "TASKS": "{count} tâches ouvertes",
+      "MODULE_UPDATES": "{count} mises à jour de modules",
+      "MODULES_INSTALLED": "{count} modules installés",
+      "MODULES_AVAILABLE": "{count} modules"
+    },
+    "FRAME": {
+      "REFRESH": "Actualiser",
+      "NEW_TAB": "Ouvrir dans un nouvel onglet"
+    },
+    "DASHBOARD": {
+      "WELCOME": {
+        "TITLE": "Bienvenue"
+      },
+      "RESET_LAYOUT": "Réinitialiser la disposition",
+      "RESET_LAYOUT_CONFIRM": "Remettre chaque widget à sa place et à sa taille par défaut ?",
+      "VIEW_ALL": "Tout afficher",
+      "DISMISS": "Ignorer",
+      "ALERTS": {
+        "TITLE": "Alertes et notifications",
+        "EMPTY": "Vous êtes à jour",
+        "EMPTY_HINT": "Les résultats des tâches en arrière-plan, des imports et exports ainsi que les messages système s'affichent ici."
+      },
+      "ACTIVITY": {
+        "TITLE": "Activité récente",
+        "EMPTY": "Aucune modification enregistrée pour l'instant",
+        "ADDED": "créé",
+        "MODIFIED": "mis à jour",
+        "DELETED": "supprimé"
+      },
+      "SIGN_INS": {
+        "TITLE": "Activité de connexion",
+        "TOTAL": "Connexions, 7 derniers jours",
+        "FAILED": "Connexions échouées",
+        "USERS": "Utilisateurs connectés",
+        "DISABLED": "La journalisation des connexions est désactivée"
+      }
+    },
+    "AUTH": {
+      "LIGHT_THEME": "Passer au thème clair",
+      "DARK_THEME": "Passer au thème sombre",
+      "SHOWCASE": {
+        "LABEL": "À propos de Virto Commerce",
+        "GO_TO": "Afficher : {name}",
+        "MORE": "En savoir plus sur VirtoCommerce.com",
+        "PLATFORM": {
+          "CHIP": "Virto Commerce sur Virto Cloud",
+          "TITLE": "Composable Commerce géré pour le B2B complexe",
+          "BODY": "Une plateforme open source et API-first sur .NET, exploitée pour vous sur Virto Cloud. Commencez par ce dont vous avez besoin et ajoutez des modules au fil de la croissance de votre activité.",
+          "POINT_1": "Virto Cloud héberge, met à l'échelle, met à jour et surveille vos environnements",
+          "POINT_2": "Plus de 100 modules à installer, mettre à jour ou remplacer un par un",
+          "POINT_3": "Connectez n'importe quelle vitrine, ERP ou marketplace via des API ouvertes"
+        },
+        "CATALOG": {
+          "CHIP": "Catalogue et prix",
+          "TITLE": "Un seul catalogue pour tous les canaux et toutes les listes de prix",
+          "BODY": "Gérez une seule fois les produits physiques, numériques et configurables, puis publiez-les dans chaque boutique avec son propre assortiment et ses propres prix.",
+          "POINT_1": "Des catalogues virtuels qui réutilisent les produits entre boutiques et canaux",
+          "POINT_2": "Des listes de prix avec paliers de quantité, dates et règles par segment de clients",
+          "POINT_3": "Des stocks répartis entre entrepôts et centres de distribution"
+        },
+        "B2B": {
+          "CHIP": "Achats B2B",
+          "TITLE": "Conçu pour la façon dont les entreprises achètent",
+          "BODY": "Comptes d'entreprise, acheteurs et contrats, avec les devis et les commandes récurrentes dont dépendent les affaires B2B.",
+          "POINT_1": "Des organisations avec leurs acheteurs, rôles et adresses",
+          "POINT_2": "Des devis et des prix contractuels négociés par client",
+          "POINT_3": "Des abonnements qui recommandent selon un calendrier"
+        },
+        "API": {
+          "CHIP": "API et agents IA",
+          "TITLE": "Ouvert, API-first et prêt pour les agents",
+          "BODY": "Chaque fonctionnalité est une API : créez n'importe quel front-end, laissez des agents IA acheter et agir en votre nom, et étendez la plateforme avec vos propres modules.",
+          "POINT_1": "GraphQL xAPI pour les vitrines, les applications et les intégrations",
+          "POINT_2": "Agentic Access via MCP pour les assistants et agents IA",
+          "POINT_3": "Prise en charge native des protocoles UCP et OnX"
+        }
+      },
+      "HELP": "Aide",
+      "LINKS": {
+        "HELP": "Aide",
+        "SUPPORT": "Support",
+        "PRIVACY": "Confidentialité",
+        "TERMS": "Conditions"
+      },
+      "SLIDES_LABEL": "À propos de {name}"
+    },
+    "LOGIN": {
+      "SUBTITLE": "Connectez-vous à {name} pour continuer",
+      "CONTINUE_WITH": "Continuer avec {name}",
+      "CONTINUE_WITH_SSO": "Continuer avec l'authentification unique",
+      "OR": "ou",
+      "LOGIN": "Email ou nom d'utilisateur",
+      "LOGIN_PLACEHOLDER": "Saisissez votre email ou votre nom d'utilisateur",
+      "SIGNING_IN": "Connexion…",
+      "ERRORS": {
+        "LOCKED_OUT": "Ce compte est verrouillé après trop de tentatives échouées. Réessayez plus tard ou contactez votre administrateur.",
+        "NOT_ALLOWED": "Ce compte n'est pas encore autorisé à se connecter. Contactez votre administrateur."
+      }
+    },
+    "ACCESS_DENIED": {
+      "TITLE": "Accès refusé",
+      "MESSAGE": "Votre compte n'a pas accès à {name}. Contactez votre administrateur.",
+      "SIGNED_IN_AS": "Connecté en tant que {name}",
+      "SWITCH_ACCOUNT": "Se connecter avec un autre compte"
+    },
+    "SEARCH": {
+      "LABEL": "Rechercher",
+      "PLACEHOLDER": "Rechercher ou accéder à…",
+      "CLEAR": "Effacer",
+      "CLOSE": "Fermer la recherche",
+      "RESULTS": "Résultats de recherche",
+      "SEARCH_IN": "Rechercher dans",
+      "SEARCHING_IN": "Recherche dans",
+      "SEARCH_EVERYWHERE": "Rechercher partout",
+      "TYPE_TO_SEARCH": "Saisissez ce que vous cherchez",
+      "TIP_SCOPE": "Commencez par le nom d'un groupe, par exemple {example}, pour ne rechercher que là.",
+      "SEARCHING": "Recherche…",
+      "FAILED": "La recherche a échoué",
+      "RETRY": "Réessayer",
+      "NO_RESULTS": "Aucun résultat pour « {query} »",
+      "NO_RESULTS_HINT": "Vérifiez l'orthographe ou essayez avec moins de mots.",
+      "NO_RESULTS_SCOPED": "Vérifiez l'orthographe ou recherchez partout.",
+      "SHOW_ALL": "Afficher les {count} résultats dans {group}",
+      "OPEN_FAILED": "Impossible d'ouvrir le résultat",
+      "KEYS_MOVE": "pour naviguer",
+      "KEYS_OPEN": "pour ouvrir",
+      "KEYS_CLOSE": "pour fermer",
+      "GROUPS": {
+        "MENU": "Menu",
+        "APPS": "Applications",
+        "SETTINGS": "Paramètres",
+        "USERS": "Utilisateurs",
+        "ROLES": "Rôles"
+      },
+      "BADGES": {
+        "ADMIN": "Admin",
+        "LOCKED": "Verrouillé"
+      }
+    },
+    "FRAMEWORK": {
+      "PROGRESS": "Progression",
+      "CLOSE_SIDEBAR": "Fermer la barre latérale",
+      "DASHBOARD_GRID": "Widgets du tableau de bord. Faites glisser un widget, ou sélectionnez-le et appuyez sur Entrée pour le déplacer avec les flèches.",
+      "DATE_PICKER": {
+        "TOGGLE_OVERLAY": "Afficher ou masquer le sélecteur",
+        "MENU": "Menu du sélecteur de date",
+        "INPUT": "Champ de date",
+        "OPEN_TIME_PICKER": "Ouvrir le sélecteur d'heure",
+        "CLOSE_TIME_PICKER": "Fermer le sélecteur d'heure",
+        "INCREMENT": "Augmenter : {unit}",
+        "DECREMENT": "Diminuer : {unit}",
+        "OPEN_TIME_OVERLAY": "Choisir : {unit}",
+        "AM_PM": "Basculer AM/PM",
+        "OPEN_YEARS": "Choisir l'année",
+        "OPEN_MONTHS": "Choisir le mois",
+        "NEXT_MONTH": "Mois suivant",
+        "PREV_MONTH": "Mois précédent",
+        "NEXT_YEAR": "Année suivante",
+        "PREV_YEAR": "Année précédente",
+        "CLEAR": "Effacer la valeur",
+        "CALENDAR_ICON": "Ouvrir le calendrier",
+        "TIME_PICKER": "Sélecteur d'heure",
+        "MONTH_PICKER": "Sélecteur de mois",
+        "YEAR_PICKER": "Sélecteur d'année",
+        "TIME_OVERLAY": "Sélecteur : {unit}",
+        "UNITS": {
+          "hours": "heures",
+          "minutes": "minutes",
+          "seconds": "secondes"
+        }
+      }
+    }
+  }
+}

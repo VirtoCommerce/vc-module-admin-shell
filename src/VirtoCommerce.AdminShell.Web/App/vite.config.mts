@@ -1,0 +1,7 @@
+import { getApplicationConfiguration } from "@vc-shell/config-generator";
+import { mfHostConfig } from "@vc-shell/mf-host/vite";
+
+export default getApplicationConfiguration({
+  ...mfHostConfig(),
+  // Add you extra Vite configuration here
+});

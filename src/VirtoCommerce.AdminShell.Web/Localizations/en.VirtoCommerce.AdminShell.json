@@ -1,23 +1,112 @@
 {
-  "admin-shell": {
-    "blades": {
-      "hello-world": {
-        "title": "Hello world blade"
-      }
-    }
-  },
   "permissions": {
-    "admin-shell:access": "Open Admin Shell menu",
-    "admin-shell:create": "Create Admin Shell related data",
-    "admin-shell:read": "View Admin Shell related data",
-    "admin-shell:update": "Update Admin Shell related data",
-    "admin-shell:delete": "Delete Admin Shell related data"
+    "admin-shell:menu:manage": "Manage the Admin Shell menu: the menu editor, the global and role layers, what users may change"
   },
   "settings": {
     "AdminShell": {
-      "Enabled": {
-        "title": "Admin Shell Enabled",
-        "description": "Admin Shell Enabled setting"
+      "Menu": {
+        "Global": {
+          "title": "Global menu patch",
+          "description": "JSON patch applied to the default Admin Shell menu for everyone: hide, rename or move sections and items, or add new ones"
+        },
+        "Role": {
+          "title": "Role menu patch",
+          "description": "JSON patch applied to the Admin Shell menu for users in this role; an item stays visible when any of the user's roles keeps it"
+        },
+        "User": {
+          "title": "Menu preferences",
+          "description": "The user's pinned and hidden Admin Shell menu items"
+        },
+        "AllowPin": {
+          "title": "Users may pin menu items",
+          "description": "Off: users can't pin items, and the items they pinned stop showing in Pinned; they come back when this is turned on again"
+        },
+        "AllowHide": {
+          "title": "Users may hide menu items",
+          "description": "Off: users can't hide items, and the items they hid show again; they are hidden again when this is turned on again"
+        },
+        "AllowReorder": {
+          "title": "Users may reorder menu items",
+          "description": "Off: the users' own order of menu items doesn't apply; it applies again when this is turned on again"
+        }
+      },
+      "UI": {
+        "Appearance": {
+          "title": "Appearance",
+          "description": "Light, dark, or the operating system's appearance of the Admin Shell"
+        },
+        "Theme": {
+          "title": "Theme",
+          "description": "The Admin Shell's colors: Virto, Warm, Blue, Indigo or a custom theme"
+        }
+      },
+      "Branding": {
+        "CompanyName": {
+          "title": "Company name",
+          "description": "Shown in the browser tab, on the sign-in page and in its footer. Empty: Virto Commerce"
+        },
+        "LogoUrl": {
+          "title": "Logo",
+          "description": "The logo on light backgrounds (sign-in page, Home): an image URL, for example one from Assets. SVG or PNG, about 200 x 48 px"
+        },
+        "LogoDarkUrl": {
+          "title": "Logo for dark appearance",
+          "description": "The logo on dark backgrounds. Empty: the logo above"
+        },
+        "MarkUrl": {
+          "title": "Logo mark",
+          "description": "A square icon for the menu rail and the phone top bar: an image URL. SVG or PNG, at least 64 x 64 px"
+        },
+        "FaviconUrl": {
+          "title": "Browser tab icon",
+          "description": "The favicon: an image URL (ICO, PNG or SVG). Empty: the logo mark"
+        },
+        "HelpUrl": {
+          "title": "Help link",
+          "description": "Where Help on the sign-in page and in the user menu leads. Empty: no Help link"
+        },
+        "SupportUrl": {
+          "title": "Support link",
+          "description": "A support page or mailto: address, in the sign-in footer and the user menu"
+        },
+        "PrivacyUrl": {
+          "title": "Privacy policy link",
+          "description": "Shown in the sign-in page footer"
+        },
+        "TermsUrl": {
+          "title": "Terms of use link",
+          "description": "Shown in the sign-in page footer"
+        }
+      },
+      "SignIn": {
+        "Showcase": {
+          "title": "Sign-in page panel",
+          "description": "The panel beside the sign-in form (from 1024 px wide): virto shows Virto Commerce's slides, custom the slides below, none only the form"
+        },
+        "Slides": {
+          "title": "Sign-in page slides",
+          "description": "JSON list of slides: [{ \"chip\", \"title\", \"body\", \"points\": [], \"image\", \"imageDark\", \"alt\", \"link\": { \"text\", \"url\" } }]. A text can be a string or { \"en\": \"...\", \"de\": \"...\" }"
+        }
+      },
+      "Home": {
+        "Welcome": {
+          "title": "Home welcome card",
+          "description": "JSON: { \"title\", \"body\", \"image\", \"imageDark\", \"links\": [{ \"text\", \"url\" }] }, shown first on Home. {} hides it"
+        }
+      },
+      "Theme": {
+        "Default": {
+          "title": "Default theme",
+          "description": "The theme of the sign-in page and of users who have not picked one: virto, warm, blue, indigo or the id of a theme file"
+        },
+        "Appearance": {
+          "title": "Default appearance",
+          "description": "Light, dark or the operating system appearance for the sign-in page and users who have not picked one"
+        },
+        "UserChoice": {
+          "title": "Users choose their theme",
+          "description": "Off: everyone has the default theme and the theme pickers are hidden"
+        }
       }
     }
   }

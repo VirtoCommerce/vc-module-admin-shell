@@ -1,0 +1,218 @@
+{
+  "language_name": "中文",
+  "SHELL": {
+    "NAV": {
+      "SECTIONS": "栏目",
+      "HOME": "{name} 首页",
+      "MENU": "菜单",
+      "NOTIFICATIONS": "通知",
+      "ACCOUNT": "账户",
+      "CLASSIC_ADMIN": "打开经典管理后台",
+      "HIDE_MENU": "隐藏菜单",
+      "KEEP_OPEN": "保持菜单展开",
+      "SHOW_MENU": "显示菜单",
+      "PIN": "固定",
+      "UNPIN": "取消固定",
+      "HIDE_ITEM": "从菜单中隐藏",
+      "PINNED": "已固定",
+      "RECENT": "最近",
+      "SHOW_HIDDEN": "显示 {count} 个隐藏项",
+      "OPEN_BLADES": "已打开的面板",
+      "NEW_TAB": "在新标签页中打开"
+    },
+    "USER_MENU": {
+      "LICENSE": "许可证",
+      "LICENSE_NONE": "未激活",
+      "LICENSE_NONE_HINT": "此平台未激活商业许可证",
+      "LICENSE_EXPIRED": "已过期",
+      "LICENSE_UNTIL": "有效期至 {date}",
+      "LICENSE_ACTIVATE": "激活",
+      "LICENSE_DETAILS": "详情",
+      "LANGUAGE": "语言",
+      "THEME": "外观",
+      "THEME_SYSTEM": "跟随系统",
+      "COLOR_THEME": "主题",
+      "COLOR_THEMES": {
+        "VIRTO": "Virto",
+        "WARM": "暖色",
+        "BLUE": "蓝色",
+        "INDIGO": "靛蓝"
+      },
+      "SIGN_OUT": "退出登录",
+      "BUILD": "构建 {version}"
+    },
+    "BADGES": {
+      "TASKS": "{count} 个待处理任务",
+      "MODULE_UPDATES": "{count} 个模块更新",
+      "MODULES_INSTALLED": "已安装 {count} 个模块",
+      "MODULES_AVAILABLE": "{count} 个模块"
+    },
+    "FRAME": {
+      "REFRESH": "刷新",
+      "NEW_TAB": "在新标签页中打开"
+    },
+    "DASHBOARD": {
+      "WELCOME": {
+        "TITLE": "欢迎"
+      },
+      "RESET_LAYOUT": "重置布局",
+      "RESET_LAYOUT_CONFIRM": "将所有小部件恢复到默认位置和大小？",
+      "VIEW_ALL": "查看全部",
+      "DISMISS": "忽略",
+      "ALERTS": {
+        "TITLE": "提醒和通知",
+        "EMPTY": "已全部处理完毕",
+        "EMPTY_HINT": "后台任务、导入和导出的结果以及系统消息会显示在这里。"
+      },
+      "ACTIVITY": {
+        "TITLE": "最近活动",
+        "EMPTY": "尚无更改记录",
+        "ADDED": "已创建",
+        "MODIFIED": "已更新",
+        "DELETED": "已删除"
+      },
+      "SIGN_INS": {
+        "TITLE": "登录活动",
+        "TOTAL": "登录次数（最近 7 天）",
+        "FAILED": "登录失败",
+        "USERS": "已登录用户",
+        "DISABLED": "登录记录功能已关闭"
+      }
+    },
+    "AUTH": {
+      "LIGHT_THEME": "切换到浅色主题",
+      "DARK_THEME": "切换到深色主题",
+      "SHOWCASE": {
+        "LABEL": "关于 Virto Commerce",
+        "GO_TO": "显示：{name}",
+        "MORE": "访问 VirtoCommerce.com 了解更多",
+        "PLATFORM": {
+          "CHIP": "Virto Cloud 上的 Virto Commerce",
+          "TITLE": "面向复杂 B2B 的托管式可组合商务",
+          "BODY": "基于 .NET 的开源、API 优先平台，由 Virto Cloud 为您运行。从所需功能起步，随业务增长添加模块。",
+          "POINT_1": "Virto Cloud 负责托管、扩展、更新和监控您的环境",
+          "POINT_2": "100 多个模块，可逐个安装、更新或替换",
+          "POINT_3": "通过开放 API 连接任意店面、ERP 或交易平台"
+        },
+        "CATALOG": {
+          "CHIP": "目录与定价",
+          "TITLE": "一个目录，覆盖所有渠道和价目表",
+          "BODY": "实体、数字和可配置商品只需管理一次，即可发布到各个商店，并为每个商店设置独立的商品组合和价格。",
+          "POINT_1": "虚拟目录，在商店和渠道之间复用商品",
+          "POINT_2": "支持数量阶梯、日期和客户群规则的价目表",
+          "POINT_3": "跨仓库和履约中心管理库存"
+        },
+        "B2B": {
+          "CHIP": "B2B 采购",
+          "TITLE": "契合企业的采购方式",
+          "BODY": "企业账户、采购人员和合同，以及 B2B 交易离不开的报价和定期订单。",
+          "POINT_1": "组织及其采购人员、角色和地址",
+          "POINT_2": "按客户协商的报价和合同价格",
+          "POINT_3": "按计划自动补货的订阅"
+        },
+        "API": {
+          "CHIP": "API 与 AI 智能体",
+          "TITLE": "开放、API 优先、为智能体做好准备",
+          "BODY": "每项功能都是 API：构建任意前端，让 AI 智能体代您购物和执行操作，并用自己的模块扩展平台。",
+          "POINT_1": "面向店面、应用和集成的 GraphQL xAPI",
+          "POINT_2": "通过 MCP 为 AI 助手和智能体提供 Agentic Access",
+          "POINT_3": "原生支持 UCP 和 OnX 协议"
+        }
+      },
+      "HELP": "帮助",
+      "LINKS": {
+        "HELP": "帮助",
+        "SUPPORT": "支持",
+        "PRIVACY": "隐私",
+        "TERMS": "条款"
+      },
+      "SLIDES_LABEL": "关于 {name}"
+    },
+    "LOGIN": {
+      "SUBTITLE": "登录 {name} 以继续",
+      "CONTINUE_WITH": "使用 {name} 继续",
+      "CONTINUE_WITH_SSO": "使用单点登录继续",
+      "OR": "或",
+      "LOGIN": "电子邮件或用户名",
+      "LOGIN_PLACEHOLDER": "输入电子邮件或用户名",
+      "SIGNING_IN": "正在登录…",
+      "ERRORS": {
+        "LOCKED_OUT": "此账户因失败次数过多已被锁定。请稍后重试或联系管理员。",
+        "NOT_ALLOWED": "此账户暂不允许登录。请联系管理员。"
+      }
+    },
+    "ACCESS_DENIED": {
+      "TITLE": "访问被拒绝",
+      "MESSAGE": "您的帐户无权访问 {name}。请联系管理员。",
+      "SIGNED_IN_AS": "已登录为 {name}",
+      "SWITCH_ACCOUNT": "使用其他帐户登录"
+    },
+    "SEARCH": {
+      "LABEL": "搜索",
+      "PLACEHOLDER": "搜索或跳转到…",
+      "CLEAR": "清除",
+      "CLOSE": "关闭搜索",
+      "RESULTS": "搜索结果",
+      "SEARCH_IN": "搜索范围",
+      "SEARCHING_IN": "正在搜索",
+      "SEARCH_EVERYWHERE": "全部搜索",
+      "TYPE_TO_SEARCH": "输入要查找的内容",
+      "TIP_SCOPE": "以分组名称开头（例如 {example}），即可只在该分组中搜索。",
+      "SEARCHING": "正在搜索…",
+      "FAILED": "搜索失败",
+      "RETRY": "重试",
+      "NO_RESULTS": "未找到“{query}”的结果",
+      "NO_RESULTS_HINT": "请检查拼写或减少关键词。",
+      "NO_RESULTS_SCOPED": "请检查拼写，或进行全部搜索。",
+      "SHOW_ALL": "显示 {group} 中的全部 {count} 项",
+      "OPEN_FAILED": "无法打开该结果",
+      "KEYS_MOVE": "移动",
+      "KEYS_OPEN": "打开",
+      "KEYS_CLOSE": "关闭",
+      "GROUPS": {
+        "MENU": "菜单",
+        "APPS": "应用",
+        "SETTINGS": "设置",
+        "USERS": "用户",
+        "ROLES": "角色"
+      },
+      "BADGES": {
+        "ADMIN": "管理员",
+        "LOCKED": "已锁定"
+      }
+    },
+    "FRAMEWORK": {
+      "PROGRESS": "进度",
+      "CLOSE_SIDEBAR": "关闭侧边栏",
+      "DASHBOARD_GRID": "仪表板小组件。拖动小组件，或选中后按 Enter 键，再用方向键重新排列。",
+      "DATE_PICKER": {
+        "TOGGLE_OVERLAY": "显示或隐藏选择器",
+        "MENU": "日期选择菜单",
+        "INPUT": "日期输入",
+        "OPEN_TIME_PICKER": "打开时间选择",
+        "CLOSE_TIME_PICKER": "关闭时间选择",
+        "INCREMENT": "增加{unit}",
+        "DECREMENT": "减少{unit}",
+        "OPEN_TIME_OVERLAY": "选择{unit}",
+        "AM_PM": "切换上午/下午",
+        "OPEN_YEARS": "选择年份",
+        "OPEN_MONTHS": "选择月份",
+        "NEXT_MONTH": "下个月",
+        "PREV_MONTH": "上个月",
+        "NEXT_YEAR": "下一年",
+        "PREV_YEAR": "上一年",
+        "CLEAR": "清除值",
+        "CALENDAR_ICON": "打开日历",
+        "TIME_PICKER": "时间选择",
+        "MONTH_PICKER": "月份选择",
+        "YEAR_PICKER": "年份选择",
+        "TIME_OVERLAY": "{unit}选择",
+        "UNITS": {
+          "hours": "小时",
+          "minutes": "分钟",
+          "seconds": "秒"
+        }
+      }
+    }
+  }
+}

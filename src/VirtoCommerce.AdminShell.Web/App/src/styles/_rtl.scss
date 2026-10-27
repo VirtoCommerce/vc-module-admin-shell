@@ -1,0 +1,51 @@
+@use "sass:list";
+
+/* Right-to-left languages (<html dir="rtl">, set by vc-shell's language switch). The layout's left/right rules are
+   mirrored at build time (postcss-rtlcss, postcss.config.cjs); vc-shell 2.7 mirrors its arrow icons and reads inputs
+   and table cells in their own direction. This file holds the rest: the letters of these scripts and code. */
+
+/* Arabic and Hebrew letters: vc-shell's fonts have none, so the browser would pick any system font. The same font names
+   get Noto Sans Arabic and Noto Sans Hebrew for those scripts' code points only (unicode-range), bundled with the app (no
+   font service: the admin works in a closed network). Latin text keeps its font. */
+$scripts: (
+  arabic: (
+    url("../../node_modules/@fontsource-variable/noto-sans-arabic/files/noto-sans-arabic-arabic-wght-normal.woff2"),
+    (U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F,
+      U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC)
+  ),
+  hebrew: (
+    url("../../node_modules/@fontsource-variable/noto-sans-hebrew/files/noto-sans-hebrew-hebrew-wght-normal.woff2"),
+    (U+0590-05FF, U+20AA, U+FB1D-FB4F)
+  ),
+);
+
+@each $family in ("Plus Jakarta Sans", "Lato") {
+  @each $script, $font in $scripts {
+    @font-face {
+      font-display: swap;
+      font-family: $family;
+      font-style: normal;
+      font-weight: 100 900;
+      src: list.nth($font, 1) format("woff2-variations");
+      unicode-range: list.nth($font, 2);
+    }
+  }
+}
+
+[dir="rtl"] {
+  /* the date picker and a few vc-shell parts use the system font stack */
+  --dp-font-family: "Plus Jakarta Sans", -apple-system, "Segoe UI", roboto, sans-serif;
+}
+
+/* code reads left to right whatever the page: the sign-in showcase's GraphQL and JSON, JSON views, setting names. Kept
+   out of the build-time mirroring, which would turn this "ltr" and "left" around too */
+/*rtl:begin:ignore*/
+[dir="rtl"] :is(pre, code, kbd, samp) {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+[dir="rtl"] pre {
+  text-align: left;
+}
+/*rtl:end:ignore*/

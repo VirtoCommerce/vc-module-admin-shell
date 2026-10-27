@@ -1,0 +1,104 @@
+/* shared layout classes of the platform screens (host tokens only; loaded once with the remote) */
+.platform-form {
+  padding: 20px 22px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.platform-card-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.platform-note {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-neutral-600);
+}
+
+.platform-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+}
+
+.platform-badges {
+  gap: 6px;
+}
+
+.platform-code textarea {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  min-height: 160px;
+}
+
+.platform-code--tall textarea {
+  min-height: 640px;
+}
+
+.platform-nav-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-neutral-900);
+}
+
+.platform-pre {
+  white-space: pre-wrap;
+  font-size: 13px;
+}
+
+.platform-dictionary {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  &__form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 22px 8px;
+    > .vc-input {
+      flex: 1 1 160px;
+    }
+  }
+  &__actions {
+    display: flex;
+    gap: 8px;
+    align-self: flex-end;
+    padding-bottom: 2px;
+  }
+}
+
+.platform-module-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  &__title {
+    color: var(--color-neutral-900);
+    font-weight: 500;
+  }
+  &__descr {
+    font-size: 12px;
+    color: var(--color-neutral-500);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+/* a setting opened from global search or a link flashes once where it is (the Settings blade) */
+@keyframes platform-setting-found {
+  0%,
+  35% {
+    background: var(--as-accent-soft, rgba(49, 158, 212, 0.12));
+    box-shadow: 0 0 0 6px var(--as-accent-soft, rgba(49, 158, 212, 0.12));
+  }
+  100% {
+    background: transparent;
+    box-shadow: 0 0 0 6px transparent;
+  }
+}

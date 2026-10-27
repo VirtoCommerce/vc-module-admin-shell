@@ -5,12 +5,10 @@
   <version-tag></version-tag>
 
   <platformVersion>3.1076.0</platformVersion>
-  <dependencies>
-    <!--<dependency id="VirtoCommerce.Core" version="3.1001.2" />-->
-  </dependencies>
+  <dependencies />
 
-  <title>Virto Commerce Admin Shell</title>
-  <description>Virto Commerce Admin Shell</description>
+  <title>Admin Shell</title>
+  <description>Vue (vc-shell) admin host: server-driven menu, Vue modules loaded at runtime, AngularJS screens in embedded mode</description>
 
   <authors>
     <author>Alexander Siniouguine</author>
@@ -19,8 +17,17 @@
     <owner>Virto Commerce</owner>
   </owners>
 
-  <projectUrl>https://github.com/Virto Commerce/vc-module-admin-shell</projectUrl>
-  <iconUrl>Modules/$(VirtoCommerce.AdminShell)/Content/logo.png</iconUrl>
+  <apps>
+    <app id="admin-shell">
+      <title>Admin Shell</title>
+      <description>Virto Commerce admin</description>
+      <iconUrl>Modules/$(VirtoCommerce.AdminShell)/Content/logo.svg</iconUrl>
+      <placement>AppMenu</placement>
+    </app>
+  </apps>
+
+  <projectUrl>https://github.com/VirtoCommerce/vc-module-admin-shell</projectUrl>
+  <iconUrl>Modules/$(VirtoCommerce.AdminShell)/Content/logo.svg</iconUrl>
   <requireLicenseAcceptance>false</requireLicenseAcceptance>
 
   <assemblyFile>VirtoCommerce.AdminShell.Web.dll</assemblyFile>
@@ -28,6 +35,6 @@
 
   <releaseNotes>First version.</releaseNotes>
   <copyright>Copyright © 2026 Virto Commerce. All rights reserved</copyright>
-  <tags>extension module</tags>
+  <tags>admin shell</tags>
   <useFullTypeNameInSwagger>false</useFullTypeNameInSwagger>
 </module>

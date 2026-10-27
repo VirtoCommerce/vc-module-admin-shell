@@ -1,0 +1,11 @@
+{
+  "extends": "@vc-shell/ts-config/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": { "@vc-shell/framework/locales/de": ["src/locales/framework/vc-shell-de.d.ts"] },
+    "outDir": "dist",
+    "rootDir": "src",
+    "types": ["vite/client", "@vc-shell/framework/globals"]
+  },
+  "include": ["./src/**/*.ts", "./src/**/*.vue", "./src/**/*.json"]
+}
