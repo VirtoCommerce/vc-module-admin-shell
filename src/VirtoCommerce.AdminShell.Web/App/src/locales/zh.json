@@ -141,6 +141,28 @@
         "NOT_ALLOWED": "此账户暂不允许登录。请联系管理员。"
       }
     },
+    "MFA": {
+      "TITLE": "输入登录验证码",
+      "SUBTITLE": "我们已将验证码发送至 {destination}。",
+      "SUBTITLE_EMAIL": "请输入我们发送到您邮箱的验证码。",
+      "CODE": "验证码",
+      "CODE_PLACEHOLDER": "输入 6 位验证码",
+      "RESEND": "重新发送验证码",
+      "RESEND_COUNTDOWN": "{seconds} 秒后可重新发送验证码",
+      "BACK": "返回登录",
+      "CODE_RESENT": "已重新发送验证码。",
+      "ERRORS": {
+        "INVALID_CODE": "验证码无效，请检查后重试。",
+        "INVALID_TWO_FACTOR_TOKEN": "登录会话已过期，请重新登录。",
+        "CODE_ATTEMPTS_EXCEEDED": "错误的验证码过多，请等待几分钟后重新登录。",
+        "USER_IS_LOCKED_OUT": "您的账户已被锁定，请联系管理员。",
+        "USER_IS_TEMPORARY_LOCKED_OUT": "您的账户已被暂时锁定，请稍后再试。",
+        "SIGN_IN_NOT_ALLOWED": "此账户无法登录 Backoffice。",
+        "LOCKOUT_DISABLED": "此账户无法使用验证码登录，请联系管理员。",
+        "MFA_PROVIDER_NOT_AVAILABLE": "无法向此账户发送登录验证码。请确认电子邮件或联系管理员。",
+        "UNAVAILABLE": "此账户需要第二步登录验证，但该功能不可用。请联系管理员。"
+      }
+    },
     "ACCESS_DENIED": {
       "TITLE": "访问被拒绝",
       "MESSAGE": "您的帐户无权访问 {name}。请联系管理员。",

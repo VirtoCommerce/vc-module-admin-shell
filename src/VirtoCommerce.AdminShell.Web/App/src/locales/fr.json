@@ -141,6 +141,28 @@
         "NOT_ALLOWED": "Ce compte n'est pas encore autorisé à se connecter. Contactez votre administrateur."
       }
     },
+    "MFA": {
+      "TITLE": "Saisissez le code de connexion",
+      "SUBTITLE": "Nous avons envoyé un code à {destination}.",
+      "SUBTITLE_EMAIL": "Saisissez le code que nous avons envoyé à votre adresse e-mail.",
+      "CODE": "Code",
+      "CODE_PLACEHOLDER": "Saisissez le code à 6 chiffres",
+      "RESEND": "Renvoyer le code",
+      "RESEND_COUNTDOWN": "Renvoyer le code dans {seconds} s",
+      "BACK": "Retour à la connexion",
+      "CODE_RESENT": "Code renvoyé.",
+      "ERRORS": {
+        "INVALID_CODE": "Ce code n'est pas valide. Vérifiez-le et réessayez.",
+        "INVALID_TWO_FACTOR_TOKEN": "Votre session de connexion a expiré. Connectez-vous à nouveau.",
+        "CODE_ATTEMPTS_EXCEEDED": "Trop de codes incorrects. Patientez quelques minutes, puis reconnectez-vous.",
+        "USER_IS_LOCKED_OUT": "Votre compte a été verrouillé. Contactez votre administrateur.",
+        "USER_IS_TEMPORARY_LOCKED_OUT": "Votre compte a été temporairement verrouillé. Veuillez réessayer plus tard.",
+        "SIGN_IN_NOT_ALLOWED": "Vous ne pouvez pas vous connecter au Backoffice avec ce compte.",
+        "LOCKOUT_DISABLED": "Ce compte ne peut pas se connecter avec un code. Contactez votre administrateur.",
+        "MFA_PROVIDER_NOT_AVAILABLE": "Impossible d'envoyer un code de connexion à ce compte. Confirmez son e-mail ou contactez votre administrateur.",
+        "UNAVAILABLE": "Ce compte exige une deuxième étape de connexion, mais elle n'est pas disponible. Contactez votre administrateur."
+      }
+    },
     "ACCESS_DENIED": {
       "TITLE": "Accès refusé",
       "MESSAGE": "Votre compte n'a pas accès à {name}. Contactez votre administrateur.",

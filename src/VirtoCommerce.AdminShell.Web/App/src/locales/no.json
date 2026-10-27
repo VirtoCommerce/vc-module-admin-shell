@@ -141,6 +141,28 @@
         "NOT_ALLOWED": "Kontoen kan ikke logge inn ennå. Kontakt administratoren."
       }
     },
+    "MFA": {
+      "TITLE": "Skriv inn påloggingskoden",
+      "SUBTITLE": "Vi har sendt en kode til {destination}.",
+      "SUBTITLE_EMAIL": "Skriv inn koden vi sendte til e-posten din.",
+      "CODE": "Kode",
+      "CODE_PLACEHOLDER": "Skriv inn den 6-sifrede koden",
+      "RESEND": "Send koden på nytt",
+      "RESEND_COUNTDOWN": "Send koden på nytt om {seconds} s",
+      "BACK": "Tilbake til pålogging",
+      "CODE_RESENT": "Koden er sendt på nytt.",
+      "ERRORS": {
+        "INVALID_CODE": "Koden er ugyldig. Kontroller den og prøv igjen.",
+        "INVALID_TWO_FACTOR_TOKEN": "Påloggingsøkten er utløpt. Logg på igjen.",
+        "CODE_ATTEMPTS_EXCEEDED": "For mange feil koder. Vent noen minutter og logg på igjen.",
+        "USER_IS_LOCKED_OUT": "Kontoen din er låst. Kontakt administratoren.",
+        "USER_IS_TEMPORARY_LOCKED_OUT": "Kontoen din er midlertidig låst. Prøv igjen senere.",
+        "SIGN_IN_NOT_ALLOWED": "Du kan ikke logge på Backoffice med denne kontoen.",
+        "LOCKOUT_DISABLED": "Denne kontoen kan ikke logge på med en kode. Kontakt administratoren.",
+        "MFA_PROVIDER_NOT_AVAILABLE": "Vi kan ikke sende en påloggingskode til denne kontoen. Bekreft e-posten eller kontakt administratoren.",
+        "UNAVAILABLE": "Denne kontoen krever et ekstra påloggingstrinn, men det er ikke tilgjengelig. Kontakt administratoren."
+      }
+    },
     "ACCESS_DENIED": {
       "TITLE": "Tilgang nektet",
       "MESSAGE": "Kontoen din har ikke tilgang til {name}. Kontakt administratoren.",

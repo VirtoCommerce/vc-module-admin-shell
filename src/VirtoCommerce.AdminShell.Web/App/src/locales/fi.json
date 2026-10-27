@@ -141,6 +141,28 @@
         "NOT_ALLOWED": "Tilillä ei voi vielä kirjautua. Ota yhteyttä järjestelmänvalvojaan."
       }
     },
+    "MFA": {
+      "TITLE": "Syötä kirjautumiskoodi",
+      "SUBTITLE": "Lähetimme koodin osoitteeseen {destination}.",
+      "SUBTITLE_EMAIL": "Anna sähköpostiisi lähettämämme koodi.",
+      "CODE": "Koodi",
+      "CODE_PLACEHOLDER": "Syötä 6-numeroinen koodi",
+      "RESEND": "Lähetä koodi uudelleen",
+      "RESEND_COUNTDOWN": "Lähetä koodi uudelleen {seconds} s kuluttua",
+      "BACK": "Takaisin kirjautumiseen",
+      "CODE_RESENT": "Koodi lähetetty uudelleen.",
+      "ERRORS": {
+        "INVALID_CODE": "Koodi ei kelpaa. Tarkista se ja yritä uudelleen.",
+        "INVALID_TWO_FACTOR_TOKEN": "Kirjautumisistuntosi on vanhentunut. Kirjaudu uudelleen.",
+        "CODE_ATTEMPTS_EXCEEDED": "Liian monta virheellistä koodia. Odota muutama minuutti ja kirjaudu uudelleen.",
+        "USER_IS_LOCKED_OUT": "Tilisi on lukittu. Ota yhteyttä järjestelmänvalvojaan.",
+        "USER_IS_TEMPORARY_LOCKED_OUT": "Tilisi on lukittu tilapäisesti. Yritä myöhemmin uudelleen.",
+        "SIGN_IN_NOT_ALLOWED": "Tällä tilillä ei voi kirjautua Backofficeen.",
+        "LOCKOUT_DISABLED": "Tällä tilillä ei voi kirjautua koodilla. Ota yhteyttä järjestelmänvalvojaan.",
+        "MFA_PROVIDER_NOT_AVAILABLE": "Tälle tilille ei voi lähettää kirjautumiskoodia. Vahvista sähköposti tai ota yhteyttä järjestelmänvalvojaan.",
+        "UNAVAILABLE": "Tämä tili vaatii toisen kirjautumisvaiheen, mutta se ei ole käytettävissä. Ota yhteyttä järjestelmänvalvojaan."
+      }
+    },
     "ACCESS_DENIED": {
       "TITLE": "Pääsy estetty",
       "MESSAGE": "Tililläsi ei ole pääsyä kohteeseen {name}. Ota yhteyttä järjestelmänvalvojaan.",
