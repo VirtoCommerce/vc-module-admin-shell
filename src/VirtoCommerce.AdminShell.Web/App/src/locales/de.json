@@ -141,6 +141,28 @@
         "NOT_ALLOWED": "Dieses Konto darf sich noch nicht anmelden. Wenden Sie sich an Ihren Administrator."
       }
     },
+    "MFA": {
+      "TITLE": "Anmeldecode eingeben",
+      "SUBTITLE": "Wir haben einen Code an {destination} gesendet.",
+      "SUBTITLE_EMAIL": "Geben Sie den Code ein, den wir an Ihre E-Mail-Adresse gesendet haben.",
+      "CODE": "Code",
+      "CODE_PLACEHOLDER": "6-stelligen Code eingeben",
+      "RESEND": "Code erneut senden",
+      "RESEND_COUNTDOWN": "Code erneut senden in {seconds} s",
+      "BACK": "Zurück zur Anmeldung",
+      "CODE_RESENT": "Code erneut gesendet.",
+      "ERRORS": {
+        "INVALID_CODE": "Der Code ist ungültig. Prüfen Sie ihn und versuchen Sie es erneut.",
+        "INVALID_TWO_FACTOR_TOKEN": "Ihre Anmeldesitzung ist abgelaufen. Melden Sie sich erneut an.",
+        "CODE_ATTEMPTS_EXCEEDED": "Zu viele falsche Codes. Warten Sie einige Minuten und melden Sie sich erneut an.",
+        "USER_IS_LOCKED_OUT": "Ihr Konto wurde gesperrt. Wenden Sie sich an Ihren Administrator.",
+        "USER_IS_TEMPORARY_LOCKED_OUT": "Ihr Konto wurde vorübergehend gesperrt. Bitte versuchen Sie es später erneut.",
+        "SIGN_IN_NOT_ALLOWED": "Mit diesem Konto können Sie sich nicht im Backoffice anmelden.",
+        "LOCKOUT_DISABLED": "Dieses Konto kann sich nicht mit einem Code anmelden. Wenden Sie sich an Ihren Administrator.",
+        "MFA_PROVIDER_NOT_AVAILABLE": "An dieses Konto kann kein Anmeldecode gesendet werden. Bestätigen Sie die E-Mail-Adresse oder wenden Sie sich an Ihren Administrator.",
+        "UNAVAILABLE": "Für dieses Konto ist ein zweiter Anmeldeschritt erforderlich, der jedoch nicht verfügbar ist. Wenden Sie sich an Ihren Administrator."
+      }
+    },
     "ACCESS_DENIED": {
       "TITLE": "Zugriff verweigert",
       "MESSAGE": "Ihr Konto hat keinen Zugriff auf {name}. Wenden Sie sich an Ihren Administrator.",

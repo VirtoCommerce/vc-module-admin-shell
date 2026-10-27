@@ -141,6 +141,28 @@
         "NOT_ALLOWED": "Kontot får inte logga in ännu. Kontakta administratören."
       }
     },
+    "MFA": {
+      "TITLE": "Ange inloggningskoden",
+      "SUBTITLE": "Vi har skickat en kod till {destination}.",
+      "SUBTITLE_EMAIL": "Ange koden som vi skickade till din e-post.",
+      "CODE": "Kod",
+      "CODE_PLACEHOLDER": "Ange den 6-siffriga koden",
+      "RESEND": "Skicka koden igen",
+      "RESEND_COUNTDOWN": "Skicka koden igen om {seconds} s",
+      "BACK": "Tillbaka till inloggningen",
+      "CODE_RESENT": "Koden har skickats igen.",
+      "ERRORS": {
+        "INVALID_CODE": "Koden är ogiltig. Kontrollera den och försök igen.",
+        "INVALID_TWO_FACTOR_TOKEN": "Din inloggningssession har gått ut. Logga in igen.",
+        "CODE_ATTEMPTS_EXCEEDED": "För många felaktiga koder. Vänta några minuter och logga in igen.",
+        "USER_IS_LOCKED_OUT": "Ditt konto har låsts. Kontakta administratören.",
+        "USER_IS_TEMPORARY_LOCKED_OUT": "Ditt konto har låsts tillfälligt. Försök igen senare.",
+        "SIGN_IN_NOT_ALLOWED": "Du kan inte logga in i Backoffice med det här kontot.",
+        "LOCKOUT_DISABLED": "Det här kontot kan inte logga in med en kod. Kontakta administratören.",
+        "MFA_PROVIDER_NOT_AVAILABLE": "Vi kan inte skicka en inloggningskod till det här kontot. Bekräfta e-posten eller kontakta administratören.",
+        "UNAVAILABLE": "Det här kontot kräver ett andra inloggningssteg, men det är inte tillgängligt. Kontakta administratören."
+      }
+    },
     "ACCESS_DENIED": {
       "TITLE": "Åtkomst nekad",
       "MESSAGE": "Ditt konto har inte åtkomst till {name}. Kontakta administratören.",

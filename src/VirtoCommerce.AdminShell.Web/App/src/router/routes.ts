@@ -3,6 +3,7 @@ import { defineComponent, h, type Component } from "vue";
 import App from "../pages/App.vue";
 import AuthShell from "../pages/AuthShell.vue";
 import Login from "../pages/Login.vue";
+import TwoFactorSignIn from "../pages/TwoFactorSignIn.vue";
 import AccessDenied from "../pages/AccessDenied.vue";
 import FramePage from "../pages/FramePage.vue";
 import Dashboard from "../pages/Dashboard.vue";
@@ -44,6 +45,12 @@ export const routes: RouteRecordRaw[] = [
     name: "Login",
     path: "/login",
     component: Login,
+  },
+  {
+    // the code step of a password sign-in that the platform asks a second factor for (vc-module-mfa)
+    name: "TwoFactorSignIn",
+    path: "/sign-in-code",
+    component: TwoFactorSignIn,
   },
   {
     // a signed-in user the platform's PlatformUI:Access rules keep out of the admin UI (shell/adminUIAccess.ts)

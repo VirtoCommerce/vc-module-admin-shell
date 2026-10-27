@@ -141,6 +141,28 @@
         "NOT_ALLOWED": "Questo account non è ancora autorizzato ad accedere. Contattare l'amministratore."
       }
     },
+    "MFA": {
+      "TITLE": "Inserisci il codice di accesso",
+      "SUBTITLE": "Abbiamo inviato un codice a {destination}.",
+      "SUBTITLE_EMAIL": "Inserisci il codice che abbiamo inviato al tuo indirizzo email.",
+      "CODE": "Codice",
+      "CODE_PLACEHOLDER": "Inserisci il codice a 6 cifre",
+      "RESEND": "Invia di nuovo il codice",
+      "RESEND_COUNTDOWN": "Invia di nuovo il codice tra {seconds} s",
+      "BACK": "Torna all'accesso",
+      "CODE_RESENT": "Codice inviato di nuovo.",
+      "ERRORS": {
+        "INVALID_CODE": "Il codice non è valido. Controllalo e riprova.",
+        "INVALID_TWO_FACTOR_TOKEN": "La sessione di accesso è scaduta. Accedi di nuovo.",
+        "CODE_ATTEMPTS_EXCEEDED": "Troppi codici errati. Attendi qualche minuto e accedi di nuovo.",
+        "USER_IS_LOCKED_OUT": "Il tuo account è stato bloccato. Contatta l'amministratore.",
+        "USER_IS_TEMPORARY_LOCKED_OUT": "Il tuo account è stato bloccato temporaneamente. Riprova più tardi.",
+        "SIGN_IN_NOT_ALLOWED": "Non puoi accedere al Backoffice con questo account.",
+        "LOCKOUT_DISABLED": "Questo account non può accedere con un codice. Contatta l'amministratore.",
+        "MFA_PROVIDER_NOT_AVAILABLE": "Impossibile inviare un codice di accesso a questo account. Conferma l'e-mail o contatta l'amministratore.",
+        "UNAVAILABLE": "Questo account richiede un secondo passaggio di accesso, ma non è disponibile. Contatta l'amministratore."
+      }
+    },
     "ACCESS_DENIED": {
       "TITLE": "Accesso negato",
       "MESSAGE": "Il tuo account non ha accesso a {name}. Contatta l'amministratore.",

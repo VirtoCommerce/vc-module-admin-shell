@@ -47,7 +47,7 @@ The admin UI MUST provide these capabilities. Sections 5–9 detail them.
 
 | # | Capability |
 |---|---|
-| R-1 | Authenticate users (password, external providers, password flows) and keep the session. |
+| R-1 | Authenticate users (password, a second factor when the platform asks for one, external providers, password flows) and keep the session. |
 | R-2 | Present a navigation built from the platform, modules and layers (global, role, user), filtered by permissions. |
 | R-3 | Host screens as blades in a workspace with stable URLs, and guard unsaved changes. |
 | R-4 | Find anything from one search box: screens, settings, records from modules. |
@@ -108,6 +108,12 @@ Each scenario lists its acceptance criteria. Together they are the acceptance te
 
 **S-20 Explore the API.** A developer opens Developer tools and uses the platform's API explorers inside the admin or in a new tab.
 
+**S-21 Sign in with a second factor.** Multi-factor authentication is on (vc-module-mfa, `MultiFactorAuthentication.Enabled`). A user enters their user name and password; the admin asks for the one-time code sent to their email, showing where it went (masked). They enter the code and land where S-01 says.
+- A wrong code shows an error and lets them try again; after too many wrong codes, an expired step or a locked account, the admin says so and offers only "Back to sign in".
+- "Resend code" is offered after the wait the platform reports, with a countdown, and confirms that a new code was sent.
+- The step works on a phone, in every language (right-to-left included), and with the keyboard and a screen reader; the phone offers the code from the email or SMS (one-time-code autofill).
+- With MFA off, or for external providers, nothing changes: the user goes straight in.
+
 ## 6. Pages
 
 ### 6.1 Shell pages
@@ -115,6 +121,7 @@ Each scenario lists its acceptance criteria. Together they are the acceptance te
 | Page | Requirements |
 |---|---|
 | **Sign in** | Password form; one button per external provider configured on the platform; forgot-password link; branding (logo, name, footer links, side panel); theme switch; error messages; works without the side panel below 1024 px. |
+| **Sign-in code (second factor)** | Shown after a correct password when the platform asks for a second factor (section 7.10); same layout as sign-in; the masked destination, the code field, resend with countdown, back to sign in; clear error states. |
 | **Forgot / reset password, invitation, forced change** | Reached from email links with user and token in the URL; same layout as sign-in; clear success and error states. |
 | **Home (dashboard)** | Widget grid from the platform and modules; drag, resize, keyboard move; layout per user with reset; optional welcome card from branding. Each widget handles its own loading, empty and error state. |
 | **Legacy host** | Shows an AngularJS admin screen by its state in an embedded frame on the same origin, keeps the frame alive between visits, mirrors the screen into the URL. |
@@ -215,6 +222,34 @@ All are blades in the workspace with a URL, and require the permission listed.
 
 See [branding.md](branding.md).
 
+### 7.10 Sign-in and multi-factor authentication
+
+The admin that the platform serves as the main admin owns signing in: its sign-in page is the one users see, and every other UI on the platform (the AngularJS admin in a frame, embedded apps) reuses the session it creates. So the main admin, whatever it is built with, MUST implement the whole sign-in, the second factor included. The platform provides the contract; the UI provides the screens.
+
+**The contract.** Multi-factor authentication is a module (vc-module-mfa) on top of the platform's two-factor sign-in extension points (`ITwoFactorPolicy`, vc-platform#3133). The platform decides when a second factor is needed; the module sends and checks the code:
+
+1. The password sign-in (`POST api/platform/security/login`) answers `requiresTwoFactor: true` when the password is right and a second factor is needed. The user isn't signed in yet; the platform keeps them in its two-factor cookie.
+2. `POST api/mfa/signin/send` (`{ provider }`, anonymous, uses the two-factor cookie) sends a code and answers `{ succeeded, provider, providers: [{ name, destination }], resendSecondsRemaining, error: { code } }`. `destination` is already masked.
+3. `POST api/mfa/signin/verify` (`{ code, provider, rememberMe }`) answers `{ succeeded, error: { code } }`. On success the platform replaces the two-factor cookie with the normal session cookie.
+4. The error codes are `invalid_code` (the user may try again), `resend_too_soon` (not an error: the last code still works, wait `resendSecondsRemaining`), and the final ones `invalid_two_factor_token`, `code_attempts_exceeded`, `user_is_locked_out`, `user_is_temporary_locked_out`, `sign_in_not_allowed`, `lockout_disabled`, `mfa_provider_not_available`.
+
+Settings, limits and wording come from the module ([vc-module-mfa README](https://github.com/VirtoCommerce/vc-module-mfa)): `MultiFactorAuthentication.Enabled` turns it on for the Backoffice, and the lifetime of the step, the resend interval and the number of attempts are the platform's configuration, not the UI's.
+
+**Requirements.**
+
+- **MFA-1** On `requiresTwoFactor`, the sign-in page MUST open the code step instead of showing an error, and MUST keep the user's password out of it (the step uses the two-factor cookie only).
+- **MFA-2** The code step MUST request a code when it opens, show the masked destination when the module returns one, and accept six digits in a field with `inputmode="numeric"` and `autocomplete="one-time-code"`.
+- **MFA-3** "Resend code" MUST wait the seconds the module reports (`resendSecondsRemaining`) with a visible countdown, then confirm the new code. `resend_too_soon` MUST NOT be shown as an error.
+- **MFA-4** `invalid_code` MUST clear the field and keep the step open. Every other error code is final: the step MUST show its message and offer only "Back to sign in". Unknown codes show the generic sign-in failure.
+- **MFA-5** A successful code MUST finish the sign-in exactly as a password sign-in does: the platform's `PlatformUI:Access` check first, then a forced password change if the password expired, then the deep link the user asked for (S-01), else Home. The step and the sign-in page MUST NOT be used as the deep link.
+- **MFA-6** When the platform asks for a second factor but `api/mfa` doesn't exist (the module isn't installed), the step MUST say that a second sign-in step is required but not available, as the AngularJS admin does, and offer "Back to sign in".
+- **MFA-7** The step MUST meet the quality requirements of the sign-in page: the brand and layout, light and dark, phone width (RSP-1), WCAG 2.2 AA (a labelled field, errors in a live region, focus moved back to the field after an error), and every language of the UI. The masked destination MUST keep its own direction inside right-to-left text.
+- **MFA-8** The session after the code MUST be the platform's cookie session (SEC-1). The UI MUST NOT request a token with the password grant afterwards: with MFA on, that sign-in needs its own code, and a second email would confuse the user.
+- **MFA-9** External providers and API clients are outside this step: the platform applies MFA to password sign-ins only, and the token endpoint has its own two-step grant (`two_factor_required`, then `grant_type=mfa`) for apps that use it.
+- **MFA-10** The texts SHOULD be the module's (the same wording in the AngularJS admin and the main admin). A new UI MAY keep its own translations as long as every error code above has one.
+
+**Who owns the screen.** The code step is part of the main admin, next to the sign-in page, and not a module plugin: it uses the sign-in layout, branding, language and post-sign-in routing of the shell, and it must work before any plugin has loaded. The AngularJS admin keeps the module's own screen (the state the module registers with `data.twoFactorSignIn`). When modules add other sign-in methods (passkeys, an authenticator app), the main admin SHOULD offer a sign-in step contract for plugins rather than growing a screen per method (section 12).
+
 ## 8. Extension contract
 
 Modules depend on these contracts; a new implementation MUST keep them, or ship an adapter, so that modules don't need to change at the same time. Each is detailed in its own guide (see [README.md](README.md)).
@@ -244,6 +279,7 @@ The UI MUST use only platform and module APIs; it has no server of its own beyon
 | Area | API |
 |---|---|
 | Session | Platform sign-in (cookie), current user, external sign-in providers, password and invitation flows |
+| Second factor | `POST api/mfa/signin/send`, `POST api/mfa/signin/verify` (vc-module-mfa, anonymous, two-factor cookie; section 7.10) |
 | Menu | `GET api/admin-shell/menu` (effective menu), `me/prefs`, `me/recent/{itemId}`, global and role layers (`admin-shell:menu:manage`) |
 | Branding | `GET api/admin-shell/branding` (anonymous) |
 | Plugins and apps | `GET api/apps/admin-shell/manifest` (plugins), `api/platform/apps` |
@@ -293,6 +329,7 @@ The UI MUST use only platform and module APIs; it has no server of its own beyon
 - **CMP-1** MUST coexist with the AngularJS admin (P-5): AngularJS screens open inside the shell (EXT-10) and the classic admin stays reachable from the user menu until no screen needs it.
 - **CMP-2** URLs, permissions, setting names and profile settings MUST stay compatible, so bookmarks, roles and preferences survive a new implementation.
 - **CMP-3** A new implementation MUST be able to load the existing module plugins (section 8) or provide a migration path agreed with module owners, versioned through `plugin.json`.
+- **CMP-4** Whichever admin the platform serves as the main one (the root of the site) owns the sign-in, the second factor included (section 7.10); the other admins reuse its session and never show their own sign-in inside it. When the AngularJS admin moves into a module, it keeps its sign-in screens for installations that still use it as the main admin.
 
 ## 12. Open questions
 
@@ -302,6 +339,8 @@ The UI MUST use only platform and module APIs; it has no server of its own beyon
 | Should the AngularJS admin read the Admin Shell's branding? | Today it has its own (`VirtoCommerce.Platform.UI.Customization`). |
 | Should Google Analytics in the AngularJS admin be off by default? | `VirtoCommerce.SendDiagnosticData` is on by default and breaks OPS-1 for embedded legacy screens. |
 | Should disabled actions show on phones? | vc-shell hides them in the phone action list today. |
+| How does the platform choose the main admin served at the root? | Today the AngularJS admin is at `/` and the Admin Shell at `/apps/admin-shell/`. A platform option (for example a redirect from `/` to the chosen admin) also needs the sign-in redirect, external sign-in return URLs and the links in password and invitation emails to follow it (CMP-4). |
+| How do modules add sign-in methods to the main admin? | MFA is built into the shell (section 7.10). Passkeys (vc-module-passkeys) and further methods suggest a plugin contract for sign-in steps: the host routes `requiresTwoFactor` and sign-in methods to steps registered by plugins, and waits for plugins before doing so. |
 
 ## 13. Current implementation
 
