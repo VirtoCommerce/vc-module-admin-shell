@@ -186,7 +186,7 @@ import { useRouter } from "vue-router";
 import AuthShell from "./AuthShell.vue";
 import { rootedUrl } from "../utils/url";
 import { companyName } from "../shell/branding";
-import { canAccessAdminUI } from "../shell/adminUIAccess";
+import { goAfterSignIn, takeRedirectTarget } from "../shell/signIn";
 
 interface Provider {
   type: string;
@@ -237,13 +237,6 @@ const providers = computed<Provider[]>(() =>
     }),
 );
 
-// where an expired session or a deep link left off; same-site paths only. Read once, so a later sign-in can't land there.
-function takeRedirectTarget() {
-  const target = localStorage.getItem("redirectAfterLogin")?.trim();
-  localStorage.removeItem("redirectAfterLogin");
-  return target?.startsWith("/") && !target.startsWith("//") ? target : "/";
-}
-
 function signInWith(authenticationType: string) {
   // the same as vc-shell's own: sign-out reads this key to sign out of the provider as well
   localStorage.setItem("externalSignIn", JSON.stringify({ providerType: authenticationType }));
@@ -260,16 +253,12 @@ async function signInWithPassword() {
   const result = (await signIn(form.username.trim(), form.password)) as SignInResult & { status?: number; error?: string };
 
   if (result.succeeded) {
-    // as the AngularJS admin: a user the platform keeps out of the admin UI isn't sent through a password change first
-    if (!canAccessAdminUI(user.value)) {
-      await router.push({ name: "AccessDenied" });
-      return;
-    }
-    if (user.value?.passwordExpired) {
-      await router.push({ name: "ChangePassword" });
-      return;
-    }
-    await router.push(takeRedirectTarget());
+    await goAfterSignIn(router, user.value);
+    return;
+  }
+  // the password is right and the platform asks for a second factor (vc-module-mfa): the code step finishes the sign-in
+  if (result.requiresTwoFactor) {
+    await router.push({ name: "TwoFactorSignIn" });
     return;
   }
 
