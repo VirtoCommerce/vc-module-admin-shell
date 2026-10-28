@@ -135,7 +135,7 @@ function schemaOf(entry: ObjectSettingEntry, tenantType: string): SettingSchema 
   };
 }
 
-function storeFor(scope: SettingsScope, schema: Ref<SettingSchema[]>, stored: Ref<SettingValues>) {
+function storeFor(scope: SettingsScope, schemaRef: Ref<SettingSchema[]>, storedRef: Ref<SettingValues>) {
   const base =
     scope.kind === "tenant"
       ? `/api/platform/settings/v2/tenant/${encodeURIComponent(scope.tenantType)}`
@@ -144,14 +144,14 @@ function storeFor(scope: SettingsScope, schema: Ref<SettingSchema[]>, stored: Re
 
   async function load(locale = currentLocale()) {
     if (scope.kind === "entity") {
-      const [entries, localization] = await Promise.all([scope.read(), platformTranslations(locale)]);
+      const [entries, entityLocalization] = await Promise.all([scope.read(), platformTranslations(locale)]);
       const visible = (entries ?? []).filter((x) => x.name && !x.isHidden);
-      schema.value = visible.map((x) => schemaOf(x, scope.tenantType));
+      schemaRef.value = visible.map((x) => schemaOf(x, scope.tenantType));
       // as the AngularJS entity blade: a setting without a value of its own shows its default
-      stored.value = Object.fromEntries(
+      storedRef.value = Object.fromEntries(
         visible.map((x) => [x.name!, x.value ?? (x.isDictionary ? x.allowedValues : x.defaultValue)]),
       );
-      translations.value = localization ?? {};
+      translations.value = entityLocalization ?? {};
       return;
     }
     const [schemaResult, values, localization] = await Promise.all([
@@ -159,8 +159,8 @@ function storeFor(scope: SettingsScope, schema: Ref<SettingSchema[]>, stored: Re
       api<SettingValues>("GET", valuesUrl),
       platformTranslations(locale),
     ]);
-    schema.value = schemaResult ?? [];
-    stored.value = values ?? {};
+    schemaRef.value = schemaResult ?? [];
+    storedRef.value = values ?? {};
     translations.value = localization ?? {};
   }
 
@@ -171,7 +171,7 @@ function storeFor(scope: SettingsScope, schema: Ref<SettingSchema[]>, stored: Re
       await scope.write(values);
       return;
     }
-    const dates = new Set(schema.value.filter((s) => s.valueType === "DateTime").map((s) => s.name));
+    const dates = new Set(schemaRef.value.filter((s) => s.valueType === "DateTime").map((s) => s.name));
     const body = Object.fromEntries(
       Object.entries(values).map(([name, value]) => [name, dates.has(name) ? dateWire(value) : value]),
     );
@@ -181,16 +181,16 @@ function storeFor(scope: SettingsScope, schema: Ref<SettingSchema[]>, stored: Re
   const exportModified = () => api<SettingValues>("GET", `${valuesUrl}?modifiedOnly=true`);
 
   const isModified = (s: SettingSchema) =>
-    !sameValue(stored.value[s.name], s.isDictionary ? s.allowedValues : s.defaultValue, s.valueType);
+    !sameValue(storedRef.value[s.name], s.isDictionary ? s.allowedValues : s.defaultValue, s.valueType);
 
   return {
-    schema,
-    stored,
+    schema: schemaRef,
+    stored: storedRef,
     load,
     save,
     exportModified,
     isModified,
-    loaded: computed(() => schema.value.length > 0),
+    loaded: computed(() => schemaRef.value.length > 0),
   };
 }
 

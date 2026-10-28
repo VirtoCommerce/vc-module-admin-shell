@@ -595,17 +595,17 @@ const objectScope = ((): (ObjectSettingsOptions & { tenantType: string }) | unde
   if (o.mode === "disconnected" && !o.tenantId) return undefined;
   return { ...o, tenantType: o.tenantType };
 })();
-const scope: SettingsScope = !objectScope
-  ? { kind: "global" }
-  : objectScope.mode === "connected"
-    ? {
-        kind: "entity",
-        tenantType: objectScope.tenantType,
-        read: () => callParent<ObjectSettingEntry[]>("getEntitySettings"),
-        write: (values) => callParent("applyEntitySettings", values),
-      }
-    : { kind: "tenant", tenantType: objectScope.tenantType, tenantId: objectScope.tenantId! };
-const store = useSettingsStore(scope);
+function scopeOf(o: typeof objectScope): SettingsScope {
+  if (!o) return { kind: "global" };
+  if (o.mode === "disconnected") return { kind: "tenant", tenantType: o.tenantType, tenantId: o.tenantId! };
+  return {
+    kind: "entity",
+    tenantType: o.tenantType,
+    read: () => callParent<ObjectSettingEntry[]>("getEntitySettings"),
+    write: (values) => callParent("applyEntitySettings", values),
+  };
+}
+const store = useSettingsStore(scopeOf(objectScope));
 const { getApiClient: changeLogClient } = useApiClient(ChangeLogClient);
 
 const root = ref<HTMLElement>();
