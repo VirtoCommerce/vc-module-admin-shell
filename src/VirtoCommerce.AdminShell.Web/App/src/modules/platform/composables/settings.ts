@@ -1,4 +1,5 @@
-import { computed, ref } from "vue";
+import type { ObjectSettingEntry } from "@vc-shell/framework";
+import { computed, ref, type Ref } from "vue";
 import { api, currentLocale, platformTranslations } from "../api";
 
 /** Global settings schema entry (SettingsV2Controller); valueType is a string because the framework enum lacks Cron. */
@@ -20,9 +21,7 @@ export interface SettingSchema {
 
 export type SettingValues = Record<string, unknown>;
 
-const BASE = "/api/platform/settings/v2/global";
-
-// one shared store: the workspace list, group blades and the dictionary editor all read the same baseline
+// the global settings: one shared store, the workspace list, group blades and the dictionary editor all read the same baseline
 const schema = ref<SettingSchema[]>([]);
 const stored = ref<SettingValues>({});
 const translations = ref<Record<string, unknown>>({});
@@ -41,7 +40,8 @@ export function sameValue(a: unknown, b: unknown, valueType: string): boolean {
 }
 
 /** Editor value for a stored value (Json gets LF line breaks so a textarea round-trip doesn't count as a change). */
-export const toEditor = (value: unknown, valueType: string) => (valueType === "Json" && !isEmpty(value) ? lf(value) : value);
+export const toEditor = (value: unknown, valueType: string) =>
+  valueType === "Json" && !isEmpty(value) ? lf(value) : value;
 
 /**
  * The v2 values endpoint lets Json.NET parse an ISO "…T…Z" string into a date, stringifies it without zone and fraction and
@@ -55,7 +55,12 @@ function dateWire(value: unknown) {
 }
 
 /** The document the export downloads and the JSON editor shows: modified settings only. */
-export const exportDocument = (settings: SettingValues) => ({ version: "1.0", exportedAt: new Date().toISOString(), scope: "global", settings });
+export const exportDocument = (settings: SettingValues) => ({
+  version: "1.0",
+  exportedAt: new Date().toISOString(),
+  scope: "global",
+  settings,
+});
 
 /** The settings of an imported document; a bare { name: value } map is taken as it is. */
 export const settingsOf = (doc: { settings?: unknown } | null): SettingValues =>
@@ -93,38 +98,107 @@ function text(name: string, kind: "title" | "description") {
 export const settingTitle = (s: SettingSchema) => text(s.name, "title") || s.displayName || s.name;
 export const settingDescription = (s: SettingSchema) => text(s.name, "description");
 
-export function useSettingsStore() {
+/**
+ * Where a settings blade reads and saves, as the AngularJS unified settings blade's data sources:
+ * - global: the platform's global settings (the Settings workspace);
+ * - tenant ("disconnected"): one object's settings, e.g. a store's, read and saved by the blade itself through the v2
+ *   tenant API (needs platform:setting:query / platform:setting:update);
+ * - entity ("connected"): the settings an entity carries (Store.settings, ObjectSettingEntry[]); the blade that opened it
+ *   gives them and takes the changed values back, and its entity saves them (no settings permission needed).
+ */
+export type SettingsScope =
+  | { kind: "global" }
+  | { kind: "tenant"; tenantType: string; tenantId: string }
+  | {
+      kind: "entity";
+      tenantType: string;
+      read: () => Promise<ObjectSettingEntry[]>;
+      write: (values: SettingValues) => Promise<unknown>;
+    };
+
+/** An entity's setting (with its own metadata) as the blade's schema entry */
+function schemaOf(entry: ObjectSettingEntry, tenantType: string): SettingSchema {
+  return {
+    name: entry.name!,
+    displayName: entry.displayName,
+    groupName: entry.groupName,
+    moduleId: entry.moduleId,
+    valueType: String(entry.valueType ?? "ShortText"),
+    defaultValue: entry.defaultValue,
+    allowedValues: entry.allowedValues,
+    isRequired: entry.isRequired,
+    isReadOnly: entry.isReadOnly,
+    isDictionary: entry.isDictionary,
+    isLocalizable: entry.isLocalizable,
+    restartRequired: entry.restartRequired,
+    assignedToTenants: [tenantType],
+  };
+}
+
+function storeFor(scope: SettingsScope, schemaRef: Ref<SettingSchema[]>, storedRef: Ref<SettingValues>) {
+  const base =
+    scope.kind === "tenant"
+      ? `/api/platform/settings/v2/tenant/${encodeURIComponent(scope.tenantType)}`
+      : "/api/platform/settings/v2/global";
+  const valuesUrl = scope.kind === "tenant" ? `${base}/${encodeURIComponent(scope.tenantId)}/values` : `${base}/values`;
+
   async function load(locale = currentLocale()) {
+    if (scope.kind === "entity") {
+      const [entries, entityLocalization] = await Promise.all([scope.read(), platformTranslations(locale)]);
+      const visible = (entries ?? []).filter((x) => x.name && !x.isHidden);
+      schemaRef.value = visible.map((x) => schemaOf(x, scope.tenantType));
+      // as the AngularJS entity blade: a setting without a value of its own shows its default
+      storedRef.value = Object.fromEntries(
+        visible.map((x) => [x.name!, x.value ?? (x.isDictionary ? x.allowedValues : x.defaultValue)]),
+      );
+      translations.value = entityLocalization ?? {};
+      return;
+    }
     const [schemaResult, values, localization] = await Promise.all([
-      api<SettingSchema[]>("GET", `${BASE}/schema`),
-      api<SettingValues>("GET", `${BASE}/values`),
+      api<SettingSchema[]>("GET", `${base}/schema`),
+      api<SettingValues>("GET", valuesUrl),
       platformTranslations(locale),
     ]);
-    schema.value = schemaResult ?? [];
-    stored.value = values ?? {};
+    schemaRef.value = schemaResult ?? [];
+    storedRef.value = values ?? {};
     translations.value = localization ?? {};
   }
 
   /** Saves only the given values (the caller passes the changed ones); replaceAll resets every modified setting not in the body. */
   async function save(values: SettingValues, replaceAll = false) {
     if (!Object.keys(values).length && !replaceAll) return; // an empty body is a 400
-    const dates = new Set(schema.value.filter((s) => s.valueType === "DateTime").map((s) => s.name));
-    const body = Object.fromEntries(Object.entries(values).map(([name, value]) => [name, dates.has(name) ? dateWire(value) : value]));
-    await api("POST", `${BASE}/values?replaceAll=${replaceAll}`, body);
+    if (scope.kind === "entity") {
+      await scope.write(values);
+      return;
+    }
+    const dates = new Set(schemaRef.value.filter((s) => s.valueType === "DateTime").map((s) => s.name));
+    const body = Object.fromEntries(
+      Object.entries(values).map(([name, value]) => [name, dates.has(name) ? dateWire(value) : value]),
+    );
+    await api("POST", `${valuesUrl}?replaceAll=${replaceAll}`, body);
   }
 
-  const exportModified = () => api<SettingValues>("GET", `${BASE}/values?modifiedOnly=true`);
+  const exportModified = () => api<SettingValues>("GET", `${valuesUrl}?modifiedOnly=true`);
 
   const isModified = (s: SettingSchema) =>
-    !sameValue(stored.value[s.name], s.isDictionary ? s.allowedValues : s.defaultValue, s.valueType);
+    !sameValue(storedRef.value[s.name], s.isDictionary ? s.allowedValues : s.defaultValue, s.valueType);
 
   return {
-    schema,
-    stored,
+    schema: schemaRef,
+    stored: storedRef,
     load,
     save,
     exportModified,
     isModified,
-    loaded: computed(() => schema.value.length > 0),
+    loaded: computed(() => schemaRef.value.length > 0),
   };
+}
+
+/**
+ * The settings a blade edits. Global: one shared store (the workspace list, group blades and the dictionary editor read
+ * the same baseline). An object's or entity's settings: a store of their own for the blade that edits them.
+ */
+export function useSettingsStore(scope: SettingsScope = { kind: "global" }) {
+  if (scope.kind === "global") return storeFor(scope, schema, stored);
+  return storeFor(scope, ref<SettingSchema[]>([]), ref<SettingValues>({}));
 }

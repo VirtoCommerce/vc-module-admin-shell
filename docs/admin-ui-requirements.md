@@ -269,6 +269,7 @@ Modules depend on these contracts; a new implementation MUST keep them, or ship 
 | EXT-11 | **Embedded apps** | Apps registered in a module's manifest open inside the shell or in a tab. |
 | EXT-12 | **Sign-in page** | An extension point after the sign-in form. |
 | EXT-13 | **Translations and permissions** | Plugins merge their translations and check the user's permissions through the host. |
+| EXT-15 | **Object settings** | `openBlade({ name: "PlatformObjectSettings", options: { tenantType, tenantId, mode } })` opens the settings blade for one object: `connected` edits the entity's own settings (the opening blade exposes `getEntitySettings` and `applyEntitySettings`, its entity saves them), `disconnected` reads and saves through the tenant settings API. See [object-settings.md](object-settings.md). |
 
 **Dependency rule.** A plugin MAY reference another module's blades, routes, API or widgets only when its `module.manifest` depends on that module, directly or transitively, or declares it as an optional dependency and checks EXT-9 before using it. A module MUST NOT place UI on blades of modules that depend on it; it provides a shared widget instead (EXT-8). An implementation SHOULD verify this rule in CI from the manifests.
 
