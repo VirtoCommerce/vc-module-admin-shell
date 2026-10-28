@@ -1,10 +1,11 @@
 <template>
   <VcBlade
-    :title="$t('PLATFORM.SETTINGS.LIST.TITLE')"
+    :title="objectScope?.title || $t('PLATFORM.SETTINGS.LIST.TITLE')"
+    :subtitle="objectScope?.subtitle"
     :toolbar-items="toolbar"
     :loading="loading"
     :modified="form.isModified.value"
-    width="70%"
+    :width="objectScope ? '60%' : '70%'"
   >
     <!-- The unified settings blade (vc-platform docs/developer-guide/settingsV2.md): the groups as a tree, the settings of
          the chosen group as properties edited in place. Narrow (a phone): the tree, then the properties of a group. -->
@@ -53,6 +54,7 @@
             <span class="ps-chip__count">{{ modifiedCount }}</span>
           </button>
           <button
+            v-if="!objectScope"
             type="button"
             class="ps-chip"
             :aria-pressed="includeTenant"
@@ -149,7 +151,9 @@
               type="button"
               class="ps-node__toggle"
               tabindex="-1"
-              :aria-label="isExpanded(row) ? $t('PLATFORM.SETTINGS.LIST.COLLAPSE') : $t('PLATFORM.SETTINGS.LIST.EXPAND')"
+              :aria-label="
+                isExpanded(row) ? $t('PLATFORM.SETTINGS.LIST.COLLAPSE') : $t('PLATFORM.SETTINGS.LIST.EXPAND')
+              "
               @click.stop="toggle(row)"
             >
               <VcIcon
@@ -250,8 +254,10 @@
               <span
                 v-if="section.moduleId"
                 class="ps-section__module"
-              >{{ section.moduleId }}</span>
+                >{{ section.moduleId }}</span
+              >
               <button
+                v-if="!objectScope"
                 type="button"
                 class="ps__icon-btn ps-section__link"
                 :title="$t('PLATFORM.SETTINGS.LIST.COPY_LINK')"
@@ -282,11 +288,13 @@
                   <span
                     v-if="isDirty(s)"
                     class="ps-tag ps-tag--dirty"
-                  >{{ $t("PLATFORM.SETTINGS.LIST.UNSAVED") }}</span>
+                    >{{ $t("PLATFORM.SETTINGS.LIST.UNSAVED") }}</span
+                  >
                   <span
                     v-else-if="isModified(s)"
                     class="ps-tag ps-tag--modified"
-                  >{{ $t("PLATFORM.SETTINGS.LIST.MODIFIED") }}</span>
+                    >{{ $t("PLATFORM.SETTINGS.LIST.MODIFIED") }}</span
+                  >
                   <span
                     v-if="s.restartRequired"
                     class="ps-tag ps-tag--warn"
@@ -361,12 +369,15 @@
                     v-for="value in dictionaryValues(s)"
                     :key="String(value)"
                     class="ps-tag"
-                  >{{ value }}</span>
+                    >{{ value }}</span
+                  >
                   <span
                     v-if="!dictionaryValues(s).length"
                     class="ps-prop__none"
-                  >—</span>
+                    >—</span
+                  >
                   <VcButton
+                    v-if="!objectScope"
                     variant="outline"
                     size="sm"
                     icon="lucide-pencil"
@@ -491,6 +502,7 @@ import {
   usePermissions,
   usePopup,
   type IBladeToolbar,
+  type ObjectSettingEntry,
 } from "@vc-shell/framework";
 import {
   VcBlade,
@@ -522,6 +534,7 @@ import {
   settingTitle,
   toEditor,
   useSettingsStore,
+  type SettingsScope,
   type SettingSchema,
   type SettingValues,
 } from "../../composables/settings";
@@ -532,6 +545,24 @@ defineBlade({
   isWorkspace: true,
   permissions: ["platform:setting:access"],
 });
+
+/**
+ * PlatformObjectSettings' options, the contract for module plugins (docs/object-settings.md):
+ * - tenantType: the settings' tenant type, e.g. "Store";
+ * - tenantId: the object's id (disconnected; connected: the entity's, shown nowhere);
+ * - mode: "disconnected" reads and saves through the tenant API; "connected" asks the opening blade for its entity's
+ *   settings (callParent("getEntitySettings") → ObjectSettingEntry[]) and hands the changed ones back
+ *   (callParent("applyEntitySettings", { name: value })), the entity saves them;
+ * - canUpdate (connected): false shows the settings read-only; title, subtitle: the blade's head.
+ */
+interface ObjectSettingsOptions {
+  tenantType?: string;
+  tenantId?: string;
+  mode?: "connected" | "disconnected";
+  canUpdate?: boolean;
+  title?: string;
+  subtitle?: string;
+}
 
 /** A group of the tree: "Catalog|Search"; the root ("All settings") has the id "" */
 interface TreeNode {
@@ -549,13 +580,32 @@ interface TreeNode {
 }
 
 const { t, locale } = useI18n({ useScope: "global" });
-const { id: bladeId, openBlade, exposeToChildren, query } = useBlade();
+const { id: bladeId, openBlade, exposeToChildren, query, options, callParent } = useBlade<ObjectSettingsOptions>();
 const { updateBladeQuery } = useBladeStack();
 const route = useRoute();
 const router = useRouter();
 const { hasAccess } = usePermissions();
 const { showConfirmation } = usePopup();
-const store = useSettingsStore();
+// Opened by a module for one object (PlatformObjectSettings, e.g. a store's settings): its settings only, read and saved
+// through the tenant API ("disconnected"), or the ones its entity carries, saved with the entity ("connected"), as the
+// AngularJS unified settings blade's tenant and entity modes. Otherwise the Settings workspace: the global settings.
+const objectScope = ((): (ObjectSettingsOptions & { tenantType: string }) | undefined => {
+  const o = options.value;
+  if (!o?.tenantType || (o.mode !== "connected" && o.mode !== "disconnected")) return undefined;
+  if (o.mode === "disconnected" && !o.tenantId) return undefined;
+  return { ...o, tenantType: o.tenantType };
+})();
+const scope: SettingsScope = !objectScope
+  ? { kind: "global" }
+  : objectScope.mode === "connected"
+    ? {
+        kind: "entity",
+        tenantType: objectScope.tenantType,
+        read: () => callParent<ObjectSettingEntry[]>("getEntitySettings"),
+        write: (values) => callParent("applyEntitySettings", values),
+      }
+    : { kind: "tenant", tenantType: objectScope.tenantType, tenantId: objectScope.tenantId! };
+const store = useSettingsStore(scope);
 const { getApiClient: changeLogClient } = useApiClient(ChangeLogClient);
 
 const root = ref<HTMLElement>();
@@ -583,7 +633,10 @@ const setFileInput = (el: unknown) => {
 
 const item = ref<SettingValues>({});
 
-const canUpdate = computed(() => hasAccess("platform:setting:update"));
+// connected: the entity's own rights (its blade says, e.g. store:update); otherwise the settings permission
+const canUpdate = computed(() =>
+  objectScope?.mode === "connected" ? objectScope.canUpdate !== false : hasAccess("platform:setting:update"),
+);
 const readonly = (s: SettingSchema) => !!s.isReadOnly || !canUpdate.value;
 const defaultOf = (s: SettingSchema) => toEditor(s.defaultValue, s.valueType);
 
@@ -619,7 +672,7 @@ const form = usePlatformBladeForm({
 });
 
 // leaving Settings for another screen, or closing the tab, with edits not saved asks first
-useLeaveGuard(form.isModified, "/settings", () => t("PLATFORM.COMMON.CLOSE_CONFIRMATION"));
+if (!objectScope) useLeaveGuard(form.isModified, "/settings", () => t("PLATFORM.COMMON.CLOSE_CONFIRMATION"));
 
 /** The editors from the stored values; `keepEdits` keeps the unsaved ones (a reload under them) */
 function fill(keepEdits = false) {
@@ -642,7 +695,7 @@ const { loading: saveLoading, action: save } = useAsync(async () => {
   await store.load(String(locale.value || "en"));
   fill();
   notification.success(t("PLATFORM.SETTINGS.SAVED"));
-  if (restart) notification.warning(t("PLATFORM.SETTINGS.LIST.RESTART_NOTE"));
+  if (restart && !objectScope) notification.warning(t("PLATFORM.SETTINGS.LIST.RESTART_NOTE"));
 });
 
 const loading = useLoading(loadLoading, saveLoading);
@@ -684,12 +737,15 @@ function openDictionary(s: SettingSchema) {
 /** keyword search over name, title, group and value (the current one, as edited) */
 function matches(s: SettingSchema, text: string) {
   const value = item.value[s.name] ?? store.stored.value[s.name];
-  return [s.name, settingTitle(s), groupPath(s).join(" > "), typeof value === "object" ? JSON.stringify(value) : value].some(
-    (x) => x != null && String(x).toLowerCase().includes(text),
-  );
+  return [
+    s.name,
+    settingTitle(s),
+    groupPath(s).join(" > "),
+    typeof value === "object" ? JSON.stringify(value) : value,
+  ].some((x) => x != null && String(x).toLowerCase().includes(text));
 }
 
-const inScope = (s: SettingSchema) => includeTenant.value || !s.assignedToTenants?.length;
+const inScope = (s: SettingSchema) => !!objectScope || includeTenant.value || !s.assignedToTenants?.length;
 
 // modified only reads the stored values: a setting being reset stays in view until it is saved
 const modifiedCount = computed(() => store.schema.value.filter((s) => inScope(s) && store.isModified(s)).length);
@@ -708,7 +764,14 @@ const visible = computed(() => {
 });
 
 const modules = computed(() =>
-  [...new Set(store.schema.value.filter(inScope).map((s) => s.moduleId).filter(Boolean))]
+  [
+    ...new Set(
+      store.schema.value
+        .filter(inScope)
+        .map((s) => s.moduleId)
+        .filter(Boolean),
+    ),
+  ]
     .sort()
     .map((x) => ({ id: x as string, title: x as string })),
 );
@@ -742,7 +805,15 @@ function clearModuleFilter() {
 /* ---- the tree: the groups of the visible settings ---- */
 
 const tree = computed(() => {
-  const top: TreeNode = { id: "", label: t("PLATFORM.SETTINGS.LIST.ALL"), depth: 0, children: [], count: 0, modified: false, dirty: false };
+  const top: TreeNode = {
+    id: "",
+    label: t("PLATFORM.SETTINGS.LIST.ALL"),
+    depth: 0,
+    children: [],
+    count: 0,
+    modified: false,
+    dirty: false,
+  };
   const byId = new Map<string, TreeNode>([["", top]]);
   for (const s of visible.value) {
     const modified = isModified(s);
@@ -894,7 +965,9 @@ async function scrollTo(selector: string, flash?: string) {
     setTimeout(() => {
       if (found.value === flash) found.value = undefined;
     }, 2400);
-    element.querySelector<HTMLElement>("input, textarea, [tabindex]:not([tabindex='-1'])")?.focus({ preventScroll: true });
+    element
+      .querySelector<HTMLElement>("input, textarea, [tabindex]:not([tabindex='-1'])")
+      ?.focus({ preventScroll: true });
   }
 }
 
@@ -926,6 +999,7 @@ async function revealGroup(id: string) {
 // a setting's link (?setting=) gives way to its group once it is shown
 // (the stack keeps it for its next address sync, which a choice in the tree doesn't cause: the address is set here too)
 watch(selected, (group) => {
+  if (objectScope) return;
   updateBladeQuery(bladeId.value, { group, setting: "" });
   const { group: _group, setting: _setting, ...rest } = route.query;
   router.replace({ query: group ? { ...rest, group } : rest });
@@ -982,40 +1056,57 @@ async function onImportFile(event: Event) {
 }
 
 const toolbar = ref<IBladeToolbar[]>([
-  ...saveResetItems(form, { save: () => save(), reset: () => fill(), resetDisabled: computed(() => !changed.value.length) }),
+  ...saveResetItems(form, {
+    save: () => save(),
+    reset: () => fill(),
+    resetDisabled: computed(() => !changed.value.length),
+  }),
   refreshItem(() => load(true)),
-  { id: "export", title: t("PLATFORM.SETTINGS.LIST.EXPORT"), icon: "lucide-download", clickHandler: () => exportJson() },
-  {
-    id: "import",
-    title: t("PLATFORM.SETTINGS.LIST.IMPORT"),
-    icon: "lucide-upload",
-    permissions: ["platform:setting:update"],
-    clickHandler: () => fileInput?.click(),
-  },
-  {
-    id: "json",
-    title: t("PLATFORM.SETTINGS.LIST.EDIT_JSON"),
-    icon: "lucide-braces",
-    clickHandler: () => openBlade({ name: "PlatformSettingsJson" }),
-  },
-  {
-    id: "cache",
-    title: t("PLATFORM.SETTINGS.LIST.RESET_CACHE"),
-    icon: "lucide-eraser",
-    permissions: ["cache:reset"],
-    async clickHandler() {
-      if (await showConfirmation(t("PLATFORM.SETTINGS.LIST.RESET_CACHE_CONFIRM"))) {
-        await (await changeLogClient()).resetPlatformCache();
-        notification.success(t("PLATFORM.SETTINGS.LIST.CACHE_RESET"));
-      }
-    },
-  },
+  ...(objectScope ? [] : globalToolbar()),
 ]);
+
+// the workspace's own: export, import, the JSON editor, the cache (global settings only)
+function globalToolbar(): IBladeToolbar[] {
+  return [
+    {
+      id: "export",
+      title: t("PLATFORM.SETTINGS.LIST.EXPORT"),
+      icon: "lucide-download",
+      clickHandler: () => exportJson(),
+    },
+    {
+      id: "import",
+      title: t("PLATFORM.SETTINGS.LIST.IMPORT"),
+      icon: "lucide-upload",
+      permissions: ["platform:setting:update"],
+      clickHandler: () => fileInput?.click(),
+    },
+    {
+      id: "json",
+      title: t("PLATFORM.SETTINGS.LIST.EDIT_JSON"),
+      icon: "lucide-braces",
+      clickHandler: () => openBlade({ name: "PlatformSettingsJson" }),
+    },
+    {
+      id: "cache",
+      title: t("PLATFORM.SETTINGS.LIST.RESET_CACHE"),
+      icon: "lucide-eraser",
+      permissions: ["cache:reset"],
+      async clickHandler() {
+        if (await showConfirmation(t("PLATFORM.SETTINGS.LIST.RESET_CACHE_CONFIRM"))) {
+          await (await changeLogClient()).resetPlatformCache();
+          notification.success(t("PLATFORM.SETTINGS.LIST.CACHE_RESET"));
+        }
+      },
+    },
+  ];
+}
 
 // the dictionary and JSON blades reload the store: unsaved values here stay
 exposeToChildren({ reload: () => load(true) });
 
 load().then(async () => {
+  if (objectScope) return;
   const setting = settingFocus.value?.name ?? linkParam("setting");
   const group = linkParam("group");
   settingFocus.value = undefined;
@@ -1038,6 +1129,7 @@ useEventListener(window, "hashchange", () => {
 
 // global search asks for a setting while the blade is open
 watch(settingFocus, (focus) => {
+  if (objectScope) return;
   if (!focus || !store.loaded.value || loadLoading.value) return;
   settingFocus.value = undefined;
   revealSetting(focus.name);
