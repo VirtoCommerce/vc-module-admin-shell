@@ -504,6 +504,32 @@
       "DRAG_HINT": "Trascina sezioni ed elementi per riordinarli, o rilascia un elemento in un altro gruppo o sezione. Su uno schermo touch, tieni premuto prima.",
       "DROP_HERE": "Rilascia gli elementi qui",
       "DROP_NO_GROUP": "Rilascia qui per nessun gruppo"
+    },
+    "SIGN_IN_METHODS": {
+      "TITLE": "Metodi di accesso",
+      "SUBTITLE": "Come accedi al tuo account",
+      "READ_ONLY": "I metodi di accesso non possono essere modificati in questa sessione (ad esempio mentre agisci come un altro utente).",
+      "PASSWORD": "Password",
+      "SET_PASSWORD": "Imposta una password",
+      "SET_PASSWORD_HINT": "Il tuo account non ha una password. Impostane una per accedere anche con nome utente e password.",
+      "PASSWORD_SET_OK": "Password impostata",
+      "ADD": "Aggiungi",
+      "ADDED": "Aggiunta a {name}",
+      "CHANGED": "Modificata il {date}",
+      "CREATED": "Creata il {date}",
+      "RENAME": "Rinomina",
+      "KEY_NAME": "Nome",
+      "CANCEL": "Annulla",
+      "DELETE": "Elimina",
+      "DELETE_CONFIRM": "Eliminare «{name}» da {method}? Non potrai più accedere con essa.",
+      "DELETE_PASSWORD_CONFIRM": "Eliminare la password? Accederai solo con gli altri metodi di accesso.",
+      "LAST_KEY": "È il tuo unico modo di accedere, quindi non può essere eliminato",
+      "PASSWORD_SET": "La password è impostata",
+      "NO_PASSWORD": "La password non è impostata",
+      "LINKED_ACCOUNT": "Account collegato",
+      "NO_LINKED_ACCOUNT": "Nessun account collegato",
+      "NO_KEYS": "Nessuna chiave",
+      "UNNAMED": "Chiave senza nome"
     }
   }
 }

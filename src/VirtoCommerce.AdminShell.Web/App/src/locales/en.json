@@ -138,7 +138,31 @@
       "SIGNING_IN": "Signing in…",
       "ERRORS": {
         "LOCKED_OUT": "This account is locked after too many failed attempts. Try again later or contact your administrator.",
-        "NOT_ALLOWED": "This account isn't allowed to sign in yet. Contact your administrator."
+        "NOT_ALLOWED": "This account isn't allowed to sign in yet. Contact your administrator.",
+        "METHOD_FAILED": "That didn't work. Try again or use another way to sign in.",
+        "METHOD_NEEDS_PASSWORD": "This account needs a second sign-in step. Sign in with your password instead."
+      }
+    },
+    "MFA": {
+      "TITLE": "Enter the sign-in code",
+      "SUBTITLE": "We sent a code to {destination}.",
+      "SUBTITLE_EMAIL": "Enter the code we sent to your email.",
+      "CODE": "Code",
+      "CODE_PLACEHOLDER": "Enter the 6-digit code",
+      "RESEND": "Resend code",
+      "RESEND_COUNTDOWN": "Resend code in {seconds} s",
+      "BACK": "Back to sign in",
+      "CODE_RESENT": "Code sent again.",
+      "ERRORS": {
+        "INVALID_CODE": "That code didn't work. Check it and try again.",
+        "INVALID_TWO_FACTOR_TOKEN": "Your sign-in session has expired. Sign in again.",
+        "CODE_ATTEMPTS_EXCEEDED": "Too many incorrect codes. Wait a few minutes and sign in again.",
+        "USER_IS_LOCKED_OUT": "Your account has been locked. Contact your administrator.",
+        "USER_IS_TEMPORARY_LOCKED_OUT": "Your account has been temporarily locked. Please try again later.",
+        "SIGN_IN_NOT_ALLOWED": "You can't sign in to the Backoffice with this account.",
+        "LOCKOUT_DISABLED": "This account can't sign in with a code. Contact your administrator.",
+        "MFA_PROVIDER_NOT_AVAILABLE": "We can't send a sign-in code to this account. Confirm its email or contact your administrator.",
+        "UNAVAILABLE": "This account requires a second sign-in step, but it is not available. Contact your administrator."
       }
     },
     "MFA": {

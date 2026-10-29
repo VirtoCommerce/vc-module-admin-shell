@@ -504,6 +504,32 @@
       "DRAG_HINT": "拖动分区和项目以重新排序，或将项目放到其他分组或分区中。在触摸屏上，请先长按。",
       "DROP_HERE": "将项目拖放到此处",
       "DROP_NO_GROUP": "拖放到此处以不分组"
+    },
+    "SIGN_IN_METHODS": {
+      "TITLE": "登录方式",
+      "SUBTITLE": "您登录帐户的方式",
+      "READ_ONLY": "此会话中无法更改登录方式（例如以其他用户身份操作时）。",
+      "PASSWORD": "密码",
+      "SET_PASSWORD": "设置密码",
+      "SET_PASSWORD_HINT": "您的帐户没有密码。设置密码后，也可以使用用户名和密码登录。",
+      "PASSWORD_SET_OK": "密码已设置",
+      "ADD": "添加",
+      "ADDED": "已添加到{name}",
+      "CHANGED": "更改于 {date}",
+      "CREATED": "创建于 {date}",
+      "RENAME": "重命名",
+      "KEY_NAME": "名称",
+      "CANCEL": "取消",
+      "DELETE": "删除",
+      "DELETE_CONFIRM": "要从{method}中删除“{name}”吗？之后将无法再用它登录。",
+      "DELETE_PASSWORD_CONFIRM": "删除密码吗？之后只能使用其他登录方式登录。",
+      "LAST_KEY": "这是您唯一的登录方式，因此无法删除",
+      "PASSWORD_SET": "已设置密码",
+      "NO_PASSWORD": "未设置密码",
+      "LINKED_ACCOUNT": "已关联的账户",
+      "NO_LINKED_ACCOUNT": "没有关联的帐户",
+      "NO_KEYS": "没有密钥",
+      "UNNAMED": "未命名的密钥"
     }
   }
 }

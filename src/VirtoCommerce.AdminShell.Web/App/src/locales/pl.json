@@ -138,7 +138,31 @@
       "SIGNING_IN": "Logowanie…",
       "ERRORS": {
         "LOCKED_OUT": "To konto zostało zablokowane po zbyt wielu nieudanych próbach. Spróbuj ponownie później lub skontaktuj się z administratorem.",
-        "NOT_ALLOWED": "To konto nie może się jeszcze logować. Skontaktuj się z administratorem."
+        "NOT_ALLOWED": "To konto nie może się jeszcze logować. Skontaktuj się z administratorem.",
+        "METHOD_FAILED": "Nie udało się. Spróbuj ponownie lub zaloguj się w inny sposób.",
+        "METHOD_NEEDS_PASSWORD": "To konto wymaga drugiego kroku logowania. Zaloguj się zamiast tego hasłem."
+      }
+    },
+    "MFA": {
+      "TITLE": "Wprowadź kod logowania",
+      "SUBTITLE": "Wysłaliśmy kod na adres {destination}.",
+      "SUBTITLE_EMAIL": "Wpisz kod, który wysłaliśmy na Twój adres e-mail.",
+      "CODE": "Kod",
+      "CODE_PLACEHOLDER": "Wprowadź 6-cyfrowy kod",
+      "RESEND": "Wyślij kod ponownie",
+      "RESEND_COUNTDOWN": "Wyślij kod ponownie za {seconds} s",
+      "BACK": "Wróć do logowania",
+      "CODE_RESENT": "Kod wysłano ponownie.",
+      "ERRORS": {
+        "INVALID_CODE": "Kod jest nieprawidłowy. Sprawdź go i spróbuj ponownie.",
+        "INVALID_TWO_FACTOR_TOKEN": "Sesja logowania wygasła. Zaloguj się ponownie.",
+        "CODE_ATTEMPTS_EXCEEDED": "Zbyt wiele nieprawidłowych kodów. Odczekaj kilka minut i zaloguj się ponownie.",
+        "USER_IS_LOCKED_OUT": "Twoje konto zostało zablokowane. Skontaktuj się z administratorem.",
+        "USER_IS_TEMPORARY_LOCKED_OUT": "Twoje konto zostało tymczasowo zablokowane. Spróbuj ponownie później.",
+        "SIGN_IN_NOT_ALLOWED": "Tym kontem nie można zalogować się do Backoffice.",
+        "LOCKOUT_DISABLED": "To konto nie może logować się kodem. Skontaktuj się z administratorem.",
+        "MFA_PROVIDER_NOT_AVAILABLE": "Nie możemy wysłać kodu logowania na to konto. Potwierdź adres e-mail lub skontaktuj się z administratorem.",
+        "UNAVAILABLE": "To konto wymaga drugiego kroku logowania, ale jest on niedostępny. Skontaktuj się z administratorem."
       }
     },
     "MFA": {

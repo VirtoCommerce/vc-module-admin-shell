@@ -138,7 +138,31 @@
       "SIGNING_IN": "Kirjaudutaan…",
       "ERRORS": {
         "LOCKED_OUT": "Tili on lukittu liian monen epäonnistuneen yrityksen jälkeen. Yritä myöhemmin uudelleen tai ota yhteyttä järjestelmänvalvojaan.",
-        "NOT_ALLOWED": "Tilillä ei voi vielä kirjautua. Ota yhteyttä järjestelmänvalvojaan."
+        "NOT_ALLOWED": "Tilillä ei voi vielä kirjautua. Ota yhteyttä järjestelmänvalvojaan.",
+        "METHOD_FAILED": "Se ei onnistunut. Yritä uudelleen tai kirjaudu toisella tavalla.",
+        "METHOD_NEEDS_PASSWORD": "Tämä tili vaatii toisen kirjautumisvaiheen. Kirjaudu sen sijaan salasanallasi."
+      }
+    },
+    "MFA": {
+      "TITLE": "Syötä kirjautumiskoodi",
+      "SUBTITLE": "Lähetimme koodin osoitteeseen {destination}.",
+      "SUBTITLE_EMAIL": "Anna sähköpostiisi lähettämämme koodi.",
+      "CODE": "Koodi",
+      "CODE_PLACEHOLDER": "Syötä 6-numeroinen koodi",
+      "RESEND": "Lähetä koodi uudelleen",
+      "RESEND_COUNTDOWN": "Lähetä koodi uudelleen {seconds} s kuluttua",
+      "BACK": "Takaisin kirjautumiseen",
+      "CODE_RESENT": "Koodi lähetetty uudelleen.",
+      "ERRORS": {
+        "INVALID_CODE": "Koodi ei kelpaa. Tarkista se ja yritä uudelleen.",
+        "INVALID_TWO_FACTOR_TOKEN": "Kirjautumisistuntosi on vanhentunut. Kirjaudu uudelleen.",
+        "CODE_ATTEMPTS_EXCEEDED": "Liian monta virheellistä koodia. Odota muutama minuutti ja kirjaudu uudelleen.",
+        "USER_IS_LOCKED_OUT": "Tilisi on lukittu. Ota yhteyttä järjestelmänvalvojaan.",
+        "USER_IS_TEMPORARY_LOCKED_OUT": "Tilisi on lukittu tilapäisesti. Yritä myöhemmin uudelleen.",
+        "SIGN_IN_NOT_ALLOWED": "Tällä tilillä ei voi kirjautua Backofficeen.",
+        "LOCKOUT_DISABLED": "Tällä tilillä ei voi kirjautua koodilla. Ota yhteyttä järjestelmänvalvojaan.",
+        "MFA_PROVIDER_NOT_AVAILABLE": "Tälle tilille ei voi lähettää kirjautumiskoodia. Vahvista sähköposti tai ota yhteyttä järjestelmänvalvojaan.",
+        "UNAVAILABLE": "Tämä tili vaatii toisen kirjautumisvaiheen, mutta se ei ole käytettävissä. Ota yhteyttä järjestelmänvalvojaan."
       }
     },
     "MFA": {

@@ -504,6 +504,32 @@
       "DRAG_HINT": "Arraste seções e itens para reordená-los, ou solte um item em outro grupo ou seção. Em uma tela sensível ao toque, pressione e segure primeiro.",
       "DROP_HERE": "Solte itens aqui",
       "DROP_NO_GROUP": "Solte aqui para nenhum grupo"
+    },
+    "SIGN_IN_METHODS": {
+      "TITLE": "Métodos de login",
+      "SUBTITLE": "Como você entra na sua conta",
+      "READ_ONLY": "Os métodos de entrada não podem ser alterados nesta sessão (por exemplo, ao agir como outro usuário).",
+      "PASSWORD": "Senha",
+      "SET_PASSWORD": "Definir uma senha",
+      "SET_PASSWORD_HINT": "Sua conta não tem senha. Defina uma para entrar também com nome de usuário e senha.",
+      "PASSWORD_SET_OK": "Senha definida",
+      "ADD": "Adicionar",
+      "ADDED": "Adicionada a {name}",
+      "CHANGED": "Alterada em {date}",
+      "CREATED": "Criada em {date}",
+      "RENAME": "Renomear",
+      "KEY_NAME": "Nome",
+      "CANCEL": "Cancelar",
+      "DELETE": "Excluir",
+      "DELETE_CONFIRM": "Excluir “{name}” de {method}? Você não poderá mais entrar com ela.",
+      "DELETE_PASSWORD_CONFIRM": "Excluir sua senha? Você entrará apenas com seus outros métodos de entrada.",
+      "LAST_KEY": "Esta é sua única forma de entrar, por isso não pode ser excluída",
+      "PASSWORD_SET": "A senha está definida",
+      "NO_PASSWORD": "A senha não está definida",
+      "LINKED_ACCOUNT": "Conta vinculada",
+      "NO_LINKED_ACCOUNT": "Nenhuma conta vinculada",
+      "NO_KEYS": "Nenhuma chave",
+      "UNNAMED": "Chave sem nome"
     }
   }
 }

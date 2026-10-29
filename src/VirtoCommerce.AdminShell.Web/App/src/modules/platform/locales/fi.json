@@ -504,6 +504,32 @@
       "DRAG_HINT": "Vedä osioita ja kohteita järjestääksesi ne uudelleen, tai pudota kohde toiseen ryhmään tai osioon. Kosketusnäytöllä paina ensin pitkään.",
       "DROP_HERE": "Pudota kohteet tähän",
       "DROP_NO_GROUP": "Pudota tähän ilman ryhmää"
+    },
+    "SIGN_IN_METHODS": {
+      "TITLE": "Kirjautumistavat",
+      "SUBTITLE": "Miten kirjaudut tilillesi",
+      "READ_ONLY": "Kirjautumistapoja ei voi muuttaa tässä istunnossa (esimerkiksi toimiessasi toisena käyttäjänä).",
+      "PASSWORD": "Salasana",
+      "SET_PASSWORD": "Aseta salasana",
+      "SET_PASSWORD_HINT": "Tililläsi ei ole salasanaa. Aseta salasana, niin voit kirjautua myös käyttäjätunnuksella ja salasanalla.",
+      "PASSWORD_SET_OK": "Salasana asetettu",
+      "ADD": "Lisää",
+      "ADDED": "Lisätty: {name}",
+      "CHANGED": "Muutettu {date}",
+      "CREATED": "Luotu {date}",
+      "RENAME": "Nimeä uudelleen",
+      "KEY_NAME": "Nimi",
+      "CANCEL": "Peruuta",
+      "DELETE": "Poista",
+      "DELETE_CONFIRM": "Poistetaanko ”{name}” kohteesta {method}? Et voi enää kirjautua sillä.",
+      "DELETE_PASSWORD_CONFIRM": "Poistetaanko salasana? Kirjaudut sen jälkeen vain muilla kirjautumistavoillasi.",
+      "LAST_KEY": "Tämä on ainoa kirjautumistapasi, joten sitä ei voi poistaa",
+      "PASSWORD_SET": "Salasana on asetettu",
+      "NO_PASSWORD": "Salasanaa ei ole asetettu",
+      "LINKED_ACCOUNT": "Linkitetty tili",
+      "NO_LINKED_ACCOUNT": "Ei linkitettyä tiliä",
+      "NO_KEYS": "Ei avaimia",
+      "UNNAMED": "Nimetön avain"
     }
   }
 }

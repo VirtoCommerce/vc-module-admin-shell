@@ -156,6 +156,8 @@ import {
   usePopup,
   useApiClient,
   useAsync,
+  useBlade,
+  useBladeWidgets,
   useFunctions,
   useLanguages,
   useUser,
@@ -171,6 +173,7 @@ import { useRouter } from "vue-router";
 import { api } from "../../api";
 import { ensureSucceeded } from "../../composables/security";
 import { colorTheme, colorThemeOptions, themeChoice, themeMode } from "../../../../shell/themeMode";
+import { loadUserSignInMethods } from "../../../../shell/signInMethods";
 import { browserZone, languageName, timeZones } from "./intl";
 
 defineBlade({
@@ -187,7 +190,14 @@ interface Profile {
 }
 
 const PREFIX = "VirtoCommerce.Platform.UI.";
-const FIELDS = ["Language", "RegionalFormat", "TimeZone", "UseTimeAgo", "FullDateThreshold", "FullDateThresholdUnit"] as const;
+const FIELDS = [
+  "Language",
+  "RegionalFormat",
+  "TimeZone",
+  "UseTimeAgo",
+  "FullDateThreshold",
+  "FullDateThresholdUnit",
+] as const;
 type Field = (typeof FIELDS)[number];
 
 const { t, availableLocales } = useI18n({ useScope: "global" });
@@ -200,10 +210,43 @@ const { user } = useUser();
 const item = ref<UserDetail>({});
 defineBladeContext({ item });
 
+// the ways the user signs in (password, linked accounts, passkeys), as the AngularJS profile's "Sign-in methods" widget;
+// hidden on a platform without sign-in methods (before 3.1091)
+const { openBlade, exposeToChildren } = useBlade();
+const signInKeyCount = ref<number>();
+// false once the platform says the account has no password (it signs in with a passkey or a linked account)
+const hasPassword = ref<boolean>();
+const loadSignInKeyCount = async () => {
+  const methods = await loadUserSignInMethods().catch(() => undefined);
+  signInKeyCount.value = methods ? methods.reduce((count, m) => count + (m.keys?.length ?? 0), 0) : undefined;
+  const password = methods?.find((m) => m.kind === "Password");
+  hasPassword.value = password ? !!password.keys?.length : undefined;
+};
+useBladeWidgets([
+  {
+    id: "PlatformUserSignInMethods",
+    icon: "lucide-key-round",
+    title: "PLATFORM.SIGN_IN_METHODS.TITLE",
+    badge: computed(() => signInKeyCount.value ?? 0),
+    isVisible: computed(() => signInKeyCount.value !== undefined),
+    onClick: () => openBlade({ name: "PlatformUserSignInMethods" }),
+  },
+]);
+// the sign-in methods blade updates the count as keys come and go
+exposeToChildren({ reload: () => loadSignInKeyCount() });
+loadSignInKeyCount();
+
 // the profile saves as you go; the toolbar has the account's other own action (the avatar menu links here)
 const { open: changePassword } = usePopup({ component: ChangePassword });
 const toolbar = ref<IBladeToolbar[]>([
-  { id: "changePassword", title: t("SHELL.ACCOUNT.CHANGE_PASSWORD"), icon: "lucide-key-round", clickHandler: () => changePassword() },
+  {
+    id: "changePassword",
+    title: t("SHELL.ACCOUNT.CHANGE_PASSWORD"),
+    icon: "lucide-key-round",
+    // without a password there is none to change: the sign-in methods set one
+    isVisible: computed(() => hasPassword.value !== false),
+    clickHandler: () => changePassword(),
+  },
 ]);
 
 const profile = ref<Profile>();
@@ -234,14 +277,18 @@ const units = computed(() =>
   })),
 );
 
-const thresholdEnabled = computed(() => !!values.value.UseTimeAgo && (values.value.FullDateThresholdUnit ?? "Never") !== "Never");
+const thresholdEnabled = computed(
+  () => !!values.value.UseTimeAgo && (values.value.FullDateThresholdUnit ?? "Never") !== "Never",
+);
 // a threshold that is not a number (empty, text) is as invalid as one below 1
 const thresholdInvalid = (value: unknown) => {
   const threshold = Number(value);
   return Number.isNaN(threshold) || threshold < 1;
 };
 const thresholdError = computed(() =>
-  thresholdEnabled.value && thresholdInvalid(values.value.FullDateThreshold) ? t("PLATFORM.PROFILE.THRESHOLD_INVALID") : undefined,
+  thresholdEnabled.value && thresholdInvalid(values.value.FullDateThreshold)
+    ? t("PLATFORM.PROFILE.THRESHOLD_INVALID")
+    : undefined,
 );
 
 // the account record (email, phone, linked contact); editing it takes the security update permission, as on Security > Users
@@ -252,7 +299,9 @@ let savedAccount = "";
 const canEditAccount = computed(() => !!account.value.id && hasAccess("platform:security:update"));
 // an account keeps an email (password resets go to it): empty is an error too, and nothing invalid is saved
 const emailError = computed(() =>
-  canEditAccount.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(account.value.email ?? "") ? t("PLATFORM.PROFILE.EMAIL_INVALID") : undefined,
+  canEditAccount.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(account.value.email ?? "")
+    ? t("PLATFORM.PROFILE.EMAIL_INVALID")
+    : undefined,
 );
 const accountSnapshot = () => JSON.stringify([account.value.email ?? "", account.value.phoneNumber ?? ""]);
 
@@ -322,7 +371,11 @@ const { loading: saveLoading, action: save } = useAsync(async () => {
 
 const loading = useLoading(loadLoading, saveLoading, accountSaving);
 
-watch(values, debounce(() => save(), 400), { deep: true });
+watch(
+  values,
+  debounce(() => save(), 400),
+  { deep: true },
+);
 
 // the language is the shell's too: chosen here it applies at once when the shell has it (the platform's list is longer),
 // and one chosen in the avatar's menu shows here
