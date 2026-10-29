@@ -211,26 +211,13 @@ const rows = computed(() =>
         title: title(method),
         icon: extension?.icon ?? (isPassword ? "lucide-lock" : undefined),
         logo: rootedUrl(method.logoUrl),
-        // the password has no "Add": it is set, once there is none
-        addTitle: !canAdd
-          ? undefined
-          : isPassword
-            ? t("PLATFORM.SIGN_IN_METHODS.SET_PASSWORD")
-            : (extension?.createKeyTitle?.() ?? t("PLATFORM.SIGN_IN_METHODS.ADD")),
+        addTitle: canAdd ? addTitle(method) : undefined,
         canChange: isPassword && !readOnly.value,
-        empty: isPassword
-          ? t("PLATFORM.SIGN_IN_METHODS.NO_PASSWORD")
-          : isExternal
-            ? t("PLATFORM.SIGN_IN_METHODS.NO_LINKED_ACCOUNT")
-            : t("PLATFORM.SIGN_IN_METHODS.NO_KEYS"),
+        empty: emptyText(method),
         keys: (method.keys ?? []).map((key) => ({
           ...key,
           icon: extension?.keyIcon?.(key) ?? (isPassword ? "lucide-lock" : "lucide-key-round"),
-          label: isPassword
-            ? t("PLATFORM.SIGN_IN_METHODS.PASSWORD_SET")
-            : isExternal
-              ? t("PLATFORM.SIGN_IN_METHODS.LINKED_ACCOUNT")
-              : key.name || t("PLATFORM.SIGN_IN_METHODS.UNNAMED"),
+          label: keyLabel(method, key),
           hint: isExternal ? key.id : undefined,
           details: [
             extension?.describeKey?.(key),
@@ -250,6 +237,24 @@ function title(method: SignInMethod) {
   if (extension?.title) return extension.title();
   if (method.kind === "Password") return t("PLATFORM.SIGN_IN_METHODS.PASSWORD");
   return method.displayName || method.name;
+}
+
+// the password has no "Add": it is set, once there is none
+function addTitle(method: SignInMethod) {
+  if (method.kind === "Password") return t("PLATFORM.SIGN_IN_METHODS.SET_PASSWORD");
+  return signInMethods.get(method.name)?.createKeyTitle?.() ?? t("PLATFORM.SIGN_IN_METHODS.ADD");
+}
+
+function emptyText(method: SignInMethod) {
+  if (method.kind === "Password") return t("PLATFORM.SIGN_IN_METHODS.NO_PASSWORD");
+  if (method.kind === "External") return t("PLATFORM.SIGN_IN_METHODS.NO_LINKED_ACCOUNT");
+  return t("PLATFORM.SIGN_IN_METHODS.NO_KEYS");
+}
+
+function keyLabel(method: SignInMethod, key: SignInKey) {
+  if (method.kind === "Password") return t("PLATFORM.SIGN_IN_METHODS.PASSWORD_SET");
+  if (method.kind === "External") return t("PLATFORM.SIGN_IN_METHODS.LINKED_ACCOUNT");
+  return key.name || t("PLATFORM.SIGN_IN_METHODS.UNNAMED");
 }
 
 // impersonating, or an account the platform keeps read-only: the platform allows no change of any method
