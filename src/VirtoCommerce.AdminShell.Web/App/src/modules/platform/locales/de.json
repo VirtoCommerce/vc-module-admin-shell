@@ -504,6 +504,32 @@
       "DRAG_HINT": "Ziehen Sie Bereiche und Einträge, um sie neu anzuordnen, oder legen Sie einen Eintrag in einer anderen Gruppe oder einem anderen Bereich ab. Auf einem Touchscreen zuerst gedrückt halten.",
       "DROP_HERE": "Einträge hier ablegen",
       "DROP_NO_GROUP": "Hier ablegen für keine Gruppe"
+    },
+    "SIGN_IN_METHODS": {
+      "TITLE": "Anmeldemethoden",
+      "SUBTITLE": "Wie Sie sich bei Ihrem Konto anmelden",
+      "READ_ONLY": "Anmeldemethoden können in dieser Sitzung nicht geändert werden (z. B. wenn Sie als anderer Benutzer handeln).",
+      "PASSWORD": "Passwort",
+      "SET_PASSWORD": "Passwort festlegen",
+      "SET_PASSWORD_HINT": "Ihr Konto hat kein Passwort. Legen Sie eines fest, um sich auch mit Benutzername und Passwort anzumelden.",
+      "PASSWORD_SET_OK": "Passwort festgelegt",
+      "ADD": "Hinzufügen",
+      "ADDED": "Zu {name} hinzugefügt",
+      "CHANGED": "Geändert am {date}",
+      "CREATED": "Erstellt am {date}",
+      "RENAME": "Umbenennen",
+      "KEY_NAME": "Name",
+      "CANCEL": "Abbrechen",
+      "DELETE": "Löschen",
+      "DELETE_CONFIRM": "„{name}“ aus {method} löschen? Sie können sich damit nicht mehr anmelden.",
+      "DELETE_PASSWORD_CONFIRM": "Passwort löschen? Sie melden sich dann nur noch mit Ihren anderen Anmeldemethoden an.",
+      "LAST_KEY": "Dies ist Ihre einzige Anmeldemöglichkeit und kann daher nicht gelöscht werden",
+      "PASSWORD_SET": "Passwort ist festgelegt",
+      "NO_PASSWORD": "Passwort ist nicht festgelegt",
+      "LINKED_ACCOUNT": "Verknüpftes Konto",
+      "NO_LINKED_ACCOUNT": "Kein verknüpftes Konto",
+      "NO_KEYS": "Keine Schlüssel",
+      "UNNAMED": "Unbenannter Schlüssel"
     }
   }
 }

@@ -12,8 +12,40 @@
     </div>
 
     <!-- the platform's external sign-in providers (Google, Microsoft Entra ID, OpenID Connect), when configured -->
-    <template v-if="providers.length">
+    <template v-if="providers.length || methodButtons.length">
       <div class="as-auth__providers">
+        <!-- sign-in methods modules add (a passkey): shown once the module's plugin gives the method a signIn -->
+        <button
+          v-for="button in methodButtons"
+          :key="button.name"
+          type="button"
+          class="as-auth__provider"
+          :disabled="busy"
+          @click="signInWithMethod(button.name)"
+        >
+          <VcIcon
+            v-if="methodBusy === button.name"
+            icon="lucide-loader-circle"
+            size="m"
+            class="as-auth__spin"
+          />
+          <VcIcon
+            v-else-if="button.icon"
+            :icon="button.icon"
+            size="m"
+          />
+          <img
+            v-else-if="button.logo"
+            :src="button.logo"
+            alt=""
+          />
+          <VcIcon
+            v-else
+            icon="lucide-key-round"
+            size="m"
+          />
+          {{ button.label }}
+        </button>
         <button
           v-for="provider in providers"
           :key="provider.type"
@@ -91,12 +123,19 @@
           {{ provider.label }}
         </button>
       </div>
-      <div class="as-auth__divider">{{ $t("SHELL.LOGIN.OR") }}</div>
+      <div
+        v-if="passwordEnabled"
+        class="as-auth__divider"
+      >
+        {{ $t("SHELL.LOGIN.OR") }}
+      </div>
     </template>
 
     <!-- Laid out on a grid so the tab order can differ from the look: email, password, Sign in, then "Forgot password?"
          (shown on the password label row) and the show-password eye (shown inside the field). -->
+    <!-- as the AngularJS sign-in: no form when the platform has password sign-in turned off -->
     <form
+      v-if="passwordEnabled"
       class="as-auth__form"
       @submit.prevent="signInWithPassword"
     >
@@ -187,6 +226,7 @@ import AuthShell from "./AuthShell.vue";
 import { rootedUrl } from "../utils/url";
 import { companyName } from "../shell/branding";
 import { goAfterSignIn, takeRedirectTarget } from "../shell/signIn";
+import { loadSignInMethods, signInMethods, SignInError, type SignInMethod } from "../shell/signInMethods";
 
 interface Provider {
   type: string;
@@ -197,22 +237,48 @@ interface Provider {
 
 const { t } = useI18n({ useScope: "global" });
 const router = useRouter();
-const { signIn, loading, user } = useUserManagement();
+const { signIn, loading, user, loadUser } = useUserManagement();
 
 const form = reactive({ username: "", password: "" });
 const showPassword = ref(false);
 const error = ref("");
 const redirecting = ref(false);
-const busy = computed(() => loading.value || redirecting.value);
+// the module sign-in method in progress (its button shows a spinner)
+const methodBusy = ref<string>();
+const busy = computed(() => loading.value || redirecting.value || !!methodBusy.value);
 
 const providerInfos = ref<ExternalSignInProviderInfo[]>([]);
+const methods = ref<SignInMethod[]>([]);
 onMounted(async () => {
-  try {
-    providerInfos.value = (await new ExternalSignInClient().getExternalLoginProviders()) ?? [];
-  } catch {
+  const [infos, list] = await Promise.all([
     // no providers: the password form still works
-  }
+    new ExternalSignInClient().getExternalLoginProviders().catch(() => undefined),
+    // a platform without sign-in methods: only the providers and the password
+    loadSignInMethods().catch(() => undefined),
+  ]);
+  providerInfos.value = infos ?? [];
+  methods.value = list ?? [];
 });
+
+// the password form, unless the platform lists sign-in methods without the password (password sign-in turned off)
+const passwordEnabled = computed(() => !methods.value.length || methods.value.some((m) => m.kind === "Password"));
+
+// The platform's own kinds keep their buttons (the providers above, the password form); a module's method gets one when
+// its plugin has said how to sign in with it in this browser (a passkey needs WebAuthn)
+const methodButtons = computed(() =>
+  [...methods.value]
+    .filter((m) => m.kind !== "Password" && m.kind !== "External" && signInMethods.get(m.name)?.signIn)
+    .map((m) => {
+      const extension = signInMethods.get(m.name)!;
+      const title = extension.title?.() ?? m.displayName ?? m.name;
+      return {
+        name: m.name,
+        icon: extension.icon,
+        logo: rootedUrl(m.logoUrl),
+        label: extension.signInTitle?.() ?? t("SHELL.LOGIN.CONTINUE_WITH", { name: title }),
+      };
+    }),
+);
 
 // Each module names its provider ("GoogleSSO" / "Google", "AzureAD" / "Microsoft Entra ID", "oidc" / "OpenID Connect")
 // and the captions are configurable, so the brand is read from both. A provider we don't know keeps its own caption.
@@ -248,9 +314,44 @@ function signInWith(authenticationType: string) {
   window.location.assign(url);
 }
 
+// The plugin talks to the browser and signs in with a cookie (signInMethods.signIn); the shell then opens the session as
+// after a password. A cancelled prompt resolves false and shows nothing.
+async function signInWithMethod(name: string) {
+  const extension = signInMethods.get(name);
+  if (!extension?.signIn || busy.value) return;
+  error.value = "";
+  methodBusy.value = name;
+  try {
+    if ((await extension.signIn()) === false) return;
+    await goAfterSignIn(router, await loadUser());
+  } catch (e) {
+    error.value = methodSignInError(e);
+  } finally {
+    methodBusy.value = undefined;
+  }
+}
+
+function methodSignInError(e: unknown) {
+  if (e instanceof SignInError) {
+    if (e.code === "user_is_locked_out" || e.code === "user_is_temporary_locked_out")
+      return t("SHELL.LOGIN.ERRORS.LOCKED_OUT");
+    if (e.code === "sign_in_not_allowed") return t("SHELL.LOGIN.ERRORS.NOT_ALLOWED");
+    // the platform asks this method for a second factor, which only the password's code step can give
+    if (e.code === "two_factor_required" || e.code === "two_factor_unavailable")
+      return t("SHELL.LOGIN.ERRORS.METHOD_NEEDS_PASSWORD");
+    if (e.status === 400) return t("SHELL.LOGIN.ERRORS.METHOD_FAILED");
+    return t("LOGIN.ERRORS.AUTH_WITH_CODE", { code: e.status });
+  }
+  // the plugin's own message (a browser refusal it explains)
+  return e instanceof Error && e.message ? e.message : t("SHELL.LOGIN.ERRORS.METHOD_FAILED");
+}
+
 async function signInWithPassword() {
   error.value = "";
-  const result = (await signIn(form.username.trim(), form.password)) as SignInResult & { status?: number; error?: string };
+  const result = (await signIn(form.username.trim(), form.password)) as SignInResult & {
+    status?: number;
+    error?: string;
+  };
 
   if (result.succeeded) {
     await goAfterSignIn(router, user.value);

@@ -96,3 +96,51 @@ loadUser() → goAfterSignIn(): access denied | forced password change | deep li
 - Wait for the countdown and "Resend code": "Code sent again", a new countdown.
 - The right code: Home, or the deep link the user opened; the AngularJS screens open signed in.
 - With MFA off: the password signs in directly.
+
+## Sign-in methods (passkeys and other module methods)
+
+The platform lists the ways to sign in, the **sign-in methods** (vc-platform#3144, platform 3.1091 or later): the password, each external provider, and methods modules add, such as the passkey of [vc-module-passkeys](https://github.com/VirtoCommerce/vc-module-passkeys). For the current user it also lists their **keys** for each method (the password, linked accounts, passkeys) and whether a key can be added, renamed or deleted. The Admin Shell shows them in two places:
+
+- **Sign-in page:** a button for each module method whose plugin says how to sign in with it in this browser ("Sign in with a passkey"), above the external providers. The password form and the providers stay as they are.
+- **User profile > Sign-in methods** (a widget on the profile blade, as in the AngularJS profile): every method with the user's keys. Add, rename and delete follow what the platform allows; the password is changed there, or set when the account has none (a passkey-only account); the only key left can't be deleted. While impersonating, nothing can be changed.
+
+On a platform without sign-in methods, the sign-in page and the profile look as before.
+
+| Sign-in page | Profile > Sign-in methods | Phone |
+|---|---|---|
+| ![The sign-in page with "Sign in with a passkey" above the password form](images/passkey-sign-in.jpg) | ![Sign-in methods: the password, and four passkeys with where each lives and when it was created](images/sign-in-methods.jpg) | ![Sign-in methods at phone width](images/sign-in-methods-phone.jpg) |
+
+A module's plugin adds the browser side of its method, as AngularJS modules do with `signInMethodService.extendSignInMethod`. Source: `src/shell/signInMethods.ts`; the screens are `src/pages/Login.vue` and `src/modules/platform/pages/user-profile/sign-in-methods.vue`.
+
+```ts
+// in the plugin's install(app); the host is app.config.globalProperties.$signInMethods (or inject("adminShell.signInMethods"))
+const host = app.config.globalProperties.$signInMethods;
+host?.extend("Passkey", {                       // the method's name, as the platform lists it
+  title: () => t("PASSKEYS.TITLE"),            // its heading in the profile
+  signInTitle: () => t("PASSKEYS.SIGN_IN"),    // the sign-in button
+  icon: "lucide-fingerprint",
+  // both only where the browser can: no signIn, no button; no createKey, no "Add"
+  signIn: async () => {
+    const credential = await navigator.credentials.get(/* the module's options */);
+    if (!credential) return false;             // false: cancelled, nothing is shown
+    await host.signIn({ grant_type: "passkey", credential: JSON.stringify(credential) });
+  },
+  createKey: async () => { /* the browser's prompt, then the module's API; false when cancelled */ },
+  createKeyTitle: () => t("PASSKEYS.ADD"),
+  describeKey: (key) => key.state && t(`PASSKEYS.STATES.${key.state}`), // one line under the key's name
+  keyIcon: (key) => (key.state === "DeviceOnly" ? "lucide-laptop" : "lucide-cloud"),
+});
+```
+
+| Member | Description |
+|---|---|
+| `extend(name, extension)` | Adds the browser side of a method; extending it again replaces it. Everything in `extension` is optional. |
+| `signIn(parameters)` | Signs in with a cookie through any grant type of the token endpoint (`POST api/platform/security/sign-in`). Throws a `SignInError` (`status`, `code`) when the platform refuses. |
+| `extension.signIn()` | Signs in. Resolves `false` when the user cancelled; throws to show an error (a `SignInError` reads as "locked", "not allowed" or "that didn't work"; another error shows its message). The shell then opens the session as after a password: access check, forced password change, deep link. |
+| `extension.createKey()` | Adds a key for the current user. Resolves `false` when cancelled; throws an `Error` whose message is shown. |
+| `title`, `signInTitle`, `createKeyTitle` | Texts in the UI's language, as functions so they follow a language change. |
+| `icon`, `keyIcon(key)`, `describeKey(key)` | How the method and its keys read; the shell adds the created or changed date. |
+
+**Guidelines.** Register the extension in `install`: the button appears as soon as the plugin loads. Leave out `signIn` and `createKey` where the browser can't do them, rather than failing when clicked. Treat a cancelled browser prompt (`NotAllowedError`, `AbortError`) as `false`, not as an error. Don't collect the password or other credentials yourself.
+
+**Testing.** On a platform with sign-in methods and the module's plugin, in light and dark, at phone width, and in a right-to-left language: the sign-in button and a cancelled prompt (no message); adding a key, a duplicate key (the authenticator says it already has one), renaming with Enter and Escape, deleting with the confirmation; signing out and in with the new key; deleting the password and setting a new one; the last key's delete disabled with its reason. Browsers without a passkey authenticator can be tested with a software one (Chrome DevTools > WebAuthn, or a page script that answers `navigator.credentials`).

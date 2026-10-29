@@ -138,7 +138,31 @@
       "SIGNING_IN": "Entrando…",
       "ERRORS": {
         "LOCKED_OUT": "Esta conta foi bloqueada após muitas tentativas sem sucesso. Tente novamente mais tarde ou contate o administrador.",
-        "NOT_ALLOWED": "Esta conta ainda não tem permissão para entrar. Contate o administrador."
+        "NOT_ALLOWED": "Esta conta ainda não tem permissão para entrar. Contate o administrador.",
+        "METHOD_FAILED": "Não funcionou. Tente novamente ou use outra forma de entrar.",
+        "METHOD_NEEDS_PASSWORD": "Esta conta exige uma segunda etapa de entrada. Entre com sua senha."
+      }
+    },
+    "MFA": {
+      "TITLE": "Digite o código de acesso",
+      "SUBTITLE": "Enviamos um código para {destination}.",
+      "SUBTITLE_EMAIL": "Digite o código que enviamos para o seu e-mail.",
+      "CODE": "Código",
+      "CODE_PLACEHOLDER": "Digite o código de 6 dígitos",
+      "RESEND": "Reenviar código",
+      "RESEND_COUNTDOWN": "Reenviar código em {seconds} s",
+      "BACK": "Voltar ao login",
+      "CODE_RESENT": "Código reenviado.",
+      "ERRORS": {
+        "INVALID_CODE": "O código é inválido. Verifique-o e tente novamente.",
+        "INVALID_TWO_FACTOR_TOKEN": "Sua sessão de login expirou. Faça login novamente.",
+        "CODE_ATTEMPTS_EXCEEDED": "Muitos códigos incorretos. Aguarde alguns minutos e faça login novamente.",
+        "USER_IS_LOCKED_OUT": "Sua conta foi bloqueada. Entre em contato com o administrador.",
+        "USER_IS_TEMPORARY_LOCKED_OUT": "Sua conta foi bloqueada temporariamente. Tente novamente mais tarde.",
+        "SIGN_IN_NOT_ALLOWED": "Você não pode fazer login no Backoffice com esta conta.",
+        "LOCKOUT_DISABLED": "Esta conta não pode fazer login com um código. Entre em contato com o administrador.",
+        "MFA_PROVIDER_NOT_AVAILABLE": "Não é possível enviar um código de acesso para esta conta. Confirme o e-mail ou entre em contato com o administrador.",
+        "UNAVAILABLE": "Esta conta exige uma segunda etapa de início de sessão, mas ela não está disponível. Entre em contato com o administrador."
       }
     },
     "MFA": {

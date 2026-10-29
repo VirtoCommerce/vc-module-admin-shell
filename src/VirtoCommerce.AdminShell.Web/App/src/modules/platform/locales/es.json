@@ -504,6 +504,32 @@
       "DRAG_HINT": "Arrastre secciones y elementos para reordenarlos, o suelte un elemento en otro grupo o sección. En una pantalla táctil, mantenga pulsado primero.",
       "DROP_HERE": "Suelte elementos aquí",
       "DROP_NO_GROUP": "Suelte aquí para no tener grupo"
+    },
+    "SIGN_IN_METHODS": {
+      "TITLE": "Métodos de inicio de sesión",
+      "SUBTITLE": "Cómo inicia sesión en su cuenta",
+      "READ_ONLY": "Los métodos de inicio de sesión no se pueden cambiar en esta sesión (por ejemplo, mientras actúa como otro usuario).",
+      "PASSWORD": "Contraseña",
+      "SET_PASSWORD": "Establecer una contraseña",
+      "SET_PASSWORD_HINT": "Su cuenta no tiene contraseña. Establezca una para iniciar sesión también con su nombre de usuario y contraseña.",
+      "PASSWORD_SET_OK": "Contraseña establecida",
+      "ADD": "Agregar",
+      "ADDED": "Agregada a {name}",
+      "CHANGED": "Cambiada el {date}",
+      "CREATED": "Creada el {date}",
+      "RENAME": "Cambiar nombre",
+      "KEY_NAME": "Nombre",
+      "CANCEL": "Cancelar",
+      "DELETE": "Eliminar",
+      "DELETE_CONFIRM": "¿Eliminar «{name}» de {method}? Ya no podrá iniciar sesión con ella.",
+      "DELETE_PASSWORD_CONFIRM": "¿Eliminar su contraseña? Solo podrá iniciar sesión con sus otros métodos.",
+      "LAST_KEY": "Es su única forma de iniciar sesión, por lo que no se puede eliminar",
+      "PASSWORD_SET": "La contraseña está establecida",
+      "NO_PASSWORD": "La contraseña no está establecida",
+      "LINKED_ACCOUNT": "Cuenta vinculada",
+      "NO_LINKED_ACCOUNT": "Ninguna cuenta vinculada",
+      "NO_KEYS": "Sin claves",
+      "UNNAMED": "Clave sin nombre"
     }
   }
 }

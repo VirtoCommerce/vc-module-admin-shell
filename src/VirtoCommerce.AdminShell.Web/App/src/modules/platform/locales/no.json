@@ -504,6 +504,32 @@
       "DRAG_HINT": "Dra seksjoner og elementer for å endre rekkefølgen, eller slipp et element i en annen gruppe eller seksjon. På en berøringsskjerm, trykk og hold først.",
       "DROP_HERE": "Slipp elementer her",
       "DROP_NO_GROUP": "Slipp her for ingen gruppe"
+    },
+    "SIGN_IN_METHODS": {
+      "TITLE": "Påloggingsmetoder",
+      "SUBTITLE": "Slik logger du på kontoen din",
+      "READ_ONLY": "Påloggingsmetoder kan ikke endres i denne økten (for eksempel mens du handler som en annen bruker).",
+      "PASSWORD": "Passord",
+      "SET_PASSWORD": "Angi et passord",
+      "SET_PASSWORD_HINT": "Kontoen din har ikke passord. Angi et for også å logge på med brukernavn og passord.",
+      "PASSWORD_SET_OK": "Passord angitt",
+      "ADD": "Legg til",
+      "ADDED": "Lagt til i {name}",
+      "CHANGED": "Endret {date}",
+      "CREATED": "Opprettet {date}",
+      "RENAME": "Gi nytt navn",
+      "KEY_NAME": "Navn",
+      "CANCEL": "Avbryt",
+      "DELETE": "Slett",
+      "DELETE_CONFIRM": "Slette «{name}» fra {method}? Du kan ikke logge på med den lenger.",
+      "DELETE_PASSWORD_CONFIRM": "Slette passordet? Du logger da bare på med de andre påloggingsmetodene dine.",
+      "LAST_KEY": "Dette er din eneste måte å logge på, så den kan ikke slettes",
+      "PASSWORD_SET": "Passord er angitt",
+      "NO_PASSWORD": "Passord er ikke angitt",
+      "LINKED_ACCOUNT": "Koblet konto",
+      "NO_LINKED_ACCOUNT": "Ingen tilknyttet konto",
+      "NO_KEYS": "Ingen nøkler",
+      "UNNAMED": "Navnløs nøkkel"
     }
   }
 }
