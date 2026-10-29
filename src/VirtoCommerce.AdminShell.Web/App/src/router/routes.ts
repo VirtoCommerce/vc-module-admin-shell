@@ -71,6 +71,12 @@ export const routes: RouteRecordRaw[] = [
     props: tokenProps,
   },
   {
+    // the link in the platform's password-reset email: the AngularJS admin's route ("#!/resetpassword/{userId}/{token}"),
+    // which reaches the shell when it is the only admin UI; the hash's "!" makes the path "/!/..."
+    path: "/!/resetpassword/:userId/:token(.*)",
+    redirect: (to) => ({ name: "ResetPassword", query: { userId: to.params.userId, token: to.params.token } }),
+  },
+  {
     name: "ForgotPassword",
     path: "/forgot-password",
     component: inAuthShell(ForgotPassword),

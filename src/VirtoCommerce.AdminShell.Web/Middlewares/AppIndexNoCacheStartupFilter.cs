@@ -12,6 +12,8 @@ namespace VirtoCommerce.AdminShell.Web.Middlewares;
 /// one, and with it the old build, after the module is updated. It is marked no-cache here: the browser revalidates it
 /// (a 304 when it hasn't changed). The build's other files have the build number in their names and stay cacheable.
 /// A startup filter, because the platform registers the apps' static files before modules' PostInitialize.
+/// The path is checked when the response starts: when the shell owns the site root, the platform serves this page for
+/// "/" by rewriting the path to /apps/admin-shell/ after this middleware has run.
 /// </summary>
 public class AppIndexNoCacheStartupFilter : IStartupFilter
 {
@@ -22,14 +24,19 @@ public class AppIndexNoCacheStartupFilter : IStartupFilter
         {
             app.Use((context, nextMiddleware) =>
             {
-                if (IsIndex(context.Request.Path))
+                var path = context.Request.Path;
+                if (path != "/" && !path.StartsWithSegments(AppPath, StringComparison.OrdinalIgnoreCase))
                 {
-                    context.Response.OnStarting(() =>
+                    return nextMiddleware(context);
+                }
+                context.Response.OnStarting(() =>
+                {
+                    if (IsIndex(context.Request.Path))
                     {
                         context.Response.Headers[HeaderNames.CacheControl] = "no-cache";
-                        return System.Threading.Tasks.Task.CompletedTask;
-                    });
-                }
+                    }
+                    return System.Threading.Tasks.Task.CompletedTask;
+                });
                 return nextMiddleware(context);
             });
             next(app);
