@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Admin Shell module is the Vue admin of the Virto Commerce platform, built on [vc-shell](https://github.com/VirtoCommerce/vc-shell). It runs at `/apps/admin-shell/` next to the AngularJS admin and gradually replaces it; it can also own the site root (see [Site root](#site-root)). Modules bring their own UI as Admin Shell plugins (Module Federation remotes) that load at runtime. AngularJS screens and platform apps that have no Vue UI yet keep working inside the shell. The menu is composed on the server per user, from the modules' defaults and the organisation's, roles' and users' changes.
+The Admin Shell module is the Vue admin of the Virto Commerce platform, built on [vc-shell](https://github.com/VirtoCommerce/vc-shell). It runs at `/apps/admin-shell/` next to the AngularJS admin ([VirtoCommerce.AdminAngularJs](https://github.com/VirtoCommerce/vc-module-admin-angular-js)) and gradually replaces it; it can also own the site root, with or without the AngularJS admin (see [Site root](#site-root)). Modules bring their own UI as Admin Shell plugins (Module Federation remotes) that load at runtime. AngularJS screens and platform apps that have no Vue UI yet keep working inside the shell. The menu is composed on the server per user, from the modules' defaults and the organisation's, roles' and users' changes.
 
 ## Screenshots
 
@@ -61,15 +61,25 @@ The sign-in page, with the installation's brand and a showcase of the platform.
 
 ### Site root
 
-The module declares its app as an admin UI (`<adminUI priority="50" />` in `module.manifest`, platform 3.1093.0+). Which admin UI the platform serves at `/` follows `VirtoCommerce:PlatformUI:RootApp`:
+The module declares its app as an admin UI that can own the site root: `<adminUI priority="50" />` on the `admin-shell` app in `module.manifest` (platform 3.1093.0+; older platforms ignore it and serve the shell only at `/apps/admin-shell/`). Which admin UI the platform serves at `/` follows the platform's `VirtoCommerce:PlatformUI:RootApp`:
 
-| Installed | `RootApp` | `/` | AngularJS screens in the shell |
-|---|---|---|---|
-| Admin Shell only | empty | Admin Shell | Not available; their menu items say that the AngularJS admin isn't installed |
-| Admin Shell + [VirtoCommerce.AdminAngularJs](https://github.com/VirtoCommerce/vc-module-admin-angular-js) | empty | AngularJS admin (priority 100) | Embedded from `/` |
-| Admin Shell + VirtoCommerce.AdminAngularJs | `admin-shell` | Admin Shell | Embedded from `/apps/platform/` |
+| Installed | `RootApp` | `/` | Admin Shell | AngularJS screens in the shell |
+|---|---|---|---|---|
+| Admin Shell only | empty | Admin Shell | `/` and `/apps/admin-shell/` | Not available; their menu items say that the AngularJS admin isn't installed, *Open classic admin* is hidden |
+| Admin Shell + [VirtoCommerce.AdminAngularJs](https://github.com/VirtoCommerce/vc-module-admin-angular-js) | empty | AngularJS admin (priority 100) | `/apps/admin-shell/` | Embedded from `/` (as before) |
+| Admin Shell + VirtoCommerce.AdminAngularJs | `admin-shell` | Admin Shell | `/` and `/apps/admin-shell/` | Embedded from `/apps/platform/` |
 
-The shell finds the AngularJS admin in `GET /api/platform/common/ui/context` (`adminUIs`, app id `platform`); on platforms without that list it embeds `/` as before. See the platform's [Admin UI](https://github.com/VirtoCommerce/vc-platform/blob/dev/docs/developer-guide/admin-ui.md).
+```json
+{ "VirtoCommerce": { "PlatformUI": { "RootApp": "admin-shell" } } }
+```
+
+or `VirtoCommerce__PlatformUI__RootApp=admin-shell`.
+
+* At `/` the platform serves the shell's own `index.html` (the address stays `/`); the build's files keep their `/apps/admin-shell/...` URLs, and routing is by the URL hash, so nothing else changes.
+* The shell finds the AngularJS admin in `GET /api/platform/common/ui/context` (`adminUIs`, app id `platform`) once per page; on platforms without that list it embeds `/` as before, and a failed request is asked again next time.
+* The platform's password-reset email links to the AngularJS admin's reset page; when the shell is the only admin UI, the shell takes that link (`#!/resetpassword/{userId}/{token}`) and opens its own reset page.
+
+See the platform's [Admin UI](https://github.com/VirtoCommerce/vc-platform/blob/dev/docs/developer-guide/admin-ui.md).
 
 ### Application Settings
 
@@ -117,7 +127,7 @@ The module hosts the Admin Shell app and composes its menu; the platform serves 
 
 ### Startup Flow
 
-1. The browser opens `/apps/admin-shell/`. The platform serves the host app; `index.html` isn't cached, so a new build is picked up at once.
+1. The browser opens `/apps/admin-shell/`, or `/` when the shell owns the site root. The platform serves the host app; `index.html` isn't cached (at either address), so a new build is picked up at once.
 2. The host loads the current user, installs vc-shell, the platform screens and the global search registry, and mounts.
 3. In parallel it reads the plugin manifest (`GET /api/apps/admin-shell/manifest`, platform). It installs each module's plugin as soon as it loads; a failing plugin is skipped.
 4. The shell loads the user's menu (`GET /api/admin-shell/menu`).
@@ -152,7 +162,7 @@ The module hosts the Admin Shell app and composes its menu; the platform serves 
 | `MenuComposer` | Composes the effective menu from the default menu, patches, user preferences and permissions; ranks *Recent* |
 | `DefaultMenuBuilder` | Builds the default menu from `default-menu.json`, installed apps and plugin contributions |
 | `AdminMenuService` | Reads and writes the menu layers in platform settings (JSON, per platform, role and user) and resolves the user's effective menu |
-| `AppIndexNoCacheStartupFilter` | Serves the host's `index.html` with `Cache-Control: no-cache` |
+| `AppIndexNoCacheStartupFilter` | Serves the host's `index.html` with `Cache-Control: no-cache`, also when the platform serves it at `/` |
 
 ### Client Extension Points
 
