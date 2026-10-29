@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Admin Shell module is the Vue admin of the Virto Commerce platform, built on [vc-shell](https://github.com/VirtoCommerce/vc-shell). It runs at `/apps/admin-shell/` next to the AngularJS admin and gradually replaces it. Modules bring their own UI as Admin Shell plugins (Module Federation remotes) that load at runtime. AngularJS screens and platform apps that have no Vue UI yet keep working inside the shell. The menu is composed on the server per user, from the modules' defaults and the organisation's, roles' and users' changes.
+The Admin Shell module is the Vue admin of the Virto Commerce platform, built on [vc-shell](https://github.com/VirtoCommerce/vc-shell). It runs at `/apps/admin-shell/` next to the AngularJS admin and gradually replaces it; it can also own the site root (see [Site root](#site-root)). Modules bring their own UI as Admin Shell plugins (Module Federation remotes) that load at runtime. AngularJS screens and platform apps that have no Vue UI yet keep working inside the shell. The menu is composed on the server per user, from the modules' defaults and the organisation's, roles' and users' changes.
 
 ## Screenshots
 
@@ -58,6 +58,18 @@ The sign-in page, with the installation's brand and a showcase of the platform.
   * the sign-in page.
 
 ## Configuration
+
+### Site root
+
+The module declares its app as an admin UI (`<adminUI priority="50" />` in `module.manifest`, platform 3.1093.0+). Which admin UI the platform serves at `/` follows `VirtoCommerce:PlatformUI:RootApp`:
+
+| Installed | `RootApp` | `/` | AngularJS screens in the shell |
+|---|---|---|---|
+| Admin Shell only | empty | Admin Shell | Not available; their menu items say that the AngularJS admin isn't installed |
+| Admin Shell + [VirtoCommerce.AdminAngularJs](https://github.com/VirtoCommerce/vc-module-admin-angular-js) | empty | AngularJS admin (priority 100) | Embedded from `/` |
+| Admin Shell + VirtoCommerce.AdminAngularJs | `admin-shell` | Admin Shell | Embedded from `/apps/platform/` |
+
+The shell finds the AngularJS admin in `GET /api/platform/common/ui/context` (`adminUIs`, app id `platform`); on platforms without that list it embeds `/` as before. See the platform's [Admin UI](https://github.com/VirtoCommerce/vc-platform/blob/dev/docs/developer-guide/admin-ui.md).
 
 ### Application Settings
 

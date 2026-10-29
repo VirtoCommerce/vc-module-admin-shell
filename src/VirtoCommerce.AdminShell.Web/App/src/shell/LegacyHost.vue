@@ -14,15 +14,27 @@
     :src="initialSrc"
     title="Virto Commerce"
   />
+  <div
+    v-else-if="missing && active"
+    class="legacy-host legacy-host--missing"
+    :style="rectStyle"
+  >
+    {{ t("SHELL.NAV.CLASSIC_ADMIN_MISSING") }}
+  </div>
 </template>
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
+import { legacyAdminBaseUrl, legacyAdminSrc } from "./legacyAdmin";
 
 const route = useRoute();
 const frame = ref<HTMLIFrameElement>();
+const { t } = useI18n({ useScope: "global" });
 const started = ref(false);
+// no AngularJS admin installed: its screens can't open
+const missing = ref(false);
 const initialSrc = ref("");
 const rect = ref({ top: 0, left: 0, width: 0, height: 0 });
 
@@ -35,9 +47,6 @@ const rectStyle = computed(() => ({
   width: `${rect.value.width}px`,
   height: `${rect.value.height}px`,
 }));
-
-// AngularJS reads EmbeddedMode from the real query string, which survives in-app navigation
-const srcFor = (url: string) => `/?EmbeddedMode=true#!${url}`;
 
 function navigate(url: string) {
   const win = frame.value?.contentWindow as (Window & { angular?: any }) | null | undefined;
@@ -86,6 +95,24 @@ function trackWorkspace() {
   measure();
 }
 
+let starting = false;
+
+async function start() {
+  if (starting) {
+    return;
+  }
+  starting = true;
+  const base = await legacyAdminBaseUrl();
+  if (base === null) {
+    missing.value = true;
+    return;
+  }
+  // AngularJS reads EmbeddedMode from the real query string, which survives in-app navigation;
+  // the state asked for while the base url was fetched is the one to open
+  initialSrc.value = legacyAdminSrc(base, legacyUrl.value);
+  started.value = true;
+}
+
 watch(
   [active, legacyUrl],
   ([isActive, url]) => {
@@ -94,8 +121,7 @@ watch(
     }
     trackWorkspace();
     if (!started.value) {
-      initialSrc.value = srcFor(url);
-      started.value = true;
+      void start();
     } else {
       navigate(url);
     }
@@ -116,6 +142,15 @@ onBeforeUnmount(() => observer?.disconnect());
   &--hidden {
     visibility: hidden;
     pointer-events: none;
+  }
+
+  &--missing {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+    color: var(--neutrals-500);
   }
 }
 </style>

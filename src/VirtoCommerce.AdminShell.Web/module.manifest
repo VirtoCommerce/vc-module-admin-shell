@@ -23,6 +23,9 @@
       <description>Virto Commerce admin</description>
       <iconUrl>Modules/$(VirtoCommerce.AdminShell)/Content/logo.svg</iconUrl>
       <placement>AppMenu</placement>
+      <!-- An admin UI that can own the site root (VirtoCommerce:PlatformUI:RootApp, platform 3.1093.0+; older platforms
+           ignore it). With the AngularJS admin (priority 100) installed too, that one owns the root unless RootApp says otherwise. -->
+      <adminUI priority="50" />
     </app>
   </apps>
 

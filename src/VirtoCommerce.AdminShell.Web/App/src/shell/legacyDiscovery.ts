@@ -1,9 +1,11 @@
 /**
  * Legacy discovery: the AngularJS admin's own main menu (platformWebApp.mainMenuService), read from the admin running in a
  * frame of the same origin. The menu editor lists the screens it finds, so a system integrator can add the ones the menu
- * doesn't have yet. Today the AngularJS admin ships with the platform (at the site root); once it moves to the module
- * VirtoCommerce.AdminAngularJs this is where to check that the module is installed.
+ * doesn't have yet. The AngularJS admin is the module VirtoCommerce.AdminAngularJs, at the site root or /apps/platform/
+ * (see legacyAdmin); without the module there are no screens to find.
  */
+
+import { legacyAdminBaseUrl, legacyAdminSrc } from "./legacyAdmin";
 
 /** A screen of the AngularJS admin's menu */
 export interface LegacyScreen {
@@ -34,14 +36,12 @@ interface Injector {
   get<T = unknown>(name: string): T;
 }
 
-const ADMIN_URL = "/?EmbeddedMode=true#!/workspace";
-
 /** the persistent frame the shell shows AngularJS screens in, or a hidden one of our own for as long as it takes */
-function frameOfAdmin(): { frame: HTMLIFrameElement; own: boolean } {
+function frameOfAdmin(adminUrl: string): { frame: HTMLIFrameElement; own: boolean } {
   const existing = document.querySelector<HTMLIFrameElement>("iframe.legacy-host");
   if (existing) return { frame: existing, own: false };
   const frame = document.createElement("iframe");
-  frame.src = ADMIN_URL;
+  frame.src = adminUrl;
   frame.title = "AngularJS admin";
   frame.setAttribute("aria-hidden", "true");
   frame.tabIndex = -1;
@@ -88,7 +88,10 @@ const HOME_STATE = "workspace";
 
 /** The screens of the AngularJS admin's menu (items with a state to open; its groups like "browse" are left out) */
 export async function discoverLegacyScreens(timeoutMs = 45000): Promise<LegacyScreen[]> {
-  const { frame, own } = frameOfAdmin();
+  const base = await legacyAdminBaseUrl();
+  // no AngularJS admin installed: no screens to find
+  if (base === null) return [];
+  const { frame, own } = frameOfAdmin(legacyAdminSrc(base));
   try {
     const injector = await waitFor(() => injectorOf(frame), timeoutMs);
     // the modules finish adding their items a moment after the first ones
