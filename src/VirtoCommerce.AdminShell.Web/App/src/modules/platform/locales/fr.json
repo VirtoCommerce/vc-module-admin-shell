@@ -504,6 +504,32 @@
       "DRAG_HINT": "Faites glisser les sections et les éléments pour les réordonner, ou déposez un élément dans un autre groupe ou une autre section. Sur un écran tactile, appuyez longuement d'abord.",
       "DROP_HERE": "Déposez des éléments ici",
       "DROP_NO_GROUP": "Déposez ici pour aucun groupe"
+    },
+    "SIGN_IN_METHODS": {
+      "TITLE": "Méthodes de connexion",
+      "SUBTITLE": "Comment vous vous connectez à votre compte",
+      "READ_ONLY": "Les méthodes de connexion ne peuvent pas être modifiées dans cette session (par exemple, quand vous agissez en tant qu'un autre utilisateur).",
+      "PASSWORD": "Mot de passe",
+      "SET_PASSWORD": "Définir un mot de passe",
+      "SET_PASSWORD_HINT": "Votre compte n'a pas de mot de passe. Définissez-en un pour vous connecter aussi avec votre nom d'utilisateur et votre mot de passe.",
+      "PASSWORD_SET_OK": "Mot de passe défini",
+      "ADD": "Ajouter",
+      "ADDED": "Ajoutée à {name}",
+      "CHANGED": "Modifié le {date}",
+      "CREATED": "Créée le {date}",
+      "RENAME": "Renommer",
+      "KEY_NAME": "Nom",
+      "CANCEL": "Annuler",
+      "DELETE": "Supprimer",
+      "DELETE_CONFIRM": "Supprimer « {name} » de {method} ? Vous ne pourrez plus vous connecter avec.",
+      "DELETE_PASSWORD_CONFIRM": "Supprimer votre mot de passe ? Vous vous connecterez uniquement avec vos autres méthodes de connexion.",
+      "LAST_KEY": "C'est votre seul moyen de connexion, il ne peut donc pas être supprimé",
+      "PASSWORD_SET": "Le mot de passe est défini",
+      "NO_PASSWORD": "Le mot de passe n'est pas défini",
+      "LINKED_ACCOUNT": "Compte lié",
+      "NO_LINKED_ACCOUNT": "Aucun compte lié",
+      "NO_KEYS": "Aucune clé",
+      "UNNAMED": "Clé sans nom"
     }
   }
 }

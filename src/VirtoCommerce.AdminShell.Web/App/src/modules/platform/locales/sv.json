@@ -504,6 +504,32 @@
       "DRAG_HINT": "Dra avsnitt och objekt för att ordna om dem, eller släpp ett objekt i en annan grupp eller ett annat avsnitt. På en pekskärm, tryck och håll först.",
       "DROP_HERE": "Släpp objekt här",
       "DROP_NO_GROUP": "Släpp här för ingen grupp"
+    },
+    "SIGN_IN_METHODS": {
+      "TITLE": "Inloggningsmetoder",
+      "SUBTITLE": "Så loggar du in på ditt konto",
+      "READ_ONLY": "Inloggningsmetoder kan inte ändras i den här sessionen (till exempel när du agerar som en annan användare).",
+      "PASSWORD": "Lösenord",
+      "SET_PASSWORD": "Ange ett lösenord",
+      "SET_PASSWORD_HINT": "Ditt konto har inget lösenord. Ange ett för att även logga in med användarnamn och lösenord.",
+      "PASSWORD_SET_OK": "Lösenord angivet",
+      "ADD": "Lägg till",
+      "ADDED": "Tillagd i {name}",
+      "CHANGED": "Ändrat {date}",
+      "CREATED": "Skapad {date}",
+      "RENAME": "Byt namn",
+      "KEY_NAME": "Namn",
+      "CANCEL": "Avbryt",
+      "DELETE": "Ta bort",
+      "DELETE_CONFIRM": "Ta bort ”{name}” från {method}? Du kan inte längre logga in med den.",
+      "DELETE_PASSWORD_CONFIRM": "Ta bort lösenordet? Du loggar då bara in med dina andra inloggningsmetoder.",
+      "LAST_KEY": "Det här är ditt enda sätt att logga in, så det kan inte tas bort",
+      "PASSWORD_SET": "Lösenordet är angivet",
+      "NO_PASSWORD": "Lösenordet är inte angivet",
+      "LINKED_ACCOUNT": "Länkat konto",
+      "NO_LINKED_ACCOUNT": "Inget länkat konto",
+      "NO_KEYS": "Inga nycklar",
+      "UNNAMED": "Namnlös nyckel"
     }
   }
 }

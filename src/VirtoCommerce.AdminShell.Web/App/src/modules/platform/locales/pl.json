@@ -504,6 +504,32 @@
       "DRAG_HINT": "Przeciągaj sekcje i elementy, aby zmienić ich kolejność, lub upuść element w innej grupie lub sekcji. Na ekranie dotykowym najpierw naciśnij i przytrzymaj.",
       "DROP_HERE": "Upuść elementy tutaj",
       "DROP_NO_GROUP": "Upuść tutaj, aby bez grupy"
+    },
+    "SIGN_IN_METHODS": {
+      "TITLE": "Metody logowania",
+      "SUBTITLE": "Jak logujesz się na swoje konto",
+      "READ_ONLY": "W tej sesji nie można zmieniać metod logowania (na przykład podczas działania jako inny użytkownik).",
+      "PASSWORD": "Hasło",
+      "SET_PASSWORD": "Ustaw hasło",
+      "SET_PASSWORD_HINT": "Twoje konto nie ma hasła. Ustaw je, aby logować się także nazwą użytkownika i hasłem.",
+      "PASSWORD_SET_OK": "Hasło ustawione",
+      "ADD": "Dodaj",
+      "ADDED": "Dodano do: {name}",
+      "CHANGED": "Zmieniono {date}",
+      "CREATED": "Utworzono {date}",
+      "RENAME": "Zmień nazwę",
+      "KEY_NAME": "Nazwa",
+      "CANCEL": "Anuluj",
+      "DELETE": "Usuń",
+      "DELETE_CONFIRM": "Usunąć „{name}” z {method}? Nie będzie można się nim już zalogować.",
+      "DELETE_PASSWORD_CONFIRM": "Usunąć hasło? Będziesz logować się tylko innymi metodami logowania.",
+      "LAST_KEY": "To Twój jedyny sposób logowania, więc nie można go usunąć",
+      "PASSWORD_SET": "Hasło jest ustawione",
+      "NO_PASSWORD": "Hasło nie jest ustawione",
+      "LINKED_ACCOUNT": "Połączone konto",
+      "NO_LINKED_ACCOUNT": "Brak połączonego konta",
+      "NO_KEYS": "Brak kluczy",
+      "UNNAMED": "Klucz bez nazwy"
     }
   }
 }

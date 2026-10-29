@@ -1,6 +1,7 @@
 <template>
   <!-- widgets come from the host (shell/dashboard) and from module plugins via registerDashboardWidget -->
   <div
+    ref="root"
     class="as-dashboard"
     :class="{ 'as-dashboard--welcome': hasWelcome }"
     @pointerdown.capture="arm"
@@ -10,6 +11,7 @@
     <button
       type="button"
       class="as-dashboard__reset"
+      :style="{ right: resetRight }"
       @click="resetLayout"
     >
       <VcIcon
@@ -33,7 +35,7 @@
 import { DraggableDashboard, usePopup } from "@vc-shell/framework";
 import { VcIcon } from "@vc-shell/framework/ui";
 import type { GridStack } from "gridstack";
-import { computed, ref } from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { branding } from "../shell/branding";
 import WelcomeCard from "../shell/dashboard/WelcomeCard.vue";
@@ -66,7 +68,10 @@ function tidy(event: Event) {
 function onKey(event: KeyboardEvent) {
   armed = false;
   const target = event.target as Element;
-  if ((event.key === "Enter" || event.key === " ") && target.classList?.contains("vc-gridstack-dashboard__item--grabbed")) {
+  if (
+    (event.key === "Enter" || event.key === " ") &&
+    target.classList?.contains("vc-gridstack-dashboard__item--grabbed")
+  ) {
     const grid = target.closest<GridElement>(".grid-stack")?.gridstack;
     if (grid) setTimeout(() => grid.compact("compact"));
   }
@@ -75,6 +80,35 @@ function onKey(event: KeyboardEvent) {
 // vc-shell's reset saves the widgets' own positions but moves the widgets one by one in the order they registered, and a
 // widget that floats up into a row another one hasn't reached yet pushes that one down (plugins register theirs as
 // they load, e.g. Inventory before Orders). A new grid loads the saved positions all at once, as on a first visit.
+// The reset link lines up with the cards' right edge: the grid's margin, the widget's inset and the scrollbar when the
+// page scrolls add up differently with the width, so it is measured, not a fixed offset
+const root = ref<HTMLElement>();
+const resetRight = ref<string>();
+function alignReset() {
+  const grid = root.value?.querySelector<HTMLElement>(".grid-stack");
+  if (!root.value || !grid) return;
+  const item = grid.querySelector(".grid-stack-item");
+  const content = item?.querySelector(".grid-stack-item-content");
+  const inset = item && content ? item.getBoundingClientRect().right - content.getBoundingClientRect().right : 0;
+  resetRight.value = `${Math.round(root.value.getBoundingClientRect().right - grid.getBoundingClientRect().right + inset)}px`;
+}
+let resizeObserver: ResizeObserver | undefined;
+// the grid appears after the widgets load, and again after a reset
+function watchGrid(attempt = 0) {
+  const grid = root.value?.querySelector(".grid-stack");
+  if (grid) {
+    resizeObserver?.observe(grid);
+    alignReset();
+  } else if (attempt < 50) setTimeout(() => watchGrid(attempt + 1), 100);
+}
+onMounted(() => {
+  resizeObserver = new ResizeObserver(() => alignReset());
+  if (root.value) resizeObserver.observe(root.value);
+  watchGrid();
+});
+watch(generation, () => nextTick(() => watchGrid()));
+onBeforeUnmount(() => resizeObserver?.disconnect());
+
 async function resetLayout() {
   if (await showConfirmation(t("SHELL.DASHBOARD.RESET_LAYOUT_CONFIRM"))) {
     dashboard.value?.rearrangeWidgets();

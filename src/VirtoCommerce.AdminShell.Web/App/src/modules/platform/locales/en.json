@@ -504,6 +504,32 @@
       "DRAG_HINT": "Drag sections and items to reorder them, or drop an item into another group or section. On a touch screen, press and hold first.",
       "DROP_HERE": "Drop items here",
       "DROP_NO_GROUP": "Drop here for no group"
+    },
+    "SIGN_IN_METHODS": {
+      "TITLE": "Sign-in methods",
+      "SUBTITLE": "How you sign in to your account",
+      "READ_ONLY": "Sign-in methods can't be changed in this session (for example, while you act as another user).",
+      "PASSWORD": "Password",
+      "SET_PASSWORD": "Set a password",
+      "SET_PASSWORD_HINT": "Your account has no password. Set one to also sign in with your user name and password.",
+      "PASSWORD_SET_OK": "Password set",
+      "ADD": "Add",
+      "ADDED": "Added to {name}",
+      "CHANGED": "Changed {date}",
+      "CREATED": "Created {date}",
+      "RENAME": "Rename",
+      "KEY_NAME": "Name",
+      "CANCEL": "Cancel",
+      "DELETE": "Delete",
+      "DELETE_CONFIRM": "Delete “{name}” from {method}? You won't be able to sign in with it any more.",
+      "DELETE_PASSWORD_CONFIRM": "Delete your password? You'll sign in only with your other sign-in methods.",
+      "LAST_KEY": "This is your only way to sign in, so it can't be deleted",
+      "PASSWORD_SET": "Password is set",
+      "NO_PASSWORD": "Password is not set",
+      "LINKED_ACCOUNT": "Linked account",
+      "NO_LINKED_ACCOUNT": "No linked account",
+      "NO_KEYS": "No keys",
+      "UNNAMED": "Unnamed key"
     }
   }
 }
