@@ -8,6 +8,7 @@
       "NOTIFICATIONS": "Notifications",
       "ACCOUNT": "Account",
       "CLASSIC_ADMIN": "Open classic admin",
+      "CLASSIC_ADMIN_MISSING": "The classic (AngularJS) admin is not installed, so this screen can't open. Install the VirtoCommerce.AdminAngularJs module.",
       "HIDE_MENU": "Hide menu",
       "KEEP_OPEN": "Keep menu open",
       "SHOW_MENU": "Show menu",

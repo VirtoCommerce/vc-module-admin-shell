@@ -6,6 +6,7 @@
 import type { BladeDescriptor } from "@vc-shell/framework";
 import { useBladeStack } from "@vc-shell/framework";
 import type { Router } from "vue-router";
+import { legacyAdminBaseUrl } from "../legacyAdmin";
 
 type BladeStack = ReturnType<typeof useBladeStack>;
 type BladeOpenEvent = Omit<Parameters<BladeStack["openBlade"]>[0], "parentId">;
@@ -144,6 +145,8 @@ export async function openLegacy(options: {
   const routeChanges = route.name !== "Legacy" || route.query.url !== options.url;
   // LegacyHost moves the admin to the url when the route changes (and reloads the state when it is there already)
   await goTo({ name: "Legacy", query: { url: options.url } });
+  // no AngularJS admin installed: LegacyHost says so, and there is no admin to wait for
+  if ((await legacyAdminBaseUrl()) === null) return;
   const injector = await waitFor(legacyInjector, 30000, "The AngularJS admin");
   // the route named this url already, so nothing moved the admin: it may have gone elsewhere by itself (a link in a blade)
   const frameWindow = document.querySelector<HTMLIFrameElement>("iframe.legacy-host")?.contentWindow;

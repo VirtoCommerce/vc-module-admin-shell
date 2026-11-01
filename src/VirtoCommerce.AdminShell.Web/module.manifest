@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
   <id>VirtoCommerce.AdminShell</id>
-  <version>3.1003.0</version>
+  <version>3.1092.0</version>
   <version-tag></version-tag>
 
-  <platformVersion>3.1091.0</platformVersion>
+  <platformVersion>3.1092.0</platformVersion>
   <dependencies />
 
   <title>Admin Shell</title>
-  <description>Vue (vc-shell) admin host: server-driven menu, Vue modules loaded at runtime, AngularJS screens in embedded mode</description>
+  <description>Vue (vc-shell) back office (Commerce Manager) for the Virto Commerce Platform. Without an admin UI module the platform runs API only.</description>
 
   <authors>
     <author>Alexander Siniouguine</author>
@@ -17,12 +17,19 @@
     <owner>Virto Commerce</owner>
   </owners>
 
+  <groups>
+    <group>commerce</group>
+  </groups>
+
   <apps>
     <app id="admin-shell">
       <title>Admin Shell</title>
       <description>Virto Commerce admin</description>
       <iconUrl>Modules/$(VirtoCommerce.AdminShell)/Content/logo.svg</iconUrl>
       <placement>AppMenu</placement>
+      <!-- An admin UI that can own the site root (VirtoCommerce:PlatformUI:RootApp, platform 3.1093.0+; older platforms
+           ignore it). With the AngularJS admin (priority 100) installed too, that one owns the root unless RootApp says otherwise. -->
+      <adminUI priority="50" />
     </app>
   </apps>
 
