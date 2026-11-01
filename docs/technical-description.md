@@ -124,7 +124,7 @@ Plugins load in parallel with the first render. Each is installed as soon as its
 
 ### 3.5 The embedded AngularJS admin (`shell/LegacyHost.vue`)
 
-One iframe for the whole session, created the first time an AngularJS screen opens: `/?EmbeddedMode=true#!{url}`, same origin. It is laid over the workspace and hidden (not unloaded) when a Vue screen is shown, so the classic admin starts once and keeps its state. Opening another screen changes the frame's hash; opening the current one again reloads its state, which reopens it from its root blade. The shell can drive it through the AngularJS injector (see [AngularJS screens](legacy-screens.md)).
+One iframe for the whole session, created the first time an AngularJS screen opens: `{admin}?EmbeddedMode=true#!{url}`, same origin, where `{admin}` is `/` or `/apps/platform/` — wherever the AngularJS admin opens (`adminUIs` in `GET /api/platform/common/ui/context`). It is laid over the workspace and hidden (not unloaded) when a Vue screen is shown, so the classic admin starts once and keeps its state. Opening another screen changes the frame's hash; opening the current one again reloads its state, which reopens it from its root blade. The shell can drive it through the AngularJS injector (see [AngularJS screens](legacy-screens.md)).
 
 ### 3.6 Embedded apps (`pages/FramePage.vue`)
 

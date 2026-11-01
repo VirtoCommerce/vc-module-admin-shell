@@ -115,8 +115,9 @@
       </a>
       <!-- the way out to the AngularJS admin while modules move over -->
       <a
+        v-if="classicAdminUrl"
         class="as-um__row as-um__row--action"
-        href="/"
+        :href="classicAdminUrl"
         target="_blank"
         rel="noopener"
         @click="emit('close')"
@@ -171,6 +172,7 @@ import { formatLicenseDate, isLicenseExpired } from "./license";
 import MenuSelect, { type MenuSelectOption } from "./MenuSelect.vue";
 import { useLanguageOptions } from "./languages";
 import { branding, safeUrl } from "./branding";
+import { legacyAdminBaseUrl } from "./legacyAdmin";
 import { colorTheme, colorThemeOptions, themeChoice, themeMode, type ThemeMode } from "./themeMode";
 
 defineProps<{ avatar?: string }>();
@@ -185,7 +187,10 @@ const { getApiClient: securityClient } = useApiClient(SecurityClient);
 
 // the platform's build and license (read once per page)
 const info = ref<SystemInfo>();
+// the AngularJS admin, at the site root or /apps/platform/; none when it isn't installed
+const classicAdminUrl = ref<string | null>(null);
 onMounted(async () => {
+  legacyAdminBaseUrl().then((url) => (classicAdminUrl.value = url));
   info.value = await systemInfo().catch(() => undefined);
 });
 

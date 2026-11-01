@@ -1,12 +1,14 @@
 // The path the user opened, e.g. #/orders. Routes of plugin modules don't exist until the plugins load,
 // so the router first falls back to the root; App re-applies this path once the modules are ready.
-const requestedPath = window.location.hash.replace(/^#/, "") || "/";
+// "#!/..." is an AngularJS-style link (the platform's password-reset email); the router reads it as "/!/..."
+const requestedPath = window.location.hash.replace(/^#!?/, "") || "/";
 
 // the sign-in pages: after signing in, the sign-in flow decides where to go, not the page the tab was opened on
 const AUTH_PATHS = ["/login", "/invite", "/resetpassword", "/forgot-password", "/changepassword"];
 
 let pending: string | undefined =
-  requestedPath === "/" || AUTH_PATHS.some((p) => requestedPath === p || requestedPath.startsWith(`${p}?`))
+  requestedPath === "/" ||
+  AUTH_PATHS.some((p) => requestedPath === p || requestedPath.startsWith(`${p}?`) || requestedPath.startsWith(`${p}/`))
     ? undefined
     : requestedPath;
 
