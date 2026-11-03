@@ -3406,9 +3406,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vc-shell/api-client-generator@npm:2.7.0":
-  version: 2.7.0
-  resolution: "@vc-shell/api-client-generator@npm:2.7.0"
+"@vc-shell/api-client-generator@npm:2.10.4":
+  version: 2.10.4
+  resolution: "@vc-shell/api-client-generator@npm:2.10.4"
   dependencies:
     chalk: "npm:^2.4.2"
     cross-spawn: "npm:^7.0.3"
@@ -3418,13 +3418,13 @@ __metadata:
     vite-plugin-dts: "npm:^3.6.4"
   bin:
     api-client-generator: dist/api-client-generator.js
-  checksum: 10/b49bdab384dbd1209c9856a22f58e168ca788a01c60e2850d642b5c297ccf372429653d11292752c30448e83b8fdb9fb835153f93005fec33de8cca4e4b84e23
+  checksum: 10/52b843de368dcaec633fac19099fe9f28832aaa8433eb0528d83c94e4bbcdba03d39da0f0e13ad7d12ebb46dfa9ba35529516b50577dde136501227ddc1bcdf7
   languageName: node
   linkType: hard
 
-"@vc-shell/config-generator@npm:2.7.0":
-  version: 2.7.0
-  resolution: "@vc-shell/config-generator@npm:2.7.0"
+"@vc-shell/config-generator@npm:2.10.4":
+  version: 2.10.4
+  resolution: "@vc-shell/config-generator@npm:2.10.4"
   dependencies:
     "@babel/parser": "npm:^7.27.0"
     "@vitejs/plugin-vue": "npm:^5.2.3"
@@ -3434,13 +3434,13 @@ __metadata:
     vite-plugin-circular-dependency: "npm:^0.5.0"
     vite-plugin-mkcert: "npm:^1.17.1"
     vue: "npm:^3.5.30"
-  checksum: 10/6b17413c972f74d455822914f0b97806653c112869024c03a4969ddd34592918c49b68e61855d34b47cfb237d09cc0f9fd7293fe4edc495989f66c305f90c9ba
+  checksum: 10/594a371bfe5eeb23ef8e75e008aa413a7b42cf8bc2213d80cede3da1456b2f5e494d30f0b711e2a1388758799543daab4c9dda1a2fd1d47026ac63f516106638
   languageName: node
   linkType: hard
 
-"@vc-shell/framework@npm:2.7.0":
-  version: 2.7.0
-  resolution: "@vc-shell/framework@npm:2.7.0"
+"@vc-shell/framework@npm:2.10.4":
+  version: 2.10.4
+  resolution: "@vc-shell/framework@npm:2.10.4"
   dependencies:
     "@floating-ui/dom": "npm:^1.7.4"
     "@floating-ui/vue": "npm:^1.0.6"
@@ -3507,13 +3507,13 @@ __metadata:
       optional: false
   bin:
     vc-check-locales: dist/scripts/check-locales.cjs
-  checksum: 10/87fda7723610eb20d693625f9e759ffa95740ba1321e9d94f34171d7d7410cbb29d5b62712563c312d085538c03057dc7515163c23385bc4bfcb9547aec19fdb
+  checksum: 10/e5045d669c89e7ae3fe7c34fc4d9b716d7a681c0730f16f7f2c40aa8783ca5559615a28f3c7c3ec17de4e07527ef29a3bc81301bcea3cb60e8214a02161e3987
   languageName: node
   linkType: hard
 
-"@vc-shell/framework@patch:@vc-shell/framework@npm%3A2.7.0#~/.yarn/patches/@vc-shell-framework-npm-2.7.0-31c7107b59.patch":
-  version: 2.7.0
-  resolution: "@vc-shell/framework@patch:@vc-shell/framework@npm%3A2.7.0#~/.yarn/patches/@vc-shell-framework-npm-2.7.0-31c7107b59.patch::version=2.7.0&hash=29a200"
+"@vc-shell/framework@patch:@vc-shell/framework@npm%3A2.10.4#~/.yarn/patches/@vc-shell-framework-npm-2.10.4-20e6bdf6c0.patch":
+  version: 2.10.4
+  resolution: "@vc-shell/framework@patch:@vc-shell/framework@npm%3A2.10.4#~/.yarn/patches/@vc-shell-framework-npm-2.10.4-20e6bdf6c0.patch::version=2.10.4&hash=755c21"
   dependencies:
     "@floating-ui/dom": "npm:^1.7.4"
     "@floating-ui/vue": "npm:^1.0.6"
@@ -3580,39 +3580,39 @@ __metadata:
       optional: false
   bin:
     vc-check-locales: dist/scripts/check-locales.cjs
-  checksum: 10/100a9377aecbff6949013bafc80566303c9a0a21ba7586be48444d45caf921b10d8a961fef95c7e871c91d05ca5f0cf823470b0d53385bd8157fed7ddbcebd64
+  checksum: 10/f35c624fce55d6d2f4d5b83cbfe25485873a45a3c72f6f097464235c45433ecf4b2159d78af34e94247bee26caf7b876408aeb17a8db2b04a68b883d9908e47c
   languageName: node
   linkType: hard
 
-"@vc-shell/mf-config@npm:2.7.0":
-  version: 2.7.0
-  resolution: "@vc-shell/mf-config@npm:2.7.0"
-  checksum: 10/302d8bc90ebb834ce4b6ef1e7f96e8b2ccef6d532f7e45d0d7b5d69c2eda02b83be0c9eff2d02a0dd169f6e0563a3df50f844844ff57684cd1a4a2d984be6893
+"@vc-shell/mf-config@npm:2.10.4":
+  version: 2.10.4
+  resolution: "@vc-shell/mf-config@npm:2.10.4"
+  checksum: 10/f867ff6e237537d7d9203a8415d9c7453dab3de46a5e859b10a6b145308237770ebbab904c8ab456187a2c3e65ed9a4246e1f04fd85288cb7c6fcb2dfb7f3e66
   languageName: node
   linkType: hard
 
-"@vc-shell/mf-host@npm:2.7.0":
-  version: 2.7.0
-  resolution: "@vc-shell/mf-host@npm:2.7.0"
+"@vc-shell/mf-host@npm:2.10.4":
+  version: 2.10.4
+  resolution: "@vc-shell/mf-host@npm:2.10.4"
   dependencies:
     "@module-federation/runtime": "npm:^2.1.0"
-    "@vc-shell/mf-config": "npm:2.7.0"
+    "@vc-shell/mf-config": "npm:2.10.4"
   peerDependencies:
-    "@vc-shell/framework": ^2.7.0
+    "@vc-shell/framework": ^2.10.4
     "@vueuse/core": ^10.0.0
     lodash-es: ^4.0.0
     vee-validate: ^4.12.0
     vue: ^3.4.0
     vue-i18n: ^9.0.0 || ^11.0.0
     vue-router: ^4.0.0 || ^5.0.0
-  checksum: 10/36594dade852c4e66c3991755f0fb45b5f62cd5372f6266407ed78796ae3048548ec523adc2a42b6c6f10d9017ea28ab771e854daecf86136833bee5c72d35a6
+  checksum: 10/9bf969288ec4aa4430ea16a8f352f46684970295ae52590bb518763f5eeb9721107f354513a3a0f7b69d7f7406c1a5ceeaa2f4cf708d77992738a5ee3b8c9d1d
   languageName: node
   linkType: hard
 
-"@vc-shell/ts-config@npm:2.7.0":
-  version: 2.7.0
-  resolution: "@vc-shell/ts-config@npm:2.7.0"
-  checksum: 10/9de5124168dd773ee38e0c5298965c67af64a78a5e05d587448b71b662666459f1f0b3046a602dc52af855aef27bcd2708e399bb3b19f9a186ed7f6936dca2fb
+"@vc-shell/ts-config@npm:2.10.4":
+  version: 2.10.4
+  resolution: "@vc-shell/ts-config@npm:2.10.4"
+  checksum: 10/30e842c3cac56dbc3a3c7a0d078979fc064569df059460d7fb2092539262f74644c27d37be629ee05b358ac73dbb6c4d1397d3f9f8238da59d441ce4a09ea4cf
   languageName: node
   linkType: hard
 
@@ -4223,11 +4223,11 @@ __metadata:
     "@types/sortablejs": "npm:^1"
     "@typescript-eslint/eslint-plugin": "npm:^8.43.0"
     "@typescript-eslint/parser": "npm:^8.43.0"
-    "@vc-shell/api-client-generator": "npm:2.7.0"
-    "@vc-shell/config-generator": "npm:2.7.0"
-    "@vc-shell/framework": "patch:@vc-shell/framework@npm%3A2.7.0#~/.yarn/patches/@vc-shell-framework-npm-2.7.0-31c7107b59.patch"
-    "@vc-shell/mf-host": "npm:2.7.0"
-    "@vc-shell/ts-config": "npm:2.7.0"
+    "@vc-shell/api-client-generator": "npm:2.10.4"
+    "@vc-shell/config-generator": "npm:2.10.4"
+    "@vc-shell/framework": "patch:@vc-shell/framework@npm%3A2.10.4#~/.yarn/patches/@vc-shell-framework-npm-2.10.4-20e6bdf6c0.patch"
+    "@vc-shell/mf-host": "npm:2.10.4"
+    "@vc-shell/ts-config": "npm:2.10.4"
     "@vitejs/plugin-vue": "npm:^5.2.3"
     "@vue/eslint-config-prettier": "npm:^10.2.0"
     "@vue/eslint-config-typescript": "npm:^14.6.0"
