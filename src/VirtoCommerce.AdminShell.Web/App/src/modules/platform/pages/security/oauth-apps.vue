@@ -86,7 +86,7 @@ const loading = useLoading(searchLoading, deleteLoading);
 load();
 watch(() => pagination.skip, () => load());
 
-// there is no GET by client id: the details blade gets the row (or a new descriptor) as options
+// the details blade reads the row's application again; without a row it starts a new one
 function openApp(app?: AppRow) {
   activeId.value = app?.id;
   openBlade({
