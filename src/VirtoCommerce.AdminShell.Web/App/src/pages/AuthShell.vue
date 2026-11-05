@@ -357,9 +357,10 @@ function toggleTheme() {
     background: var(--color-neutral-50);
   }
 
+  // the same ring as the other keyboard-only controls here: the 15% halo alone was ~1.3:1, under WCAG 1.4.11's 3:1
   &:focus-visible {
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-primary-500) 15%, transparent);
-    outline: none;
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
   }
 
   svg,
