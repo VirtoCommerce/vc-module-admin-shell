@@ -358,8 +358,8 @@ function toggleTheme() {
   }
 
   &:focus-visible {
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-primary-500) 15%, transparent);
-    outline: none;
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
   }
 
   svg,
@@ -521,8 +521,8 @@ function toggleTheme() {
   }
 
   &:focus-visible {
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-primary-500) 25%, transparent);
-    outline: none;
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
   }
 }
 
