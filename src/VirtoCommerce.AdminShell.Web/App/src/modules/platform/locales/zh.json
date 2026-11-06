@@ -223,6 +223,7 @@
         "UNREGISTERED_WARNING": "在 {resources} 列入平台设置的 Authorization:Resources 之前，不会为其颁发令牌。",
         "REDIRECT_REQUIRED": "授权码授权需要重定向 URI。",
         "URI_FRAGMENT": "{uri} 不能包含片段 (#)",
+        "URI_SCRIPT": "{uri} 不能使用脚本协议（javascript、vbscript、data）",
         "URI_HTTP": "{uri} 必须使用 HTTPS：仅 localhost 和 127.0.0.1 等环回地址允许使用 HTTP",
         "URI_HTTP_LEGACY": "{uri} 对非环回地址使用 HTTP。该 URI 会被保留，但无法添加新的同类 URI。",
         "OTHER_PERMISSIONS": "其他权限",

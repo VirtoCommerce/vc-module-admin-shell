@@ -223,6 +223,7 @@
         "UNREGISTERED_WARNING": "Tokenia ei myönnetä kohteelle {resources}, ennen kuin se on lueteltu alustan asetusten kohdassa Authorization:Resources.",
         "REDIRECT_REQUIRED": "Valtuutuskoodin myöntö tarvitsee uudelleenohjaus-URI:n.",
         "URI_FRAGMENT": "{uri} ei saa sisältää fragmenttia (#)",
+        "URI_SCRIPT": "{uri} ei voi käyttää komentosarjaskeemaa (javascript, vbscript, data)",
         "URI_HTTP": "{uri}: käytä HTTPS:ää. HTTP on sallittu vain loopback-osoitteille, kuten localhost ja 127.0.0.1",
         "URI_HTTP_LEGACY": "{uri} käyttää HTTP:tä osoitteelle, joka ei ole loopback-osoite. Se säilytetään, mutta uutta samanlaista ei voi lisätä.",
         "OTHER_PERMISSIONS": "Muut luvat",

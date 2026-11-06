@@ -223,6 +223,7 @@
         "UNREGISTERED_WARNING": "Токен для {resources} не выдаётся, пока ресурс не указан в Authorization:Resources в настройках платформы.",
         "REDIRECT_REQUIRED": "Для гранта кода авторизации нужен URI перенаправления.",
         "URI_FRAGMENT": "{uri} не может содержать фрагмент (#)",
+        "URI_SCRIPT": "{uri} не может использовать схему скрипта (javascript, vbscript, data)",
         "URI_HTTP": "{uri} должен использовать HTTPS: HTTP разрешён только для loopback-адресов, таких как localhost и 127.0.0.1",
         "URI_HTTP_LEGACY": "{uri} использует HTTP для адреса, который не является loopback-адресом. Он сохранён, но добавить новый такой URI нельзя.",
         "OTHER_PERMISSIONS": "Другие разрешения",

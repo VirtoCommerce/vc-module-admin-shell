@@ -223,6 +223,7 @@
         "UNREGISTERED_WARNING": "No se emite ningún token para {resources} hasta que figure en Authorization:Resources de los ajustes de la plataforma.",
         "REDIRECT_REQUIRED": "La concesión de código de autorización necesita un URI de redirección.",
         "URI_FRAGMENT": "{uri} no puede tener un fragmento (#)",
+        "URI_SCRIPT": "{uri} no puede usar un esquema de script (javascript, vbscript, data)",
         "URI_HTTP": "{uri} debe usar HTTPS: HTTP solo se permite para direcciones de bucle invertido como localhost y 127.0.0.1",
         "URI_HTTP_LEGACY": "{uri} usa HTTP para una dirección que no es de bucle invertido. Se conserva, pero no se puede añadir otro igual.",
         "OTHER_PERMISSIONS": "Otros permisos",

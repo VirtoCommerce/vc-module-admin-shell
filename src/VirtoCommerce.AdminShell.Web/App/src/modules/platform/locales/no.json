@@ -223,6 +223,7 @@
         "UNREGISTERED_WARNING": "Det utstedes ikke noe token for {resources} før den er oppført i Authorization:Resources i plattforminnstillingene.",
         "REDIRECT_REQUIRED": "Tildelingstypen autorisasjonskode krever en omdirigerings-URI.",
         "URI_FRAGMENT": "{uri} kan ikke ha et fragment (#)",
+        "URI_SCRIPT": "{uri} kan ikke bruke et skriptskjema (javascript, vbscript, data)",
         "URI_HTTP": "{uri} må bruke HTTPS: HTTP er bare tillatt for loopback-adresser som localhost og 127.0.0.1",
         "URI_HTTP_LEGACY": "{uri} bruker HTTP for en adresse som ikke er en loopback-adresse. Den beholdes, men en ny av samme type kan ikke legges til.",
         "OTHER_PERMISSIONS": "Andre tillatelser",

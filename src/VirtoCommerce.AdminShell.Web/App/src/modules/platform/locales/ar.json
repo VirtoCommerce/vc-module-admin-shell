@@ -223,6 +223,7 @@
         "UNREGISTERED_WARNING": "لا يُصدر أي رمز مميز لـ {resources} حتى يُدرج في Authorization:Resources في إعدادات المنصة.",
         "REDIRECT_REQUIRED": "يحتاج منح رمز التفويض إلى عنوان URI لإعادة التوجيه.",
         "URI_FRAGMENT": "لا يمكن أن يحتوي {uri} على جزء (#)",
+        "URI_SCRIPT": "لا يمكن أن يستخدم {uri} مخطط برنامج نصي (javascript وvbscript وdata)",
         "URI_HTTP": "يجب أن يستخدم {uri} بروتوكول HTTPS: يُسمح بـ HTTP فقط لعناوين الاسترجاع مثل localhost و 127.0.0.1",
         "URI_HTTP_LEGACY": "يستخدم {uri} بروتوكول HTTP لعنوان ليس عنوان استرجاع. يُحتفظ به، لكن لا يمكن إضافة عنوان جديد مثله.",
         "OTHER_PERMISSIONS": "صلاحيات أخرى",

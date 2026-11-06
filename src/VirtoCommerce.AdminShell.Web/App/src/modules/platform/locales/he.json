@@ -223,6 +223,7 @@
         "UNREGISTERED_WARNING": "לא יונפק אסימון עבור {resources} עד שיופיע ב-Authorization:Resources בהגדרות הפלטפורמה.",
         "REDIRECT_REQUIRED": "הענקת קוד הרשאה דורשת URI להפניה.",
         "URI_FRAGMENT": "{uri} אינו יכול להכיל מקטע (#)",
+        "URI_SCRIPT": "{uri} לא יכול להשתמש בסכמת סקריפט (javascript, vbscript, data)",
         "URI_HTTP": "{uri} חייב להשתמש ב-HTTPS: HTTP מותר רק לכתובות loopback כגון localhost ו-127.0.0.1",
         "URI_HTTP_LEGACY": "{uri} משתמש ב-HTTP לכתובת שאינה כתובת loopback. הוא נשמר, אך לא ניתן להוסיף חדש כמותו.",
         "OTHER_PERMISSIONS": "הרשאות אחרות",

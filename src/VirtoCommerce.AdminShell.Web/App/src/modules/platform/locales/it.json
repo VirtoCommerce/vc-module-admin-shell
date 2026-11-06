@@ -223,6 +223,7 @@
         "UNREGISTERED_WARNING": "Nessun token viene emesso per {resources} finché non è elencato in Authorization:Resources delle impostazioni della piattaforma.",
         "REDIRECT_REQUIRED": "La concessione con codice di autorizzazione richiede un URI di reindirizzamento.",
         "URI_FRAGMENT": "{uri} non può contenere un frammento (#)",
+        "URI_SCRIPT": "{uri} non può usare uno schema di script (javascript, vbscript, data)",
         "URI_HTTP": "{uri} deve usare HTTPS: HTTP è consentito solo per indirizzi di loopback come localhost e 127.0.0.1",
         "URI_HTTP_LEGACY": "{uri} usa HTTP per un indirizzo che non è di loopback. Viene mantenuto, ma non è possibile aggiungerne uno nuovo simile.",
         "OTHER_PERMISSIONS": "Altri permessi",

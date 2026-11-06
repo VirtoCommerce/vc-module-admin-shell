@@ -223,6 +223,7 @@
         "UNREGISTERED_WARNING": "Für {resources} wird kein Token ausgestellt, bis es in Authorization:Resources der Plattformeinstellungen aufgeführt ist.",
         "REDIRECT_REQUIRED": "Der Grant „Autorisierungscode“ benötigt einen Weiterleitungs-URI.",
         "URI_FRAGMENT": "{uri} darf kein Fragment (#) enthalten",
+        "URI_SCRIPT": "{uri} darf kein Skript-Schema verwenden (javascript, vbscript, data)",
         "URI_HTTP": "{uri} muss HTTPS verwenden: HTTP ist nur für Loopback-Adressen wie localhost und 127.0.0.1 erlaubt",
         "URI_HTTP_LEGACY": "{uri} verwendet HTTP für eine Adresse, die keine Loopback-Adresse ist. Der URI bleibt erhalten, aber ein neuer dieser Art kann nicht hinzugefügt werden.",
         "OTHER_PERMISSIONS": "Weitere Berechtigungen",

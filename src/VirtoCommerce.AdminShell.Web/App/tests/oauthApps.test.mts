@@ -42,6 +42,8 @@ test("redirect URIs: absolute, without a fragment, HTTPS unless loopback", () =>
   assert.equal(uriProblem("https://agent.example.com/callback#done"), "fragment");
   assert.equal(uriProblem("/callback"), "invalid");
   assert.equal(uriProblem("file:///c:/callback"), "invalid");
+  assert.equal(uriProblem("javascript:alert(1)"), "script");
+  assert.equal(uriProblem("DATA:text/html,x"), "script");
 });
 
 test("grant types and scopes are toggled without touching the other permissions", () => {

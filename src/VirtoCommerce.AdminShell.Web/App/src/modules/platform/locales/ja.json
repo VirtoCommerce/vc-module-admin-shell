@@ -223,6 +223,7 @@
         "UNREGISTERED_WARNING": "{resources} がプラットフォーム設定の Authorization:Resources に登録されるまで、トークンは発行されません。",
         "REDIRECT_REQUIRED": "認可コードグラントにはリダイレクトURIが必要です。",
         "URI_FRAGMENT": "{uri} にはフラグメント (#) を含めることができません",
+        "URI_SCRIPT": "{uri} にはスクリプトのスキーム (javascript、vbscript、data) は使用できません",
         "URI_HTTP": "{uri} は HTTPS を使用する必要があります。HTTP は localhost や 127.0.0.1 などのループバックアドレスでのみ許可されます",
         "URI_HTTP_LEGACY": "{uri} はループバックアドレスではないアドレスに HTTP を使用しています。そのまま保持されますが、同様の URI を新たに追加することはできません。",
         "OTHER_PERMISSIONS": "その他の権限",

@@ -74,9 +74,9 @@ export function setPkce(app: OAuthApp, on: boolean) {
 const isLoopback = (host: string) =>
   host === "localhost" || host === "[::1]" || /^127(\.\d{1,3}){3}$/.test(host) || host.endsWith(".localhost");
 
-export type UriProblem = "invalid" | "fragment" | "http";
+export type UriProblem = "invalid" | "script" | "fragment" | "http";
 
-/** Why a redirect URI can't be used: absolute, no fragment, HTTPS unless it is a loopback address (RFC 8252) */
+/** Why a redirect URI can't be used: absolute, not a script, no fragment, HTTPS unless loopback (RFC 8252) */
 export function uriProblem(uri: string): UriProblem | undefined {
   let url: URL;
   try {
@@ -85,6 +85,7 @@ export function uriProblem(uri: string): UriProblem | undefined {
     return "invalid";
   }
   if (url.protocol === "file:") return "invalid";
+  if (/^(javascript|vbscript|data):$/i.test(url.protocol)) return "script";
   if (url.hash || uri.includes("#")) return "fragment";
   if (url.protocol === "http:" && !isLoopback(url.hostname)) return "http";
   return undefined;

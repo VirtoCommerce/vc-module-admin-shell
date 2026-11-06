@@ -223,6 +223,7 @@
         "UNREGISTERED_WARNING": "Aucun jeton n'est émis pour {resources} tant qu'il ne figure pas dans Authorization:Resources des paramètres de la plateforme.",
         "REDIRECT_REQUIRED": "L'octroi par code d'autorisation nécessite un URI de redirection.",
         "URI_FRAGMENT": "{uri} ne peut pas contenir de fragment (#)",
+        "URI_SCRIPT": "{uri} ne peut pas utiliser un schéma de script (javascript, vbscript, data)",
         "URI_HTTP": "{uri} doit utiliser HTTPS : HTTP n'est autorisé que pour les adresses de bouclage comme localhost et 127.0.0.1",
         "URI_HTTP_LEGACY": "{uri} utilise HTTP pour une adresse qui n'est pas une adresse de bouclage. Il est conservé, mais un nouvel URI de ce type ne peut pas être ajouté.",
         "OTHER_PERMISSIONS": "Autres permissions",
