@@ -65,19 +65,25 @@
         </div>
       </div>
       <VcDataTable
-        v-model:search-value="criteria.keyword"
         :items="records"
         :total-count="totalCount"
         :pagination="pagination"
-        :searchable="true"
         :state-key="'PLATFORM_SIGNIN_LOG'"
         :active-item-id="activeId"
-        :global-filters="globalFilters"
         :empty-state="{ icon: 'lucide-log-in', title: $t('PLATFORM.SECURITY.SIGNIN.EMPTY') }"
         @row-click="(e: { data: UserSignInLog }) => openRecord(e.data)"
         @pagination-click="pagination.goToPage"
-        @filter="onFilter"
       >
+        <!-- the screen's own bar: the drill-downs above write into it, so what filters the list is always a pill -->
+        <template #header>
+          <VcSearchBar
+            v-model="query"
+            :fields="fields"
+            :presets="presets"
+            :placeholder="$t('PLATFORM.SECURITY.SIGNIN.SEARCH')"
+            storage-key="PLATFORM_SIGNIN_LOG"
+          />
+        </template>
         <VcColumn
           id="createdDate"
           :title="$t('PLATFORM.SECURITY.SIGNIN.DATE')"
@@ -95,7 +101,11 @@
           <template #body="{ data }">
             <div class="tw-inline-flex">
               <VcStatus :variant="data.succeeded ? 'success' : 'danger'">
-                {{ data.succeeded ? $t("PLATFORM.SECURITY.SIGNIN.SUCCEEDED") : data.failureReason || $t("PLATFORM.SECURITY.SIGNIN.FAILED") }}
+                {{
+                  data.succeeded
+                    ? $t("PLATFORM.SECURITY.SIGNIN.SUCCEEDED")
+                    : data.failureReason || $t("PLATFORM.SECURITY.SIGNIN.FAILED")
+                }}
               </VcStatus>
             </div>
           </template>
@@ -114,13 +124,27 @@
 </template>
 
 <script setup lang="ts">
-import { useAsync, useBlade, useDataTablePagination, useFunctions, useLoading, type IBladeToolbar } from "@vc-shell/framework";
-import { VcBanner, VcBlade, VcColumn, VcDataTable, VcSelect, VcStatus } from "@vc-shell/framework/ui";
+import {
+  useAsync,
+  useBlade,
+  useDataTablePagination,
+  useLoading,
+  type IBladeToolbar,
+  type SearchBarField,
+  type SearchBarPreset,
+  type SearchBarState,
+} from "@vc-shell/framework";
+import { VcBanner, VcBlade, VcColumn, VcDataTable, VcSearchBar, VcSelect, VcStatus } from "@vc-shell/framework/ui";
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { refreshItem } from "../../composables/blade";
 import { PAGE_SIZE } from "../../composables/list";
-import { signInLogApi, type SignInLogCriteria, type SignInLogStats, type UserSignInLog } from "../../composables/security";
+import {
+  signInLogApi,
+  type SignInLogCriteria,
+  type SignInLogStats,
+  type UserSignInLog,
+} from "../../composables/security";
 import { criteriaDate } from "../../../../shell/dashboard/api";
 
 defineBlade({
@@ -132,7 +156,6 @@ defineBlade({
 const SIGN_IN_TYPES = ["Password", "External", "Impersonation", "ImpersonationRevert", "ClientCredentials", "Logout"];
 const { t } = useI18n({ useScope: "global" });
 const { options, openBlade } = useBlade<{ userId?: string; userName?: string }>();
-const { debounce } = useFunctions();
 
 // legacy dashboard periods (minutes); "all" sends no dates
 const periods = computed(() => [
@@ -145,7 +168,20 @@ const periods = computed(() => [
 ]);
 const period = ref("1440");
 
-const criteria = ref<SignInLogCriteria & { keyword: string }>({ keyword: "" });
+// the bar's search and filters; the list's criteria follow them (the bar debounces the typing)
+const query = ref<SearchBarState>({ search: "", values: {} });
+const criteria = computed<SignInLogCriteria>(() => {
+  const v = query.value.values;
+  const list = (x: unknown) => (Array.isArray(x) && x.length ? (x as string[]) : undefined);
+  return {
+    keyword: query.value.search.trim() || undefined,
+    succeeded: v.outcome ? v.outcome === "succeeded" : undefined,
+    signInTypes: list(v.signInTypes),
+    failureReasons: list(v.failureReasons),
+    ipAddress: (v.ipAddress as string) || undefined,
+    storeId: (v.storeId as string) || undefined,
+  };
+});
 const records = ref<UserSignInLog[]>([]);
 const totalCount = ref(0);
 const stats = ref<SignInLogStats>();
@@ -164,7 +200,6 @@ const { loading: listLoading, action: loadList } = useAsync(async () => {
   const result = await signInLogApi.search({
     ...base(),
     ...criteria.value,
-    keyword: criteria.value.keyword || undefined,
     sort: "createdDate:desc",
     skip: pagination.skip,
     take: PAGE_SIZE,
@@ -185,9 +220,21 @@ const tiles = computed(() => {
   const s = stats.value;
   if (!s) return [];
   return [
-    { label: t("PLATFORM.SECURITY.SIGNIN.TOTAL"), value: s.totalCount, delta: delta(s.totalCount, s.previousTotalCount) },
-    { label: t("PLATFORM.SECURITY.SIGNIN.FAILED"), value: s.failedCount, delta: delta(s.failedCount, s.previousFailedCount) },
-    { label: t("PLATFORM.SECURITY.SIGNIN.USERS"), value: s.distinctUserCount, delta: delta(s.distinctUserCount, s.previousDistinctUserCount) },
+    {
+      label: t("PLATFORM.SECURITY.SIGNIN.TOTAL"),
+      value: s.totalCount,
+      delta: delta(s.totalCount, s.previousTotalCount),
+    },
+    {
+      label: t("PLATFORM.SECURITY.SIGNIN.FAILED"),
+      value: s.failedCount,
+      delta: delta(s.failedCount, s.previousFailedCount),
+    },
+    {
+      label: t("PLATFORM.SECURITY.SIGNIN.USERS"),
+      value: s.distinctUserCount,
+      delta: delta(s.distinctUserCount, s.previousDistinctUserCount),
+    },
     {
       label: t("PLATFORM.SECURITY.SIGNIN.IMPERSONATIONS"),
       value: s.impersonationCount,
@@ -202,22 +249,40 @@ function toFirstPage() {
   else loadList();
 }
 
-// drill-downs: clicking a breakdown row filters the list (legacy dashboard -> list)
-function applyFilter(change: SignInLogCriteria) {
-  criteria.value = { keyword: criteria.value.keyword, ...change };
-  toFirstPage();
+// drill-downs: clicking a breakdown row filters the list (legacy dashboard -> list), as pills in the bar
+function applyFilter(values: SearchBarState["values"], search = query.value.search) {
+  query.value = { search, values };
 }
 const breakdowns = computed(() => {
   const s = stats.value;
   return [
-    { title: t("PLATFORM.SECURITY.SIGNIN.TOP_FAILED_IPS"), rows: s?.topFailedIpAddresses ?? [], apply: (k: string) => applyFilter({ ipAddress: k, succeeded: false }) },
-    { title: t("PLATFORM.SECURITY.SIGNIN.TOP_FAILED_USERS"), rows: s?.topFailedUserNames ?? [], apply: (k: string) => applyFilter({ keyword: k, succeeded: false }) },
-    { title: t("PLATFORM.SECURITY.SIGNIN.FAILURE_REASONS"), rows: s?.failureReasonBreakdown ?? [], apply: (k: string) => applyFilter({ failureReasons: [k], succeeded: false }) },
-    { title: t("PLATFORM.SECURITY.SIGNIN.BY_STORE"), rows: s?.signInsByStore ?? [], apply: (k: string) => applyFilter({ storeId: k }) },
+    {
+      title: t("PLATFORM.SECURITY.SIGNIN.TOP_FAILED_IPS"),
+      rows: s?.topFailedIpAddresses ?? [],
+      apply: (k: string) => applyFilter({ ipAddress: k, outcome: "failed" }),
+    },
+    {
+      title: t("PLATFORM.SECURITY.SIGNIN.TOP_FAILED_USERS"),
+      rows: s?.topFailedUserNames ?? [],
+      apply: (k: string) => applyFilter({ outcome: "failed" }, k),
+    },
+    {
+      title: t("PLATFORM.SECURITY.SIGNIN.FAILURE_REASONS"),
+      rows: s?.failureReasonBreakdown ?? [],
+      apply: (k: string) => applyFilter({ failureReasons: [k], outcome: "failed" }),
+    },
+    {
+      title: t("PLATFORM.SECURITY.SIGNIN.BY_STORE"),
+      rows: s?.signInsByStore ?? [],
+      apply: (k: string) => applyFilter({ storeId: k }),
+    },
   ];
 });
 
-const globalFilters = computed(() => [
+// the period's breakdowns, with how many sign-ins each has
+const keyOptions = (rows?: { key: string; count: number }[]) =>
+  (rows ?? []).map((r) => ({ value: r.key, label: r.key, count: r.count }));
+const fields = computed<SearchBarField[]>(() => [
   {
     id: "outcome",
     label: t("PLATFORM.SECURITY.SIGNIN.OUTCOME"),
@@ -228,24 +293,52 @@ const globalFilters = computed(() => [
       ],
     },
   },
-  { id: "signInTypes", label: t("PLATFORM.SECURITY.SIGNIN.TYPE"), filter: { multiple: true, options: SIGN_IN_TYPES.map((x) => ({ value: x, label: x })) } },
+  {
+    id: "signInTypes",
+    label: t("PLATFORM.SECURITY.SIGNIN.TYPE"),
+    filter: { multiple: true, options: SIGN_IN_TYPES.map((x) => ({ value: x, label: x })) },
+  },
+  // what the drill-downs set, offered behind + Filter too: the reasons and stores the period has
+  {
+    id: "failureReasons",
+    label: t("PLATFORM.SECURITY.SIGNIN.FAILURE_REASON"),
+    filter: { multiple: true, options: keyOptions(stats.value?.failureReasonBreakdown) },
+    pinned: false,
+  },
+  { id: "ipAddress", label: t("PLATFORM.SECURITY.SESSIONS.IP"), filter: true, pinned: false },
+  {
+    id: "storeId",
+    label: t("PLATFORM.SECURITY.SIGNIN.STORE"),
+    filter: { options: keyOptions(stats.value?.signInsByStore) },
+    pinned: false,
+  },
 ]);
 
-function onFilter(event: { filters: Record<string, unknown> }) {
-  const types = event.filters.signInTypes;
-  let signInTypes: string[] | undefined;
-  // a cleared multi-select comes as [], which means no filter
-  if (Array.isArray(types)) signInTypes = types.length ? types : undefined;
-  else if (types) signInTypes = [types as string];
-  applyFilter({
-    succeeded: event.filters.outcome ? event.filters.outcome === "succeeded" : undefined,
-    signInTypes,
-  });
-}
+// the presets the log offers everyone: what an administrator looks for after an incident
+const presets = computed<SearchBarPreset[]>(() => [
+  {
+    id: "failed",
+    name: t("PLATFORM.SECURITY.SIGNIN.PRESETS.FAILED"),
+    values: { outcome: "failed" },
+    pinned: true,
+    version: 1,
+  },
+  {
+    id: "impersonations",
+    name: t("PLATFORM.SECURITY.SIGNIN.IMPERSONATIONS"),
+    values: { signInTypes: ["Impersonation", "ImpersonationRevert"] },
+    pinned: true,
+    version: 1,
+  },
+]);
 
 function openRecord(record: UserSignInLog) {
   activeId.value = record.id;
-  openBlade({ name: "PlatformSecuritySignInLogDetails", options: { record }, onClose: () => (activeId.value = undefined) });
+  openBlade({
+    name: "PlatformSecuritySignInLogDetails",
+    options: { record },
+    onClose: () => (activeId.value = undefined),
+  });
 }
 
 reload();
@@ -253,8 +346,11 @@ watch(period, () => {
   loadStats();
   toFirstPage();
 });
-watch(() => criteria.value.keyword, debounce(toFirstPage, 300));
-watch(() => pagination.skip, () => loadList());
+watch(criteria, toFirstPage, { deep: true });
+watch(
+  () => pagination.skip,
+  () => loadList(),
+);
 
 const toolbar = ref<IBladeToolbar[]>([
   refreshItem(() => reload()),

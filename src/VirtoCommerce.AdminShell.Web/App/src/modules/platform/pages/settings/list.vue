@@ -14,114 +14,14 @@
       class="ps"
       :class="{ 'ps--narrow': narrow, 'ps--detail': narrow && detail }"
     >
+      <!-- search and filters in vc-shell's search bar, as on the lists: Modified, Tenant settings and Module are pills -->
       <div class="ps__bar">
-        <label class="ps__search">
-          <VcIcon
-            class="ps__search-icon"
-            icon="lucide-search"
-            size="s"
-          />
-          <input
-            v-model="keyword"
-            type="search"
-            class="ps__search-input"
-            :placeholder="$t('PLATFORM.SETTINGS.LIST.SEARCH')"
-            :aria-label="$t('PLATFORM.SETTINGS.LIST.SEARCH')"
-          />
-          <button
-            v-if="keyword"
-            type="button"
-            class="ps__icon-btn"
-            :title="$t('PLATFORM.SETTINGS.LIST.CLEAR')"
-            :aria-label="$t('PLATFORM.SETTINGS.LIST.CLEAR')"
-            @click="keyword = ''"
-          >
-            <VcIcon
-              icon="lucide-x"
-              size="s"
-            />
-          </button>
-        </label>
-        <div class="ps__filters">
-          <button
-            type="button"
-            class="ps-chip"
-            :aria-pressed="modifiedOnly"
-            @click="modifiedOnly = !modifiedOnly"
-          >
-            <span class="ps-dot ps-dot--modified" />
-            {{ $t("PLATFORM.SETTINGS.LIST.MODIFIED_ONLY") }}
-            <span class="ps-chip__count">{{ modifiedCount }}</span>
-          </button>
-          <button
-            v-if="!objectScope"
-            type="button"
-            class="ps-chip"
-            :aria-pressed="includeTenant"
-            @click="includeTenant = !includeTenant"
-          >
-            <VcIcon
-              icon="lucide-store"
-              size="xs"
-            />
-            {{ $t("PLATFORM.SETTINGS.LIST.TENANT") }}
-          </button>
-        </div>
-        <!-- the module filter in a panel behind the Filters button, as on vc-shell's tables -->
-        <span ref="filterAnchor">
-          <VcButton
-            class="as-filter-button"
-            variant="secondary"
-            size="sm"
-            icon="lucide-funnel"
-            :title="$t('COMPONENTS.ORGANISMS.VC_TABLE.GLOBAL_FILTERS.BUTTON')"
-            :aria-label="$t('COMPONENTS.ORGANISMS.VC_TABLE.GLOBAL_FILTERS.BUTTON')"
-            :aria-expanded="filtersOpen"
-            @click="openFilters"
-          >
-            <span
-              v-if="moduleId"
-              class="vc-global-filters-button__badge"
-              >1</span
-            >
-          </VcButton>
-        </span>
-        <VcPopover
-          v-model:show="filtersOpen"
-          :anchor-ref="filterAnchor"
-          :title="$t('COMPONENTS.ORGANISMS.VC_TABLE.GLOBAL_FILTERS.TITLE')"
-          placement="bottom-end"
-        >
-          <div class="vc-global-filters-panel__content">
-            <div class="vc-global-filters-panel__filter">
-              <label class="vc-global-filters-panel__label">{{ $t("PLATFORM.MODULES.MODULE") }}</label>
-              <VcSelect
-                v-model="draftModuleId"
-                v-combobox-name="$t('PLATFORM.MODULES.MODULE')"
-                size="small"
-                :options="modules"
-                :placeholder="$t('PLATFORM.SETTINGS.LIST.ALL_MODULES')"
-                clearable
-                searchable
-              />
-            </div>
-          </div>
-          <template #footer>
-            <VcButton
-              variant="outline"
-              size="sm"
-              @click="clearModuleFilter"
-            >
-              {{ $t("COMPONENTS.ORGANISMS.VC_TABLE.COLUMN_FILTER.CLEAR") }}
-            </VcButton>
-            <VcButton
-              size="sm"
-              @click="applyModuleFilter"
-            >
-              {{ $t("COMPONENTS.ORGANISMS.VC_TABLE.COLUMN_FILTER.APPLY") }}
-            </VcButton>
-          </template>
-        </VcPopover>
+        <VcSearchBar
+          v-model="searchState"
+          :fields="filterFields"
+          :placeholder="$t('PLATFORM.SETTINGS.LIST.SEARCH')"
+          :storage-key="objectScope ? undefined : 'PLATFORM_SETTINGS'"
+        />
       </div>
 
       <div class="ps__body">
@@ -503,6 +403,9 @@ import {
   usePopup,
   type IBladeToolbar,
   type ObjectSettingEntry,
+  type SearchBarField,
+  type SearchBarState,
+  type SearchBarValue,
 } from "@vc-shell/framework";
 import {
   VcBlade,
@@ -510,7 +413,7 @@ import {
   VcDatePicker,
   VcIcon,
   VcInput,
-  VcPopover,
+  VcSearchBar,
   VcSelect,
   VcSwitch,
   VcTextarea,
@@ -615,10 +518,26 @@ const { width } = useElementSize(root);
 const narrow = computed(() => width.value > 0 && width.value < 720);
 const detail = ref(false);
 
-const keyword = ref("");
-const modifiedOnly = ref(false);
-const includeTenant = ref(false);
-const moduleId = ref<string>();
+// the search bar's state; the filters below read and write it (revealing a setting clears them)
+const searchState = ref<SearchBarState>({ search: "", values: {} });
+function setFilter(id: string, value: SearchBarValue) {
+  const values = { ...searchState.value.values };
+  if (value === undefined) delete values[id];
+  else values[id] = value;
+  searchState.value = { ...searchState.value, values };
+}
+const keyword = computed({
+  get: () => searchState.value.search,
+  set: (search: string) => (searchState.value = { ...searchState.value, search }),
+});
+const toggleFilter = (id: string) =>
+  computed({ get: () => !!searchState.value.values[id], set: (on: boolean) => setFilter(id, on || undefined) });
+const modifiedOnly = toggleFilter("modified");
+const includeTenant = toggleFilter("tenant");
+const moduleId = computed({
+  get: () => searchState.value.values.module as string | undefined,
+  set: (id?: string) => setFilter("module", id || undefined),
+});
 const selected = ref("");
 const focused = ref<string>();
 const expanded = ref(new Set<string>());
@@ -773,33 +692,26 @@ const modules = computed(() =>
     ),
   ]
     .sort()
-    .map((x) => ({ id: x as string, title: x as string })),
+    .map((x) => ({ value: x as string, label: x as string })),
 );
 
+const filterFields = computed<SearchBarField[]>(() => [
+  // the pill tells how many settings differ from their defaults
+  {
+    id: "modified",
+    label: `${t("PLATFORM.SETTINGS.LIST.MODIFIED_ONLY")} · ${modifiedCount.value}`,
+    filter: { toggle: true },
+  },
+  // an object's settings are all its tenant's
+  ...(objectScope
+    ? []
+    : [{ id: "tenant", label: t("PLATFORM.SETTINGS.LIST.TENANT"), filter: { toggle: true as const } }]),
+  { id: "module", label: t("PLATFORM.MODULES.MODULE"), filter: { options: modules.value } },
+]);
+
+// Clear filters (an empty result) clears the bar, the tenant settings stay as chosen
 function clearFilters() {
-  keyword.value = "";
-  modifiedOnly.value = false;
-  moduleId.value = undefined;
-}
-
-// the Filters panel edits a draft of the module filter; Apply puts it in force, as in vc-shell's table filters
-const filterAnchor = ref<HTMLElement | null>(null);
-const filtersOpen = ref(false);
-const draftModuleId = ref<string>();
-
-function openFilters() {
-  draftModuleId.value = moduleId.value;
-  filtersOpen.value = !filtersOpen.value;
-}
-
-function applyModuleFilter() {
-  moduleId.value = draftModuleId.value || undefined;
-  filtersOpen.value = false;
-}
-
-function clearModuleFilter() {
-  moduleId.value = undefined;
-  filtersOpen.value = false;
+  searchState.value = { search: "", values: includeTenant.value ? { tenant: true } : {} };
 }
 
 /* ---- the tree: the groups of the visible settings ---- */
@@ -1147,54 +1059,13 @@ watch(settingFocus, (focus) => {
   min-height: 0;
   background: var(--color-neutral-0);
 
-  /* the search and the filters */
+  /* the band around the search bar, as a table's search header: the bar lays its row out against its own edges, so the
+     side padding goes on this wrapper; 8px, the tree's own inset, so the search lines up with the tree's rows */
   &__bar {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 8px 12px;
-    padding: var(--search-bar-padding);
-    border-bottom: 1px solid var(--color-neutral-200);
-  }
-  &__search {
-    flex: 1 1 260px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    height: var(--search-field-height);
-    padding: 0 6px 0 12px;
-    border: 1px solid var(--search-field-border);
-    border-radius: var(--search-field-radius);
-    background: var(--search-field-bg);
-    color: var(--color-neutral-500);
-    cursor: text;
-    &:focus-within {
-      border-color: var(--color-primary-500);
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary-500) 18%, transparent);
-    }
-  }
-  &__search-input {
-    flex: 1;
-    min-width: 0;
-    height: 100%;
-    border: 0;
-    outline: 0;
-    background: transparent;
-    font: inherit;
-    font-size: 14px;
-    color: var(--color-neutral-900);
-    &::placeholder {
-      color: var(--color-neutral-400);
-    }
-    &::-webkit-search-cancel-button {
-      display: none;
-    }
-  }
-  &__filters {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 8px;
+    flex: none;
+    padding: 0 8px;
+    background: var(--table-header-bg, var(--color-neutral-50));
+    border-bottom: 1px solid var(--table-header-border, var(--color-neutral-200));
   }
   &__icon-btn {
     display: inline-flex;

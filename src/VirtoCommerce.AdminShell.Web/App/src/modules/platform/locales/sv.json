@@ -81,12 +81,15 @@
         "ACCOUNT_TYPE": "Kontotyp",
         "STATUS": "Status",
         "ROLE": "Roll",
-        "STATE": "Tillstånd",
         "LOCKED": "Låst",
-        "LOCKED_ONLY": "Endast låsta",
         "EMAIL_NOT_VERIFIED": "E-posten är inte verifierad",
         "LAST_LOGIN": "Senaste inloggning",
-        "DELETE_CONFIRM": "Ta bort {count} markerade användare?"
+        "DELETE_CONFIRM": "Ta bort {count} markerade användare?",
+        "PRESETS": {
+          "LOCKED": "Låsta konton",
+          "UNVERIFIED": "E-post ej verifierad",
+          "RECENT": "Inloggade, senaste 7 dagarna"
+        }
       },
       "USER": {
         "NEW_TITLE": "Ny användare",
@@ -278,6 +281,12 @@
           "storeName": "Butik",
           "organizationName": "Organisation",
           "organizationId": "Organisations-ID"
+        },
+        "SEARCH": "Sök på användarnamn",
+        "FAILURE_REASON": "Orsak till fel",
+        "STORE": "Butik",
+        "PRESETS": {
+          "FAILED": "Misslyckade inloggningar"
         }
       },
       "CHANGES": {

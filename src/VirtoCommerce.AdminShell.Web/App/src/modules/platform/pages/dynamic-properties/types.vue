@@ -12,92 +12,14 @@
       class="ps"
       :class="{ 'ps--narrow': narrow, 'ps--detail': narrow && detail }"
     >
+      <!-- search and filters in vc-shell's search bar, as on the lists: With properties and the property kinds are pills -->
       <div class="ps__bar">
-        <label class="ps__search">
-          <VcIcon
-            class="ps__search-icon"
-            icon="lucide-search"
-            size="s"
-          />
-          <input
-            v-model="keyword"
-            type="search"
-            class="ps__search-input"
-            :placeholder="$t('PLATFORM.DYNAMIC.SEARCH')"
-            :aria-label="$t('PLATFORM.DYNAMIC.SEARCH')"
-          />
-          <button
-            v-if="keyword"
-            type="button"
-            class="ps__icon-btn"
-            :title="$t('PLATFORM.SETTINGS.LIST.CLEAR')"
-            :aria-label="$t('PLATFORM.SETTINGS.LIST.CLEAR')"
-            @click="keyword = ''"
-          >
-            <VcIcon
-              icon="lucide-x"
-              size="s"
-            />
-          </button>
-        </label>
-        <!-- the filters in a panel behind a button, as vc-shell's tables have them (VcDataTable global filters) -->
-        <span ref="filterAnchor">
-          <!-- icon only: the name is for screen readers and the tooltip; the badge counts the filters in force -->
-          <VcButton
-            class="as-filter-button"
-            variant="secondary"
-            size="sm"
-            icon="lucide-funnel"
-            :title="$t('COMPONENTS.ORGANISMS.VC_TABLE.GLOBAL_FILTERS.BUTTON')"
-            :aria-label="$t('COMPONENTS.ORGANISMS.VC_TABLE.GLOBAL_FILTERS.BUTTON')"
-            :aria-expanded="filtersOpen"
-            @click="openFilters"
-          >
-            <span
-              v-if="activeFilterCount"
-              class="vc-global-filters-button__badge"
-              >{{ activeFilterCount }}</span
-            >
-          </VcButton>
-        </span>
-        <VcPopover
-          v-model:show="filtersOpen"
-          :anchor-ref="filterAnchor"
-          :title="$t('COMPONENTS.ORGANISMS.VC_TABLE.GLOBAL_FILTERS.TITLE')"
-          placement="bottom-end"
-          :max-height="480"
-        >
-          <div class="vc-global-filters-panel__content pdp-filters">
-            <label class="pdp-filters__row">
-              <VcSwitch v-model="draft.withProperties" />
-              <span>{{ $t("PLATFORM.DYNAMIC.WITH_PROPERTIES") }}</span>
-            </label>
-            <label
-              v-for="flag in FLAGS"
-              :key="flag.key"
-              class="pdp-filters__row"
-            >
-              <VcSwitch v-model="draft.flags[flag.key]" />
-              <span>{{ $t(flag.label) }}</span>
-              <span class="pdp-filters__count">{{ flagCount(flag.key) }}</span>
-            </label>
-          </div>
-          <template #footer>
-            <VcButton
-              variant="outline"
-              size="sm"
-              @click="clearFilterPanel"
-            >
-              {{ $t("COMPONENTS.ORGANISMS.VC_TABLE.COLUMN_FILTER.CLEAR") }}
-            </VcButton>
-            <VcButton
-              size="sm"
-              @click="applyFilters"
-            >
-              {{ $t("COMPONENTS.ORGANISMS.VC_TABLE.COLUMN_FILTER.APPLY") }}
-            </VcButton>
-          </template>
-        </VcPopover>
+        <VcSearchBar
+          v-model="query"
+          :fields="filterFields"
+          :placeholder="$t('PLATFORM.DYNAMIC.SEARCH')"
+          storage-key="PLATFORM_DYNAMIC_PROPERTIES"
+        />
       </div>
 
       <div class="ps__body">
@@ -323,8 +245,10 @@ import {
   usePermissions,
   type DynamicProperty,
   type IBladeToolbar,
+  type SearchBarField,
+  type SearchBarState,
 } from "@vc-shell/framework";
-import { VcBlade, VcButton, VcIcon, VcPopover, VcSwitch } from "@vc-shell/framework/ui";
+import { VcBlade, VcButton, VcIcon, VcSearchBar } from "@vc-shell/framework/ui";
 import { useElementSize } from "@vueuse/core";
 import { computed, nextTick, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
@@ -393,9 +317,11 @@ const detail = ref(false);
 
 const types = ref<ObjectType[]>([]);
 const properties = ref<DynamicProperty[]>([]);
-const keyword = ref("");
-const withPropertiesOnly = ref(false);
-const flagFilter = ref(new Set<FlagKey>());
+// the search bar's state; the filters below read it
+const query = ref<SearchBarState>({ search: "", values: {} });
+const keyword = computed(() => query.value.search);
+const withPropertiesOnly = computed(() => !!query.value.values.withProperties);
+const flagFilter = computed(() => new Set(FLAGS.map((f) => f.key).filter((key) => query.value.values[key])));
 const selected = ref("");
 const focused = ref<string>();
 const collapsed = ref(new Set<string>());
@@ -452,39 +378,21 @@ const { loading, action: load } = useAsync(async () => {
 
 /* ---- filters ---- */
 
-// the panel edits a draft; Apply puts it in force, as in vc-shell's table filters
-const filterAnchor = ref<HTMLElement | null>(null);
-const filtersOpen = ref(false);
-const draft = ref({ withProperties: false, flags: {} as Partial<Record<FlagKey, boolean>> });
-
-function openFilters() {
-  draft.value = {
-    withProperties: withPropertiesOnly.value,
-    flags: Object.fromEntries([...flagFilter.value].map((key) => [key, true])),
-  };
-  filtersOpen.value = !filtersOpen.value;
-}
-
-function applyFilters() {
-  withPropertiesOnly.value = draft.value.withProperties;
-  flagFilter.value = new Set(FLAGS.map((f) => f.key).filter((key) => draft.value.flags[key]));
-  filtersOpen.value = false;
-}
-
-function clearFilterPanel() {
-  withPropertiesOnly.value = false;
-  flagFilter.value = new Set();
-  filtersOpen.value = false;
-}
-
-const activeFilterCount = computed(() => flagFilter.value.size + (withPropertiesOnly.value ? 1 : 0));
+// the property kinds behind + Filter, each with how many properties have it; a property must have every kind chosen
+const filterFields = computed<SearchBarField[]>(() => [
+  { id: "withProperties", label: t("PLATFORM.DYNAMIC.WITH_PROPERTIES"), filter: { toggle: true } },
+  ...FLAGS.map((f) => ({
+    id: f.key,
+    label: `${t(f.label)} · ${flagCount(f.key)}`,
+    filter: { toggle: true as const },
+    pinned: false,
+  })),
+]);
 
 const filtered = computed(() => !!keyword.value.trim() || withPropertiesOnly.value || flagFilter.value.size > 0);
 
 function clearFilters() {
-  keyword.value = "";
-  withPropertiesOnly.value = false;
-  flagFilter.value = new Set();
+  query.value = { search: "", values: {} };
 }
 
 const text = (...values: (string | undefined | null)[]) => values.filter(Boolean).join(" ").toLowerCase();
@@ -784,26 +692,6 @@ load();
   margin: 4px 0 8px;
   color: var(--color-neutral-500);
   font-size: 13px;
-}
-
-.pdp-filters {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-
-  &__row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 13px;
-    cursor: pointer;
-  }
-
-  &__count {
-    margin-inline-start: auto;
-    color: var(--color-neutral-500);
-    font-variant-numeric: tabular-nums;
-  }
 }
 
 .pdp-section__icon {

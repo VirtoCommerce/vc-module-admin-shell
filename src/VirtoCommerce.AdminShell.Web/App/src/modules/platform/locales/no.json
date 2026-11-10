@@ -81,12 +81,15 @@
         "ACCOUNT_TYPE": "Kontotype",
         "STATUS": "Status",
         "ROLE": "Rolle",
-        "STATE": "Tilstand",
         "LOCKED": "Låst",
-        "LOCKED_ONLY": "Bare låste",
         "EMAIL_NOT_VERIFIED": "E-posten er ikke bekreftet",
         "LAST_LOGIN": "Siste innlogging",
-        "DELETE_CONFIRM": "Slette {count} valgte brukere?"
+        "DELETE_CONFIRM": "Slette {count} valgte brukere?",
+        "PRESETS": {
+          "LOCKED": "Låste kontoer",
+          "UNVERIFIED": "E-post ikke bekreftet",
+          "RECENT": "Logget inn, siste 7 dager"
+        }
       },
       "USER": {
         "NEW_TITLE": "Ny bruker",
@@ -278,6 +281,12 @@
           "storeName": "Butikk",
           "organizationName": "Organisasjon",
           "organizationId": "Organisasjons-ID"
+        },
+        "SEARCH": "Søk etter brukernavn",
+        "FAILURE_REASON": "Årsak til feil",
+        "STORE": "Butikk",
+        "PRESETS": {
+          "FAILED": "Mislykkede pålogginger"
         }
       },
       "CHANGES": {

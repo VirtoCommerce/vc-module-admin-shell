@@ -57,7 +57,7 @@
     "@fontsource-variable/noto-sans-arabic": "5.2.10",
     "@fontsource-variable/noto-sans-hebrew": "5.2.8",
     "@vc-shell/config-generator": "2.10.4",
-    "@vc-shell/framework": "patch:@vc-shell/framework@npm%3A2.10.4#~/.yarn/patches/@vc-shell-framework-npm-2.10.4-20e6bdf6c0.patch",
+    "@vc-shell/framework": "patch:@vc-shell/framework@npm%3A2.11.0-pr410.f56d541#~/.yarn/patches/@vc-shell-framework-npm-2.11.0-pr410.f56d541-ad71bb0483.patch",
     "@vc-shell/mf-host": "2.10.4",
     "@vueuse/core": "^10.7.1",
     "@vueuse/integrations": "^10.7.1",

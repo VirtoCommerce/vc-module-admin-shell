@@ -81,12 +81,15 @@
         "ACCOUNT_TYPE": "סוג חשבון",
         "STATUS": "סטטוס",
         "ROLE": "תפקיד",
-        "STATE": "מצב",
         "LOCKED": "נעול",
-        "LOCKED_ONLY": "נעולים בלבד",
         "EMAIL_NOT_VERIFIED": "הדוא״ל לא אומת",
         "LAST_LOGIN": "כניסה אחרונה",
-        "DELETE_CONFIRM": "האם למחוק את המשתמשים שנבחרו ({count})?"
+        "DELETE_CONFIRM": "האם למחוק את המשתמשים שנבחרו ({count})?",
+        "PRESETS": {
+          "LOCKED": "חשבונות נעולים",
+          "UNVERIFIED": "דוא\"ל לא אומת",
+          "RECENT": "התחברו ב-7 הימים האחרונים"
+        }
       },
       "USER": {
         "NEW_TITLE": "משתמש חדש",
@@ -278,6 +281,12 @@
           "storeName": "חנות",
           "organizationName": "ארגון",
           "organizationId": "מזהה ארגון"
+        },
+        "SEARCH": "חיפוש לפי שם משתמש",
+        "FAILURE_REASON": "סיבת הכישלון",
+        "STORE": "חנות",
+        "PRESETS": {
+          "FAILED": "התחברויות שנכשלו"
         }
       },
       "CHANGES": {
