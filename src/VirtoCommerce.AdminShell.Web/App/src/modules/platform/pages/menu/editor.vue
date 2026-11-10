@@ -1253,7 +1253,7 @@ function addLegacy(screen: LegacyScreen) {
     icon: "lucide-app-window",
     permission: screen.permission,
     // after the section's items, in the AngularJS menu's order
-    priority: END_PRIORITY + (screen.priority ?? 0),
+    priority: END_PRIORITY + Math.round(screen.priority ?? 0),
     target: { type: "legacy", legacyUrl: screen.legacyUrl },
     children: [],
   });
