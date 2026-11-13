@@ -81,12 +81,15 @@
         "ACCOUNT_TYPE": "Tipo di account",
         "STATUS": "Stato",
         "ROLE": "Ruolo",
-        "STATE": "Condizione",
         "LOCKED": "Bloccato",
-        "LOCKED_ONLY": "Solo bloccati",
         "EMAIL_NOT_VERIFIED": "Email non verificata",
         "LAST_LOGIN": "Ultimo accesso",
-        "DELETE_CONFIRM": "Eliminare gli utenti selezionati ({count})?"
+        "DELETE_CONFIRM": "Eliminare gli utenti selezionati ({count})?",
+        "PRESETS": {
+          "LOCKED": "Account bloccati",
+          "UNVERIFIED": "Email non verificata",
+          "RECENT": "Accesso negli ultimi 7 giorni"
+        }
       },
       "USER": {
         "NEW_TITLE": "Nuovo utente",
@@ -278,6 +281,12 @@
           "storeName": "Negozio",
           "organizationName": "Organizzazione",
           "organizationId": "ID organizzazione"
+        },
+        "SEARCH": "Cerca per nome utente",
+        "FAILURE_REASON": "Motivo dell'errore",
+        "STORE": "Negozio",
+        "PRESETS": {
+          "FAILED": "Accessi non riusciti"
         }
       },
       "CHANGES": {

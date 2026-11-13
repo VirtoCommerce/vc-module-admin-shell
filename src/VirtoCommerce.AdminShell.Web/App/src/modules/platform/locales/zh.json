@@ -81,12 +81,15 @@
         "ACCOUNT_TYPE": "账户类型",
         "STATUS": "状态",
         "ROLE": "角色",
-        "STATE": "状态",
         "LOCKED": "已锁定",
-        "LOCKED_ONLY": "仅已锁定",
         "EMAIL_NOT_VERIFIED": "电子邮件未验证",
         "LAST_LOGIN": "最后登录",
-        "DELETE_CONFIRM": "删除选中的 {count} 个用户？"
+        "DELETE_CONFIRM": "删除选中的 {count} 个用户？",
+        "PRESETS": {
+          "LOCKED": "已锁定的账户",
+          "UNVERIFIED": "邮箱未验证",
+          "RECENT": "最近 7 天登录过"
+        }
       },
       "USER": {
         "NEW_TITLE": "新用户",
@@ -278,6 +281,12 @@
           "storeName": "商店",
           "organizationName": "组织",
           "organizationId": "组织 ID"
+        },
+        "SEARCH": "按用户名搜索",
+        "FAILURE_REASON": "失败原因",
+        "STORE": "商店",
+        "PRESETS": {
+          "FAILED": "登录失败"
         }
       },
       "CHANGES": {

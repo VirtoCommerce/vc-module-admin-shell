@@ -81,12 +81,15 @@
         "ACCOUNT_TYPE": "Tilin tyyppi",
         "STATUS": "Tila",
         "ROLE": "Rooli",
-        "STATE": "Tila",
         "LOCKED": "Lukittu",
-        "LOCKED_ONLY": "Vain lukitut",
         "EMAIL_NOT_VERIFIED": "Sähköpostia ei ole vahvistettu",
         "LAST_LOGIN": "Viimeisin kirjautuminen",
-        "DELETE_CONFIRM": "Poistetaanko valitut käyttäjät ({count})?"
+        "DELETE_CONFIRM": "Poistetaanko valitut käyttäjät ({count})?",
+        "PRESETS": {
+          "LOCKED": "Lukitut tilit",
+          "UNVERIFIED": "Sähköposti vahvistamatta",
+          "RECENT": "Kirjautuneet, 7 päivää"
+        }
       },
       "USER": {
         "NEW_TITLE": "Uusi käyttäjä",
@@ -278,6 +281,12 @@
           "storeName": "Kauppa",
           "organizationName": "Organisaatio",
           "organizationId": "Organisaation ID"
+        },
+        "SEARCH": "Hae käyttäjänimellä",
+        "FAILURE_REASON": "Virheen syy",
+        "STORE": "Kauppa",
+        "PRESETS": {
+          "FAILED": "Epäonnistuneet kirjautumiset"
         }
       },
       "CHANGES": {

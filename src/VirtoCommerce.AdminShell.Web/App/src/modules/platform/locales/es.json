@@ -81,12 +81,15 @@
         "ACCOUNT_TYPE": "Tipo de cuenta",
         "STATUS": "Estado",
         "ROLE": "Rol",
-        "STATE": "Situación",
         "LOCKED": "Bloqueado",
-        "LOCKED_ONLY": "Solo bloqueados",
         "EMAIL_NOT_VERIFIED": "Correo electrónico no verificado",
         "LAST_LOGIN": "Último acceso",
-        "DELETE_CONFIRM": "¿Eliminar {count} usuario(s) seleccionado(s)?"
+        "DELETE_CONFIRM": "¿Eliminar {count} usuario(s) seleccionado(s)?",
+        "PRESETS": {
+          "LOCKED": "Cuentas bloqueadas",
+          "UNVERIFIED": "Correo no verificado",
+          "RECENT": "Con sesión, últimos 7 días"
+        }
       },
       "USER": {
         "NEW_TITLE": "Nuevo usuario",
@@ -278,6 +281,12 @@
           "storeName": "Tienda",
           "organizationName": "Organización",
           "organizationId": "ID de organización"
+        },
+        "SEARCH": "Buscar por nombre de usuario",
+        "FAILURE_REASON": "Motivo del error",
+        "STORE": "Tienda",
+        "PRESETS": {
+          "FAILED": "Inicios de sesión fallidos"
         }
       },
       "CHANGES": {

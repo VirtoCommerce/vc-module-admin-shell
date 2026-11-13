@@ -81,12 +81,15 @@
         "ACCOUNT_TYPE": "アカウントタイプ",
         "STATUS": "ステータス",
         "ROLE": "ロール",
-        "STATE": "状態",
         "LOCKED": "ロック中",
-        "LOCKED_ONLY": "ロック中のみ",
         "EMAIL_NOT_VERIFIED": "メール未確認",
         "LAST_LOGIN": "最終ログイン",
-        "DELETE_CONFIRM": "選択した {count} 人のユーザーを削除しますか？"
+        "DELETE_CONFIRM": "選択した {count} 人のユーザーを削除しますか？",
+        "PRESETS": {
+          "LOCKED": "ロック中のアカウント",
+          "UNVERIFIED": "メール未確認",
+          "RECENT": "過去7日間にサインイン"
+        }
       },
       "USER": {
         "NEW_TITLE": "新規ユーザー",
@@ -278,6 +281,12 @@
           "storeName": "ストア",
           "organizationName": "組織",
           "organizationId": "組織 ID"
+        },
+        "SEARCH": "ユーザー名で検索",
+        "FAILURE_REASON": "失敗の理由",
+        "STORE": "ストア",
+        "PRESETS": {
+          "FAILED": "失敗したサインイン"
         }
       },
       "CHANGES": {

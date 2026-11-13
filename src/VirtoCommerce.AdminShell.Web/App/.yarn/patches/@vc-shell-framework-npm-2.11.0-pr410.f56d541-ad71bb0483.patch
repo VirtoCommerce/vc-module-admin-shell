@@ -1,0 +1,20 @@
+diff --git a/dist/chunks/VcScheduler.vue_vue_type_script_setup_true_lang-ey8TusZc.js b/dist/chunks/VcScheduler.vue_vue_type_script_setup_true_lang-ey8TusZc.js
+index c13b4569cf4a5f1dd8bd4b1ef547453def0bdd1d..e71424cb80586b62425764194a3152d526152bfd 100644
+--- a/dist/chunks/VcScheduler.vue_vue_type_script_setup_true_lang-ey8TusZc.js
++++ b/dist/chunks/VcScheduler.vue_vue_type_script_setup_true_lang-ey8TusZc.js
+@@ -1446,13 +1446,14 @@ const Id = xr, Ld = /* @__PURE__ */ Z({
+     }, {
+       trigger: V(({ click: u }) => [
+         M(a(Wu), {
+-          as: "button",
++          as: "span",
+           onTrigger: u
+         }, {
+           default: V(() => [
+             M(a(ke), {
+               ref_key: "buttonRef",
+               ref: t,
++              "aria-label": s.$t("COMPONENTS.MOLECULES.VC_BREADCRUMBS.BACK"),
+               icon: "lucide-arrow-left",
+               "icon-class": "tw-text-neutrals-500",
+               "icon-size": "l",

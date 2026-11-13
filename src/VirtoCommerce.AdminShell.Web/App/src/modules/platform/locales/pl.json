@@ -81,12 +81,15 @@
         "ACCOUNT_TYPE": "Typ konta",
         "STATUS": "Status",
         "ROLE": "Rola",
-        "STATE": "Stan",
-        "LOCKED": "Zablokowany",
-        "LOCKED_ONLY": "Tylko zablokowani",
+        "LOCKED": "Zablokowane",
         "EMAIL_NOT_VERIFIED": "Email niezweryfikowany",
         "LAST_LOGIN": "Ostatnie logowanie",
-        "DELETE_CONFIRM": "Usunąć zaznaczonych użytkowników ({count})?"
+        "DELETE_CONFIRM": "Usunąć zaznaczonych użytkowników ({count})?",
+        "PRESETS": {
+          "LOCKED": "Zablokowane konta",
+          "UNVERIFIED": "E-mail niezweryfikowany",
+          "RECENT": "Logowanie w ostatnich 7 dniach"
+        }
       },
       "USER": {
         "NEW_TITLE": "Nowy użytkownik",
@@ -278,6 +281,12 @@
           "storeName": "Sklep",
           "organizationName": "Organizacja",
           "organizationId": "ID organizacji"
+        },
+        "SEARCH": "Szukaj po nazwie użytkownika",
+        "FAILURE_REASON": "Przyczyna niepowodzenia",
+        "STORE": "Sklep",
+        "PRESETS": {
+          "FAILED": "Nieudane logowania"
         }
       },
       "CHANGES": {

@@ -81,12 +81,15 @@
         "ACCOUNT_TYPE": "Kontotyp",
         "STATUS": "Status",
         "ROLE": "Rolle",
-        "STATE": "Zustand",
         "LOCKED": "Gesperrt",
-        "LOCKED_ONLY": "Nur gesperrte",
         "EMAIL_NOT_VERIFIED": "E-Mail nicht bestätigt",
         "LAST_LOGIN": "Letzte Anmeldung",
-        "DELETE_CONFIRM": "{count} ausgewählte(n) Benutzer löschen?"
+        "DELETE_CONFIRM": "{count} ausgewählte(n) Benutzer löschen?",
+        "PRESETS": {
+          "LOCKED": "Gesperrte Konten",
+          "UNVERIFIED": "E-Mail nicht bestätigt",
+          "RECENT": "Angemeldet, letzte 7 Tage"
+        }
       },
       "USER": {
         "NEW_TITLE": "Neuer Benutzer",
@@ -278,6 +281,12 @@
           "storeName": "Shop",
           "organizationName": "Organisation",
           "organizationId": "Organisations-ID"
+        },
+        "SEARCH": "Nach Benutzername suchen",
+        "FAILURE_REASON": "Fehlergrund",
+        "STORE": "Shop",
+        "PRESETS": {
+          "FAILED": "Fehlgeschlagene Anmeldungen"
         }
       },
       "CHANGES": {

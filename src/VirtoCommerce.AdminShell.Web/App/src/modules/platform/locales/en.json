@@ -81,12 +81,15 @@
         "ACCOUNT_TYPE": "Account type",
         "STATUS": "Status",
         "ROLE": "Role",
-        "STATE": "State",
         "LOCKED": "Locked",
-        "LOCKED_ONLY": "Locked only",
         "EMAIL_NOT_VERIFIED": "Email not verified",
         "LAST_LOGIN": "Last login",
-        "DELETE_CONFIRM": "Delete {count} selected user(s)?"
+        "DELETE_CONFIRM": "Delete {count} selected user(s)?",
+        "PRESETS": {
+          "LOCKED": "Locked accounts",
+          "UNVERIFIED": "Email not verified",
+          "RECENT": "Signed in, last 7 days"
+        }
       },
       "USER": {
         "NEW_TITLE": "New user",
@@ -278,6 +281,12 @@
           "storeName": "Store",
           "organizationName": "Organization",
           "organizationId": "Organization ID"
+        },
+        "SEARCH": "Search by user name",
+        "FAILURE_REASON": "Failure reason",
+        "STORE": "Store",
+        "PRESETS": {
+          "FAILED": "Failed sign-ins"
         }
       },
       "CHANGES": {

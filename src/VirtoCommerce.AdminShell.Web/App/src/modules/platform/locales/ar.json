@@ -81,12 +81,15 @@
         "ACCOUNT_TYPE": "نوع الحساب",
         "STATUS": "الحالة",
         "ROLE": "الدور",
-        "STATE": "الوضع",
         "LOCKED": "مقفل",
-        "LOCKED_ONLY": "المقفلة فقط",
         "EMAIL_NOT_VERIFIED": "البريد الإلكتروني غير مؤكد",
         "LAST_LOGIN": "آخر تسجيل دخول",
-        "DELETE_CONFIRM": "هل تريد حذف المستخدمين المحددين ({count})؟"
+        "DELETE_CONFIRM": "هل تريد حذف المستخدمين المحددين ({count})؟",
+        "PRESETS": {
+          "LOCKED": "الحسابات المقفلة",
+          "UNVERIFIED": "البريد الإلكتروني غير مؤكد",
+          "RECENT": "سجّلوا الدخول آخر 7 أيام"
+        }
       },
       "USER": {
         "NEW_TITLE": "مستخدم جديد",
@@ -278,6 +281,12 @@
           "storeName": "المتجر",
           "organizationName": "المؤسسة",
           "organizationId": "معرّف المؤسسة"
+        },
+        "SEARCH": "البحث باسم المستخدم",
+        "FAILURE_REASON": "سبب الفشل",
+        "STORE": "المتجر",
+        "PRESETS": {
+          "FAILED": "عمليات تسجيل دخول فاشلة"
         }
       },
       "CHANGES": {

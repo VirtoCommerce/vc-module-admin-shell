@@ -81,12 +81,15 @@
         "ACCOUNT_TYPE": "Тип учётной записи",
         "STATUS": "Статус",
         "ROLE": "Роль",
-        "STATE": "Состояние",
         "LOCKED": "Заблокирован",
-        "LOCKED_ONLY": "Только заблокированные",
         "EMAIL_NOT_VERIFIED": "Email не подтверждён",
         "LAST_LOGIN": "Последний вход",
-        "DELETE_CONFIRM": "Удалить выбранных пользователей ({count})?"
+        "DELETE_CONFIRM": "Удалить выбранных пользователей ({count})?",
+        "PRESETS": {
+          "LOCKED": "Заблокированные",
+          "UNVERIFIED": "Email не подтверждён",
+          "RECENT": "Входили за 7 дней"
+        }
       },
       "USER": {
         "NEW_TITLE": "Новый пользователь",
@@ -278,6 +281,12 @@
           "storeName": "Магазин",
           "organizationName": "Организация",
           "organizationId": "ID организации"
+        },
+        "SEARCH": "Поиск по имени пользователя",
+        "FAILURE_REASON": "Причина ошибки",
+        "STORE": "Магазин",
+        "PRESETS": {
+          "FAILED": "Неудачные входы"
         }
       },
       "CHANGES": {

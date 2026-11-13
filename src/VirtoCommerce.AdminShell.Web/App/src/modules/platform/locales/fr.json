@@ -81,12 +81,15 @@
         "ACCOUNT_TYPE": "Type de compte",
         "STATUS": "Statut",
         "ROLE": "Rôle",
-        "STATE": "État",
         "LOCKED": "Verrouillé",
-        "LOCKED_ONLY": "Verrouillés uniquement",
         "EMAIL_NOT_VERIFIED": "Email non vérifié",
         "LAST_LOGIN": "Dernière connexion",
-        "DELETE_CONFIRM": "Supprimer {count} utilisateur(s) sélectionné(s) ?"
+        "DELETE_CONFIRM": "Supprimer {count} utilisateur(s) sélectionné(s) ?",
+        "PRESETS": {
+          "LOCKED": "Comptes verrouillés",
+          "UNVERIFIED": "E-mail non vérifié",
+          "RECENT": "Connectés, 7 derniers jours"
+        }
       },
       "USER": {
         "NEW_TITLE": "Nouvel utilisateur",
@@ -278,6 +281,12 @@
           "storeName": "Boutique",
           "organizationName": "Organisation",
           "organizationId": "ID de l'organisation"
+        },
+        "SEARCH": "Rechercher par nom d'utilisateur",
+        "FAILURE_REASON": "Motif de l'échec",
+        "STORE": "Boutique",
+        "PRESETS": {
+          "FAILED": "Connexions échouées"
         }
       },
       "CHANGES": {
