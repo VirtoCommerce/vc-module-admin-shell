@@ -8,7 +8,8 @@
       "insights": "Insights",
       "configuration": "Configuration",
       "apps": "Apps",
-      "more": "More"
+      "more": "More",
+      "cloud": "Cloud"
     },
     "RAIL": {
       "dashboard": "Home",
@@ -18,7 +19,8 @@
       "insights": "Insights",
       "configuration": "Settings",
       "apps": "Apps",
-      "more": "More"
+      "more": "More",
+      "cloud": "Cloud"
     },
     "GROUPS": {
       "orders_sales": "Sales",
@@ -102,7 +104,11 @@
       "state_machines": "State Machines",
       "stores": "Stores",
       "subscriptions": "Subscriptions",
-      "webhooks": "Webhooks"
+      "webhooks": "Webhooks",
+      "saas_environments": "Environments",
+      "saas_organization": "Organization",
+      "saas_docs": "Documentation",
+      "saas_health": "Service Health"
     }
   }
 }

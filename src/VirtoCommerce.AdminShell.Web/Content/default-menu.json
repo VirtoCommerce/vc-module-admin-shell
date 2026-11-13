@@ -18,6 +18,15 @@
       ]
     },
     {
+      "id": "cloud", "title": "Cloud", "icon": "lucide-cloud", "priority": 150,
+      "items": [
+        { "id": "saas.environments", "title": "Environments", "icon": "lucide-server", "priority": 100, "moduleId": "VirtoCommerce.SaaS", "permission": "saas:env:access", "route": "/saas", "target": { "type": "legacy", "legacyUrl": "/workspace/saas" } },
+        { "id": "saas.organization", "title": "Organization", "icon": "lucide-building-2", "priority": 200, "moduleId": "VirtoCommerce.SaaS", "permission": "customer:read", "route": "/saas-organization", "target": { "type": "legacy", "legacyUrl": "/workspace/organization" } },
+        { "id": "saas.docs", "title": "Documentation", "icon": "lucide-book-open", "priority": 300, "moduleId": "VirtoCommerce.SaaS", "permission": "saas:env:access", "route": "/saas-docs", "target": { "type": "legacy", "legacyUrl": "/workspace/docs" } },
+        { "id": "saas.health", "title": "Service Health", "icon": "lucide-activity", "priority": 400, "moduleId": "VirtoCommerce.SaaS", "permission": "saas:env:access", "route": "/saas-health", "target": { "type": "legacy", "legacyUrl": "/workspace/status" } }
+      ]
+    },
+    {
       "id": "catalog", "title": "Products", "icon": "lucide-package", "priority": 200,
       "items": [
         { "id": "catalog", "title": "Catalogs", "icon": "lucide-folder", "priority": 100, "moduleId": "VirtoCommerce.Catalog", "permission": "catalog:access", "route": "/catalog", "target": { "type": "legacy", "legacyUrl": "/workspace/catalog" }, "aliases": ["legacy.catalog"] },
