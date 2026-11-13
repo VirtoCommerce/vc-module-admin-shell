@@ -714,9 +714,13 @@
 /* alert cards (Dashboard.jsx AlertItem): 4px coloured stripe, 14px 18px 14px 22px */
 .dash-alerts {
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: 10px;
+  // the card has a fixed height: a long list scrolls inside it instead of stretching the card
+  min-height: 0;
   overflow: auto;
+  overscroll-behavior: contain;
 }
 
 .dash-alert {

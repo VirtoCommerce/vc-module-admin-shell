@@ -53,7 +53,8 @@
           searchable
         />
         <VcRow class="tw-gap-4">
-          <VcCol>
+          <!-- only an administrator may see and grant the administrator flag (as the AngularJS SaaS admin did) -->
+          <VcCol v-if="isCurrentUserAdministrator">
             <VcSwitch
               v-model="item.isAdministrator"
               :label="$t('PLATFORM.SECURITY.USER.ADMINISTRATOR')"
@@ -181,6 +182,7 @@ import {
   useLoading,
   usePermissions,
   usePopup,
+  useUser,
   type ApplicationUser,
   type IBladeToolbar,
 } from "@vc-shell/framework";
@@ -210,6 +212,7 @@ defineBlade({
 const { t } = useI18n({ useScope: "global" });
 const { param, openBlade, closeSelf, replaceWith, callParent, exposeToChildren } = useBlade();
 const { hasAccess } = usePermissions();
+const { isAdministrator: isCurrentUserAdministrator } = useUser();
 const { showConfirmation } = usePopup();
 const { getApiClient } = useApiClient(SecurityClient);
 const lookups = useSecurityLookups();
