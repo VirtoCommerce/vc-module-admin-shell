@@ -228,7 +228,15 @@
         "URI_HTTP_LEGACY": "{uri} 对非环回地址使用 HTTP。该 URI 会被保留，但无法添加新的同类 URI。",
         "OTHER_PERMISSIONS": "其他权限",
         "OTHER_PERMISSIONS_HINT": "此界面不编辑的权限将保持不变。端点权限由授权类型决定。",
-        "PERMISSION_PLACEHOLDER": "输入权限后按 Enter"
+        "PERMISSION_PLACEHOLDER": "输入权限后按 Enter",
+        "REGISTRATION": "注册方式",
+        "REGISTRATIONS": {
+          "SELF": "自行注册",
+          "ADMINISTRATOR": "由管理员注册",
+          "CLIENT_ID_METADATA_DOCUMENT": "自行注册：元数据文档",
+          "DYNAMIC_REGISTRATION": "自行注册：动态注册"
+        },
+        "SELF_REGISTERED_READONLY": "此应用程序为自行注册：它遵循其元数据文档或注册信息，因此无法在此更改。删除它即可断开该客户端。"
       },
       "SIGNIN": {
         "TITLE": "登录日志",

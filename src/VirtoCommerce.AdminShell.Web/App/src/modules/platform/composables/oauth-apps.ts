@@ -6,7 +6,7 @@ import type { OpenIddictApplicationDescriptor } from "@vc-shell/framework";
 // the generated type marks the collections readonly; they are plain arrays on the wire
 export type OAuthApp = Omit<
   OpenIddictApplicationDescriptor,
-  "redirectUris" | "postLogoutRedirectUris" | "permissions" | "requirements"
+  "redirectUris" | "postLogoutRedirectUris" | "permissions" | "requirements" | "properties"
 > & {
   redirectUris?: string[];
   postLogoutRedirectUris?: string[];
@@ -14,6 +14,7 @@ export type OAuthApp = Omit<
   requirements?: string[];
   applicationType?: string;
   consentType?: string;
+  properties?: Record<string, unknown>;
 };
 
 export interface OAuthResource {
@@ -39,6 +40,17 @@ export const SCOPES = ["scp:email", "scp:profile", "scp:roles"] as const;
 // set by the server from the grant types, not edited
 const DERIVED = ["ept:authorization", "ept:end_session", "ept:token", "rst:code"];
 const EDITED = new Set<string>([...GRANT_TYPES, ...SCOPES]);
+
+/** The platform marks the application of a self-registered client with it */
+const REGISTRATION_PROPERTY = "vc_registration";
+const REGISTRATION_TYPES = ["client_id_metadata_document", "dynamic_registration"] as const;
+export type RegistrationType = (typeof REGISTRATION_TYPES)[number];
+
+/** Undefined when an administrator registered the client */
+export function registrationOf(app: OAuthApp): RegistrationType | undefined {
+  const value = app.properties?.[REGISTRATION_PROPERTY];
+  return REGISTRATION_TYPES.find((x) => x === value);
+}
 
 export const hasPermission = (app: OAuthApp, permission: string) => (app.permissions ?? []).includes(permission);
 

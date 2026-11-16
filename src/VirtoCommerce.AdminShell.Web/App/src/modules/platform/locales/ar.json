@@ -228,7 +228,15 @@
         "URI_HTTP_LEGACY": "يستخدم {uri} بروتوكول HTTP لعنوان ليس عنوان استرجاع. يُحتفظ به، لكن لا يمكن إضافة عنوان جديد مثله.",
         "OTHER_PERMISSIONS": "صلاحيات أخرى",
         "OTHER_PERMISSIONS_HINT": "الصلاحيات التي لا تعدّلها هذه الشاشة تبقى كما هي. صلاحيات نقاط النهاية تتبع أنواع المنح.",
-        "PERMISSION_PLACEHOLDER": "اكتب صلاحية واضغط Enter"
+        "PERMISSION_PLACEHOLDER": "اكتب صلاحية واضغط Enter",
+        "REGISTRATION": "التسجيل",
+        "REGISTRATIONS": {
+          "SELF": "مسجّل ذاتيًا",
+          "ADMINISTRATOR": "بواسطة مسؤول",
+          "CLIENT_ID_METADATA_DOCUMENT": "مسجّل ذاتيًا: مستند بيانات وصفية",
+          "DYNAMIC_REGISTRATION": "مسجّل ذاتيًا: ديناميكي"
+        },
+        "SELF_REGISTERED_READONLY": "سجّل هذا التطبيق نفسه ذاتيًا: فهو يتبع مستند البيانات الوصفية أو التسجيل الخاص به، لذا لا يمكن تغييره هنا. احذفه لفصل العميل."
       },
       "SIGNIN": {
         "TITLE": "سجل تسجيل الدخول",

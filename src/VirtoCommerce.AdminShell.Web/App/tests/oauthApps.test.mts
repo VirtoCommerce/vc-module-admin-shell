@@ -6,6 +6,7 @@ import {
   findApp,
   hasGrantType,
   otherPermissions,
+  registrationOf,
   requiresPkce,
   resourcesOf,
   saveApp,
@@ -91,6 +92,26 @@ test("other permissions are those the form doesn't edit or derive", () => {
     "ept:introspection",
     "gt:urn:ietf:params:oauth:grant-type:device_code",
     "scp:custom",
+  ]);
+});
+
+test("the registration is the vc_registration property of a self-registered client", () => {
+  const apps: OAuthApp[] = [
+    { properties: { vc_registration: "client_id_metadata_document" } },
+    { properties: { vc_registration: "dynamic_registration" } },
+    { properties: { vc_registration: "something else" } },
+    { properties: {} },
+    {},
+  ];
+
+  const registrations = apps.map(registrationOf);
+
+  assert.deepEqual(registrations, [
+    "client_id_metadata_document",
+    "dynamic_registration",
+    undefined,
+    undefined,
+    undefined,
   ]);
 });
 

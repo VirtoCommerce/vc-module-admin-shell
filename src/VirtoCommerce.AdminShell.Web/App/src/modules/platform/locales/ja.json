@@ -228,7 +228,15 @@
         "URI_HTTP_LEGACY": "{uri} はループバックアドレスではないアドレスに HTTP を使用しています。そのまま保持されますが、同様の URI を新たに追加することはできません。",
         "OTHER_PERMISSIONS": "その他の権限",
         "OTHER_PERMISSIONS_HINT": "この画面で編集しない権限は、そのまま保持されます。エンドポイントの権限はグラントタイプに従います。",
-        "PERMISSION_PLACEHOLDER": "権限を入力して Enter キーを押してください"
+        "PERMISSION_PLACEHOLDER": "権限を入力して Enter キーを押してください",
+        "REGISTRATION": "登録",
+        "REGISTRATIONS": {
+          "SELF": "自己登録",
+          "ADMINISTRATOR": "管理者による登録",
+          "CLIENT_ID_METADATA_DOCUMENT": "自己登録: メタデータ ドキュメント",
+          "DYNAMIC_REGISTRATION": "自己登録: 動的登録"
+        },
+        "SELF_REGISTERED_READONLY": "このアプリケーションは自己登録されています。メタデータ ドキュメントまたは登録内容に従うため、ここでは変更できません。クライアントを切断するには削除してください。"
       },
       "SIGNIN": {
         "TITLE": "サインインログ",

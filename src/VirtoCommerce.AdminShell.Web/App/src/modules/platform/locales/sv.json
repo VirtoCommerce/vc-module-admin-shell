@@ -228,7 +228,15 @@
         "URI_HTTP_LEGACY": "{uri} använder HTTP för en adress som inte är en loopback-adress. Den behålls, men en ny av samma slag kan inte läggas till.",
         "OTHER_PERMISSIONS": "Andra behörigheter",
         "OTHER_PERMISSIONS_HINT": "Behörigheter som den här vyn inte redigerar behålls som de är. Slutpunktsbehörigheter följer beviljandetyperna.",
-        "PERMISSION_PLACEHOLDER": "Skriv en behörighet och tryck på Enter"
+        "PERMISSION_PLACEHOLDER": "Skriv en behörighet och tryck på Enter",
+        "REGISTRATION": "Registrering",
+        "REGISTRATIONS": {
+          "SELF": "Självregistrerad",
+          "ADMINISTRATOR": "Av en administratör",
+          "CLIENT_ID_METADATA_DOCUMENT": "Självregistrerad: metadatadokument",
+          "DYNAMIC_REGISTRATION": "Självregistrerad: dynamisk"
+        },
+        "SELF_REGISTERED_READONLY": "Den här applikationen registrerade sig själv: den följer sitt metadatadokument eller sin registrering och kan inte ändras här. Ta bort den för att koppla från klienten."
       },
       "SIGNIN": {
         "TITLE": "Inloggningslogg",

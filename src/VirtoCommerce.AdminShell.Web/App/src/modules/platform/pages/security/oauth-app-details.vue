@@ -9,6 +9,13 @@
   >
     <VcContainer>
       <VcForm class="platform-form">
+        <VcBanner
+          v-if="selfRegistration"
+          variant="info"
+        >
+          {{ $t("PLATFORM.SECURITY.OAUTH.SELF_REGISTERED_READONLY") }}
+        </VcBanner>
+
         <VcRow class="tw-gap-4">
           <VcCol>
             <VcInput
@@ -266,6 +273,7 @@ import {
   hasPermission,
   oauthResources,
   otherPermissions,
+  registrationOf,
   requiresPkce,
   resourcesOf,
   saveApp,
@@ -425,10 +433,15 @@ const valid = computed(
     !uriError(item.value.postLogoutRedirectUris, baseline.value.postLogoutRedirectUris),
 );
 
+// the platform refuses to save a self-registered client
+const selfRegistration = computed(() => registrationOf(item.value));
+
 const form = usePlatformBladeForm({
   data: item,
   // POST oauthapps saves new and existing apps alike, with :update
-  canSaveOverride: computed(() => valid.value && hasAccess("platform:security:oauth_applications:update")),
+  canSaveOverride: computed(
+    () => valid.value && !selfRegistration.value && hasAccess("platform:security:oauth_applications:update"),
+  ),
 });
 
 // the secret can't be shown again after the application is created: keep it in a file too

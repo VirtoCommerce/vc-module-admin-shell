@@ -228,7 +228,15 @@
         "URI_HTTP_LEGACY": "{uri} usa HTTP para una dirección que no es de bucle invertido. Se conserva, pero no se puede añadir otro igual.",
         "OTHER_PERMISSIONS": "Otros permisos",
         "OTHER_PERMISSIONS_HINT": "Permisos que esta pantalla no edita; se conservan tal cual. Los permisos de los puntos de conexión siguen los tipos de concesión.",
-        "PERMISSION_PLACEHOLDER": "Escriba un permiso y pulse Intro"
+        "PERMISSION_PLACEHOLDER": "Escriba un permiso y pulse Intro",
+        "REGISTRATION": "Registro",
+        "REGISTRATIONS": {
+          "SELF": "Autorregistrada",
+          "ADMINISTRATOR": "Por un administrador",
+          "CLIENT_ID_METADATA_DOCUMENT": "Autorregistrada: documento de metadatos",
+          "DYNAMIC_REGISTRATION": "Autorregistrada: dinámico"
+        },
+        "SELF_REGISTERED_READONLY": "Esta aplicación se registró por sí misma: sigue su documento de metadatos o su registro, por lo que no se puede cambiar aquí. Elimínela para desconectar el cliente."
       },
       "SIGNIN": {
         "TITLE": "Registro de inicios de sesión",

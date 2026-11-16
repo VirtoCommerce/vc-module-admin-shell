@@ -228,7 +228,15 @@
         "URI_HTTP_LEGACY": "{uri} bruker HTTP for en adresse som ikke er en loopback-adresse. Den beholdes, men en ny av samme type kan ikke legges til.",
         "OTHER_PERMISSIONS": "Andre tillatelser",
         "OTHER_PERMISSIONS_HINT": "Tillatelser som dette skjermbildet ikke redigerer, beholdes som de er. Endepunkttillatelser følger tildelingstypene.",
-        "PERMISSION_PLACEHOLDER": "Skriv inn en tillatelse og trykk Enter"
+        "PERMISSION_PLACEHOLDER": "Skriv inn en tillatelse og trykk Enter",
+        "REGISTRATION": "Registrering",
+        "REGISTRATIONS": {
+          "SELF": "Selvregistrert",
+          "ADMINISTRATOR": "Av en administrator",
+          "CLIENT_ID_METADATA_DOCUMENT": "Selvregistrert: metadatadokument",
+          "DYNAMIC_REGISTRATION": "Selvregistrert: dynamisk"
+        },
+        "SELF_REGISTERED_READONLY": "Denne applikasjonen registrerte seg selv: den følger metadatadokumentet eller registreringen sin og kan ikke endres her. Slett den for å koble fra klienten."
       },
       "SIGNIN": {
         "TITLE": "Innloggingslogg",
