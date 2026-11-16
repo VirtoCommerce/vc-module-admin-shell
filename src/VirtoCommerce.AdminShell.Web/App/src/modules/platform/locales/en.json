@@ -113,7 +113,9 @@
         "LOCK_CONFIRM": "Lock the account {name}? The user won't be able to sign in.",
         "UNLOCK": "Unlock",
         "SEND_VERIFICATION": "Resend verification email",
-        "VERIFICATION_SENT": "Verification email sent"
+        "VERIFICATION_SENT": "Verification email sent",
+        "LOGIN_ON_BEHALF": "Login on behalf",
+        "LOGIN_ON_BEHALF_NO_URL": "Can't sign in on behalf: the user has no store, or the store has no URL."
       },
       "APIKEYS": {
         "TITLE": "API keys",

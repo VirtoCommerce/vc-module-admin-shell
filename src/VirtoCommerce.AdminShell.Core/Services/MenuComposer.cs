@@ -116,6 +116,33 @@ public static class MenuComposer
     }
 
     /// <summary>The More section, added after every other section when the menu doesn't have it</summary>
+    /// <summary>
+    /// Sections a module's Admin Shell plugin declares (plugin.json contributions.menuSections), for the items it
+    /// contributes. A section the menu already has keeps its own title, icon and place; a new one joins the menu like a
+    /// default section (patches and the menu editor can rename, move or hide it) and shows once it has items.
+    /// </summary>
+    public static void AddContributedSections(MenuDocument menu, IEnumerable<MenuSection> sections)
+    {
+        foreach (var section in (sections ?? []).Where(x => !string.IsNullOrWhiteSpace(x?.Id)))
+        {
+            if (FindSection(menu, section.Id) != null)
+            {
+                continue;
+            }
+
+            menu.Sections.Add(new MenuSection
+            {
+                Id = section.Id,
+                Title = section.Title ?? section.Id,
+                TitleKey = section.TitleKey,
+                Titles = section.Titles,
+                Icon = section.Icon,
+                Priority = section.Priority,
+                Permission = section.Permission,
+            });
+        }
+    }
+
     public static MenuSection MoreSection(MenuDocument menu)
     {
         var section = FindSection(menu, ModuleConstants.MoreSectionId);

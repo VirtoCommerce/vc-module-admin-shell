@@ -113,7 +113,9 @@
         "LOCK_CONFIRM": "Lukitaanko tili {name}? Käyttäjä ei voi kirjautua sisään.",
         "UNLOCK": "Avaa lukitus",
         "SEND_VERIFICATION": "Lähetä vahvistussähköposti uudelleen",
-        "VERIFICATION_SENT": "Vahvistussähköposti lähetetty"
+        "VERIFICATION_SENT": "Vahvistussähköposti lähetetty",
+        "LOGIN_ON_BEHALF": "Kirjaudu sisään puolesta",
+        "LOGIN_ON_BEHALF_NO_URL": "Kirjautuminen puolesta ei onnistu: käyttäjällä ei ole kauppaa tai kaupalla ei ole URL-osoitetta."
       },
       "APIKEYS": {
         "TITLE": "API-avaimet",

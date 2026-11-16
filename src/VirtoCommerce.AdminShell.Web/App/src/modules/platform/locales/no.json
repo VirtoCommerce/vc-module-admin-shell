@@ -113,7 +113,9 @@
         "LOCK_CONFIRM": "Vil du låse kontoen {name}? Brukeren vil ikke kunne logge inn.",
         "UNLOCK": "Lås opp",
         "SEND_VERIFICATION": "Send bekreftelses-e-post på nytt",
-        "VERIFICATION_SENT": "Bekreftelses-e-posten er sendt"
+        "VERIFICATION_SENT": "Bekreftelses-e-posten er sendt",
+        "LOGIN_ON_BEHALF": "Logg inn på vegne av",
+        "LOGIN_ON_BEHALF_NO_URL": "Kan ikke logge inn på vegne av brukeren: brukeren har ingen butikk, eller butikken har ingen URL."
       },
       "APIKEYS": {
         "TITLE": "API-nøkler",

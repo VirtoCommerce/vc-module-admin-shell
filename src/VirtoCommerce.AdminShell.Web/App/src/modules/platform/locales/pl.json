@@ -113,7 +113,9 @@
         "LOCK_CONFIRM": "Zablokować konto {name}? Użytkownik nie będzie mógł się zalogować.",
         "UNLOCK": "Odblokuj",
         "SEND_VERIFICATION": "Wyślij ponownie email weryfikacyjny",
-        "VERIFICATION_SENT": "Wysłano email weryfikacyjny"
+        "VERIFICATION_SENT": "Wysłano email weryfikacyjny",
+        "LOGIN_ON_BEHALF": "Zaloguj się w imieniu",
+        "LOGIN_ON_BEHALF_NO_URL": "Nie można zalogować się w imieniu użytkownika: użytkownik nie ma sklepu lub sklep nie ma adresu URL."
       },
       "APIKEYS": {
         "TITLE": "Klucze API",
