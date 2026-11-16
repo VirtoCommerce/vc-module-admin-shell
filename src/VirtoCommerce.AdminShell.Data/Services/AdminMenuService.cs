@@ -43,13 +43,13 @@ public class AdminMenuService(
         // every role counts, with or without a patch: a role that hides nothing keeps an item another role hides
         var rolePatches = Task.WhenAll(roles.Select(role => GetRolePatchAsync(role.Id)));
 
-        // administrators pass too, as for the endpoints' [Authorize]
+        // a permission held globally or in a scope shows the entry; administrators pass too
         return MenuComposer.Compose(
             GetDefaultMenu(discovered),
             await globalPatch,
             await rolePatches,
             await userPrefs,
-            principal.HasGlobalPermission,
+            permission => MenuAccess.HasPermission(principal, permission),
             (await recent).Select(x => x.Id).ToList(),
             await personalization);
     }

@@ -113,7 +113,9 @@
         "LOCK_CONFIRM": "Das Konto {name} sperren? Der Benutzer kann sich dann nicht mehr anmelden.",
         "UNLOCK": "Entsperren",
         "SEND_VERIFICATION": "Bestätigungs-E-Mail erneut senden",
-        "VERIFICATION_SENT": "Bestätigungs-E-Mail gesendet"
+        "VERIFICATION_SENT": "Bestätigungs-E-Mail gesendet",
+        "LOGIN_ON_BEHALF": "Im Namen von anmelden",
+        "LOGIN_ON_BEHALF_NO_URL": "Anmeldung im Namen nicht möglich: Der Benutzer hat keinen Shop, oder der Shop hat keine URL."
       },
       "APIKEYS": {
         "TITLE": "API-Schlüssel",

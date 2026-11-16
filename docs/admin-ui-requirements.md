@@ -140,7 +140,7 @@ All are blades in the workspace with a URL, and require the permission listed.
 | | Edit as JSON | `platform:setting:access` | The modified settings as one document; saving replaces them. |
 | **Security** | Security (workspace) | `platform:security:access` | Entry to users, roles, OAuth apps, sign-in log. |
 | | Users | `platform:security:access` | Search; filters (type, status, role, flags, last sign-in); add; delete selected. |
-| | User details | `platform:security:access` | Create and edit (name, email, type, roles, flags); change password; lock, unlock; verify email; delete; open API keys, sessions, changes and sign-in log of the user. |
+| | User details | `platform:security:access` | Create and edit (name, email, type, roles, flags; the Administrator flag only by an administrator); change password; lock, unlock; verify email; delete; login on behalf (`platform:security:loginOnBehalf`, the user's store site); open API keys, sessions, changes and sign-in log of the user. |
 | | Password | `platform:security:update` | Set or reset a user's password with the platform's rules. |
 | | API keys | `platform:security:access` | Generate, show once, delete. |
 | | Sessions | `platform:security:access` | Active sessions; terminate one or all. |
@@ -169,7 +169,7 @@ All are blades in the workspace with a URL, and require the permission listed.
 
 ### 7.2 Navigation and menu
 
-- **NAV-1** The menu MUST be composed on the server, in this order: the default menu (platform and modules' contributions) → global patch → role patches (an item stays visible if any of the user's roles keeps it) → the user's own pins and hidden items. Then it is filtered by the user's permissions.
+- **NAV-1** The menu MUST be composed on the server, in this order: the default menu (platform and modules' contributions) → global patch → role patches (an item stays visible if any of the user's roles keeps it) → the user's own pins and hidden items. Then it is filtered by the user's permissions: an entry shows for a permission held globally or in a scope (the screen applies the scope).
 - **NAV-2** Item targets MUST include: a UI screen (route), an AngularJS screen (state), an embedded app, and an external URL (new tab).
 - **NAV-3** A module's item that `replaces` an AngularJS item MUST take its place, its pins and its recent uses.
 - **NAV-4** Home MUST show the user's recent places, ranked by use with decay over time (current: 30 kept, half-life 7 days).
@@ -258,7 +258,7 @@ Modules depend on these contracts; a new implementation MUST keep them, or ship 
 |---|---|---|
 | EXT-1 | **Plugins** | A module ships a UI plugin in `{module}/plugins/admin-shell/` with a `plugin.json` (remote name, exposed entry, contributions). The host lists installed plugins from the server, loads them at runtime (Module Federation today), and installs each one into the app. A plugin that fails to load MUST NOT break the shell or other plugins. |
 | EXT-2 | **Screens** | A plugin registers blades by name with a URL segment, a permission list and whether it is a workspace; other code opens them by name with a record id, query and options. |
-| EXT-3 | **Menu contributions** | `contributions.menu` in `plugin.json`: id, section, title, icon, route, permission, priority, and `replaces` for an AngularJS item. |
+| EXT-3 | **Menu contributions** | `contributions.menu` in `plugin.json`: id, section, title, icon, route, permission, priority, and `replaces` for an AngularJS item; `contributions.menuSections`: the module's own rail sections for them. |
 | EXT-4 | **Global search providers** | `registerProvider({ id, title, icon, order, minLength, aliases, permission, search(query, context) })`, results with title, description, icon and an open action. |
 | EXT-5 | **Menu counters** | `register({ itemId, hint, permission, count({ signal }) })`, polled by the host while the tab is visible. |
 | EXT-6 | **Dashboard widgets** | `registerDashboardWidget({ id, name, component, size, position, permissions })`. |

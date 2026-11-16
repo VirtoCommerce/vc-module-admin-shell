@@ -113,7 +113,9 @@
         "LOCK_CONFIRM": "アカウント {name} をロックしますか？このユーザーはサインインできなくなります。",
         "UNLOCK": "ロック解除",
         "SEND_VERIFICATION": "確認メールを再送信",
-        "VERIFICATION_SENT": "確認メールを送信しました"
+        "VERIFICATION_SENT": "確認メールを送信しました",
+        "LOGIN_ON_BEHALF": "代理ログイン",
+        "LOGIN_ON_BEHALF_NO_URL": "代理ログインできません: ユーザーにストアがないか、ストアに URL が設定されていません。"
       },
       "APIKEYS": {
         "TITLE": "APIキー",
