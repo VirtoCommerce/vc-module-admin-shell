@@ -15,6 +15,7 @@ Source: `src/VirtoCommerce.AdminShell.Data/Services/DefaultMenuBuilder.cs` (read
 | `Content/default-menu.json` (this module) | Admin Shell developers | Sections and groups; the screens of Virto Commerce modules (each with its plugin's Vue `route` and its AngularJS `target`, see [below](#screens-of-the-default-menu)), the platform's Vue screens (`platform.*`), known apps. An item whose `moduleId` isn't installed is dropped. |
 | Installed apps | module developers (`module.manifest`) | Each app with `<placement>MainMenu</placement>` that the default menu doesn't place → *Apps* section. See [Embedded apps](embedded-apps.md). |
 | `plugin.json` → `contributions.menu` | module developers | This guide. A contribution for a screen the default menu places (same id, one of its `aliases`, or the id it `replaces`) adds nothing: the default menu keeps the title, place and route. |
+| `plugin.json` → `contributions.menuSections` | module developers | Sections for the module's own items, see [Sections of a plugin](#sections-of-a-plugin). |
 | Global and role patches | system integrators, customers | Add, rename, move, hide. See [Menu layers](menu-layers.md). |
 
 > vc-shell's own `defineBlade({ menuItem })` doesn't place a blade in the Admin Shell's menu: declare entries in `plugin.json`. A workspace blade that no entry opens isn't lost, though: the shell finds it and lists it in *More* with its `menuItem` title and icon ([discovered blades](menu-layers.md#discovered-blades)).
@@ -54,9 +55,9 @@ The contribution is read only when both `plugin.json` and `remoteEntry.js` are i
 | `titleKey` | string | Translation key of the label in the plugin's locales (`STORES.MENU.TITLE`); without one the shell looks for `MENU.ITEMS.<id>` in its menu file, then shows `title`. See [Localization](localization.md#menu). |
 | `icon` | string | A vc-shell icon (`lucide-*`). |
 | `iconUrl` | string | An image instead of the icon. |
-| `sectionId` | string | The section (rail entry). A section the menu doesn't have, or none: *More*, after *Apps*, where a patch can move it. Ignored when the item replaces another: it takes that item's section. |
+| `sectionId` | string | The section (rail entry): one of the default menu's or one the plugin declares in `menuSections`. A section the menu doesn't have, or none: *More*, after *Apps*, where a patch can move it. Ignored when the item replaces another: it takes that item's section. |
 | `priority` | int | Order in the section, lower first; ties by title. The default menu's items are 100 apart (100, 200, 300… in each section), so `250` goes between the second and the third. Ignored when the item replaces another: it takes that item's priority. |
-| `permission` | string | The item is hidden without it. Use the module's `:access` permission. |
+| `permission` | string | The item is hidden without it. Use the module's `:access` permission. A permission granted in a scope (only some stores, only the user's own organizations) shows the item too: the screen and its API apply the scope. |
 | `route` | string | Shorthand for `target: { "type": "vue", "route": … }`. |
 | `target` | object | What the item opens, when it isn't a Vue route of the plugin (below). |
 | `replaces` | string | Id of the item this one supersedes, usually `legacy.<id>`. |
@@ -87,6 +88,34 @@ The contribution is read only when both `plugin.json` and `remoteEntry.js` are i
 | `more` | More | 800 | Only when it has items: contributions without a known section, [discovered blades](menu-layers.md#discovered-blades) |
 
 Sections and items are 100 apart so a patch or a seed can put an entry between two (`650`: a section between Configuration and Apps).
+
+### Sections of a plugin
+
+A module whose screens belong together in a rail entry of their own declares it next to its items, under `contributions.menuSections`:
+
+```json
+{
+  "contributions": {
+    "menuSections": [
+      { "id": "cloud", "title": "Cloud", "titleKey": "SAAS.MENU.CLOUD", "icon": "lucide-cloud", "priority": 150 }
+    ],
+    "menu": [
+      { "id": "saas.environments", "sectionId": "cloud", "title": "Environments", "icon": "lucide-server", "route": "/saas", "permission": "saas:env:access", "priority": 100 }
+    ]
+  }
+}
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | string | Required. The `sectionId` of the plugin's items. |
+| `title` | string | Label, in English. |
+| `titleKey` | string | Translation key of the label in the plugin's locales; without one the shell looks for `MENU.SECTIONS.<id>` in its menu file, then shows `title`. |
+| `icon` | string | A vc-shell icon (`lucide-*`). |
+| `priority` | int | Place on the rail, lower first (see the default menu's sections above: `150` goes between Home and Products). |
+| `permission` | string | The section is hidden without it. A section also hides while none of its items is visible to the user. |
+
+A section the menu already has (the default menu's, another plugin's) keeps its own title, icon and place: a plugin can't redefine it. A plugin's section is part of the default menu, so global and role patches and the menu editor can rename, move or hide it like any other.
 
 ### Groups
 
@@ -133,6 +162,6 @@ If the replaced id is an item of `default-menu.json` (or one of its `aliases`), 
 
 ## Testing
 
-- `POST /api/admin-shell/menu/default` (permission `admin-shell:menu:manage`, body `{}`) shows the default menu with your item; the AngularJS one is gone if `replaces` is set.
+- `POST /api/admin-shell/menu/default` (permission `admin-shell:menu:manage`, body `{}`) shows the default menu with your item (and your section); the AngularJS one is gone if `replaces` is set.
 - `POST /api/admin-shell/menu` (body `{}`) shows the effective menu of the signed-in user.
 - In the shell: the item is in its section and group, it opens the screen, and a user without the permission doesn't see it.

@@ -113,7 +113,9 @@
         "LOCK_CONFIRM": "Vill du låsa kontot {name}? Användaren kommer inte att kunna logga in.",
         "UNLOCK": "Lås upp",
         "SEND_VERIFICATION": "Skicka verifieringsmejlet igen",
-        "VERIFICATION_SENT": "Verifieringsmejlet har skickats"
+        "VERIFICATION_SENT": "Verifieringsmejlet har skickats",
+        "LOGIN_ON_BEHALF": "Logga in å andras vägnar",
+        "LOGIN_ON_BEHALF_NO_URL": "Det går inte att logga in för användarens räkning: användaren har ingen butik, eller butiken har ingen URL."
       },
       "APIKEYS": {
         "TITLE": "API-nycklar",

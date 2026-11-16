@@ -113,7 +113,9 @@
         "LOCK_CONFIRM": "Bloccare l'account {name}? L'utente non potrà più accedere.",
         "UNLOCK": "Sblocca",
         "SEND_VERIFICATION": "Invia di nuovo l'email di verifica",
-        "VERIFICATION_SENT": "Email di verifica inviata"
+        "VERIFICATION_SENT": "Email di verifica inviata",
+        "LOGIN_ON_BEHALF": "Accedi per conto di",
+        "LOGIN_ON_BEHALF_NO_URL": "Impossibile accedere per conto dell'utente: non ha un negozio, oppure il negozio non ha un URL."
       },
       "APIKEYS": {
         "TITLE": "Chiavi API",

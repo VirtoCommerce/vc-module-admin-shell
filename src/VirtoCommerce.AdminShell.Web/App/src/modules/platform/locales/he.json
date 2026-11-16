@@ -113,7 +113,9 @@
         "LOCK_CONFIRM": "האם לנעול את החשבון {name}? המשתמש לא יוכל להיכנס.",
         "UNLOCK": "ביטול נעילה",
         "SEND_VERIFICATION": "שליחה חוזרת של דוא״ל אימות",
-        "VERIFICATION_SENT": "דוא״ל האימות נשלח"
+        "VERIFICATION_SENT": "דוא״ל האימות נשלח",
+        "LOGIN_ON_BEHALF": "כניסה בשם המשתמש",
+        "LOGIN_ON_BEHALF_NO_URL": "לא ניתן להיכנס בשם המשתמש: אין לו חנות, או שלחנות אין כתובת URL."
       },
       "APIKEYS": {
         "TITLE": "מפתחות API",

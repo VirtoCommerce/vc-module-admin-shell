@@ -113,7 +113,9 @@
         "LOCK_CONFIRM": "¿Bloquear la cuenta {name}? El usuario no podrá iniciar sesión.",
         "UNLOCK": "Desbloquear",
         "SEND_VERIFICATION": "Reenviar correo de verificación",
-        "VERIFICATION_SENT": "Correo de verificación enviado"
+        "VERIFICATION_SENT": "Correo de verificación enviado",
+        "LOGIN_ON_BEHALF": "Iniciar sesión en nombre de",
+        "LOGIN_ON_BEHALF_NO_URL": "No se puede iniciar sesión en nombre del usuario: no tiene tienda o la tienda no tiene URL."
       },
       "APIKEYS": {
         "TITLE": "Claves API",

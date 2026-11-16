@@ -113,7 +113,9 @@
         "LOCK_CONFIRM": "锁定账户 {name}？该用户将无法登录。",
         "UNLOCK": "解锁",
         "SEND_VERIFICATION": "重新发送验证邮件",
-        "VERIFICATION_SENT": "验证邮件已发送"
+        "VERIFICATION_SENT": "验证邮件已发送",
+        "LOGIN_ON_BEHALF": "代表登录",
+        "LOGIN_ON_BEHALF_NO_URL": "无法代为登录：该用户没有商店，或商店未设置 URL。"
       },
       "APIKEYS": {
         "TITLE": "API 密钥",

@@ -113,7 +113,9 @@
         "LOCK_CONFIRM": "Verrouiller le compte {name} ? L'utilisateur ne pourra plus se connecter.",
         "UNLOCK": "Déverrouiller",
         "SEND_VERIFICATION": "Renvoyer l'email de vérification",
-        "VERIFICATION_SENT": "Email de vérification envoyé"
+        "VERIFICATION_SENT": "Email de vérification envoyé",
+        "LOGIN_ON_BEHALF": "Se connecter au nom de",
+        "LOGIN_ON_BEHALF_NO_URL": "Impossible de se connecter au nom de l'utilisateur : il n'a pas de boutique, ou la boutique n'a pas d'URL."
       },
       "APIKEYS": {
         "TITLE": "Clés API",

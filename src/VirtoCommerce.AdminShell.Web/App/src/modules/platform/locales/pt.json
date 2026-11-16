@@ -113,7 +113,9 @@
         "LOCK_CONFIRM": "Bloquear a conta {name}? O usuário não poderá entrar.",
         "UNLOCK": "Desbloquear",
         "SEND_VERIFICATION": "Reenviar e-mail de verificação",
-        "VERIFICATION_SENT": "E-mail de verificação enviado"
+        "VERIFICATION_SENT": "E-mail de verificação enviado",
+        "LOGIN_ON_BEHALF": "Login em nome de",
+        "LOGIN_ON_BEHALF_NO_URL": "Não é possível entrar em nome do usuário: ele não tem loja ou a loja não tem URL."
       },
       "APIKEYS": {
         "TITLE": "Chaves API",
