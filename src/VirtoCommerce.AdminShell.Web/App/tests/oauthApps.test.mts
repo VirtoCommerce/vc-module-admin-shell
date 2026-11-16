@@ -5,6 +5,7 @@ import { afterEach, test } from "node:test";
 import {
   findApp,
   hasGrantType,
+  isSelfRegistered,
   otherPermissions,
   registrationOf,
   requiresPkce,
@@ -100,19 +101,22 @@ test("the registration is the vc_registration property of a self-registered clie
     { properties: { vc_registration: "client_id_metadata_document" } },
     { properties: { vc_registration: "dynamic_registration" } },
     { properties: { vc_registration: "something else" } },
+    { properties: { vc_registration: "" } },
+    { properties: { vc_registration: 1 } },
     { properties: {} },
     {},
   ];
 
-  const registrations = apps.map(registrationOf);
-
-  assert.deepEqual(registrations, [
+  assert.deepEqual(apps.map(registrationOf), [
     "client_id_metadata_document",
     "dynamic_registration",
     undefined,
     undefined,
     undefined,
+    undefined,
+    undefined,
   ]);
+  assert.deepEqual(apps.map(isSelfRegistered), [true, true, true, false, false, false, false]);
 });
 
 test("PKCE is the ft:pkce requirement", () => {

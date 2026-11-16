@@ -46,7 +46,13 @@ const REGISTRATION_PROPERTY = "vc_registration";
 const REGISTRATION_TYPES = ["client_id_metadata_document", "dynamic_registration"] as const;
 export type RegistrationType = (typeof REGISTRATION_TYPES)[number];
 
-/** Undefined when an administrator registered the client */
+/** The platform treats any string in the property as a self-registration, of a type the screen knows or not */
+export const isSelfRegistered = (app: OAuthApp) => {
+  const value = app.properties?.[REGISTRATION_PROPERTY];
+  return typeof value === "string" && value !== "";
+};
+
+/** The known type of the self-registration; undefined when an administrator registered the client or the type is unknown */
 export function registrationOf(app: OAuthApp): RegistrationType | undefined {
   const value = app.properties?.[REGISTRATION_PROPERTY];
   return REGISTRATION_TYPES.find((x) => x === value);

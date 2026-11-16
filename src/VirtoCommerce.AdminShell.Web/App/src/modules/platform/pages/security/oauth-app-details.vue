@@ -22,6 +22,7 @@
               v-model="item.displayName"
               :label="$t('PLATFORM.SECURITY.OAUTH.NAME')"
               required
+              :disabled="readonly"
               :error-message="item.displayName ? undefined : $t('PLATFORM.COMMON.REQUIRED')"
             />
           </VcCol>
@@ -51,7 +52,7 @@
               :hint="
                 item.clientType ? $t(`PLATFORM.SECURITY.OAUTH.CLIENT_TYPES.${upper(item.clientType)}_HINT`) : undefined
               "
-              :disabled="!isNew"
+              :disabled="!isNew || readonly"
               :clearable="false"
               @update:model-value="setClientType"
             />
@@ -63,6 +64,7 @@
               :options="applicationTypeOptions"
               :hint="$t(`PLATFORM.SECURITY.OAUTH.APPLICATION_TYPES.${upper(item.applicationType || 'web')}_HINT`)"
               :placeholder="$t('PLATFORM.SECURITY.OAUTH.APPLICATION_TYPES.WEB')"
+              :disabled="readonly"
               :clearable="false"
             />
           </VcCol>
@@ -95,12 +97,14 @@
               :options="consentTypeOptions"
               :hint="consentHint"
               :placeholder="$t('PLATFORM.SECURITY.OAUTH.CONSENT_TYPES.EXPLICIT')"
+              :disabled="readonly"
               :clearable="false"
             />
             <VcSwitch
               :model-value="requiresPkce(item)"
               :label="$t('PLATFORM.SECURITY.OAUTH.PKCE')"
               :tooltip="$t('PLATFORM.SECURITY.OAUTH.PKCE_HINT')"
+              :disabled="readonly"
               @update:model-value="(on?: boolean) => setPkce(item, !!on)"
             />
             <VcBanner
@@ -115,6 +119,7 @@
               :options="grantTypeOptions"
               :error-message="hasGrantType(item) ? undefined : $t('PLATFORM.SECURITY.OAUTH.GRANT_TYPE_REQUIRED')"
               orientation="horizontal"
+              :disabled="readonly"
               @update:model-value="(values: string[]) => setChecked(GRANT_TYPES, values)"
             />
             <VcBanner
@@ -129,6 +134,7 @@
               :hint="$t('PLATFORM.SECURITY.OAUTH.SCOPES_HINT')"
               :options="scopeOptions"
               orientation="horizontal"
+              :disabled="readonly"
               @update:model-value="(values: string[]) => setChecked(SCOPES, values)"
             />
             <VcMultivalue
@@ -138,6 +144,7 @@
               :label="$t('PLATFORM.SECURITY.OAUTH.REDIRECT_URIS')"
               :placeholder="$t('PLATFORM.SECURITY.OAUTH.URI_PLACEHOLDER')"
               :error-message="uriError(item.redirectUris, baseline.redirectUris)"
+              :disabled="readonly"
             />
             <VcBanner
               v-if="hasPermission(item, AUTHORIZATION_CODE) && !item.redirectUris?.length"
@@ -158,6 +165,7 @@
               :label="$t('PLATFORM.SECURITY.OAUTH.POST_LOGOUT_URIS')"
               :placeholder="$t('PLATFORM.SECURITY.OAUTH.URI_PLACEHOLDER')"
               :error-message="uriError(item.postLogoutRedirectUris, baseline.postLogoutRedirectUris)"
+              :disabled="readonly"
             />
           </div>
         </VcCard>
@@ -169,6 +177,7 @@
               v-for="resource in resources"
               :key="resource.uri"
               :model-value="selectedResources.includes(resource.uri)"
+              :disabled="readonly"
               @update:model-value="(on: boolean | boolean[]) => toggleResource(resource.uri, on === true)"
             >
               {{ resourceTitle(resource) }}
@@ -199,6 +208,7 @@
               :label="$t('PLATFORM.SECURITY.OAUTH.OTHER_RESOURCES')"
               :placeholder="$t('PLATFORM.SECURITY.OAUTH.URI_PLACEHOLDER')"
               :error-message="resourceError"
+              :disabled="readonly"
             />
             <VcBanner
               v-if="unregisteredResources.length"
@@ -220,6 +230,7 @@
               option-label="id"
               option-value="id"
               :placeholder="$t('PLATFORM.SECURITY.OAUTH.PERMISSION_PLACEHOLDER')"
+              :disabled="readonly"
             />
           </div>
         </VcCard>
@@ -271,9 +282,9 @@ import {
   findApp,
   hasGrantType,
   hasPermission,
+  isSelfRegistered,
   oauthResources,
   otherPermissions,
-  registrationOf,
   requiresPkce,
   resourcesOf,
   saveApp,
@@ -434,7 +445,8 @@ const valid = computed(
 );
 
 // the platform refuses to save a self-registered client
-const selfRegistration = computed(() => registrationOf(item.value));
+const selfRegistration = computed(() => isSelfRegistered(item.value));
+const readonly = computed(() => selfRegistration.value);
 
 const form = usePlatformBladeForm({
   data: item,

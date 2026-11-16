@@ -38,9 +38,9 @@
       >
         <template #body="{ data }">
           <VcStatus
-            v-if="registrationOf(data)"
+            v-if="isSelfRegistered(data)"
             variant="warning"
-            :title="$t(`PLATFORM.SECURITY.OAUTH.REGISTRATIONS.${registrationOf(data)!.toUpperCase()}`)"
+            :title="registrationTitle(data)"
           >
             {{ $t("PLATFORM.SECURITY.OAUTH.REGISTRATIONS.SELF") }}
           </VcStatus>
@@ -66,7 +66,7 @@ import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { refreshItem } from "../../composables/blade";
 import { PAGE_SIZE } from "../../composables/list";
-import { registrationOf, type OAuthApp } from "../../composables/oauth-apps";
+import { isSelfRegistered, registrationOf, type OAuthApp } from "../../composables/oauth-apps";
 
 defineBlade({
   url: "/oauth-apps",
@@ -107,6 +107,12 @@ const { loading: deleteLoading, action: remove } = useAsync<string[]>(async (cli
 });
 
 const loading = useLoading(searchLoading, deleteLoading);
+
+// a registration type the screen doesn't know shows the badge without a tooltip
+function registrationTitle(app: OAuthApp) {
+  const type = registrationOf(app);
+  return type ? t(`PLATFORM.SECURITY.OAUTH.REGISTRATIONS.${type.toUpperCase()}`) : undefined;
+}
 
 const globalFilters = computed(() => [
   {

@@ -233,8 +233,8 @@
         "REGISTRATIONS": {
           "SELF": "Zarejestrowana samodzielnie",
           "ADMINISTRATOR": "Przez administratora",
-          "CLIENT_ID_METADATA_DOCUMENT": "Samodzielnie: dokument metadanych",
-          "DYNAMIC_REGISTRATION": "Samodzielnie: dynamicznie"
+          "CLIENT_ID_METADATA_DOCUMENT": "Zarejestrowana samodzielnie: dokument metadanych",
+          "DYNAMIC_REGISTRATION": "Zarejestrowana samodzielnie: dynamicznie"
         },
         "SELF_REGISTERED_READONLY": "Ta aplikacja zarejestrowała się samodzielnie: podąża za swoim dokumentem metadanych lub rejestracją, więc nie można jej tu zmienić. Usuń ją, aby odłączyć klienta."
       },
