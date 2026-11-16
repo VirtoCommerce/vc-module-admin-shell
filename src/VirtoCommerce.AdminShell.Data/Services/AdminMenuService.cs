@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using VirtoCommerce.AdminShell.Core;
 using VirtoCommerce.AdminShell.Core.Models;
 using VirtoCommerce.AdminShell.Core.Services;
+using VirtoCommerce.Platform.Core;
 using VirtoCommerce.Platform.Core.DistributedLock;
 using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
@@ -49,9 +50,27 @@ public class AdminMenuService(
             await globalPatch,
             await rolePatches,
             await userPrefs,
-            principal.HasGlobalPermission,
+            permission => HasPermissionInAnyScope(principal, permission),
             (await recent).Select(x => x.Id).ToList(),
             await personalization);
+    }
+
+    /// <summary>
+    /// A menu item is navigation: it shows when the user holds its permission globally or in some scope (a scoped grant
+    /// is the claim "name|[scopes]", e.g. customer:read limited to the user's organizations). The screen and its API
+    /// still apply the scope.
+    /// </summary>
+    private static bool HasPermissionInAnyScope(ClaimsPrincipal principal, string permission)
+    {
+        if (principal.HasGlobalPermission(permission))
+        {
+            return true;
+        }
+
+        var scopedPrefix = permission + "|";
+        return principal.Claims.Any(c =>
+            c.Type == PlatformConstants.Security.Claims.PermissionClaimType &&
+            c.Value.StartsWith(scopedPrefix, StringComparison.Ordinal));
     }
 
     /// <summary>What users may change in their menu (platform settings, so they can also be set per environment)</summary>
