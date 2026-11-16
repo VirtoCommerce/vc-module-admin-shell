@@ -108,7 +108,6 @@ const { loading: deleteLoading, action: remove } = useAsync<string[]>(async (cli
 
 const loading = useLoading(searchLoading, deleteLoading);
 
-// a registration type the screen doesn't know shows the badge without a tooltip
 function registrationTitle(app: OAuthApp) {
   const type = registrationOf(app);
   return type ? t(`PLATFORM.SECURITY.OAUTH.REGISTRATIONS.${type.toUpperCase()}`) : undefined;
