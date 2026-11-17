@@ -158,7 +158,10 @@
         "DELETE_CONFIRM": "Usunąć rolę {name}?",
         "SCOPE_TEXT_HINT": "Wartości zakresu (identyfikatory), jedna na wpis",
         "SCOPE_TEXT_PLACEHOLDER": "Wpisz wartość i naciśnij Enter",
-        "SCOPES_ALL": "Bez ograniczeń (kliknij, aby dodać zakresy)"
+        "SCOPES_ALL": "Bez ograniczeń (kliknij, aby dodać zakresy)",
+        "DASHBOARD": "Pulpit",
+        "DASHBOARD_HINT": "Widżety, które użytkownicy tej roli widzą na stronie głównej. Użytkownik nadal widzi widżet, który pokazuje inna z jego ról, a administratorzy widzą wszystkie widżety.",
+        "DASHBOARD_UNAVAILABLE": "Nie można odczytać ustawień pulpitu tej roli, więc nie można ich tutaj zmienić."
       },
       "OAUTH": {
         "TITLE": "Aplikacje OAuth",

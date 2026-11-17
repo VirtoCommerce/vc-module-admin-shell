@@ -158,7 +158,10 @@
         "DELETE_CONFIRM": "删除角色 {name}？",
         "SCOPE_TEXT_HINT": "范围值（ID），每项一个",
         "SCOPE_TEXT_PLACEHOLDER": "输入值后按 Enter",
-        "SCOPES_ALL": "不限（点击添加范围）"
+        "SCOPES_ALL": "不限（点击添加范围）",
+        "DASHBOARD": "仪表板",
+        "DASHBOARD_HINT": "此角色的用户在主页上看到的小组件。用户的其他角色显示的小组件仍会显示，管理员可看到所有小组件。",
+        "DASHBOARD_UNAVAILABLE": "无法读取该角色的仪表板设置，因此无法在此处更改。"
       },
       "OAUTH": {
         "TITLE": "OAuth 应用",

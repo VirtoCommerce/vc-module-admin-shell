@@ -80,7 +80,7 @@ Each scenario lists its acceptance criteria. Together they are the acceptance te
 
 **S-06 Add a user.** A security administrator creates a user (name, email, type), assigns roles, sends an invitation or sets a password, and can later lock or unlock the user, verify their email, reset their password, see their API keys, sessions, changes and sign-ins, and terminate sessions.
 
-**S-07 Create a role with scoped permissions.** A security administrator creates a role, picks permissions grouped by module, limits some to scopes (a store, a catalog, …), and assigns the role to users. Removing a permission takes effect for every user of the role.
+**S-07 Create a role with scoped permissions.** A security administrator creates a role, picks permissions grouped by module, limits some to scopes (a store, a catalog, …), and assigns the role to users. Removing a permission takes effect for every user of the role. The administrator also chooses which dashboard widgets the role's users see; a user keeps a widget that another of their roles shows.
 
 **S-08 Integrate a system.** A developer generates an API key for a technical user, or registers an OAuth application (client id, secret, grant types). Secrets are shown once.
 
@@ -261,7 +261,7 @@ Modules depend on these contracts; a new implementation MUST keep them, or ship 
 | EXT-3 | **Menu contributions** | `contributions.menu` in `plugin.json`: id, section, title, icon, route, permission, priority, and `replaces` for an AngularJS item; `contributions.menuSections`: the module's own rail sections for them. |
 | EXT-4 | **Global search providers** | `registerProvider({ id, title, icon, order, minLength, aliases, permission, search(query, context) })`, results with title, description, icon and an open action. |
 | EXT-5 | **Menu counters** | `register({ itemId, hint, permission, count({ signal }) })`, polled by the host while the tab is visible. |
-| EXT-6 | **Dashboard widgets** | `registerDashboardWidget({ id, name, component, size, position, permissions })`. |
+| EXT-6 | **Dashboard widgets** | `registerDashboardWidget({ id, name, component, size, position, permissions })`. A role can hide any widget by id (`AdminShell.Dashboard.Role`, [dashboard-widgets.md](dashboard-widgets.md#widgets-per-role)). |
 | EXT-7 | **Blade widgets** | Widgets on a module's own blades, or on blades of modules it depends on, by blade name; the blade publishes its record to widgets. |
 | EXT-8 | **Shared widgets** | A module provides a widget by id; the module that owns a blade places it, with props. A placed widget shows only when its provider is installed. |
 | EXT-9 | **Installed modules** | `isInstalled(id)`, `whenInstalled(id)`, `version(id)`, so plugins use optional dependencies only when present. |

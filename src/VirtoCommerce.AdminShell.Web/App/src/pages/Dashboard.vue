@@ -22,7 +22,9 @@
     </button>
     <!-- the company's message (white-labeling), above the widgets -->
     <WelcomeCard />
+    <!-- after the user's roles' hidden widgets are known, so a hidden widget never shows and its room is never kept -->
     <DraggableDashboard
+      v-if="hidden"
       :key="generation"
       ref="dashboard"
       resizable
@@ -32,16 +34,31 @@
 </template>
 
 <script lang="ts" setup>
-import { DraggableDashboard, usePopup } from "@vc-shell/framework";
+import { DashboardServiceKey, DraggableDashboard, useDashboard, usePopup } from "@vc-shell/framework";
 import { VcIcon } from "@vc-shell/framework/ui";
 import type { GridStack } from "gridstack";
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, provide, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { adminDashboardApi } from "../api/adminDashboard";
 import { branding } from "../shell/branding";
 import WelcomeCard from "../shell/dashboard/WelcomeCard.vue";
 
 const { t } = useI18n({ useScope: "global" });
 const { showConfirmation } = usePopup();
+
+// Widgets per role (the role screen's Dashboard section): the grid gets the app's dashboard service with the widgets the
+// user's roles hide left out, so the others close up into their room, and Reset layout arranges only what shows. Widgets
+// still check their own permissions in the service. If the list can't be read, every widget shows.
+const hidden = ref<ReadonlySet<string>>();
+const widgets = useDashboard();
+provide(DashboardServiceKey, {
+  ...widgets,
+  getWidgets: () => widgets.getWidgets().filter((widget) => !hidden.value?.has(widget.id)),
+});
+adminDashboardApi
+  .getMine()
+  .then((value) => (hidden.value = new Set(value?.hiddenWidgets ?? [])))
+  .catch(() => (hidden.value = new Set()));
 const dashboard = ref<InstanceType<typeof DraggableDashboard> | null>(null);
 // with the welcome card above the grid, the page scrolls as one (the card, then the widgets)
 const hasWelcome = computed(() => !!branding.value.home.welcome);

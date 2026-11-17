@@ -158,7 +158,10 @@
         "DELETE_CONFIRM": "Delete the role {name}?",
         "SCOPE_TEXT_HINT": "Scope values (ids), one per entry",
         "SCOPE_TEXT_PLACEHOLDER": "Type a value and press Enter",
-        "SCOPES_ALL": "Not limited (click to add scopes)"
+        "SCOPES_ALL": "Not limited (click to add scopes)",
+        "DASHBOARD": "Dashboard",
+        "DASHBOARD_HINT": "The widgets this role's users see on Home. A user still sees a widget that another of their roles shows, and administrators see every widget.",
+        "DASHBOARD_UNAVAILABLE": "The role's dashboard settings can't be read, so they can't be changed here."
       },
       "OAUTH": {
         "TITLE": "OAuth applications",

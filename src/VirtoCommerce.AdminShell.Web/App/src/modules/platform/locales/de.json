@@ -158,7 +158,10 @@
         "DELETE_CONFIRM": "Die Rolle {name} löschen?",
         "SCOPE_TEXT_HINT": "Bereichswerte (IDs), einer pro Eintrag",
         "SCOPE_TEXT_PLACEHOLDER": "Wert eingeben und Enter drücken",
-        "SCOPES_ALL": "Nicht beschränkt (klicken, um Bereiche hinzuzufügen)"
+        "SCOPES_ALL": "Nicht beschränkt (klicken, um Bereiche hinzuzufügen)",
+        "DASHBOARD": "Dashboard",
+        "DASHBOARD_HINT": "Die Widgets, die Benutzer dieser Rolle auf der Startseite sehen. Ein Benutzer sieht ein Widget weiterhin, wenn eine andere seiner Rollen es anzeigt; Administratoren sehen alle Widgets.",
+        "DASHBOARD_UNAVAILABLE": "Die Dashboard-Einstellungen der Rolle können nicht gelesen werden und lassen sich daher hier nicht ändern."
       },
       "OAUTH": {
         "TITLE": "OAuth-Anwendungen",

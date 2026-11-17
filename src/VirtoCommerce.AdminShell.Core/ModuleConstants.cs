@@ -88,6 +88,18 @@ public static class ModuleConstants
             DefaultValue = "{}",
         };
 
+        /// <summary>
+        /// Per-role dashboard (tenant type "Role", object id = role id): the widgets the role's users don't need, e.g.
+        /// {"hiddenWidgets":["shell-alerts"]}. Edited on the role's screen; nothing is hidden by default.
+        /// </summary>
+        public static SettingDescriptor RoleDashboard { get; } = new()
+        {
+            Name = "AdminShell.Dashboard.Role",
+            GroupName = "Admin Shell|Dashboard",
+            ValueType = SettingValueType.Json,
+            DefaultValue = "{}",
+        };
+
         /// <summary>Per-user personalization: pinned, hidden and ordered items. Hidden so the AngularJS profile save can't overwrite it.</summary>
         public static SettingDescriptor UserMenu { get; } = new()
         {
@@ -273,7 +285,7 @@ public static class ModuleConstants
         ];
 
         public static IEnumerable<SettingDescriptor> ModuleSettings => [GlobalMenu, .. PersonalizationSettings, .. BrandingSettings];
-        public static IEnumerable<SettingDescriptor> RoleSettings => [RoleMenu];
+        public static IEnumerable<SettingDescriptor> RoleSettings => [RoleMenu, RoleDashboard];
         public static IEnumerable<SettingDescriptor> UserSettings => [UserMenu, UserRecent, UserAppearance, UserTheme];
     }
 }

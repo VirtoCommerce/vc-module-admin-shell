@@ -52,6 +52,26 @@
             />
           </VcDataTable>
         </VcCard>
+        <!-- the widgets the role's users see on Home (Admin Shell's dashboard setting of the role) -->
+        <VcCard :header="$t('PLATFORM.SECURITY.ROLE.DASHBOARD')">
+          <div class="role-dashboard">
+            <p class="role-dashboard__hint">{{ $t("PLATFORM.SECURITY.ROLE.DASHBOARD_HINT") }}</p>
+            <p
+              v-if="!dashboardReadable"
+              class="role-dashboard__hint"
+            >
+              {{ $t("PLATFORM.SECURITY.ROLE.DASHBOARD_UNAVAILABLE") }}
+            </p>
+            <VcSwitch
+              v-for="widget in dashboardWidgets"
+              :key="widget.id"
+              :model-value="!hiddenWidgets.includes(widget.id)"
+              :label="widget.label"
+              :disabled="!canEditDashboard"
+              @update:model-value="(shown?: boolean) => setShown(widget.id, !!shown)"
+            />
+          </div>
+        </VcCard>
       </VcForm>
     </VcContainer>
   </VcBlade>
@@ -64,6 +84,7 @@ import {
   useApiClient,
   useAsync,
   useBlade,
+  useDashboard,
   useLoading,
   usePermissions,
   usePopup,
@@ -72,9 +93,20 @@ import {
   type PermissionScope,
   type Role,
 } from "@vc-shell/framework";
-import { VcBlade, VcCard, VcColumn, VcContainer, VcDataTable, VcForm, VcInput, VcTextarea } from "@vc-shell/framework/ui";
+import {
+  VcBlade,
+  VcCard,
+  VcColumn,
+  VcContainer,
+  VcDataTable,
+  VcForm,
+  VcInput,
+  VcSwitch,
+  VcTextarea,
+} from "@vc-shell/framework/ui";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { adminDashboardApi } from "../../../../api/adminDashboard";
 import { saveResetItems, usePlatformBladeForm } from "../../composables/blade";
 import { ensureSucceeded, registeredPermissions, type CatalogPermission } from "../../composables/security";
 
@@ -92,7 +124,7 @@ interface PermissionRow {
   scopes: string;
 }
 
-const { t } = useI18n({ useScope: "global" });
+const { t, te } = useI18n({ useScope: "global" });
 const { param, openBlade, closeSelf, replaceWith, callParent, exposeToChildren } = useBlade();
 const { hasAccess } = usePermissions();
 const { showConfirmation } = usePopup();
@@ -126,10 +158,49 @@ const rows = computed<PermissionRow[]>(() =>
     .filter((r) => !keyword.value || `${r.name} ${r.description} ${r.groupName}`.toLowerCase().includes(keyword.value.toLowerCase())),
 );
 
+// Dashboard: the widgets the role's users don't need. A user still sees a widget another of their roles shows (and an
+// administrator sees all). The list shows the widgets installed here, and any hidden id this shell doesn't have.
+const hiddenWidgets = ref<string[]>([]);
+const savedHiddenWidgets = ref<string[]>([]);
+// unreadable (no rights, an error): shown as all on, not editable and not saved, so a save can't wipe the role's list
+const dashboardReadable = ref(true);
+const dashboard = useDashboard();
+const canEditDashboard = computed(
+  () => dashboardReadable.value && hasAccess(isNew.value ? "platform:security:create" : "platform:security:update"),
+);
+const dashboardWidgets = computed(() => {
+  const installed = dashboard.getWidgets().map((w) => ({ id: w.id, label: te(w.name) ? t(w.name) : w.name || w.id }));
+  const known = new Set(installed.map((w) => w.id));
+  const others = hiddenWidgets.value.filter((id) => !known.has(id)).map((id) => ({ id, label: id }));
+  return [...installed, ...others].sort((a, b) => a.label.localeCompare(b.label));
+});
+function setShown(id: string, shown: boolean) {
+  hiddenWidgets.value = shown ? hiddenWidgets.value.filter((x) => x !== id) : [...hiddenWidgets.value, id];
+}
+
+// the form tracks the role and its dashboard together: Save, Reset and the close confirmation cover both
+const formState = computed({
+  get: () => ({ role: item.value, hiddenWidgets: hiddenWidgets.value }),
+  set: (value) => {
+    item.value = value.role;
+    hiddenWidgets.value = value.hiddenWidgets;
+  },
+});
 const form = usePlatformBladeForm({
-  data: item,
+  data: formState,
   canSaveOverride: computed(() => !!item.value.name && hasAccess(isNew.value ? "platform:security:create" : "platform:security:update")),
 });
+
+async function loadDashboard(roleId?: string) {
+  dashboardReadable.value = true;
+  if (!roleId) return [];
+  try {
+    return (await adminDashboardApi.getRole(roleId)).hiddenWidgets ?? [];
+  } catch {
+    dashboardReadable.value = false;
+    return [];
+  }
+}
 
 const { loading: loadLoading, action: load } = useAsync(async () => {
   const client = await getApiClient();
@@ -140,13 +211,23 @@ const { loading: loadLoading, action: load } = useAsync(async () => {
   registered.value = all;
   item.value = role;
   item.value.permissions ??= [];
+  hiddenWidgets.value = await loadDashboard(item.value.id);
+  savedHiddenWidgets.value = [...hiddenWidgets.value];
   selection.value = [];
   form.setBaseline();
 });
 
+async function saveDashboard(roleId?: string) {
+  const changed = [...hiddenWidgets.value].sort().join() !== [...savedHiddenWidgets.value].sort().join();
+  if (!roleId || !changed || !canEditDashboard.value) return;
+  await adminDashboardApi.saveRole(roleId, { hiddenWidgets: hiddenWidgets.value });
+}
+
 const { loading: saveLoading, action: save } = useAsync(async () => {
-  // PUT roles creates the role when it has no id
-  ensureSucceeded(await (await getApiClient()).updateRole(item.value));
+  const client = await getApiClient();
+  // PUT roles creates the role when it has no id; a new role's id is read back for its dashboard
+  ensureSucceeded(await client.updateRole(item.value));
+  await saveDashboard(item.value.id ?? (await client.getRole(item.value.name!)).id);
   notification.success(t("PLATFORM.COMMON.SAVED"));
   await callParent("reload");
   if (isNew.value) {
@@ -227,3 +308,18 @@ exposeToChildren({
 
 load();
 </script>
+
+<style lang="scss">
+.role-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+}
+
+.role-dashboard__hint {
+  margin: 0;
+  color: var(--as-muted);
+  font-size: 13px;
+}
+</style>

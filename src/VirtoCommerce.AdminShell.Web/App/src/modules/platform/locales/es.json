@@ -158,7 +158,10 @@
         "DELETE_CONFIRM": "¿Eliminar el rol {name}?",
         "SCOPE_TEXT_HINT": "Valores de ámbito (ID), uno por entrada",
         "SCOPE_TEXT_PLACEHOLDER": "Escriba un valor y pulse Intro",
-        "SCOPES_ALL": "Sin límite (haga clic para añadir ámbitos)"
+        "SCOPES_ALL": "Sin límite (haga clic para añadir ámbitos)",
+        "DASHBOARD": "Panel",
+        "DASHBOARD_HINT": "Los widgets que ven en Inicio los usuarios de este rol. Un usuario sigue viendo un widget que muestra otro de sus roles, y los administradores ven todos los widgets.",
+        "DASHBOARD_UNAVAILABLE": "No se puede leer la configuración del panel del rol, así que no se puede cambiar aquí."
       },
       "OAUTH": {
         "TITLE": "Aplicaciones OAuth",

@@ -158,7 +158,10 @@
         "DELETE_CONFIRM": "Supprimer le rôle {name} ?",
         "SCOPE_TEXT_HINT": "Valeurs de portée (ID), une par entrée",
         "SCOPE_TEXT_PLACEHOLDER": "Saisissez une valeur et appuyez sur Entrée",
-        "SCOPES_ALL": "Non limitée (cliquez pour ajouter des portées)"
+        "SCOPES_ALL": "Non limitée (cliquez pour ajouter des portées)",
+        "DASHBOARD": "Tableau de bord",
+        "DASHBOARD_HINT": "Les widgets que les utilisateurs de ce rôle voient sur l'accueil. Un utilisateur voit toujours un widget qu'un autre de ses rôles affiche, et les administrateurs voient tous les widgets.",
+        "DASHBOARD_UNAVAILABLE": "Les paramètres du tableau de bord du rôle sont illisibles, ils ne peuvent donc pas être modifiés ici."
       },
       "OAUTH": {
         "TITLE": "Applications OAuth",

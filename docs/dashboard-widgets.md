@@ -96,6 +96,16 @@ How the layout behaves:
 - **Reset layout** (top right) puts every widget back at its declared position.
 - **Phones:** widgets are stacked full width in registration order (the host's first, then the plugins' as they load), not in grid order.
 
+## Widgets per role
+
+A security administrator chooses which widgets a role's users see, on the role's screen (Security → Roles → a role → **Dashboard**): every installed widget the administrator can see has a switch, on by default. This is for widgets a role has the permissions for but doesn't need; for example, cloud admins of a SaaS installation get no background jobs, so *Alerts and Notifications* would only take room.
+
+- **Stored** as the role setting `AdminShell.Dashboard.Role` (tenant `Role`, object id = role id), e.g. `{"hiddenWidgets":["shell-alerts"]}`. Nothing is hidden by default. Ids of widgets that aren't installed are kept and do nothing.
+- **Rule:** a widget is left out only when **every** one of the user's roles hides it, as for menu items: a role that shows it keeps it. Administrators and users without roles see every widget they have the permissions for.
+- **API:** `GET /api/admin-shell/dashboard` (the current user's hidden widgets), `GET` / `PUT /api/admin-shell/dashboard/roles/{roleId}` (`platform:security:read` / `platform:security:update`). A body that doesn't bind is refused with 400; `{}` shows every widget.
+- **On Home** the page loads the list before the grid, and gives the grid the dashboard service without those widgets: the others close up into their room, and *Reset layout* arranges only what shows. A widget's `permissions` still apply on top.
+- Hiding is not security: a widget's data stays protected by its endpoints' permissions.
+
 ## Shared styles (`.dash-*`)
 
 Use these classes for a widget that looks like the others in both themes (defined in `src/styles/custom.scss`):

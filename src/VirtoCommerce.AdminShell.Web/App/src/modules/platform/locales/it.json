@@ -158,7 +158,10 @@
         "DELETE_CONFIRM": "Eliminare il ruolo {name}?",
         "SCOPE_TEXT_HINT": "Valori dell'ambito (ID), uno per voce",
         "SCOPE_TEXT_PLACEHOLDER": "Digitare un valore e premere Invio",
-        "SCOPES_ALL": "Nessun limite (fare clic per aggiungere ambiti)"
+        "SCOPES_ALL": "Nessun limite (fare clic per aggiungere ambiti)",
+        "DASHBOARD": "Dashboard",
+        "DASHBOARD_HINT": "I widget che gli utenti di questo ruolo vedono nella Home. Un utente continua a vedere un widget mostrato da un altro dei suoi ruoli, e gli amministratori vedono tutti i widget.",
+        "DASHBOARD_UNAVAILABLE": "Le impostazioni della dashboard del ruolo non sono leggibili, quindi non si possono modificare qui."
       },
       "OAUTH": {
         "TITLE": "Applicazioni OAuth",

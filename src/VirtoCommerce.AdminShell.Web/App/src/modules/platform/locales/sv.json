@@ -158,7 +158,10 @@
         "DELETE_CONFIRM": "Vill du ta bort rollen {name}?",
         "SCOPE_TEXT_HINT": "Omfångsvärden (id:n), ett per post",
         "SCOPE_TEXT_PLACEHOLDER": "Skriv ett värde och tryck på Enter",
-        "SCOPES_ALL": "Inte begränsad (klicka för att lägga till omfång)"
+        "SCOPES_ALL": "Inte begränsad (klicka för att lägga till omfång)",
+        "DASHBOARD": "Instrumentpanel",
+        "DASHBOARD_HINT": "De widgetar som användare med den här rollen ser på startsidan. En användare ser fortfarande en widget som en annan av deras roller visar, och administratörer ser alla widgetar.",
+        "DASHBOARD_UNAVAILABLE": "Rollens inställningar för instrumentpanelen kan inte läsas, så de kan inte ändras här."
       },
       "OAUTH": {
         "TITLE": "OAuth-applikationer",

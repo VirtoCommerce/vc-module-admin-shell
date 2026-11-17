@@ -173,7 +173,7 @@ The appearance (`system` / `light` / `dark`), the color theme (`virto` / `warm` 
 
 `shell/themeMode.ts` loads them when a user signs in (`GET me/values?moduleId=VirtoCommerce.AdminShell` and `?moduleId=Platform`); the profile wins over the browser's copy. It saves only what changed (`POST me/values`), batched over 400ms. The browser keeps a copy (`localStorage`) for the sign-in page and the first paint. The avatar menu and My profile both edit the same refs, so a change in one shows in the other.
 
-The module also registers the menu settings (`AdminShell.Menu.Global`, `.Role`, `.User`, `.Recent`); [menu-layers.md](menu-layers.md) describes them. `.User` and `.Recent` are hidden, so they don't appear on the Settings screen.
+The module also registers the menu settings (`AdminShell.Menu.Global`, `.Role`, `.User`, `.Recent`); [menu-layers.md](menu-layers.md) describes them. `.User` and `.Recent` are hidden, so they don't appear on the Settings screen. The role setting `AdminShell.Dashboard.Role` holds the dashboard widgets a role's users don't see; it is edited on the role's screen ([dashboard-widgets.md](dashboard-widgets.md#widgets-per-role)).
 
 ## Adding a setting (module developers)
 

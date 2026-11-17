@@ -158,7 +158,10 @@
         "DELETE_CONFIRM": "Vil du slette rollen {name}?",
         "SCOPE_TEXT_HINT": "Omfangsverdier (ID-er), én per oppføring",
         "SCOPE_TEXT_PLACEHOLDER": "Skriv inn en verdi og trykk Enter",
-        "SCOPES_ALL": "Ikke begrenset (klikk for å legge til omfang)"
+        "SCOPES_ALL": "Ikke begrenset (klikk for å legge til omfang)",
+        "DASHBOARD": "Dashbord",
+        "DASHBOARD_HINT": "Widgetene brukere med denne rollen ser på startsiden. En bruker ser fortsatt en widget som en annen av rollene deres viser, og administratorer ser alle widgeter.",
+        "DASHBOARD_UNAVAILABLE": "Rollens dashbordinnstillinger kan ikke leses, så de kan ikke endres her."
       },
       "OAUTH": {
         "TITLE": "OAuth-applikasjoner",

@@ -158,7 +158,10 @@
         "DELETE_CONFIRM": "Excluir a função {name}?",
         "SCOPE_TEXT_HINT": "Valores do escopo (IDs), um por entrada",
         "SCOPE_TEXT_PLACEHOLDER": "Digite um valor e pressione Enter",
-        "SCOPES_ALL": "Sem limite (clique para adicionar escopos)"
+        "SCOPES_ALL": "Sem limite (clique para adicionar escopos)",
+        "DASHBOARD": "Painel",
+        "DASHBOARD_HINT": "Os widgets que os utilizadores desta função veem no Início. Um utilizador continua a ver um widget que outra das suas funções mostra, e os administradores veem todos os widgets.",
+        "DASHBOARD_UNAVAILABLE": "Não é possível ler as definições do painel da função, por isso não podem ser alteradas aqui."
       },
       "OAUTH": {
         "TITLE": "Aplicativos OAuth",

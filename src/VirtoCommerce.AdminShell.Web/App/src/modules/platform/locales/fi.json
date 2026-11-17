@@ -158,7 +158,10 @@
         "DELETE_CONFIRM": "Poistetaanko rooli {name}?",
         "SCOPE_TEXT_HINT": "Laajuuden arvot (ID:t), yksi kuhunkin kohtaan",
         "SCOPE_TEXT_PLACEHOLDER": "Kirjoita arvo ja paina Enter",
-        "SCOPES_ALL": "Ei rajattu (lisää laajuuksia napsauttamalla)"
+        "SCOPES_ALL": "Ei rajattu (lisää laajuuksia napsauttamalla)",
+        "DASHBOARD": "Koontinäyttö",
+        "DASHBOARD_HINT": "Widgetit, jotka tämän roolin käyttäjät näkevät etusivulla. Käyttäjä näkee edelleen widgetin, jonka jokin hänen toinen roolinsa näyttää, ja ylläpitäjät näkevät kaikki widgetit.",
+        "DASHBOARD_UNAVAILABLE": "Roolin koontinäyttöasetuksia ei voi lukea, joten niitä ei voi muuttaa tässä."
       },
       "OAUTH": {
         "TITLE": "OAuth-sovellukset",
