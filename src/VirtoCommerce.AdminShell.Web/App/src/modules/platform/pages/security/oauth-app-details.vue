@@ -10,9 +10,15 @@
     <VcContainer>
       <VcForm class="platform-form">
         <VcBanner
-          v-if="selfRegistration"
+          v-if="readonly"
           variant="info"
         >
+          <div
+            v-if="registration"
+            class="tw-font-medium"
+          >
+            {{ $t(`PLATFORM.SECURITY.OAUTH.REGISTRATIONS.${upper(registration)}`) }}
+          </div>
           {{ $t("PLATFORM.SECURITY.OAUTH.SELF_REGISTERED_READONLY") }}
         </VcBanner>
 
@@ -52,7 +58,7 @@
               :hint="
                 item.clientType ? $t(`PLATFORM.SECURITY.OAUTH.CLIENT_TYPES.${upper(item.clientType)}_HINT`) : undefined
               "
-              :disabled="!isNew || readonly"
+              :disabled="!isNew"
               :clearable="false"
               @update:model-value="setClientType"
             />
@@ -285,6 +291,7 @@ import {
   isSelfRegistered,
   oauthResources,
   otherPermissions,
+  registrationOf,
   requiresPkce,
   resourcesOf,
   saveApp,
@@ -445,14 +452,14 @@ const valid = computed(
 );
 
 // the platform refuses to save a self-registered client
-const selfRegistration = computed(() => isSelfRegistered(item.value));
-const readonly = computed(() => selfRegistration.value);
+const readonly = computed(() => isSelfRegistered(item.value));
+const registration = computed(() => registrationOf(item.value));
 
 const form = usePlatformBladeForm({
   data: item,
   // POST oauthapps saves new and existing apps alike, with :update
   canSaveOverride: computed(
-    () => valid.value && !selfRegistration.value && hasAccess("platform:security:oauth_applications:update"),
+    () => valid.value && !readonly.value && hasAccess("platform:security:oauth_applications:update"),
   ),
 });
 

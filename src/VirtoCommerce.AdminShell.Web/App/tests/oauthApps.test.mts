@@ -11,6 +11,7 @@ import {
   requiresPkce,
   resourcesOf,
   saveApp,
+  selfRegisteredFilter,
   setPermission,
   setPkce,
   setResources,
@@ -135,6 +136,19 @@ test("findApp reads the application by client id and answers undefined for an un
 
   serve(404);
   assert.equal(await findApp("missing"), undefined);
+});
+
+test("findApp encodes the slashes of a client id that is a URL", async () => {
+  const calls = serve(200, { clientId: "https://agent.example.com/client.json" });
+  await findApp("https://agent.example.com/client.json");
+  assert.equal(calls[0].url, "/api/platform/oauthapps/https%3A%2F%2Fagent.example.com%2Fclient.json");
+});
+
+test("the Registration filter is the selfRegistered criterion", () => {
+  assert.equal(selfRegisteredFilter("self"), true);
+  assert.equal(selfRegisteredFilter("administrator"), false);
+  assert.equal(selfRegisteredFilter(undefined), undefined);
+  assert.equal(selfRegisteredFilter(""), undefined);
 });
 
 test("saveApp posts the application and throws with the platform's reasons", async () => {

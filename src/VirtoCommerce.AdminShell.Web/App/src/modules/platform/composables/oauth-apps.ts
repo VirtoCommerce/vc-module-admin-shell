@@ -3,7 +3,8 @@
 // Only types are imported, so the rules run on Node's test runner too (tests/oauthApps.test.mts).
 import type { OpenIddictApplicationDescriptor } from "@vc-shell/framework";
 
-// the generated type marks the collections readonly; they are plain arrays on the wire
+// the generated type marks the collections readonly, though they are plain arrays on the wire, and types the
+// properties as JSON elements, though they arrive as plain values
 export type OAuthApp = Omit<
   OpenIddictApplicationDescriptor,
   "redirectUris" | "postLogoutRedirectUris" | "permissions" | "requirements" | "properties"
@@ -55,6 +56,8 @@ export function registrationOf(app: OAuthApp): RegistrationType | undefined {
   const value = app.properties?.[REGISTRATION_PROPERTY];
   return REGISTRATION_TYPES.find((x) => x === value);
 }
+
+export const selfRegisteredFilter = (registration: unknown) => (registration ? registration === "self" : undefined);
 
 export const hasPermission = (app: OAuthApp, permission: string) => (app.permissions ?? []).includes(permission);
 
