@@ -218,7 +218,8 @@ const { loading: loadLoading, action: load } = useAsync(async () => {
 });
 
 async function saveDashboard(roleId?: string) {
-  const changed = [...hiddenWidgets.value].sort().join() !== [...savedHiddenWidgets.value].sort().join();
+  const sorted = (ids: string[]) => [...ids].sort((a, b) => a.localeCompare(b)).join();
+  const changed = sorted(hiddenWidgets.value) !== sorted(savedHiddenWidgets.value);
   if (!roleId || !changed || !canEditDashboard.value) return;
   await adminDashboardApi.saveRole(roleId, { hiddenWidgets: hiddenWidgets.value });
 }
