@@ -230,7 +230,15 @@
         "URI_HTTP_LEGACY": "{uri} usa HTTP per un indirizzo che non è di loopback. Viene mantenuto, ma non è possibile aggiungerne uno nuovo simile.",
         "OTHER_PERMISSIONS": "Altri permessi",
         "OTHER_PERMISSIONS_HINT": "Permessi che questa schermata non modifica, mantenuti così come sono. I permessi degli endpoint seguono i tipi di concessione.",
-        "PERMISSION_PLACEHOLDER": "Digitare un permesso e premere Invio"
+        "PERMISSION_PLACEHOLDER": "Digitare un permesso e premere Invio",
+        "REGISTRATION": "Registrazione",
+        "REGISTRATIONS": {
+          "SELF": "Autoregistrata",
+          "ADMINISTRATOR": "Da un amministratore",
+          "CLIENT_ID_METADATA_DOCUMENT": "Autoregistrata: documento di metadati",
+          "DYNAMIC_REGISTRATION": "Autoregistrata: dinamica"
+        },
+        "SELF_REGISTERED_READONLY": "Questa applicazione si è registrata da sola: segue il proprio documento di metadati o la propria registrazione, quindi non può essere modificata qui. Eliminala per disconnettere il client."
       },
       "SIGNIN": {
         "TITLE": "Registro degli accessi",

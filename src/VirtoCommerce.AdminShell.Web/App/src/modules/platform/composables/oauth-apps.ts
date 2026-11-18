@@ -3,10 +3,11 @@
 // Only types are imported, so the rules run on Node's test runner too (tests/oauthApps.test.mts).
 import type { OpenIddictApplicationDescriptor } from "@vc-shell/framework";
 
-// the generated type marks the collections readonly; they are plain arrays on the wire
+// the generated type marks the collections readonly, though they are plain arrays on the wire, and types the
+// properties as JSON elements, though they arrive as plain values
 export type OAuthApp = Omit<
   OpenIddictApplicationDescriptor,
-  "redirectUris" | "postLogoutRedirectUris" | "permissions" | "requirements"
+  "redirectUris" | "postLogoutRedirectUris" | "permissions" | "requirements" | "properties"
 > & {
   redirectUris?: string[];
   postLogoutRedirectUris?: string[];
@@ -14,6 +15,7 @@ export type OAuthApp = Omit<
   requirements?: string[];
   applicationType?: string;
   consentType?: string;
+  properties?: Record<string, unknown>;
 };
 
 export interface OAuthResource {
@@ -39,6 +41,23 @@ export const SCOPES = ["scp:email", "scp:profile", "scp:roles"] as const;
 // set by the server from the grant types, not edited
 const DERIVED = ["ept:authorization", "ept:end_session", "ept:token", "rst:code"];
 const EDITED = new Set<string>([...GRANT_TYPES, ...SCOPES]);
+
+/** The platform marks the application of a self-registered client with it */
+const REGISTRATION_PROPERTY = "vc_registration";
+const REGISTRATION_TYPES = ["client_id_metadata_document", "dynamic_registration"] as const;
+export type RegistrationType = (typeof REGISTRATION_TYPES)[number];
+
+export const isSelfRegistered = (app: OAuthApp) => {
+  const value = app.properties?.[REGISTRATION_PROPERTY];
+  return typeof value === "string" && value !== "";
+};
+
+export function registrationOf(app: OAuthApp): RegistrationType | undefined {
+  const value = app.properties?.[REGISTRATION_PROPERTY];
+  return REGISTRATION_TYPES.find((x) => x === value);
+}
+
+export const selfRegisteredFilter = (registration: unknown) => (registration ? registration === "self" : undefined);
 
 export const hasPermission = (app: OAuthApp, permission: string) => (app.permissions ?? []).includes(permission);
 

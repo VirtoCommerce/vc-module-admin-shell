@@ -230,7 +230,15 @@
         "URI_HTTP_LEGACY": "{uri} משתמש ב-HTTP לכתובת שאינה כתובת loopback. הוא נשמר, אך לא ניתן להוסיף חדש כמותו.",
         "OTHER_PERMISSIONS": "הרשאות אחרות",
         "OTHER_PERMISSIONS_HINT": "הרשאות שמסך זה אינו עורך נשמרות כפי שהן. הרשאות נקודות הקצה נקבעות לפי סוגי ההענקה.",
-        "PERMISSION_PLACEHOLDER": "יש להקליד הרשאה וללחוץ Enter"
+        "PERMISSION_PLACEHOLDER": "יש להקליד הרשאה וללחוץ Enter",
+        "REGISTRATION": "רישום",
+        "REGISTRATIONS": {
+          "SELF": "נרשם בעצמו",
+          "ADMINISTRATOR": "על ידי מנהל",
+          "CLIENT_ID_METADATA_DOCUMENT": "נרשם בעצמו: מסמך מטא-נתונים",
+          "DYNAMIC_REGISTRATION": "נרשם בעצמו: דינמי"
+        },
+        "SELF_REGISTERED_READONLY": "היישום הזה נרשם בעצמו: הוא פועל לפי מסמך המטא-נתונים או הרישום שלו, ולכן לא ניתן לשנות אותו כאן. מחקו אותו כדי לנתק את הלקוח."
       },
       "SIGNIN": {
         "TITLE": "יומן כניסות",

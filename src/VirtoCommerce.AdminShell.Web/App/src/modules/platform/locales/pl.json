@@ -230,7 +230,15 @@
         "URI_HTTP_LEGACY": "{uri} używa HTTP dla adresu, który nie jest adresem loopback. Zostaje zachowany, ale nie można dodać nowego takiego URI.",
         "OTHER_PERMISSIONS": "Inne uprawnienia",
         "OTHER_PERMISSIONS_HINT": "Uprawnienia, których ten ekran nie edytuje, pozostają bez zmian. Uprawnienia punktów końcowych wynikają z typów grantów.",
-        "PERMISSION_PLACEHOLDER": "Wpisz uprawnienie i naciśnij Enter"
+        "PERMISSION_PLACEHOLDER": "Wpisz uprawnienie i naciśnij Enter",
+        "REGISTRATION": "Rejestracja",
+        "REGISTRATIONS": {
+          "SELF": "Zarejestrowana samodzielnie",
+          "ADMINISTRATOR": "Przez administratora",
+          "CLIENT_ID_METADATA_DOCUMENT": "Zarejestrowana samodzielnie: dokument metadanych",
+          "DYNAMIC_REGISTRATION": "Zarejestrowana samodzielnie: dynamicznie"
+        },
+        "SELF_REGISTERED_READONLY": "Ta aplikacja zarejestrowała się samodzielnie: podąża za swoim dokumentem metadanych lub rejestracją, więc nie można jej tu zmienić. Usuń ją, aby odłączyć klienta."
       },
       "SIGNIN": {
         "TITLE": "Dziennik logowań",
