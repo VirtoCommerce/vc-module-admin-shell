@@ -68,18 +68,6 @@
         {{ $t("SHELL.DASHBOARD.WIDGETS") }}
       </button>
       <button
-        v-if="editingAll || canMove || canResize"
-        type="button"
-        class="as-dashboard__reset"
-        @click="resetLayout"
-      >
-        <VcIcon
-          icon="lucide-rotate-ccw"
-          size="xs"
-        />
-        {{ editingAll ? $t("SHELL.DASHBOARD.EVERYONE.MODULE_DEFAULTS") : $t("SHELL.DASHBOARD.RESET_LAYOUT") }}
-      </button>
-      <button
         v-if="dashboardState.canManage && !editingAll"
         type="button"
         class="as-dashboard__reset"
@@ -90,6 +78,18 @@
           size="xs"
         />
         {{ $t("SHELL.DASHBOARD.CUSTOMIZE_ALL") }}
+      </button>
+      <button
+        v-if="editingAll || canReset"
+        type="button"
+        class="as-dashboard__reset"
+        @click="resetLayout"
+      >
+        <VcIcon
+          icon="lucide-rotate-ccw"
+          size="xs"
+        />
+        {{ editingAll ? $t("SHELL.DASHBOARD.EVERYONE.MODULE_DEFAULTS") : $t("SHELL.DASHBOARD.RESET_LAYOUT") }}
       </button>
     </div>
     <!-- the widgets list while customizing: which widgets everyone sees -->
@@ -193,6 +193,10 @@ const panelOpen = ref(false);
 
 const canMove = computed(() => editingAll.value || dashboardState.value.personalization.allowMove);
 const canResize = computed(() => editingAll.value || dashboardState.value.personalization.allowResize);
+// Reset layout only once the user has placed or sized a widget (or when the server's layout can't be read, as before)
+const canReset = computed(
+  () => (canMove.value || canResize.value) && (!synced.value || Object.keys(dashboardState.value.layout).length > 0),
+);
 
 // the widgets as each mode places them: while customizing, the modules' own (the layout for everyone comes in as the
 // saved layout); else without the hidden ones and with the layout for everyone over the modules'
@@ -467,10 +471,17 @@ async function resetLayout() {
     return;
   }
   if (await showConfirmation(t("SHELL.DASHBOARD.RESET_LAYOUT_CONFIRM"))) {
-    writeStorage({});
-    dashboard.value?.rearrangeWidgets();
-    generation.value++;
-    saveMine(0);
+    // the user's layer is emptied as such: what the grid writes while it rearranges isn't the user's own
+    clearTimeout(saveTimer);
+    const state = dashboardState.value;
+    state.layout = {};
+    await switchMode(() => writeStorage({}));
+    if (!synced.value) return;
+    try {
+      await adminDashboardApi.savePrefs({ widgets: {}, layoutVersion: state.layoutVersion });
+    } catch {
+      notification.error(t("SHELL.DASHBOARD.SAVE_FAILED"));
+    }
   }
 }
 </script>
