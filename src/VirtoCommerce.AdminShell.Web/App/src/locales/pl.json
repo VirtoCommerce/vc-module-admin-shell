@@ -77,6 +77,23 @@
         "FAILED": "Nieudane logowania",
         "USERS": "Zalogowani użytkownicy",
         "DISABLED": "Rejestrowanie logowań jest wyłączone"
+      },
+      "WIDGETS": "Widżety",
+      "WIDGETS_TITLE": "Widżety na Twojej stronie głównej",
+      "CLOSE": "Zamknij",
+      "CUSTOMIZE_ALL": "Dostosuj dla wszystkich",
+      "PERMISSION": "Wymaga {permission}",
+      "NO_PERMISSION": "Bez uprawnień: widzą wszyscy",
+      "SAVE_FAILED": "Nie udało się zapisać pulpitu",
+      "EVERYONE": {
+        "TITLE": "Dostosowywanie strony głównej dla wszystkich",
+        "HINT": "Przesuwaj, zmieniaj rozmiar i ukrywaj widżety. Po zapisaniu tak zaczyna każdy; kto zmienił swój układ, zachowa go, chyba że go zresetujesz.",
+        "RESET_USERS": "Resetuj układy użytkowników",
+        "SAVE": "Zapisz dla wszystkich",
+        "CANCEL": "Anuluj",
+        "MODULE_DEFAULTS": "Układ modułów",
+        "SAVED": "Strona główna zapisana dla wszystkich",
+        "PANEL_TITLE": "Widżety dla wszystkich"
       }
     },
     "AUTH": {

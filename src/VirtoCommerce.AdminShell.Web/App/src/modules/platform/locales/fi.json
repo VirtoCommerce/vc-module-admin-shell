@@ -606,6 +606,37 @@
       "NO_LINKED_ACCOUNT": "Ei linkitettyä tiliä",
       "NO_KEYS": "Ei avaimia",
       "UNNAMED": "Nimetön avain"
+    },
+    "DASHBOARD": {
+      "TITLE": "Admin Shellin koontinäytön asetukset",
+      "TAB_EVERYONE": "Kaikille",
+      "TAB_ROLES": "Roolit",
+      "TAB_PERSONALIZATION": "Mukautus",
+      "EVERYONE_HINT": "Widgetit tulevat moduuleista, ja kukin näkyy vain käyttäjille, joilla on sen oikeus. Täällä piilotat widgetin kaikilta; paikan ja koon asetat etusivulla.",
+      "SAVE_FIRST": "Tallenna tai kumoa muutokset ensin",
+      "CUSTOMIZE_ON_HOME": "Mukauta asettelua etusivulla",
+      "RESET_USERS": "Nollaa käyttäjien asettelut",
+      "RESET_USERS_CONFIRM": "Kaikkien käyttäjien widgetit palaavat kaikkien asetteluun. Piilotetut widgetit pysyvät piilossa. Jatketaanko?",
+      "RESET_USERS_DONE": "Käyttäjien asettelut nollattu",
+      "PLACED": "Kaikille sijoitetut widgetit: {count}",
+      "LAYOUT_VERSION": "asetteluversio {version}",
+      "HIDDEN_FOR_EVERYONE": "Piilotettu kaikilta",
+      "ROLES_HINT": "Piilota widgetit, joita roolin käyttäjät eivät tarvitse. Käyttäjä näkee silti widgetin, jonka jokin hänen toinen roolinsa näyttää; ylläpitäjät näkevät kaikki.",
+      "ROLE": "Rooli",
+      "PICK_ROLE": "Valitse rooli",
+      "ROLE_LACKS": "Roolilta puuttuu oikeus",
+      "PERSONALIZATION_HINT": "Mitä käyttäjät saavat muuttaa omalla etusivullaan. Poiskytkentä ei poista mitään: valinnat palaavat, kun asetus otetaan taas käyttöön.",
+      "ALLOW_HIDE": "Piilottaa widgetejä",
+      "ALLOW_HIDE_HINT": "Pois: käyttäjien piilottamat widgetit näkyvät taas.",
+      "ALLOW_MOVE": "Siirtää widgetejä",
+      "ALLOW_MOVE_HINT": "Pois: kaikki näkevät kaikille asetetut paikat.",
+      "ALLOW_RESIZE": "Muuttaa widgetien kokoa",
+      "ALLOW_RESIZE_HINT": "Pois: kaikki näkevät kaikille asetetut koot.",
+      "JSON_HINT": "Kaikkien asetus (AdminShell.Dashboard.Global): widgetit tunnuksen mukaan, vain niiden muutokset. Kopioi se varmuuskopioksi tai toiseen ympäristöön, tai liitä ja ota käyttöön.",
+      "APPLY_JSON": "Tallenna kaikille",
+      "JSON_OBJECT": "JSON-objekti vaaditaan",
+      "JSON_WIDGETS": "\"widgets\" on oltava widget-tunnusten objekti",
+      "JSON_CONFIRM": "Korvataanko kaikkien koontinäyttö tällä JSONilla?"
     }
   }
 }

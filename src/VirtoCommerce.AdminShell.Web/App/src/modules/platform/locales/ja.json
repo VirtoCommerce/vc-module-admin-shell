@@ -606,6 +606,37 @@
       "NO_LINKED_ACCOUNT": "リンクされたアカウントはありません",
       "NO_KEYS": "キーがありません",
       "UNNAMED": "名前のないキー"
+    },
+    "DASHBOARD": {
+      "TITLE": "Admin Shell ダッシュボード設定",
+      "TAB_EVERYONE": "全員",
+      "TAB_ROLES": "ロール",
+      "TAB_PERSONALIZATION": "パーソナライズ",
+      "EVERYONE_HINT": "ウィジェットはモジュールから提供され、各ウィジェットはその権限を持つユーザーにのみ表示されます。ここでは全員からウィジェットを非表示にします。位置とサイズはホームで設定します。",
+      "SAVE_FIRST": "先に変更を保存またはリセットしてください",
+      "CUSTOMIZE_ON_HOME": "ホームで配置をカスタマイズ",
+      "RESET_USERS": "ユーザーの配置をリセット",
+      "RESET_USERS_CONFIRM": "全ユーザーのウィジェットが全員向けの配置に戻ります。非表示にしたウィジェットは非表示のままです。続行しますか？",
+      "RESET_USERS_DONE": "ユーザーの配置をリセットしました",
+      "PLACED": "全員向けに配置済み：{count}",
+      "LAYOUT_VERSION": "配置バージョン {version}",
+      "HIDDEN_FOR_EVERYONE": "全員に非表示",
+      "ROLES_HINT": "ロールのユーザーに不要なウィジェットを非表示にします。ほかのロールが表示するウィジェットは引き続き表示され、管理者にはすべて表示されます。",
+      "ROLE": "ロール",
+      "PICK_ROLE": "ロールを選択",
+      "ROLE_LACKS": "ロールに権限がありません",
+      "PERSONALIZATION_HINT": "ユーザーが自分のホームで変更できる内容です。オフにしても何も削除されず、オンに戻すと選択が復元されます。",
+      "ALLOW_HIDE": "ウィジェットを非表示",
+      "ALLOW_HIDE_HINT": "オフ：ユーザーが非表示にしたウィジェットが再表示されます。",
+      "ALLOW_MOVE": "ウィジェットを移動",
+      "ALLOW_MOVE_HINT": "オフ：全員が全員向けの位置を表示します。",
+      "ALLOW_RESIZE": "ウィジェットのサイズ変更",
+      "ALLOW_RESIZE_HINT": "オフ：全員が全員向けのサイズを表示します。",
+      "JSON_HINT": "全員向けの設定（AdminShell.Dashboard.Global）：ウィジェットを ID ごとに、変更点のみ記録します。バックアップや別環境用にコピーするか、貼り付けて適用します。",
+      "APPLY_JSON": "全員向けに保存",
+      "JSON_OBJECT": "JSON オブジェクトが必要です",
+      "JSON_WIDGETS": "\"widgets\" はウィジェット ID のオブジェクトである必要があります",
+      "JSON_CONFIRM": "全員のダッシュボードをこの JSON で置き換えますか？"
     }
   }
 }

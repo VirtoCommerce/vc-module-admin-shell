@@ -35,7 +35,10 @@ public static class ModuleConstants
         {
             public const string MenuManage = "admin-shell:menu:manage";
 
-            public static string[] AllPermissions { get; } = [MenuManage];
+            /// <summary>Change the dashboard for everyone: widgets hidden, places and sizes, per role, what users may change</summary>
+            public const string DashboardManage = "admin-shell:dashboard:manage";
+
+            public static string[] AllPermissions { get; } = [MenuManage, DashboardManage];
         }
     }
 
@@ -97,6 +100,67 @@ public static class ModuleConstants
             DefaultValue = "{}",
             IsHidden = true,
         };
+
+        /* ---- the dashboard (docs/dashboard-widgets.md): layers as for the menu ---- */
+
+        private const string DashboardGroup = "Admin Shell|Dashboard";
+
+        /// <summary>The dashboard for everyone: widgets hidden, places and sizes by widget id, and the layout version</summary>
+        public static SettingDescriptor GlobalDashboard { get; } = new()
+        {
+            Name = "AdminShell.Dashboard.Global",
+            GroupName = DashboardGroup,
+            ValueType = SettingValueType.Json,
+            DefaultValue = "{}",
+        };
+
+        /// <summary>Per-role dashboard (tenant type "Role", object id = role id): the widgets the role's users don't need</summary>
+        public static SettingDescriptor RoleDashboard { get; } = new()
+        {
+            Name = "AdminShell.Dashboard.Role",
+            GroupName = DashboardGroup,
+            ValueType = SettingValueType.Json,
+            DefaultValue = "{}",
+        };
+
+        /// <summary>Per-user dashboard: widgets hidden, places and sizes. Hidden, like the menu prefs.</summary>
+        public static SettingDescriptor UserDashboard { get; } = new()
+        {
+            Name = "AdminShell.Dashboard.User",
+            GroupName = DashboardGroup,
+            ValueType = SettingValueType.Json,
+            DefaultValue = "{}",
+            IsHidden = true,
+        };
+
+        /// <summary>Whether users may hide widgets on their dashboard (off: the widgets they hid show again)</summary>
+        public static SettingDescriptor DashboardAllowHide { get; } = new()
+        {
+            Name = "AdminShell.Dashboard.AllowHide",
+            GroupName = DashboardGroup,
+            ValueType = SettingValueType.Boolean,
+            DefaultValue = true,
+        };
+
+        /// <summary>Whether users may move widgets (off: everyone sees the places set for everyone)</summary>
+        public static SettingDescriptor DashboardAllowMove { get; } = new()
+        {
+            Name = "AdminShell.Dashboard.AllowMove",
+            GroupName = DashboardGroup,
+            ValueType = SettingValueType.Boolean,
+            DefaultValue = true,
+        };
+
+        /// <summary>Whether users may resize widgets (off: everyone sees the sizes set for everyone)</summary>
+        public static SettingDescriptor DashboardAllowResize { get; } = new()
+        {
+            Name = "AdminShell.Dashboard.AllowResize",
+            GroupName = DashboardGroup,
+            ValueType = SettingValueType.Boolean,
+            DefaultValue = true,
+        };
+
+        public static IEnumerable<SettingDescriptor> DashboardSettings => [GlobalDashboard, DashboardAllowHide, DashboardAllowMove, DashboardAllowResize];
 
         /// <summary>Per-user uses of menu items for Recent (score and last use per item). Hidden, like the prefs.</summary>
         public static SettingDescriptor UserRecent { get; } = new()
@@ -272,8 +336,8 @@ public static class ModuleConstants
             SignInShowcase, SignInSlides, HomeWelcome, DefaultTheme, DefaultAppearance, ThemeUserChoice,
         ];
 
-        public static IEnumerable<SettingDescriptor> ModuleSettings => [GlobalMenu, .. PersonalizationSettings, .. BrandingSettings];
-        public static IEnumerable<SettingDescriptor> RoleSettings => [RoleMenu];
-        public static IEnumerable<SettingDescriptor> UserSettings => [UserMenu, UserRecent, UserAppearance, UserTheme];
+        public static IEnumerable<SettingDescriptor> ModuleSettings => [GlobalMenu, .. PersonalizationSettings, .. DashboardSettings, .. BrandingSettings];
+        public static IEnumerable<SettingDescriptor> RoleSettings => [RoleMenu, RoleDashboard];
+        public static IEnumerable<SettingDescriptor> UserSettings => [UserMenu, UserRecent, UserDashboard, UserAppearance, UserTheme];
     }
 }

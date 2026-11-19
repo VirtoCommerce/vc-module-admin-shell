@@ -77,6 +77,23 @@
         "FAILED": "Connexions échouées",
         "USERS": "Utilisateurs connectés",
         "DISABLED": "La journalisation des connexions est désactivée"
+      },
+      "WIDGETS": "Widgets",
+      "WIDGETS_TITLE": "Widgets de votre accueil",
+      "CLOSE": "Fermer",
+      "CUSTOMIZE_ALL": "Personnaliser pour tous",
+      "PERMISSION": "Nécessite {permission}",
+      "NO_PERMISSION": "Aucune autorisation : tout le monde le voit",
+      "SAVE_FAILED": "Impossible d'enregistrer le tableau de bord",
+      "EVERYONE": {
+        "TITLE": "Personnalisation de l'accueil pour tous",
+        "HINT": "Déplacez, redimensionnez et masquez des widgets. Enregistré, c'est le départ de chacun ; ceux qui ont modifié le leur le gardent, sauf si vous le réinitialisez.",
+        "RESET_USERS": "Réinitialiser les dispositions des utilisateurs",
+        "SAVE": "Enregistrer pour tous",
+        "CANCEL": "Annuler",
+        "MODULE_DEFAULTS": "Disposition des modules",
+        "SAVED": "Accueil enregistré pour tous",
+        "PANEL_TITLE": "Widgets pour tous"
       }
     },
     "AUTH": {

@@ -77,6 +77,23 @@
         "FAILED": "Epäonnistuneet kirjautumiset",
         "USERS": "Kirjautuneet käyttäjät",
         "DISABLED": "Kirjautumisten tallennus on poissa käytöstä"
+      },
+      "WIDGETS": "Widgetit",
+      "WIDGETS_TITLE": "Etusivusi widgetit",
+      "CLOSE": "Sulje",
+      "CUSTOMIZE_ALL": "Mukauta kaikille",
+      "PERMISSION": "Vaatii {permission}",
+      "NO_PERMISSION": "Ei oikeutta: kaikki näkevät sen",
+      "SAVE_FAILED": "Koontinäytön tallennus epäonnistui",
+      "EVERYONE": {
+        "TITLE": "Etusivun mukautus kaikille",
+        "HINT": "Siirrä, muuta kokoa ja piilota widgetejä. Tallennettuna tämä on kaikkien lähtökohta; omansa muuttaneet säilyttävät sen, ellet nollaa sitä.",
+        "RESET_USERS": "Nollaa käyttäjien omat asettelut",
+        "SAVE": "Tallenna kaikille",
+        "CANCEL": "Peruuta",
+        "MODULE_DEFAULTS": "Moduulien asettelu",
+        "SAVED": "Etusivu tallennettu kaikille",
+        "PANEL_TITLE": "Widgetit kaikille"
       }
     },
     "AUTH": {

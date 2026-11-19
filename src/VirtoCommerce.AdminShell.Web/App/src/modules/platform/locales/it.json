@@ -606,6 +606,37 @@
       "NO_LINKED_ACCOUNT": "Nessun account collegato",
       "NO_KEYS": "Nessuna chiave",
       "UNNAMED": "Chiave senza nome"
+    },
+    "DASHBOARD": {
+      "TITLE": "Configuratore della dashboard di Admin Shell",
+      "TAB_EVERYONE": "Per tutti",
+      "TAB_ROLES": "Ruoli",
+      "TAB_PERSONALIZATION": "Personalizzazione",
+      "EVERYONE_HINT": "I widget arrivano dai moduli e ognuno è visibile solo agli utenti con il suo permesso. Qui nascondi un widget a tutti; posizione e dimensione si impostano nella home.",
+      "SAVE_FIRST": "Prima salva o annulla le modifiche",
+      "CUSTOMIZE_ON_HOME": "Personalizza il layout nella home",
+      "RESET_USERS": "Reimposta i layout degli utenti",
+      "RESET_USERS_CONFIRM": "I widget di ogni utente tornano al layout per tutti. Quelli nascosti restano nascosti. Continuare?",
+      "RESET_USERS_DONE": "Layout degli utenti reimpostati",
+      "PLACED": "Widget posizionati per tutti: {count}",
+      "LAYOUT_VERSION": "versione del layout {version}",
+      "HIDDEN_FOR_EVERYONE": "Nascosto per tutti",
+      "ROLES_HINT": "Nascondi i widget che non servono agli utenti di un ruolo. Un utente vede comunque un widget mostrato da un altro suo ruolo; gli amministratori li vedono tutti.",
+      "ROLE": "Ruolo",
+      "PICK_ROLE": "Scegli un ruolo",
+      "ROLE_LACKS": "Il ruolo non ha il permesso",
+      "PERSONALIZATION_HINT": "Cosa possono cambiare gli utenti nella loro home. Disattivare non elimina nulla: le loro scelte tornano quando la riattivi.",
+      "ALLOW_HIDE": "Nascondere i widget",
+      "ALLOW_HIDE_HINT": "Disattivato: i widget nascosti dagli utenti ricompaiono.",
+      "ALLOW_MOVE": "Spostare i widget",
+      "ALLOW_MOVE_HINT": "Disattivato: tutti vedono le posizioni impostate per tutti.",
+      "ALLOW_RESIZE": "Ridimensionare i widget",
+      "ALLOW_RESIZE_HINT": "Disattivato: tutti vedono le dimensioni impostate per tutti.",
+      "JSON_HINT": "L'impostazione per tutti (AdminShell.Dashboard.Global): widget per id, solo con ciò che cambiano. Copiala come backup o per un altro ambiente, oppure incollane una e applicala.",
+      "APPLY_JSON": "Salva per tutti",
+      "JSON_OBJECT": "È richiesto un oggetto JSON",
+      "JSON_WIDGETS": "\"widgets\" deve essere un oggetto di id dei widget",
+      "JSON_CONFIRM": "Sostituire la dashboard per tutti con questo JSON?"
     }
   }
 }

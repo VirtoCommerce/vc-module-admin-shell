@@ -606,6 +606,37 @@
       "NO_LINKED_ACCOUNT": "没有关联的帐户",
       "NO_KEYS": "没有密钥",
       "UNNAMED": "未命名的密钥"
+    },
+    "DASHBOARD": {
+      "TITLE": "Admin Shell 仪表板配置器",
+      "TAB_EVERYONE": "所有人",
+      "TAB_ROLES": "角色",
+      "TAB_PERSONALIZATION": "个性化",
+      "EVERYONE_HINT": "小组件来自各模块，每个仅对拥有其权限的用户显示。在此为所有人隐藏小组件；位置和大小在主页上设置。",
+      "SAVE_FIRST": "请先保存或重置更改",
+      "CUSTOMIZE_ON_HOME": "在主页上自定义布局",
+      "RESET_USERS": "重置用户布局",
+      "RESET_USERS_CONFIRM": "所有用户的小组件将恢复为所有人的布局。他们隐藏的小组件仍保持隐藏。继续吗？",
+      "RESET_USERS_DONE": "已重置用户布局",
+      "PLACED": "为所有人放置的小组件：{count}",
+      "LAYOUT_VERSION": "布局版本 {version}",
+      "HIDDEN_FOR_EVERYONE": "对所有人隐藏",
+      "ROLES_HINT": "隐藏某角色用户不需要的小组件。若用户的其他角色显示该小组件，用户仍能看到；管理员可看到全部。",
+      "ROLE": "角色",
+      "PICK_ROLE": "选择角色",
+      "ROLE_LACKS": "该角色缺少其权限",
+      "PERSONALIZATION_HINT": "用户可在自己主页上更改的内容。关闭不会删除任何内容：重新开启后其选择会恢复。",
+      "ALLOW_HIDE": "隐藏小组件",
+      "ALLOW_HIDE_HINT": "关闭：用户隐藏的小组件会重新显示。",
+      "ALLOW_MOVE": "移动小组件",
+      "ALLOW_MOVE_HINT": "关闭：所有人看到为所有人设置的位置。",
+      "ALLOW_RESIZE": "调整小组件大小",
+      "ALLOW_RESIZE_HINT": "关闭：所有人看到为所有人设置的大小。",
+      "JSON_HINT": "所有人的设置（AdminShell.Dashboard.Global）：按 id 列出小组件，仅含其更改。可复制用于备份或其他环境，或粘贴后应用。",
+      "APPLY_JSON": "为所有人保存",
+      "JSON_OBJECT": "需要 JSON 对象",
+      "JSON_WIDGETS": "\"widgets\" 必须是以小组件 id 为键的对象",
+      "JSON_CONFIRM": "用此 JSON 替换所有人的仪表板吗？"
     }
   }
 }

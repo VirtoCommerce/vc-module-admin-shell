@@ -102,7 +102,8 @@
       "state_machines": "Tilstandsmaskiner",
       "stores": "Butikker",
       "subscriptions": "Abonnementer",
-      "webhooks": "Webhooks"
+      "webhooks": "Webhooks",
+      "platform_dashboard": "Admin Shell-konfigurator for dashbordet"
     }
   }
 }

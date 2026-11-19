@@ -606,6 +606,37 @@
       "NO_LINKED_ACCOUNT": "Ninguna cuenta vinculada",
       "NO_KEYS": "Sin claves",
       "UNNAMED": "Clave sin nombre"
+    },
+    "DASHBOARD": {
+      "TITLE": "Configurador del panel de Admin Shell",
+      "TAB_EVERYONE": "Para todos",
+      "TAB_ROLES": "Roles",
+      "TAB_PERSONALIZATION": "Personalización",
+      "EVERYONE_HINT": "Los widgets vienen de los módulos y cada uno solo lo ven usuarios con su permiso. Aquí oculta un widget para todos; su lugar y tamaño se fijan en el propio inicio.",
+      "SAVE_FIRST": "Guarde o descarte primero sus cambios",
+      "CUSTOMIZE_ON_HOME": "Personalizar el diseño en el inicio",
+      "RESET_USERS": "Restablecer los diseños de los usuarios",
+      "RESET_USERS_CONFIRM": "Los widgets de todos los usuarios vuelven al diseño para todos. Los que ocultaron siguen ocultos. ¿Continuar?",
+      "RESET_USERS_DONE": "Diseños de los usuarios restablecidos",
+      "PLACED": "Widgets colocados para todos: {count}",
+      "LAYOUT_VERSION": "versión del diseño {version}",
+      "HIDDEN_FOR_EVERYONE": "Oculto para todos",
+      "ROLES_HINT": "Oculte los widgets que los usuarios de un rol no necesitan. Un usuario sigue viendo un widget si otro de sus roles lo muestra; los administradores ven todos.",
+      "ROLE": "Rol",
+      "PICK_ROLE": "Elija un rol",
+      "ROLE_LACKS": "El rol no tiene su permiso",
+      "PERSONALIZATION_HINT": "Qué pueden cambiar los usuarios en su inicio. Desactivar no borra nada: sus elecciones vuelven al reactivarla.",
+      "ALLOW_HIDE": "Ocultar widgets",
+      "ALLOW_HIDE_HINT": "Desactivado: los widgets ocultos por usuarios vuelven a verse.",
+      "ALLOW_MOVE": "Mover widgets",
+      "ALLOW_MOVE_HINT": "Desactivado: todos ven los lugares fijados para todos.",
+      "ALLOW_RESIZE": "Cambiar el tamaño de widgets",
+      "ALLOW_RESIZE_HINT": "Desactivado: todos ven los tamaños fijados para todos.",
+      "JSON_HINT": "El ajuste para todos (AdminShell.Dashboard.Global): widgets por id, solo con lo que cambian. Cópielo como copia de seguridad o para otro entorno, o pegue uno y aplíquelo.",
+      "APPLY_JSON": "Guardar para todos",
+      "JSON_OBJECT": "Se requiere un objeto JSON",
+      "JSON_WIDGETS": "\"widgets\" debe ser un objeto con ids de widgets",
+      "JSON_CONFIRM": "¿Reemplazar el panel para todos con este JSON?"
     }
   }
 }

@@ -606,6 +606,37 @@
       "NO_LINKED_ACCOUNT": "Inget länkat konto",
       "NO_KEYS": "Inga nycklar",
       "UNNAMED": "Namnlös nyckel"
+    },
+    "DASHBOARD": {
+      "TITLE": "Admin Shell-konfigurator för instrumentpanelen",
+      "TAB_EVERYONE": "För alla",
+      "TAB_ROLES": "Roller",
+      "TAB_PERSONALIZATION": "Anpassning",
+      "EVERYONE_HINT": "Widgetar kommer från modulerna och var och en visas bara för användare med dess behörighet. Här döljer du en widget för alla; plats och storlek anger du på startsidan.",
+      "SAVE_FIRST": "Spara eller återställ dina ändringar först",
+      "CUSTOMIZE_ON_HOME": "Anpassa layouten på startsidan",
+      "RESET_USERS": "Återställ användarnas layouter",
+      "RESET_USERS_CONFIRM": "Alla användares widgetar återgår till layouten för alla. Widgetar de dolt förblir dolda. Fortsätta?",
+      "RESET_USERS_DONE": "Användarnas layouter återställda",
+      "PLACED": "Widgetar placerade för alla: {count}",
+      "LAYOUT_VERSION": "layoutversion {version}",
+      "HIDDEN_FOR_EVERYONE": "Dold för alla",
+      "ROLES_HINT": "Dölj widgetar som en rolls användare inte behöver. En användare ser ändå en widget som en annan av hens roller visar; administratörer ser alla.",
+      "ROLE": "Roll",
+      "PICK_ROLE": "Välj en roll",
+      "ROLE_LACKS": "Rollen saknar behörigheten",
+      "PERSONALIZATION_HINT": "Vad användare får ändra på sin startsida. Att stänga av raderar inget: deras val kommer tillbaka när det slås på igen.",
+      "ALLOW_HIDE": "Dölja widgetar",
+      "ALLOW_HIDE_HINT": "Av: widgetar som användare dolt visas igen.",
+      "ALLOW_MOVE": "Flytta widgetar",
+      "ALLOW_MOVE_HINT": "Av: alla ser platserna som angetts för alla.",
+      "ALLOW_RESIZE": "Ändra storlek på widgetar",
+      "ALLOW_RESIZE_HINT": "Av: alla ser storlekarna som angetts för alla.",
+      "JSON_HINT": "Inställningen för alla (AdminShell.Dashboard.Global): widgetar per id, bara med det de ändrar. Kopiera den som säkerhetskopia eller till en annan miljö, eller klistra in en och tillämpa den.",
+      "APPLY_JSON": "Spara för alla",
+      "JSON_OBJECT": "Ett JSON-objekt krävs",
+      "JSON_WIDGETS": "\"widgets\" måste vara ett objekt med widget-id:n",
+      "JSON_CONFIRM": "Ersätta instrumentpanelen för alla med denna JSON?"
     }
   }
 }

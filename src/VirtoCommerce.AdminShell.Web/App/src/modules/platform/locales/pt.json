@@ -606,6 +606,37 @@
       "NO_LINKED_ACCOUNT": "Nenhuma conta vinculada",
       "NO_KEYS": "Nenhuma chave",
       "UNNAMED": "Chave sem nome"
+    },
+    "DASHBOARD": {
+      "TITLE": "Configurador do painel do Admin Shell",
+      "TAB_EVERYONE": "Para todos",
+      "TAB_ROLES": "Funções",
+      "TAB_PERSONALIZATION": "Personalização",
+      "EVERYONE_HINT": "Os widgets vêm dos módulos e cada um só aparece para usuários com sua permissão. Aqui você oculta um widget de todos; lugar e tamanho são definidos no próprio início.",
+      "SAVE_FIRST": "Salve ou descarte suas alterações primeiro",
+      "CUSTOMIZE_ON_HOME": "Personalizar o layout no início",
+      "RESET_USERS": "Redefinir os layouts dos usuários",
+      "RESET_USERS_CONFIRM": "Os widgets de todos os usuários voltam ao layout para todos. Os que ocultaram continuam ocultos. Continuar?",
+      "RESET_USERS_DONE": "Layouts dos usuários redefinidos",
+      "PLACED": "Widgets posicionados para todos: {count}",
+      "LAYOUT_VERSION": "versão do layout {version}",
+      "HIDDEN_FOR_EVERYONE": "Oculto para todos",
+      "ROLES_HINT": "Oculte os widgets de que os usuários de uma função não precisam. O usuário ainda vê um widget que outra de suas funções mostra; administradores veem todos.",
+      "ROLE": "Função",
+      "PICK_ROLE": "Escolha uma função",
+      "ROLE_LACKS": "A função não tem a permissão",
+      "PERSONALIZATION_HINT": "O que os usuários podem mudar no seu início. Desativar não apaga nada: as escolhas voltam ao reativar.",
+      "ALLOW_HIDE": "Ocultar widgets",
+      "ALLOW_HIDE_HINT": "Desativado: os widgets ocultados pelos usuários voltam a aparecer.",
+      "ALLOW_MOVE": "Mover widgets",
+      "ALLOW_MOVE_HINT": "Desativado: todos veem os lugares definidos para todos.",
+      "ALLOW_RESIZE": "Redimensionar widgets",
+      "ALLOW_RESIZE_HINT": "Desativado: todos veem os tamanhos definidos para todos.",
+      "JSON_HINT": "A configuração para todos (AdminShell.Dashboard.Global): widgets por id, só com o que mudam. Copie-a como backup ou para outro ambiente, ou cole uma e aplique.",
+      "APPLY_JSON": "Salvar para todos",
+      "JSON_OBJECT": "É necessário um objeto JSON",
+      "JSON_WIDGETS": "\"widgets\" deve ser um objeto com ids de widgets",
+      "JSON_CONFIRM": "Substituir o painel para todos por este JSON?"
     }
   }
 }

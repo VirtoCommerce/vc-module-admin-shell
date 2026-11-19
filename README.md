@@ -46,9 +46,10 @@ The sign-in page, with the installation's brand and a showcase of the platform.
   * each screen offers built-in views (*Locked accounts*, *Failed sign-ins*, *With errors*...) next to the views a user saves, which stay in that browser;
   * a table opts in with `search-bar`; other lists, module plugins included, keep the classic search header.
 * **Dashboard:**
-  * the host's and the modules' widgets on a draggable, resizable grid;
-  * the layout is saved per browser;
-  * *Reset layout* restores the defaults.
+  * the host's and the modules' widgets on a draggable, resizable grid, each shown only to users with its permission;
+  * layers as for the menu: for everyone (*Customize for everyone* on Home), per role, and each user's own, kept on the server so it is the same in every browser;
+  * the Admin Shell Dashboard Configurator (Configuration › Monitoring & Tools): widgets hidden for everyone and per role, what users may change (hide, move, resize), *Reset users' layouts*, *Edit as JSON*;
+  * *Reset layout* restores the layout for everyone.
 * **Desktop and phone:**
   * a section rail and panel on desktop;
   * a top bar and drawer on phones;
@@ -96,6 +97,12 @@ See the platform's [Admin UI](https://github.com/VirtoCommerce/vc-platform/blob/
 | `AdminShell.Menu.Role` | Json (per role) | `{}` | A role's menu patch; an item is hidden only if every role of the user hides it |
 | `AdminShell.Menu.User` | Json (per user, hidden) | `{}` | The user's pinned and hidden items, set from the shell (and an item order, API only) |
 | `AdminShell.Menu.Recent` | Json (per user, hidden) | `[]` | Usage scores behind *Recent*, recorded by the shell |
+| `AdminShell.Dashboard.Global` | Json | `{}` | The dashboard for everyone: widgets hidden, places and sizes, and the layout version (see [Layers](docs/dashboard-widgets.md#layers)) |
+| `AdminShell.Dashboard.AllowHide` | Boolean | `true` | Users may hide widgets on their Home |
+| `AdminShell.Dashboard.AllowMove` | Boolean | `true` | Users may move widgets |
+| `AdminShell.Dashboard.AllowResize` | Boolean | `true` | Users may resize widgets |
+| `AdminShell.Dashboard.Role` | Json (per role) | `{}` | The widgets a role's users don't need; hidden only if every role of the user hides it |
+| `AdminShell.Dashboard.User` | Json (per user, hidden) | `{}` | The user's hidden widgets, places and sizes, set on Home |
 | `AdminShell.UI.Appearance` | ShortText (per user) | `dark` | Light, dark or the system's appearance; set in the user menu or the profile, and follows the user to every browser |
 | `AdminShell.UI.Theme` | ShortText (per user) | `virto` | The color theme: Virto, Warm, Blue or Indigo; set like the appearance |
 
@@ -106,6 +113,7 @@ A setting that isn't valid JSON is ignored, so one typo can't take the menu down
 | Permission | Description |
 |------------|-------------|
 | `admin-shell:menu:manage` | Read and change the global and role menu layers through the API |
+| `admin-shell:dashboard:manage` | Change the dashboard for everyone and per role, and what users may change on theirs |
 
 Who may open the Admin Shell is the platform's admin UI access policy, `VirtoCommerce:PlatformUI:Access` in the platform's appsettings (administrators, required permissions, account types, allowed and denied permission masks; https://github.com/VirtoCommerce/vc-platform/pull/3092), the same rules as the AngularJS admin. A user it denies sees an *Access denied* page with a button to sign in with another account.
 

@@ -102,7 +102,8 @@
       "state_machines": "Zustandsautomaten",
       "stores": "Shops",
       "subscriptions": "Abonnements",
-      "webhooks": "Webhooks"
+      "webhooks": "Webhooks",
+      "platform_dashboard": "Admin Shell Dashboard-Konfigurator"
     }
   }
 }

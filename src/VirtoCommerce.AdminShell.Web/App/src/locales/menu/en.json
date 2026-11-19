@@ -102,7 +102,8 @@
       "state_machines": "State Machines",
       "stores": "Stores",
       "subscriptions": "Subscriptions",
-      "webhooks": "Webhooks"
+      "webhooks": "Webhooks",
+      "platform_dashboard": "Admin Shell Dashboard Configurator"
     }
   }
 }

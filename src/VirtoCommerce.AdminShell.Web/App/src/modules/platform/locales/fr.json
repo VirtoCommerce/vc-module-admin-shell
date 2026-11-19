@@ -606,6 +606,37 @@
       "NO_LINKED_ACCOUNT": "Aucun compte lié",
       "NO_KEYS": "Aucune clé",
       "UNNAMED": "Clé sans nom"
+    },
+    "DASHBOARD": {
+      "TITLE": "Configurateur du tableau de bord Admin Shell",
+      "TAB_EVERYONE": "Pour tous",
+      "TAB_ROLES": "Rôles",
+      "TAB_PERSONALIZATION": "Personnalisation",
+      "EVERYONE_HINT": "Les widgets viennent des modules et chacun n'est visible que des utilisateurs ayant son autorisation. Ici, vous masquez un widget pour tous ; sa place et sa taille se règlent sur l'accueil.",
+      "SAVE_FIRST": "Enregistrez ou annulez d'abord vos modifications",
+      "CUSTOMIZE_ON_HOME": "Personnaliser la disposition sur l'accueil",
+      "RESET_USERS": "Réinitialiser les dispositions des utilisateurs",
+      "RESET_USERS_CONFIRM": "Les widgets de chaque utilisateur reviennent à la disposition pour tous. Ceux qu'ils ont masqués restent masqués. Continuer ?",
+      "RESET_USERS_DONE": "Dispositions des utilisateurs réinitialisées",
+      "PLACED": "Widgets placés pour tous : {count}",
+      "LAYOUT_VERSION": "version de disposition {version}",
+      "HIDDEN_FOR_EVERYONE": "Masqué pour tous",
+      "ROLES_HINT": "Masquez les widgets dont les utilisateurs d'un rôle n'ont pas besoin. Un utilisateur voit toujours un widget qu'un autre de ses rôles affiche ; les administrateurs les voient tous.",
+      "ROLE": "Rôle",
+      "PICK_ROLE": "Choisissez un rôle",
+      "ROLE_LACKS": "Le rôle n'a pas son autorisation",
+      "PERSONALIZATION_HINT": "Ce que les utilisateurs peuvent modifier sur leur accueil. Désactiver ne supprime rien : leurs choix reviennent à la réactivation.",
+      "ALLOW_HIDE": "Masquer des widgets",
+      "ALLOW_HIDE_HINT": "Désactivé : les widgets masqués par les utilisateurs réapparaissent.",
+      "ALLOW_MOVE": "Déplacer des widgets",
+      "ALLOW_MOVE_HINT": "Désactivé : chacun voit les places définies pour tous.",
+      "ALLOW_RESIZE": "Redimensionner des widgets",
+      "ALLOW_RESIZE_HINT": "Désactivé : chacun voit les tailles définies pour tous.",
+      "JSON_HINT": "Le paramètre pour tous (AdminShell.Dashboard.Global) : widgets par id, avec seulement ce qu'ils modifient. Copiez-le pour une sauvegarde ou un autre environnement, ou collez-en un et appliquez-le.",
+      "APPLY_JSON": "Enregistrer pour tous",
+      "JSON_OBJECT": "Un objet JSON est requis",
+      "JSON_WIDGETS": "« widgets » doit être un objet d'id de widgets",
+      "JSON_CONFIRM": "Remplacer le tableau de bord pour tous par ce JSON ?"
     }
   }
 }

@@ -606,6 +606,37 @@
       "NO_LINKED_ACCOUNT": "Brak połączonego konta",
       "NO_KEYS": "Brak kluczy",
       "UNNAMED": "Klucz bez nazwy"
+    },
+    "DASHBOARD": {
+      "TITLE": "Konfigurator pulpitu Admin Shell",
+      "TAB_EVERYONE": "Dla wszystkich",
+      "TAB_ROLES": "Role",
+      "TAB_PERSONALIZATION": "Personalizacja",
+      "EVERYONE_HINT": "Widżety pochodzą z modułów i każdy widzą tylko użytkownicy z jego uprawnieniem. Tutaj ukrywasz widżet przed wszystkimi; miejsce i rozmiar ustawiasz na stronie głównej.",
+      "SAVE_FIRST": "Najpierw zapisz lub cofnij zmiany",
+      "CUSTOMIZE_ON_HOME": "Dostosuj układ na stronie głównej",
+      "RESET_USERS": "Resetuj układy użytkowników",
+      "RESET_USERS_CONFIRM": "Widżety wszystkich użytkowników wrócą do układu dla wszystkich. Ukryte przez nich widżety pozostaną ukryte. Kontynuować?",
+      "RESET_USERS_DONE": "Układy użytkowników zresetowane",
+      "PLACED": "Widżety rozmieszczone dla wszystkich: {count}",
+      "LAYOUT_VERSION": "wersja układu {version}",
+      "HIDDEN_FOR_EVERYONE": "Ukryty dla wszystkich",
+      "ROLES_HINT": "Ukryj widżety, których użytkownicy roli nie potrzebują. Użytkownik nadal widzi widżet pokazywany przez inną jego rolę; administratorzy widzą wszystkie.",
+      "ROLE": "Rola",
+      "PICK_ROLE": "Wybierz rolę",
+      "ROLE_LACKS": "Rola nie ma uprawnienia",
+      "PERSONALIZATION_HINT": "Co użytkownicy mogą zmieniać na swojej stronie głównej. Wyłączenie niczego nie usuwa: ich wybór wróci po ponownym włączeniu.",
+      "ALLOW_HIDE": "Ukrywanie widżetów",
+      "ALLOW_HIDE_HINT": "Wyłączone: ukryte przez użytkowników widżety znów są widoczne.",
+      "ALLOW_MOVE": "Przesuwanie widżetów",
+      "ALLOW_MOVE_HINT": "Wyłączone: wszyscy widzą miejsca ustawione dla wszystkich.",
+      "ALLOW_RESIZE": "Zmiana rozmiaru widżetów",
+      "ALLOW_RESIZE_HINT": "Wyłączone: wszyscy widzą rozmiary ustawione dla wszystkich.",
+      "JSON_HINT": "Ustawienie dla wszystkich (AdminShell.Dashboard.Global): widżety według id, tylko z tym, co zmieniają. Skopiuj je jako kopię zapasową lub dla innego środowiska albo wklej i zastosuj.",
+      "APPLY_JSON": "Zapisz dla wszystkich",
+      "JSON_OBJECT": "Wymagany jest obiekt JSON",
+      "JSON_WIDGETS": "„widgets” musi być obiektem z id widżetów",
+      "JSON_CONFIRM": "Zastąpić pulpit dla wszystkich tym JSON?"
     }
   }
 }

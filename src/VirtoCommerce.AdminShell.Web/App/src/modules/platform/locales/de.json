@@ -606,6 +606,37 @@
       "NO_LINKED_ACCOUNT": "Kein verknüpftes Konto",
       "NO_KEYS": "Keine Schlüssel",
       "UNNAMED": "Unbenannter Schlüssel"
+    },
+    "DASHBOARD": {
+      "TITLE": "Admin Shell Dashboard-Konfigurator",
+      "TAB_EVERYONE": "Für alle",
+      "TAB_ROLES": "Rollen",
+      "TAB_PERSONALIZATION": "Personalisierung",
+      "EVERYONE_HINT": "Widgets kommen aus den Modulen, und jedes sehen nur Benutzer mit seiner Berechtigung. Hier blenden Sie ein Widget für alle aus; Platz und Größe legen Sie auf der Startseite fest.",
+      "SAVE_FIRST": "Speichern oder verwerfen Sie zuerst Ihre Änderungen",
+      "CUSTOMIZE_ON_HOME": "Layout auf der Startseite anpassen",
+      "RESET_USERS": "Layouts der Benutzer zurücksetzen",
+      "RESET_USERS_CONFIRM": "Die Widgets aller Benutzer kehren zum Layout für alle zurück. Ausgeblendete Widgets bleiben ausgeblendet. Fortfahren?",
+      "RESET_USERS_DONE": "Layouts der Benutzer zurückgesetzt",
+      "PLACED": "Für alle platzierte Widgets: {count}",
+      "LAYOUT_VERSION": "Layoutversion {version}",
+      "HIDDEN_FOR_EVERYONE": "Für alle ausgeblendet",
+      "ROLES_HINT": "Blenden Sie Widgets aus, die die Benutzer einer Rolle nicht brauchen. Ein Benutzer sieht ein Widget weiterhin, wenn eine andere seiner Rollen es zeigt; Administratoren sehen alle.",
+      "ROLE": "Rolle",
+      "PICK_ROLE": "Rolle wählen",
+      "ROLE_LACKS": "Der Rolle fehlt die Berechtigung",
+      "PERSONALIZATION_HINT": "Was Benutzer auf ihrer Startseite ändern dürfen. Ausschalten löscht nichts: Ihre Auswahl kehrt zurück, wenn die Option wieder an ist.",
+      "ALLOW_HIDE": "Widgets ausblenden",
+      "ALLOW_HIDE_HINT": "Aus: Von Benutzern ausgeblendete Widgets erscheinen wieder.",
+      "ALLOW_MOVE": "Widgets verschieben",
+      "ALLOW_MOVE_HINT": "Aus: Alle sehen die für alle festgelegten Plätze.",
+      "ALLOW_RESIZE": "Widget-Größe ändern",
+      "ALLOW_RESIZE_HINT": "Aus: Alle sehen die für alle festgelegten Größen.",
+      "JSON_HINT": "Die Einstellung für alle (AdminShell.Dashboard.Global): Widgets nach ID, nur mit ihren Änderungen. Kopieren Sie sie als Sicherung oder für eine andere Umgebung, oder fügen Sie eine ein und wenden Sie sie an.",
+      "APPLY_JSON": "Für alle speichern",
+      "JSON_OBJECT": "Ein JSON-Objekt ist erforderlich",
+      "JSON_WIDGETS": "„widgets“ muss ein Objekt mit Widget-IDs sein",
+      "JSON_CONFIRM": "Das Dashboard für alle durch dieses JSON ersetzen?"
     }
   }
 }

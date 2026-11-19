@@ -606,6 +606,37 @@
       "NO_LINKED_ACCOUNT": "No linked account",
       "NO_KEYS": "No keys",
       "UNNAMED": "Unnamed key"
+    },
+    "DASHBOARD": {
+      "TITLE": "Admin Shell Dashboard Configurator",
+      "TAB_EVERYONE": "For everyone",
+      "TAB_ROLES": "Roles",
+      "TAB_PERSONALIZATION": "Personalization",
+      "EVERYONE_HINT": "Widgets come from the modules, and each shows only to users with its permission. Here you hide a widget from everyone; its place and size you set on Home itself.",
+      "SAVE_FIRST": "Save or reset your changes first",
+      "CUSTOMIZE_ON_HOME": "Customize the layout on Home",
+      "RESET_USERS": "Reset users' layouts",
+      "RESET_USERS_CONFIRM": "Every user's widgets go back to the layout set for everyone. The widgets they hid stay hidden. Continue?",
+      "RESET_USERS_DONE": "Users' layouts reset",
+      "PLACED": "Widgets placed for everyone: {count}",
+      "LAYOUT_VERSION": "layout version {version}",
+      "HIDDEN_FOR_EVERYONE": "Hidden for everyone",
+      "ROLES_HINT": "Hide the widgets a role's users don't need. A user still sees a widget another of their roles shows, and administrators see every widget.",
+      "ROLE": "Role",
+      "PICK_ROLE": "Choose a role",
+      "ROLE_LACKS": "The role lacks its permission",
+      "PERSONALIZATION_HINT": "What users may change on their own Home. Turning an option off deletes nothing: their choices come back when it's on again.",
+      "ALLOW_HIDE": "Hide widgets",
+      "ALLOW_HIDE_HINT": "Off: the widgets users hid show again.",
+      "ALLOW_MOVE": "Move widgets",
+      "ALLOW_MOVE_HINT": "Off: everyone sees the places set for everyone.",
+      "ALLOW_RESIZE": "Resize widgets",
+      "ALLOW_RESIZE_HINT": "Off: everyone sees the sizes set for everyone.",
+      "JSON_HINT": "The setting for everyone (AdminShell.Dashboard.Global): widgets by id, with only what they change. Copy it for a backup or another environment, or paste one and apply it.",
+      "APPLY_JSON": "Save for everyone",
+      "JSON_OBJECT": "A JSON object is required",
+      "JSON_WIDGETS": "\"widgets\" must be an object of widget ids",
+      "JSON_CONFIRM": "Replace the dashboard for everyone with this JSON?"
     }
   }
 }

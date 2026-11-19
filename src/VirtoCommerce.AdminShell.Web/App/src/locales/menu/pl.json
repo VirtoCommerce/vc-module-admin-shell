@@ -102,7 +102,8 @@
       "state_machines": "Maszyny stanów",
       "stores": "Sklepy",
       "subscriptions": "Subskrypcje",
-      "webhooks": "Webhooki"
+      "webhooks": "Webhooki",
+      "platform_dashboard": "Konfigurator pulpitu Admin Shell"
     }
   }
 }

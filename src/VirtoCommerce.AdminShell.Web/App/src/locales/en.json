@@ -78,6 +78,23 @@
         "FAILED": "Failed sign-ins",
         "USERS": "Users signed in",
         "DISABLED": "Sign-in logging is turned off"
+      },
+      "WIDGETS": "Widgets",
+      "WIDGETS_TITLE": "Widgets on your Home",
+      "CLOSE": "Close",
+      "CUSTOMIZE_ALL": "Customize for everyone",
+      "PERMISSION": "Needs {permission}",
+      "NO_PERMISSION": "No permission needed: everyone sees it",
+      "SAVE_FAILED": "Couldn't save the dashboard",
+      "EVERYONE": {
+        "TITLE": "Customizing Home for everyone",
+        "HINT": "Move, resize and hide widgets. Saved, this is where every user starts; users who changed their own keep theirs unless you reset them.",
+        "RESET_USERS": "Reset users' own layouts",
+        "SAVE": "Save for everyone",
+        "CANCEL": "Cancel",
+        "MODULE_DEFAULTS": "Modules' layout",
+        "SAVED": "Home saved for everyone",
+        "PANEL_TITLE": "Widgets for everyone"
       }
     },
     "AUTH": {

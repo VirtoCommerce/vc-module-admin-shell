@@ -102,7 +102,8 @@
       "state_machines": "Macchine a stati",
       "stores": "Negozi",
       "subscriptions": "Abbonamenti",
-      "webhooks": "Webhook"
+      "webhooks": "Webhook",
+      "platform_dashboard": "Configuratore della dashboard di Admin Shell"
     }
   }
 }

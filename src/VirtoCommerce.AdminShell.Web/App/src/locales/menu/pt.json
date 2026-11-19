@@ -102,7 +102,8 @@
       "state_machines": "Máquinas de estado",
       "stores": "Lojas",
       "subscriptions": "Assinaturas",
-      "webhooks": "Webhooks"
+      "webhooks": "Webhooks",
+      "platform_dashboard": "Configurador do painel do Admin Shell"
     }
   }
 }

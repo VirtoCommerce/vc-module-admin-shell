@@ -77,6 +77,23 @@
         "FAILED": "Misslyckade inloggningar",
         "USERS": "Inloggade användare",
         "DISABLED": "Registrering av inloggningar är avstängd"
+      },
+      "WIDGETS": "Widgetar",
+      "WIDGETS_TITLE": "Widgetar på din startsida",
+      "CLOSE": "Stäng",
+      "CUSTOMIZE_ALL": "Anpassa för alla",
+      "PERMISSION": "Kräver {permission}",
+      "NO_PERMISSION": "Ingen behörighet krävs: alla ser den",
+      "SAVE_FAILED": "Det gick inte att spara instrumentpanelen",
+      "EVERYONE": {
+        "TITLE": "Anpassar startsidan för alla",
+        "HINT": "Flytta, ändra storlek och dölj widgetar. Sparat är detta allas start; de som ändrat sin behåller den om du inte återställer den.",
+        "RESET_USERS": "Återställ användarnas egna layouter",
+        "SAVE": "Spara för alla",
+        "CANCEL": "Avbryt",
+        "MODULE_DEFAULTS": "Modulernas layout",
+        "SAVED": "Startsidan sparad för alla",
+        "PANEL_TITLE": "Widgetar för alla"
       }
     },
     "AUTH": {

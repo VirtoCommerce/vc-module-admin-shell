@@ -102,7 +102,8 @@
       "state_machines": "Machines à états",
       "stores": "Boutiques",
       "subscriptions": "Abonnements",
-      "webhooks": "Webhooks"
+      "webhooks": "Webhooks",
+      "platform_dashboard": "Configurateur du tableau de bord Admin Shell"
     }
   }
 }

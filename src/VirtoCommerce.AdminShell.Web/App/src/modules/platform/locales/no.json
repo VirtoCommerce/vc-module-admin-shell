@@ -606,6 +606,37 @@
       "NO_LINKED_ACCOUNT": "Ingen tilknyttet konto",
       "NO_KEYS": "Ingen nøkler",
       "UNNAMED": "Navnløs nøkkel"
+    },
+    "DASHBOARD": {
+      "TITLE": "Admin Shell-konfigurator for dashbordet",
+      "TAB_EVERYONE": "For alle",
+      "TAB_ROLES": "Roller",
+      "TAB_PERSONALIZATION": "Tilpasning",
+      "EVERYONE_HINT": "Widgeter kommer fra modulene, og hver vises bare for brukere med tillatelsen. Her skjuler du en widget for alle; plass og størrelse setter du på startsiden.",
+      "SAVE_FIRST": "Lagre eller tilbakestill endringene først",
+      "CUSTOMIZE_ON_HOME": "Tilpass oppsettet på startsiden",
+      "RESET_USERS": "Tilbakestill brukernes oppsett",
+      "RESET_USERS_CONFIRM": "Alle brukeres widgeter går tilbake til oppsettet for alle. Widgeter de har skjult forblir skjult. Fortsette?",
+      "RESET_USERS_DONE": "Brukernes oppsett tilbakestilt",
+      "PLACED": "Widgeter plassert for alle: {count}",
+      "LAYOUT_VERSION": "oppsettversjon {version}",
+      "HIDDEN_FOR_EVERYONE": "Skjult for alle",
+      "ROLES_HINT": "Skjul widgeter en rolles brukere ikke trenger. En bruker ser fortsatt en widget som en annen av rollene viser; administratorer ser alle.",
+      "ROLE": "Rolle",
+      "PICK_ROLE": "Velg en rolle",
+      "ROLE_LACKS": "Rollen mangler tillatelsen",
+      "PERSONALIZATION_HINT": "Hva brukere kan endre på sin startside. Å slå av sletter ingenting: valgene kommer tilbake når det slås på igjen.",
+      "ALLOW_HIDE": "Skjule widgeter",
+      "ALLOW_HIDE_HINT": "Av: widgeter brukerne har skjult, vises igjen.",
+      "ALLOW_MOVE": "Flytte widgeter",
+      "ALLOW_MOVE_HINT": "Av: alle ser plassene som er satt for alle.",
+      "ALLOW_RESIZE": "Endre størrelse på widgeter",
+      "ALLOW_RESIZE_HINT": "Av: alle ser størrelsene som er satt for alle.",
+      "JSON_HINT": "Innstillingen for alle (AdminShell.Dashboard.Global): widgeter etter id, bare med det de endrer. Kopier den som sikkerhetskopi eller til et annet miljø, eller lim inn en og bruk den.",
+      "APPLY_JSON": "Lagre for alle",
+      "JSON_OBJECT": "Et JSON-objekt kreves",
+      "JSON_WIDGETS": "\"widgets\" må være et objekt med widget-id-er",
+      "JSON_CONFIRM": "Erstatte dashbordet for alle med denne JSON-en?"
     }
   }
 }
