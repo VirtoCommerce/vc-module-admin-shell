@@ -254,6 +254,14 @@ function applyFilter(values: SearchBarState["values"], search = query.value.sear
   query.value = { search, values };
 }
 
+const NO_RESULTS = "COMPONENTS.ORGANISMS.VC_DATA_TABLE.NO_RESULTS";
+
+function noResultsTitle(search: string, count: number) {
+  if (!count) return t(`${NO_RESULTS}.TITLE_SEARCH`, { query: search });
+  if (search) return t(`${NO_RESULTS}.TITLE_SEARCH_FILTERS`, { query: search, count }, count);
+  return t(`${NO_RESULTS}.TITLE_FILTERS`, { count }, count);
+}
+
 // the bar is the screen's own, so the table can't tell an empty period from filters that match nothing: say which,
 // in the words the tables use
 const emptyState = computed(() => {
@@ -262,16 +270,11 @@ const emptyState = computed(() => {
     (x) => x !== undefined && x !== null && x !== "" && !(Array.isArray(x) && !x.length),
   ).length;
   if (!search && !count) return { icon: "lucide-log-in", title: t("PLATFORM.SECURITY.SIGNIN.EMPTY") };
-  const key = "COMPONENTS.ORGANISMS.VC_DATA_TABLE.NO_RESULTS";
   return {
     icon: "lucide-filter-x",
-    title: !count
-      ? t(`${key}.TITLE_SEARCH`, { query: search })
-      : search
-        ? t(`${key}.TITLE_SEARCH_FILTERS`, { query: search, count }, count)
-        : t(`${key}.TITLE_FILTERS`, { count }, count),
-    description: t(count ? `${key}.HINT_FILTERS` : `${key}.HINT_SEARCH`),
-    actionLabel: t(count ? `${key}.CLEAR_FILTERS` : `${key}.CLEAR_SEARCH`),
+    title: noResultsTitle(search, count),
+    description: t(count ? `${NO_RESULTS}.HINT_FILTERS` : `${NO_RESULTS}.HINT_SEARCH`),
+    actionLabel: t(count ? `${NO_RESULTS}.CLEAR_FILTERS` : `${NO_RESULTS}.CLEAR_SEARCH`),
     actionHandler: () => applyFilter({}, ""),
   };
 });
