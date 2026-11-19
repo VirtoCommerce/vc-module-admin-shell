@@ -5,6 +5,8 @@ import {
   diffLayout,
   fromStorage,
   hiddenIn,
+  keepUnseen,
+  layerKey,
   layoutIn,
   readEffective,
   roleCanSee,
@@ -83,4 +85,22 @@ test("a layer read from the server drops its empty fields", () => {
   const widgets = { "shell-alerts": { x: 1, y: null, width: null, height: 4, hidden: null } } as never;
   assert.deepEqual(layoutIn(widgets), { "shell-alerts": { x: 1, height: 4 } });
   assert.deepEqual(hiddenIn(widgets), []);
+});
+
+test("saving from the grid keeps the places of widgets the grid didn't show", () => {
+  const stored = { "shell-alerts": { width: 12 }, "not-installed": { x: 1, y: 9 }, "orders-sales": { x: 4 } };
+  assert.deepEqual(keepUnseen(stored, { "orders-sales": { x: 8 } }, ["orders-sales", "shell-activity"]), {
+    "shell-alerts": { width: 12 },
+    "not-installed": { x: 1, y: 9 },
+    "orders-sales": { x: 8 },
+  });
+});
+
+test("a layer's key ignores the order of ids and empty fields, not its content", () => {
+  const a = { widgets: { b: { hidden: true }, a: { x: 1 } }, layoutVersion: 2 };
+  const b = { layoutVersion: 2, widgets: { a: { x: 1, y: undefined }, b: { hidden: true } } };
+  assert.equal(layerKey(a), layerKey(b));
+  assert.notEqual(layerKey(a), layerKey({ ...a, layoutVersion: 3 }));
+  assert.notEqual(layerKey(a), layerKey({ widgets: { a: { x: 1 } }, layoutVersion: 2 }));
+  assert.equal(layerKey(undefined), layerKey({}));
 });

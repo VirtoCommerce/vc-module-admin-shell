@@ -84,6 +84,7 @@
       "PERMISSION": "Wymaga {permission}",
       "NO_PERMISSION": "Wszyscy",
       "SAVE_FAILED": "Nie udało się zapisać pulpitu",
+      "CHANGED_ELSEWHERE": "Ktoś inny w międzyczasie zmienił pulpit. Odśwież i wprowadź zmiany ponownie.",
       "EVERYONE": {
         "TITLE": "Dostosowywanie strony głównej dla wszystkich",
         "HINT": "Przesuwaj, zmieniaj rozmiar i ukrywaj widżety. Po zapisaniu tak zaczyna każdy; kto zmienił swój układ, zachowa go, chyba że go zresetujesz.",

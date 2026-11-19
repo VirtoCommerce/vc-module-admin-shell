@@ -651,7 +651,8 @@
       "JSON_LABEL": "Configurações do painel",
       "JSON_SHAPE": "espera-se um objeto com \"everyone\" (com \"widgets\"), \"roles\" (nomes de função para listas de ids de widgets) e \"personalization\"",
       "JSON_UNKNOWN_ROLES": "Funções que não existem aqui: {roles}",
-      "UNDO_ALL_CONFIRM": "Desfazer todas as alterações do painel? As regras são removidas; ao salvar, voltam o layout dos módulos e a liberdade dos usuários de mudar o seu."
+      "UNDO_ALL_CONFIRM": "Desfazer todas as alterações do painel? As regras são removidas; ao salvar, voltam o layout dos módulos e a liberdade dos usuários de mudar o seu.",
+      "CHANGED_ELSEWHERE": "Outra pessoa alterou o painel nesse meio-tempo. Atualize e faça suas alterações novamente."
     }
   }
 }

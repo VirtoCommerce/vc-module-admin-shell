@@ -136,6 +136,9 @@ Rules:
 - **The user** moves and resizes widgets, as far as the settings allow; users don't hide widgets (only everyone and role rules do). Turning a setting off deletes nothing: the user's layout applies again when it is on.
 - **Reset users' layouts** (when saving for everyone, or in the configurator) raises `layoutVersion`; a user's places and sizes made under an older version are dropped at the next visit.
 - **Diff only.** Saving for everyone keeps only what differs from the modules' own place and size, and a user's layer only what differs from the layout for everyone, so a later change of a default reaches the widgets nobody placed. Ids of widgets that aren't installed are kept and do nothing.
+- **Concurrent edits:** the Dashboard Editor and *Customize for everyone* re-read the layers they are about to write; when someone changed one since it was read, the save stops and asks to refresh, instead of overwriting the other change.
+- **Places of widgets not on the grid** (hidden for everyone, from a module not installed now, or one the editing administrator may not see) are kept when *Customize for everyone* saves.
+- **Earlier browser layout:** a user's layout from before the server kept it (`localStorage["vc-dashboard-layout"]`) is carried over once, on the first visit, unless the user already has one on the server or an administrator has set a layout for everyone (the old places were made against the modules' own). A move made just before leaving Home is saved on the way out.
 - A value that doesn't read as a layer (edited by hand, with a typo) counts as empty: everyone then sees every widget their permissions allow. A `PUT` whose body doesn't bind is refused with 400 and the layer is kept.
 
 ### Customize for everyone (Home)

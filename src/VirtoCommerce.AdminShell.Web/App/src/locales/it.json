@@ -84,6 +84,7 @@
       "PERMISSION": "Richiede {permission}",
       "NO_PERMISSION": "Tutti",
       "SAVE_FAILED": "Impossibile salvare la dashboard",
+      "CHANGED_ELSEWHERE": "Qualcun altro ha modificato la dashboard nel frattempo. Aggiorna e ripeti le modifiche.",
       "EVERYONE": {
         "TITLE": "Personalizzazione della home per tutti",
         "HINT": "Sposta, ridimensiona e nascondi i widget. Salvato, è il punto di partenza di tutti; chi ha cambiato il proprio lo mantiene, a meno che tu non lo reimposti.",

@@ -651,7 +651,8 @@
       "JSON_LABEL": "Ajustes del panel",
       "JSON_SHAPE": "se espera un objeto con \"everyone\" (con \"widgets\"), \"roles\" (nombres de rol con listas de ids de widgets) y \"personalization\"",
       "JSON_UNKNOWN_ROLES": "Roles que no existen aquí: {roles}",
-      "UNDO_ALL_CONFIRM": "¿Deshacer todos los cambios del panel? Las reglas se eliminan; al guardar vuelven el diseño de los módulos y la libertad de los usuarios de cambiar el suyo."
+      "UNDO_ALL_CONFIRM": "¿Deshacer todos los cambios del panel? Las reglas se eliminan; al guardar vuelven el diseño de los módulos y la libertad de los usuarios de cambiar el suyo.",
+      "CHANGED_ELSEWHERE": "Otra persona cambió el panel mientras tanto. Actualice y vuelva a hacer sus cambios."
     }
   }
 }

@@ -85,6 +85,7 @@
       "PERMISSION": "Needs {permission}",
       "NO_PERMISSION": "Everyone",
       "SAVE_FAILED": "Couldn't save the dashboard",
+      "CHANGED_ELSEWHERE": "Someone else changed the dashboard meanwhile. Refresh, then make your changes again.",
       "EVERYONE": {
         "TITLE": "Customizing Home for everyone",
         "HINT": "Move, resize and hide widgets. Saved, this is where every user starts; users who changed their own keep theirs unless you reset them.",

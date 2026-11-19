@@ -651,7 +651,8 @@
       "JSON_LABEL": "Paramètres du tableau de bord",
       "JSON_SHAPE": "un objet avec \"everyone\" (avec \"widgets\"), \"roles\" (noms de rôle vers des listes d'id de widgets) et \"personalization\" est attendu",
       "JSON_UNKNOWN_ROLES": "Rôles absents ici : {roles}",
-      "UNDO_ALL_CONFIRM": "Annuler toutes les modifications du tableau de bord ? Les règles disparaissent ; après l'enregistrement, la disposition des modules et la liberté des utilisateurs de modifier la leur s'appliquent à nouveau."
+      "UNDO_ALL_CONFIRM": "Annuler toutes les modifications du tableau de bord ? Les règles disparaissent ; après l'enregistrement, la disposition des modules et la liberté des utilisateurs de modifier la leur s'appliquent à nouveau.",
+      "CHANGED_ELSEWHERE": "Quelqu'un d'autre a modifié le tableau de bord entre-temps. Actualisez, puis refaites vos modifications."
     }
   }
 }

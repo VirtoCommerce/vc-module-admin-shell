@@ -84,6 +84,7 @@
       "PERMISSION": "需要 {permission}",
       "NO_PERMISSION": "所有人",
       "SAVE_FAILED": "无法保存仪表板",
+      "CHANGED_ELSEWHERE": "在此期间有其他人更改了仪表板。请刷新后重新进行更改。",
       "EVERYONE": {
         "TITLE": "正在为所有人自定义主页",
         "HINT": "移动、调整大小和隐藏小组件。保存后这就是所有人的起点；已自行更改的用户会保留自己的布局，除非您重置。",

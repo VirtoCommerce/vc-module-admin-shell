@@ -651,7 +651,8 @@
       "JSON_LABEL": "Impostazioni della dashboard",
       "JSON_SHAPE": "è atteso un oggetto con \"everyone\" (con \"widgets\"), \"roles\" (nomi di ruolo con liste di id dei widget) e \"personalization\"",
       "JSON_UNKNOWN_ROLES": "Ruoli non presenti qui: {roles}",
-      "UNDO_ALL_CONFIRM": "Annullare tutte le modifiche alla dashboard? Le regole vengono rimosse; dopo il salvataggio tornano il layout dei moduli e la libertà degli utenti di cambiare il proprio."
+      "UNDO_ALL_CONFIRM": "Annullare tutte le modifiche alla dashboard? Le regole vengono rimosse; dopo il salvataggio tornano il layout dei moduli e la libertà degli utenti di cambiare il proprio.",
+      "CHANGED_ELSEWHERE": "Qualcun altro ha modificato la dashboard nel frattempo. Aggiorna e ripeti le modifiche."
     }
   }
 }

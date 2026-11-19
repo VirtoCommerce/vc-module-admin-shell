@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using VirtoCommerce.AdminShell.Core;
 using VirtoCommerce.AdminShell.Core.Models;
 using VirtoCommerce.AdminShell.Core.Services;
@@ -24,7 +25,16 @@ public class AdminDashboardService(
     IDistributedLock distributedLock,
     IDashboardComposer composer) : IAdminDashboardService
 {
-    public async Task<EffectiveDashboard> GetEffectiveDashboardAsync(ClaimsPrincipal principal)
+    private static readonly JsonSerializerSettings WriteSettings = new()
+    {
+        NullValueHandling = NullValueHandling.Ignore,
+        ContractResolver = new DefaultContractResolver
+        {
+            NamingStrategy = new CamelCaseNamingStrategy { ProcessDictionaryKeys = false },
+        },
+    };
+
+    public virtual async Task<EffectiveDashboard> GetEffectiveDashboardAsync(ClaimsPrincipal principal)
     {
         var userId = principal.GetUserId();
         var global = GetGlobalAsync();
@@ -44,10 +54,10 @@ public class AdminDashboardService(
             MenuAccess.HasPermission(principal, Permissions.DashboardManage));
     }
 
-    public Task<DashboardPatch> GetGlobalAsync() => ReadPatchAsync(Settings.GlobalDashboard, null, null);
+    public virtual Task<DashboardPatch> GetGlobalAsync() => ReadPatchAsync(Settings.GlobalDashboard, null, null);
 
     // one write at a time: a reset raises the version the stored layer has
-    public Task SaveGlobalAsync(DashboardPatch patch, bool resetUserLayouts) =>
+    public virtual Task SaveGlobalAsync(DashboardPatch patch, bool resetUserLayouts) =>
         distributedLock.ExecuteAsync("admin-shell:dashboard:global",
             async _ =>
             {
@@ -58,70 +68,81 @@ public class AdminDashboardService(
             },
             TimeSpan.FromSeconds(10));
 
-    public async Task<bool> RoleExistsAsync(string roleId) =>
+    public virtual async Task<bool> RoleExistsAsync(string roleId) =>
         !string.IsNullOrWhiteSpace(roleId) && await roleManager.FindByIdAsync(roleId) != null;
 
-    public async Task<IList<RoleDashboard>> GetRolesAsync()
+    public virtual async Task<IList<RoleDashboard>> GetRolesAsync()
     {
-        // the role store's list, then each role with its permissions (the role manager loads them) and its layer
+        // the role store's list, then each role with its permissions (the role manager loads them, one at a time: it
+        // isn't safe to share between parallel calls); the roles' layers are read together, as for the menu
         var ids = roleManager.Roles.Select(x => x.Id).ToList();
-        var result = new List<RoleDashboard>();
+        var roles = new List<Role>();
         foreach (var id in ids)
         {
-            var role = await roleManager.FindByIdAsync(id);
-            if (role == null)
+            if (await roleManager.FindByIdAsync(id) is { } role)
             {
-                continue;
+                roles.Add(role);
             }
+        }
 
-            result.Add(new RoleDashboard
+        var layers = await Task.WhenAll(roles.Select(role => GetRoleAsync(role.Id)));
+
+        return roles
+            .Select((role, i) => new RoleDashboard
             {
                 Id = role.Id,
                 Name = role.Name ?? role.Id,
                 Permissions = (role.Permissions ?? []).Select(x => x.Name).Where(x => !string.IsNullOrEmpty(x)).Distinct().ToList(),
-                Dashboard = await GetRoleAsync(role.Id),
-            });
-        }
-
-        return result.OrderBy(x => x.Name, StringComparer.OrdinalIgnoreCase).ToList();
+                Dashboard = layers[i],
+            })
+            .OrderBy(x => x.Name, StringComparer.OrdinalIgnoreCase)
+            .ToList();
     }
 
-    public Task<DashboardPatch> GetRoleAsync(string roleId) => ReadPatchAsync(Settings.RoleDashboard, ModuleConstants.RoleTenant, roleId);
+    public virtual Task<DashboardPatch> GetRoleAsync(string roleId) => ReadPatchAsync(Settings.RoleDashboard, ModuleConstants.RoleTenant, roleId);
 
-    public Task SaveRoleAsync(string roleId, DashboardPatch patch)
-    {
-        var value = composer.Normalize(patch);
-        value.LayoutVersion = 0;
-        return WriteAsync(Settings.RoleDashboard, ModuleConstants.RoleTenant, roleId, value);
-    }
+    // one write at a time per role: two first saves would each insert a settings row
+    public virtual Task SaveRoleAsync(string roleId, DashboardPatch patch) =>
+        distributedLock.ExecuteAsync($"admin-shell:dashboard:role:{roleId}",
+            _ =>
+            {
+                var value = composer.Normalize(patch);
+                value.LayoutVersion = 0;
+                return WriteAsync(Settings.RoleDashboard, ModuleConstants.RoleTenant, roleId, value);
+            },
+            TimeSpan.FromSeconds(10));
 
-    public async Task<UserDashboardPrefs> GetUserPrefsAsync(string userId) =>
+    public virtual async Task<UserDashboardPrefs> GetUserPrefsAsync(string userId) =>
         composer.Normalize(await ReadAsync<UserDashboardPrefs>(Settings.UserDashboard, ModuleConstants.UserProfileTenant, userId));
 
     // one write at a time per user: two first saves would each insert a settings row
-    public Task SaveUserPrefsAsync(string userId, UserDashboardPrefs prefs) =>
+    public virtual Task SaveUserPrefsAsync(string userId, UserDashboardPrefs prefs) =>
         distributedLock.ExecuteAsync($"admin-shell:dashboard:{userId}",
             _ => WriteAsync(Settings.UserDashboard, ModuleConstants.UserProfileTenant, userId, composer.Normalize(prefs)),
             TimeSpan.FromSeconds(10));
 
-    public async Task<DashboardPersonalization> GetPersonalizationAsync() => new()
+    public virtual async Task<DashboardPersonalization> GetPersonalizationAsync() => new()
     {
         AllowMove = await settingsManager.GetValueAsync<bool>(Settings.DashboardAllowMove),
         AllowResize = await settingsManager.GetValueAsync<bool>(Settings.DashboardAllowResize),
     };
 
-    public async Task SavePersonalizationAsync(DashboardPersonalization personalization)
-    {
-        await settingsManager.SetValueAsync(Settings.DashboardAllowMove.Name, personalization.AllowMove);
-        await settingsManager.SetValueAsync(Settings.DashboardAllowResize.Name, personalization.AllowResize);
-    }
+    // one write at a time: the two settings are saved together
+    public virtual Task SavePersonalizationAsync(DashboardPersonalization personalization) =>
+        distributedLock.ExecuteAsync("admin-shell:dashboard:personalization",
+            async _ =>
+            {
+                await settingsManager.SetValueAsync(Settings.DashboardAllowMove.Name, personalization.AllowMove);
+                await settingsManager.SetValueAsync(Settings.DashboardAllowResize.Name, personalization.AllowResize);
+            },
+            TimeSpan.FromSeconds(10));
 
-    private async Task<DashboardPatch> ReadPatchAsync(SettingDescriptor descriptor, string objectType, string objectId) =>
+    protected virtual async Task<DashboardPatch> ReadPatchAsync(SettingDescriptor descriptor, string objectType, string objectId) =>
         composer.Normalize(await ReadAsync<DashboardPatch>(descriptor, objectType, objectId));
 
     // A value that doesn't read as T (edited by hand, with a typo) reads as empty: everyone then sees every widget their
     // permissions allow, instead of losing the dashboard
-    private async Task<T> ReadAsync<T>(SettingDescriptor descriptor, string objectType, string objectId) where T : new()
+    protected virtual async Task<T> ReadAsync<T>(SettingDescriptor descriptor, string objectType, string objectId) where T : new()
     {
         var json = (await settingsManager.GetObjectSettingAsync(descriptor.Name, objectType, objectId))?.Value as string;
         if (string.IsNullOrWhiteSpace(json))
@@ -139,13 +160,14 @@ public class AdminDashboardService(
         }
     }
 
-    private async Task WriteAsync(SettingDescriptor descriptor, string objectType, string objectId, object value)
+    protected virtual async Task WriteAsync(SettingDescriptor descriptor, string objectType, string objectId, object value)
     {
         var setting = await settingsManager.GetObjectSettingAsync(descriptor.Name, objectType, objectId);
         setting.ObjectType = objectType;
         setting.ObjectId = objectId;
-        // only what a layer says: a widget's unset fields are left out, so the layer below shows through
-        setting.Value = JsonConvert.SerializeObject(value, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+        // only what a layer says: a widget's unset fields are left out, so the layer below shows through. camelCase as the
+        // API and the docs show it; widget ids (dictionary keys) stay as they are. Reads ignore case.
+        setting.Value = JsonConvert.SerializeObject(value, WriteSettings);
         await settingsManager.SaveObjectSettingsAsync([setting]);
     }
 }

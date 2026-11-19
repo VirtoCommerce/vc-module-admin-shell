@@ -651,7 +651,8 @@
       "JSON_LABEL": "Dashboard-Einstellungen",
       "JSON_SHAPE": "erwartet wird ein Objekt mit \"everyone\" (mit \"widgets\"), \"roles\" (Rollennamen zu Listen von Widget-IDs) und \"personalization\"",
       "JSON_UNKNOWN_ROLES": "Diese Rollen gibt es hier nicht: {roles}",
-      "UNDO_ALL_CONFIRM": "Alle Änderungen am Dashboard rückgängig machen? Die Regeln entfallen; nach dem Speichern gelten wieder das Layout der Module und die Freiheit der Benutzer, ihres zu ändern."
+      "UNDO_ALL_CONFIRM": "Alle Änderungen am Dashboard rückgängig machen? Die Regeln entfallen; nach dem Speichern gelten wieder das Layout der Module und die Freiheit der Benutzer, ihres zu ändern.",
+      "CHANGED_ELSEWHERE": "Jemand anderes hat das Dashboard inzwischen geändert. Aktualisieren Sie und nehmen Sie Ihre Änderungen erneut vor."
     }
   }
 }

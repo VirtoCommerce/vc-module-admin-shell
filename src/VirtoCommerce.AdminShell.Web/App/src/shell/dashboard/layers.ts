@@ -183,3 +183,31 @@ export function roleCanSee(widgetPermissions: string[] | undefined, rolePermissi
   const held = new Set(rolePermissions);
   return widgetPermissions.some((p) => held.has(p));
 }
+
+/**
+ * A layout saved from the grid, with the places and sizes the grid couldn't show kept from the stored layer: widgets
+ * hidden for everyone, widgets of modules that aren't installed now, widgets the editing user may not see.
+ */
+export function keepUnseen(
+  stored: Record<string, WidgetLayout>,
+  fromGrid: Record<string, WidgetLayout>,
+  onGrid: Iterable<string>,
+): Record<string, WidgetLayout> {
+  const seen = new Set(onGrid);
+  const result: Record<string, WidgetLayout> = {};
+  for (const [id, layout] of Object.entries(stored)) if (!seen.has(id)) result[id] = layout;
+  return { ...result, ...fromGrid };
+}
+
+/** A layer as a stable text, to tell whether it changed since it was read (order of ids and fields doesn't count) */
+export function layerKey(patch: DashboardPatch | undefined | null): string {
+  const widgets = patch?.widgets ?? {};
+  const clean = (w: WidgetPatch) =>
+    [w.hidden ? 1 : 0, w.x ?? null, w.y ?? null, w.width ?? null, w.height ?? null] as const;
+  return JSON.stringify([
+    patch?.layoutVersion ?? 0,
+    Object.keys(widgets)
+      .sort((a, b) => a.localeCompare(b))
+      .map((id) => [id, clean(widgets[id] ?? {})]),
+  ]);
+}

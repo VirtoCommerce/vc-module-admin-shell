@@ -84,6 +84,7 @@
       "PERMISSION": "Nécessite {permission}",
       "NO_PERMISSION": "Tous",
       "SAVE_FAILED": "Impossible d'enregistrer le tableau de bord",
+      "CHANGED_ELSEWHERE": "Quelqu'un d'autre a modifié le tableau de bord entre-temps. Actualisez, puis refaites vos modifications.",
       "EVERYONE": {
         "TITLE": "Personnalisation de l'accueil pour tous",
         "HINT": "Déplacez, redimensionnez et masquez des widgets. Enregistré, c'est le départ de chacun ; ceux qui ont modifié le leur le gardent, sauf si vous le réinitialisez.",

@@ -651,7 +651,8 @@
       "JSON_LABEL": "Dashboard settings",
       "JSON_SHAPE": "an object with \"everyone\" (with \"widgets\"), \"roles\" (role names to lists of widget ids) and \"personalization\" is expected",
       "JSON_UNKNOWN_ROLES": "Roles that aren't here: {roles}",
-      "UNDO_ALL_CONFIRM": "Undo all changes to the dashboard? The rules go, the modules' layout and the users' freedom to change theirs apply again once you save."
+      "UNDO_ALL_CONFIRM": "Undo all changes to the dashboard? The rules go, the modules' layout and the users' freedom to change theirs apply again once you save.",
+      "CHANGED_ELSEWHERE": "Someone else changed the dashboard meanwhile. Refresh, then make your changes again."
     }
   }
 }

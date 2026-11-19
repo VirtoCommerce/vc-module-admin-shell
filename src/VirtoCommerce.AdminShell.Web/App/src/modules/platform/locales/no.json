@@ -651,7 +651,8 @@
       "JSON_LABEL": "Dashbordinnstillinger",
       "JSON_SHAPE": "et objekt med \"everyone\" (med \"widgets\"), \"roles\" (rollenavn til lister med widget-id-er) og \"personalization\" forventes",
       "JSON_UNKNOWN_ROLES": "Roller som ikke finnes her: {roles}",
-      "UNDO_ALL_CONFIRM": "Angre alle endringer i dashbordet? Reglene forsvinner; når du lagrer, gjelder modulenes oppsett og brukernes frihet til å endre sitt igjen."
+      "UNDO_ALL_CONFIRM": "Angre alle endringer i dashbordet? Reglene forsvinner; når du lagrer, gjelder modulenes oppsett og brukernes frihet til å endre sitt igjen.",
+      "CHANGED_ELSEWHERE": "Noen andre har endret dashbordet i mellomtiden. Oppdater og gjør endringene på nytt."
     }
   }
 }

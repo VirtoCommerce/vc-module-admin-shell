@@ -84,6 +84,7 @@
       "PERMISSION": "Requer {permission}",
       "NO_PERMISSION": "Todos",
       "SAVE_FAILED": "Não foi possível salvar o painel",
+      "CHANGED_ELSEWHERE": "Outra pessoa alterou o painel nesse meio-tempo. Atualize e faça suas alterações novamente.",
       "EVERYONE": {
         "TITLE": "Personalizando o início para todos",
         "HINT": "Mova, redimensione e oculte widgets. Salvo, é assim que todos começam; quem alterou o seu o mantém, a menos que você o redefina.",

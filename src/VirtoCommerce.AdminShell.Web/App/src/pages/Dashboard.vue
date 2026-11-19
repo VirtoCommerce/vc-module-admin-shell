@@ -153,6 +153,8 @@ import {
   diffLayout,
   fromStorage,
   hiddenIn,
+  keepUnseen,
+  layerKey,
   layoutIn,
   LAYOUT_STORAGE_KEY,
   OPEN_DASHBOARD,
@@ -160,6 +162,7 @@ import {
   toPatch,
   toStorage,
   visibleWidgets,
+  type DashboardPatch,
   type EffectiveDashboard,
   type WidgetLayout,
 } from "../shell/dashboard/layers";
@@ -256,19 +259,25 @@ function readStorage() {
   }
 }
 
-// the layout a browser kept before it was saved on the server is carried over once, if the user has none there yet
+// The layout a browser kept before it was saved on the server is carried over once, if the user has none there yet.
+// Not when an administrator has set a layout for everyone: the browser's places were made against the modules' own,
+// and carried over they would override it. Marked done only once saved, so a failed save is tried again.
 const MIGRATED_KEY = "admin-shell:dashboard-migrated";
 async function carryOver(state: EffectiveDashboard) {
   try {
     if (localStorage.getItem(MIGRATED_KEY)) return;
+    const nothingToCarry =
+      Object.keys(state.layout).length > 0 ||
+      Object.keys(state.defaults).length > 0 ||
+      !state.personalization.allowMove;
+    const layout = nothingToCarry ? {} : diffLayout(readStorage(), registry.getWidgets());
+    if (Object.keys(layout).length) {
+      await adminDashboardApi.savePrefs({ widgets: toPatch([], layout), layoutVersion: state.layoutVersion });
+      state.layout = layout;
+    }
     localStorage.setItem(MIGRATED_KEY, "1");
-    if (Object.keys(state.layout).length || !state.personalization.allowMove) return;
-    const layout = diffLayout(readStorage(), visibleWidgets(registry.getWidgets(), state));
-    if (!Object.keys(layout).length) return;
-    state.layout = layout;
-    await adminDashboardApi.savePrefs({ widgets: toPatch([], layout), layoutVersion: state.layoutVersion });
   } catch {
-    // stays as the server has it
+    // stays as the server has it; tried again on the next visit
   }
 }
 
@@ -284,23 +293,26 @@ async function load() {
   }
 }
 
-// the user's own layer: the places and sizes that differ from the defaults
+// the user's own layer: the places and sizes that differ from the defaults. Saved a moment after the last change, and
+// at once when the user leaves Home before that
 let saveTimer: ReturnType<typeof setTimeout> | undefined;
+async function flushMine() {
+  saveTimer = undefined;
+  const state = dashboardState.value;
+  state.layout = diffLayout(readStorage(), base.value);
+  try {
+    await adminDashboardApi.savePrefs({
+      widgets: toPatch([], state.layout),
+      layoutVersion: state.layoutVersion,
+    });
+  } catch {
+    notification.error(t("SHELL.DASHBOARD.SAVE_FAILED"));
+  }
+}
 function saveMine(delay = 600) {
   if (!synced.value || editingAll.value) return;
   clearTimeout(saveTimer);
-  saveTimer = setTimeout(async () => {
-    const state = dashboardState.value;
-    state.layout = diffLayout(readStorage(), base.value);
-    try {
-      await adminDashboardApi.savePrefs({
-        widgets: toPatch([], state.layout),
-        layoutVersion: state.layoutVersion,
-      });
-    } catch {
-      notification.error(t("SHELL.DASHBOARD.SAVE_FAILED"));
-    }
-  }, delay);
+  saveTimer = setTimeout(() => void flushMine(), delay);
 }
 
 function toggleWidget(id: string, show: boolean) {
@@ -323,9 +335,13 @@ async function switchMode(change: () => Promise<void> | void) {
   }
 }
 
+// the layer for everyone as it was read when customizing started: its places for widgets the grid doesn't show are kept,
+// and a change made meanwhile by someone else stops the save
+let everyoneStored: DashboardPatch = {};
 async function startEveryone() {
   try {
     const patch = await adminDashboardApi.getGlobal();
+    everyoneStored = patch ?? {};
     await switchMode(() => {
       everyoneHidden.value = hiddenIn(patch.widgets);
       resetUsers.value = false;
@@ -351,8 +367,17 @@ async function saveEveryone() {
     // closed up, as after a user's own move, then saved by the grid
     root.value?.querySelector<GridElement>(".grid-stack")?.gridstack?.compact("compact");
     dashboard.value?.saveLayout();
-    // only what differs from the modules' own, so a module's new default still reaches the widgets nobody placed
-    const layout = diffLayout(readStorage(), registry.getWidgets());
+    if (layerKey(await adminDashboardApi.getGlobal()) !== layerKey(everyoneStored)) {
+      notification.error(t("SHELL.DASHBOARD.CHANGED_ELSEWHERE"));
+      return;
+    }
+    // only what differs from the modules' own, so a module's new default still reaches the widgets nobody placed; the
+    // places of widgets not on the grid stay as they were
+    const layout = keepUnseen(
+      layoutIn(everyoneStored.widgets),
+      diffLayout(readStorage(), registry.getWidgets()),
+      shown.value.map((w) => w.id),
+    );
     await adminDashboardApi.saveGlobal({ widgets: toPatch(everyoneHidden.value, layout) }, resetUsers.value);
     notification.success(t("SHELL.DASHBOARD.EVERYONE.SAVED"));
     await leaveEveryone();
@@ -462,7 +487,11 @@ onMounted(async () => {
 watch(generation, () => nextTick(() => watchGrid()));
 onBeforeUnmount(() => {
   resizeObserver?.disconnect();
-  clearTimeout(saveTimer);
+  // a change still waiting to be saved is saved now
+  if (saveTimer) {
+    clearTimeout(saveTimer);
+    void flushMine();
+  }
 });
 
 async function resetLayout() {
@@ -475,6 +504,7 @@ async function resetLayout() {
   if (await showConfirmation(t("SHELL.DASHBOARD.RESET_LAYOUT_CONFIRM"))) {
     // the user's layer is emptied as such: what the grid writes while it rearranges isn't the user's own
     clearTimeout(saveTimer);
+    saveTimer = undefined;
     const state = dashboardState.value;
     state.layout = {};
     await switchMode(() => writeStorage({}));

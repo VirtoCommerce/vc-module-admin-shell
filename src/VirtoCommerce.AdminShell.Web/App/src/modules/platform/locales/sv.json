@@ -651,7 +651,8 @@
       "JSON_LABEL": "Inställningar för instrumentpanelen",
       "JSON_SHAPE": "ett objekt med \"everyone\" (med \"widgets\"), \"roles\" (rollnamn till listor med widget-id:n) och \"personalization\" förväntas",
       "JSON_UNKNOWN_ROLES": "Roller som inte finns här: {roles}",
-      "UNDO_ALL_CONFIRM": "Ångra alla ändringar av instrumentpanelen? Reglerna försvinner; när du sparar gäller modulernas layout och användarnas frihet att ändra sin igen."
+      "UNDO_ALL_CONFIRM": "Ångra alla ändringar av instrumentpanelen? Reglerna försvinner; när du sparar gäller modulernas layout och användarnas frihet att ändra sin igen.",
+      "CHANGED_ELSEWHERE": "Någon annan har ändrat instrumentpanelen under tiden. Uppdatera och gör dina ändringar igen."
     }
   }
 }

@@ -84,6 +84,7 @@
       "PERMISSION": "Vaatii {permission}",
       "NO_PERMISSION": "Kaikki",
       "SAVE_FAILED": "Koontinäytön tallennus epäonnistui",
+      "CHANGED_ELSEWHERE": "Joku muu muutti koontinäyttöä sillä välin. Päivitä ja tee muutokset uudelleen.",
       "EVERYONE": {
         "TITLE": "Etusivun mukautus kaikille",
         "HINT": "Siirrä, muuta kokoa ja piilota widgetejä. Tallennettuna tämä on kaikkien lähtökohta; omansa muuttaneet säilyttävät sen, ellet nollaa sitä.",

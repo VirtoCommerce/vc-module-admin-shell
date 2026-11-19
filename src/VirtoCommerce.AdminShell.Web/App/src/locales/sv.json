@@ -84,6 +84,7 @@
       "PERMISSION": "Kräver {permission}",
       "NO_PERMISSION": "Alla",
       "SAVE_FAILED": "Det gick inte att spara instrumentpanelen",
+      "CHANGED_ELSEWHERE": "Någon annan har ändrat instrumentpanelen under tiden. Uppdatera och gör dina ändringar igen.",
       "EVERYONE": {
         "TITLE": "Anpassar startsidan för alla",
         "HINT": "Flytta, ändra storlek och dölj widgetar. Sparat är detta allas start; de som ändrat sin behåller den om du inte återställer den.",

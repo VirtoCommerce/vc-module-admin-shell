@@ -84,6 +84,7 @@
       "PERMISSION": "Requiere {permission}",
       "NO_PERMISSION": "Todos",
       "SAVE_FAILED": "No se pudo guardar el panel",
+      "CHANGED_ELSEWHERE": "Otra persona cambió el panel mientras tanto. Actualice y vuelva a hacer sus cambios.",
       "EVERYONE": {
         "TITLE": "Personalizando el inicio para todos",
         "HINT": "Mueva, cambie el tamaño y oculte widgets. Al guardar, así empiezan todos; quien cambió el suyo lo conserva salvo que lo restablezca.",

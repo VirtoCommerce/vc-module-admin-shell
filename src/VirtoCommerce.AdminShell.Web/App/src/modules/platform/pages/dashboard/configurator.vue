@@ -251,6 +251,7 @@ import { useRouter } from "vue-router";
 import { adminDashboardApi } from "../../../../api/adminDashboard";
 import {
   hiddenIn,
+  layerKey,
   layoutIn,
   roleCanSee,
   toPatch,
@@ -431,6 +432,10 @@ async function load() {
       adminDashboardApi.getRoles(),
     ]);
     global.value = patch ?? {};
+    // the layers as read, to tell at save whether someone changed them meanwhile
+    loadedKeys.clear();
+    loadedKeys.set("everyone", layerKey(global.value));
+    for (const role of found ?? []) loadedKeys.set(`role:${role.id}`, layerKey(role.dashboard));
     roles.value = (found ?? []).map((r) => ({ id: r.id, name: r.name || r.id }));
     rolePermissions.value = new Map((found ?? []).map((r) => [r.id, r.permissions ?? []]));
     rules.value = [
@@ -465,6 +470,16 @@ function hiddenBy(list: Rule[]) {
   return byScope;
 }
 
+// the layers as they were read; a save stops when one it would write has changed since (another administrator, Home)
+const loadedKeys = new Map<string, string>();
+async function changedElsewhere(scopes: string[]) {
+  if (!scopes.length) return false;
+  const [freshGlobal, freshRoles] = await Promise.all([adminDashboardApi.getGlobal(), adminDashboardApi.getRoles()]);
+  const fresh = new Map<string, string>([["everyone", layerKey(freshGlobal)]]);
+  for (const role of freshRoles ?? []) fresh.set(`role:${role.id}`, layerKey(role.dashboard));
+  return scopes.some((key) => (fresh.get(key) ?? layerKey({})) !== (loadedKeys.get(key) ?? layerKey({})));
+}
+
 async function save() {
   loading.value = true;
   error.value = "";
@@ -472,6 +487,15 @@ async function save() {
     const before = hiddenBy(savedRules.value);
     const after = hiddenBy(rules.value);
     const same = (a: string[] = [], b: string[] = []) => [...a].sort(byText).join() === [...b].sort(byText).join();
+    const touched = [...new Set([...before.keys(), ...after.keys()])].filter(
+      (key) => !same(before.get(key), after.get(key)),
+    );
+    if (layoutChanged.value && !touched.includes("everyone")) touched.push("everyone");
+    if (await changedElsewhere(touched)) {
+      error.value = t("PLATFORM.DASHBOARD.CHANGED_ELSEWHERE");
+      loading.value = false;
+      return;
+    }
     for (const key of new Set([...before.keys(), ...after.keys()])) {
       if (key === "everyone" && layoutChanged.value) continue; // saved below with the layout
       if (same(before.get(key), after.get(key))) continue;
@@ -512,6 +536,10 @@ async function customizeOnHome() {
 async function resetUserLayouts() {
   if (!(await showConfirmation(t("PLATFORM.DASHBOARD.RESET_USERS_CONFIRM")))) return;
   try {
+    if (await changedElsewhere(["everyone"])) {
+      error.value = t("PLATFORM.DASHBOARD.CHANGED_ELSEWHERE");
+      return;
+    }
     await adminDashboardApi.saveGlobal(global.value, true);
     notification.success(t("PLATFORM.DASHBOARD.RESET_USERS_DONE"));
     await load();

@@ -651,7 +651,8 @@
       "JSON_LABEL": "Ustawienia pulpitu",
       "JSON_SHAPE": "oczekiwany jest obiekt z \"everyone\" (z \"widgets\"), \"roles\" (nazwy ról → listy id widżetów) i \"personalization\"",
       "JSON_UNKNOWN_ROLES": "Ról nie ma tutaj: {roles}",
-      "UNDO_ALL_CONFIRM": "Cofnąć wszystkie zmiany pulpitu? Reguły znikną, a po zapisaniu znów obowiązuje układ modułów i swoboda użytkowników w zmianie własnego."
+      "UNDO_ALL_CONFIRM": "Cofnąć wszystkie zmiany pulpitu? Reguły znikną, a po zapisaniu znów obowiązuje układ modułów i swoboda użytkowników w zmianie własnego.",
+      "CHANGED_ELSEWHERE": "Ktoś inny w międzyczasie zmienił pulpit. Odśwież i wprowadź zmiany ponownie."
     }
   }
 }

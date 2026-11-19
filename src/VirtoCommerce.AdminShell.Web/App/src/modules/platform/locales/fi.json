@@ -651,7 +651,8 @@
       "JSON_LABEL": "Koontinäytön asetukset",
       "JSON_SHAPE": "odotetaan objektia, jossa on \"everyone\" (ja \"widgets\"), \"roles\" (roolien nimet → widgettitunnusten luettelot) ja \"personalization\"",
       "JSON_UNKNOWN_ROLES": "Rooleja, joita täällä ei ole: {roles}",
-      "UNDO_ALL_CONFIRM": "Kumotaanko kaikki koontinäytön muutokset? Säännöt poistuvat; tallennuksen jälkeen moduulien asettelu ja käyttäjien vapaus muuttaa omaansa ovat taas voimassa."
+      "UNDO_ALL_CONFIRM": "Kumotaanko kaikki koontinäytön muutokset? Säännöt poistuvat; tallennuksen jälkeen moduulien asettelu ja käyttäjien vapaus muuttaa omaansa ovat taas voimassa.",
+      "CHANGED_ELSEWHERE": "Joku muu muutti koontinäyttöä sillä välin. Päivitä ja tee muutokset uudelleen."
     }
   }
 }

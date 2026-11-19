@@ -651,7 +651,8 @@
       "JSON_LABEL": "仪表板设置",
       "JSON_SHAPE": "需要包含 \"everyone\"（含 \"widgets\"）、\"roles\"（角色名称 → 小组件 id 列表）和 \"personalization\" 的对象",
       "JSON_UNKNOWN_ROLES": "此处不存在的角色：{roles}",
-      "UNDO_ALL_CONFIRM": "撤销对仪表板的所有更改吗？规则将被删除；保存后将恢复模块的布局以及用户更改自己布局的权限。"
+      "UNDO_ALL_CONFIRM": "撤销对仪表板的所有更改吗？规则将被删除；保存后将恢复模块的布局以及用户更改自己布局的权限。",
+      "CHANGED_ELSEWHERE": "在此期间有其他人更改了仪表板。请刷新后重新进行更改。"
     }
   }
 }
