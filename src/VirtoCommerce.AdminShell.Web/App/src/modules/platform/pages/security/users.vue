@@ -15,6 +15,8 @@
       :total-count="totalCount"
       :pagination="pagination"
       :searchable="true"
+      search-bar
+      :search-views="searchViews"
       :state-key="'PLATFORM_USERS'"
       :active-item-id="activeId"
       :show-all-columns="!activeId"
@@ -86,13 +88,14 @@ import {
   usePopup,
   type ApplicationUser,
   type IBladeToolbar,
+  type SearchBarView,
 } from "@vc-shell/framework";
 import { VcBlade, VcColumn, VcDataTable, VcStatus } from "@vc-shell/framework/ui";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { refreshItem } from "../../composables/blade";
 import { PAGE_SIZE, useSearchableList } from "../../composables/list";
-import { dayRange, tableFilters, useSearchPresets } from "../../composables/search";
+import { dayRange, tableFilters } from "../../composables/search";
 import { ensureSucceeded, useSecurityLookups } from "../../composables/security";
 
 defineBlade({
@@ -179,45 +182,22 @@ const globalFilters = computed(() =>
       label: t("PLATFORM.SECURITY.USERS.LAST_LOGIN"),
       filter: { range: ["loginStartDate", "loginEndDate"] as [string, string] },
     },
-    // yes/no states as their own pills ("Locked"), offered behind + Filter; the account type too
+    // yes/no states as their own filters ("Locked")
     {
       id: "userType",
       label: t("PLATFORM.SECURITY.USERS.ACCOUNT_TYPE"),
       filter: { options: lookups.accountTypes.value.map((x) => ({ value: x.id, label: x.title })) },
-      pinned: false,
     },
-    { id: "locked", label: t("PLATFORM.SECURITY.USERS.LOCKED"), filter: { toggle: true }, pinned: false },
-    {
-      id: "unverified",
-      label: t("PLATFORM.SECURITY.USERS.EMAIL_NOT_VERIFIED"),
-      filter: { toggle: true },
-      pinned: false,
-    },
+    { id: "locked", label: t("PLATFORM.SECURITY.USERS.LOCKED"), filter: { toggle: true } },
+    { id: "unverified", label: t("PLATFORM.SECURITY.USERS.EMAIL_NOT_VERIFIED"), filter: { toggle: true } },
   ]),
 );
 
-// the presets the list offers everyone: the accounts an administrator checks most
-useSearchPresets("PlatformSecurityUsers", [
-  {
-    id: "locked",
-    name: t("PLATFORM.SECURITY.USERS.PRESETS.LOCKED"),
-    values: { locked: true },
-    pinned: true,
-    version: 1,
-  },
-  {
-    id: "unverified",
-    name: t("PLATFORM.SECURITY.USERS.PRESETS.UNVERIFIED"),
-    values: { unverified: true },
-    pinned: true,
-    version: 1,
-  },
-  {
-    id: "recent",
-    name: t("PLATFORM.SECURITY.USERS.PRESETS.RECENT"),
-    values: { lastLogin: { relative: "7d" } },
-    version: 1,
-  },
+// the views the list offers everyone: the accounts an administrator checks most
+const searchViews = computed<SearchBarView[]>(() => [
+  { id: "locked", name: t("PLATFORM.SECURITY.USERS.PRESETS.LOCKED"), values: { locked: true } },
+  { id: "unverified", name: t("PLATFORM.SECURITY.USERS.PRESETS.UNVERIFIED"), values: { unverified: true } },
+  { id: "recent", name: t("PLATFORM.SECURITY.USERS.PRESETS.RECENT"), values: { lastLogin: { relative: "7d" } } },
 ]);
 
 function onFilter(event: { filters: Record<string, unknown> }) {

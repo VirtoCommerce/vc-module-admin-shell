@@ -15,6 +15,8 @@
       :items="visible"
       :total-count="visible.length"
       :searchable="true"
+      search-bar
+      :search-views="searchViews"
       :state-key="'PLATFORM_MODULES'"
       :active-item-id="activeId"
       :show-all-columns="!activeId"
@@ -71,14 +73,14 @@
 </template>
 
 <script setup lang="ts">
-import { useAsync, useBlade, useBladeStack, type IBladeToolbar } from "@vc-shell/framework";
+import { useAsync, useBlade, useBladeStack, type IBladeToolbar, type SearchBarView } from "@vc-shell/framework";
 import { VcBlade, VcColumn, VcDataTable, VcStatus } from "@vc-shell/framework/ui";
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 import { refreshItem } from "../../composables/blade";
 import { useModules, type ModuleAction, type ModuleRow } from "../../composables/modules";
-import { tableFilters, useSearchPresets } from "../../composables/search";
+import { tableFilters } from "../../composables/search";
 import { rootedUrl } from "../../../../utils/url";
 
 defineBlade({
@@ -180,12 +182,12 @@ const globalFilters = computed(() =>
           .map((g) => ({ value: g, label: g })),
       },
     },
-    // the legacy tree's "With errors" node, behind + Filter and as a preset
-    { id: "errors", label: t("PLATFORM.MODULES.FILTERS.ERRORS"), filter: { toggle: true }, pinned: false },
+    // the legacy tree's "With errors" node, as a filter and a view
+    { id: "errors", label: t("PLATFORM.MODULES.FILTERS.ERRORS"), filter: { toggle: true } },
   ]),
 );
-useSearchPresets("PlatformModules", [
-  { id: "errors", name: t("PLATFORM.MODULES.FILTERS.ERRORS"), values: { errors: true }, pinned: true, version: 1 },
+const searchViews = computed<SearchBarView[]>(() => [
+  { id: "errors", name: t("PLATFORM.MODULES.FILTERS.ERRORS"), values: { errors: true } },
 ]);
 
 function onFilter(event: { filters: Record<string, unknown> }) {

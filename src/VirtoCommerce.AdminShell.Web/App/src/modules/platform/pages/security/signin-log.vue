@@ -70,7 +70,7 @@
         :pagination="pagination"
         :state-key="'PLATFORM_SIGNIN_LOG'"
         :active-item-id="activeId"
-        :empty-state="{ icon: 'lucide-log-in', title: $t('PLATFORM.SECURITY.SIGNIN.EMPTY') }"
+        :empty-state="emptyState"
         @row-click="(e: { data: UserSignInLog }) => openRecord(e.data)"
         @pagination-click="pagination.goToPage"
       >
@@ -79,7 +79,7 @@
           <VcSearchBar
             v-model="query"
             :fields="fields"
-            :presets="presets"
+            :views="views"
             :placeholder="$t('PLATFORM.SECURITY.SIGNIN.SEARCH')"
             storage-key="PLATFORM_SIGNIN_LOG"
           />
@@ -131,7 +131,7 @@ import {
   useLoading,
   type IBladeToolbar,
   type SearchBarField,
-  type SearchBarPreset,
+  type SearchBarView,
   type SearchBarState,
 } from "@vc-shell/framework";
 import { VcBanner, VcBlade, VcColumn, VcDataTable, VcSearchBar, VcSelect, VcStatus } from "@vc-shell/framework/ui";
@@ -253,6 +253,28 @@ function toFirstPage() {
 function applyFilter(values: SearchBarState["values"], search = query.value.search) {
   query.value = { search, values };
 }
+
+// the bar is the screen's own, so the table can't tell an empty period from filters that match nothing: say which,
+// in the words the tables use
+const emptyState = computed(() => {
+  const search = query.value.search.trim();
+  const count = Object.values(query.value.values).filter(
+    (x) => x !== undefined && x !== null && x !== "" && !(Array.isArray(x) && !x.length),
+  ).length;
+  if (!search && !count) return { icon: "lucide-log-in", title: t("PLATFORM.SECURITY.SIGNIN.EMPTY") };
+  const key = "COMPONENTS.ORGANISMS.VC_DATA_TABLE.NO_RESULTS";
+  return {
+    icon: "lucide-filter-x",
+    title: !count
+      ? t(`${key}.TITLE_SEARCH`, { query: search })
+      : search
+        ? t(`${key}.TITLE_SEARCH_FILTERS`, { query: search, count }, count)
+        : t(`${key}.TITLE_FILTERS`, { count }, count),
+    description: t(count ? `${key}.HINT_FILTERS` : `${key}.HINT_SEARCH`),
+    actionLabel: t(count ? `${key}.CLEAR_FILTERS` : `${key}.CLEAR_SEARCH`),
+    actionHandler: () => applyFilter({}, ""),
+  };
+});
 const breakdowns = computed(() => {
   const s = stats.value;
   return [
@@ -298,37 +320,27 @@ const fields = computed<SearchBarField[]>(() => [
     label: t("PLATFORM.SECURITY.SIGNIN.TYPE"),
     filter: { multiple: true, options: SIGN_IN_TYPES.map((x) => ({ value: x, label: x })) },
   },
-  // what the drill-downs set, offered behind + Filter too: the reasons and stores the period has
+  // what the drill-downs set, in the Filters panel too: the reasons and stores the period has
   {
     id: "failureReasons",
     label: t("PLATFORM.SECURITY.SIGNIN.FAILURE_REASON"),
     filter: { multiple: true, options: keyOptions(stats.value?.failureReasonBreakdown) },
-    pinned: false,
   },
-  { id: "ipAddress", label: t("PLATFORM.SECURITY.SESSIONS.IP"), filter: true, pinned: false },
+  { id: "ipAddress", label: t("PLATFORM.SECURITY.SESSIONS.IP"), filter: true },
   {
     id: "storeId",
     label: t("PLATFORM.SECURITY.SIGNIN.STORE"),
     filter: { options: keyOptions(stats.value?.signInsByStore) },
-    pinned: false,
   },
 ]);
 
-// the presets the log offers everyone: what an administrator looks for after an incident
-const presets = computed<SearchBarPreset[]>(() => [
-  {
-    id: "failed",
-    name: t("PLATFORM.SECURITY.SIGNIN.PRESETS.FAILED"),
-    values: { outcome: "failed" },
-    pinned: true,
-    version: 1,
-  },
+// the views the log offers everyone: what an administrator looks for after an incident
+const views = computed<SearchBarView[]>(() => [
+  { id: "failed", name: t("PLATFORM.SECURITY.SIGNIN.PRESETS.FAILED"), values: { outcome: "failed" } },
   {
     id: "impersonations",
     name: t("PLATFORM.SECURITY.SIGNIN.IMPERSONATIONS"),
     values: { signInTypes: ["Impersonation", "ImpersonationRevert"] },
-    pinned: true,
-    version: 1,
   },
 ]);
 

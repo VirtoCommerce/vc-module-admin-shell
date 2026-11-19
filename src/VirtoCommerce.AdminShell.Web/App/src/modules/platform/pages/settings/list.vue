@@ -1061,9 +1061,9 @@ watch(settingFocus, (focus) => {
 
   /* the band around the search bar, as a table's search header: the bar lays its row out against its own edges, so the
      side padding goes on this wrapper; 8px, the tree's own inset, so the search lines up with the tree's rows */
+  /* the search bar has its own 8px 16px padding */
   &__bar {
     flex: none;
-    padding: 0 8px;
     background: var(--table-header-bg, var(--color-neutral-50));
     border-bottom: 1px solid var(--table-header-border, var(--color-neutral-200));
   }

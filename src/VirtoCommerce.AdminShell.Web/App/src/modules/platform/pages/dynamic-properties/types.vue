@@ -378,14 +378,13 @@ const { loading, action: load } = useAsync(async () => {
 
 /* ---- filters ---- */
 
-// the property kinds behind + Filter, each with how many properties have it; a property must have every kind chosen
+// the property kinds in the Filters panel, each with how many properties have it; a property must have every kind chosen
 const filterFields = computed<SearchBarField[]>(() => [
   { id: "withProperties", label: t("PLATFORM.DYNAMIC.WITH_PROPERTIES"), filter: { toggle: true } },
   ...FLAGS.map((f) => ({
     id: f.key,
     label: `${t(f.label)} · ${flagCount(f.key)}`,
     filter: { toggle: true as const },
-    pinned: false,
   })),
 ]);
 
