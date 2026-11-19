@@ -66,7 +66,7 @@ A setting that isn't valid JSON is treated as empty and doesn't take the menu do
 
 The Menu Editor (Configuration › Back Office) edits the global layer; role layers are managed through this API or the platform settings. See [Menu layers](menu-layers.md).
 
-The dashboard has the same kind of layers under `api/admin-shell/dashboard` (`AdminShellDashboardController`, `DashboardComposer`), edited in the Dashboard Editor; see [Dashboard widgets › Layers](dashboard-widgets.md#layers).
+The dashboard has the same kind of layers under `api/admin-shell/dashboard` (`AdminShellDashboardController`; the rules in `IDashboardComposer`, implemented by `DashboardComposer` in Data and registered in DI, so a project can replace or extend them), edited in the Dashboard Editor; see [Dashboard widgets › Layers](dashboard-widgets.md#layers).
 
 ### 2.4 How the menu is built
 

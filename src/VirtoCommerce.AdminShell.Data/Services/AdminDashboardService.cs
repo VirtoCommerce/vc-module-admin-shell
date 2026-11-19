@@ -21,7 +21,8 @@ public class AdminDashboardService(
     ISettingsManager settingsManager,
     UserManager<ApplicationUser> userManager,
     RoleManager<Role> roleManager,
-    IDistributedLock distributedLock) : IAdminDashboardService
+    IDistributedLock distributedLock,
+    IDashboardComposer composer) : IAdminDashboardService
 {
     public async Task<EffectiveDashboard> GetEffectiveDashboardAsync(ClaimsPrincipal principal)
     {
@@ -34,7 +35,7 @@ public class AdminDashboardService(
         // every role counts, with or without a setting: a role that hides nothing keeps a widget another role hides
         var roles = await Task.WhenAll((user?.Roles ?? []).Select(role => GetRoleAsync(role.Id)));
 
-        return DashboardComposer.Compose(
+        return composer.Compose(
             await global,
             roles,
             await prefs,
@@ -51,7 +52,7 @@ public class AdminDashboardService(
             async _ =>
             {
                 var stored = await GetGlobalAsync();
-                var value = DashboardComposer.Normalize(patch);
+                var value = composer.Normalize(patch);
                 value.LayoutVersion = stored.LayoutVersion + (resetUserLayouts ? 1 : 0);
                 await WriteAsync(Settings.GlobalDashboard, null, null, value);
             },
@@ -89,18 +90,18 @@ public class AdminDashboardService(
 
     public Task SaveRoleAsync(string roleId, DashboardPatch patch)
     {
-        var value = DashboardComposer.Normalize(patch);
+        var value = composer.Normalize(patch);
         value.LayoutVersion = 0;
         return WriteAsync(Settings.RoleDashboard, ModuleConstants.RoleTenant, roleId, value);
     }
 
     public async Task<UserDashboardPrefs> GetUserPrefsAsync(string userId) =>
-        DashboardComposer.Normalize(await ReadAsync<UserDashboardPrefs>(Settings.UserDashboard, ModuleConstants.UserProfileTenant, userId));
+        composer.Normalize(await ReadAsync<UserDashboardPrefs>(Settings.UserDashboard, ModuleConstants.UserProfileTenant, userId));
 
     // one write at a time per user: two first saves would each insert a settings row
     public Task SaveUserPrefsAsync(string userId, UserDashboardPrefs prefs) =>
         distributedLock.ExecuteAsync($"admin-shell:dashboard:{userId}",
-            _ => WriteAsync(Settings.UserDashboard, ModuleConstants.UserProfileTenant, userId, DashboardComposer.Normalize(prefs)),
+            _ => WriteAsync(Settings.UserDashboard, ModuleConstants.UserProfileTenant, userId, composer.Normalize(prefs)),
             TimeSpan.FromSeconds(10));
 
     public async Task<DashboardPersonalization> GetPersonalizationAsync() => new()
@@ -116,7 +117,7 @@ public class AdminDashboardService(
     }
 
     private async Task<DashboardPatch> ReadPatchAsync(SettingDescriptor descriptor, string objectType, string objectId) =>
-        DashboardComposer.Normalize(await ReadAsync<DashboardPatch>(descriptor, objectType, objectId));
+        composer.Normalize(await ReadAsync<DashboardPatch>(descriptor, objectType, objectId));
 
     // A value that doesn't read as T (edited by hand, with a typo) reads as empty: everyone then sees every widget their
     // permissions allow, instead of losing the dashboard

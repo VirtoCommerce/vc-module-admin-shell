@@ -2,19 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using VirtoCommerce.AdminShell.Core.Models;
+using VirtoCommerce.AdminShell.Core.Services;
 
-namespace VirtoCommerce.AdminShell.Core.Services;
+namespace VirtoCommerce.AdminShell.Data.Services;
 
 /// <summary>
 /// The dashboard layers, as for the menu: the widgets the modules register (each shown only to users with its
 /// permissions, checked by the client) → the global layer (for everyone) → the role layers → the user's own.
+/// Registered as <see cref="IDashboardComposer"/>: override a method to change a rule (e.g. how roles combine).
 /// </summary>
-public static class DashboardComposer
+public class DashboardComposer : IDashboardComposer
 {
     /// <summary>The grid's columns: no widget is wider</summary>
     public const int GridColumns = 12;
 
-    public static EffectiveDashboard Compose(
+    public virtual EffectiveDashboard Compose(
         DashboardPatch global,
         IReadOnlyCollection<DashboardPatch> roles,
         UserDashboardPrefs user,
@@ -49,7 +51,7 @@ public static class DashboardComposer
     }
 
     /// <summary>The places (when <paramref name="move"/>) and sizes (when <paramref name="resize"/>) a layer sets</summary>
-    private static Dictionary<string, WidgetLayout> LayoutOf(Dictionary<string, WidgetPatch> widgets, bool move, bool resize)
+    protected virtual Dictionary<string, WidgetLayout> LayoutOf(Dictionary<string, WidgetPatch> widgets, bool move, bool resize)
     {
         var result = new Dictionary<string, WidgetLayout>(StringComparer.Ordinal);
         foreach (var (id, patch) in Widgets(widgets))
@@ -74,7 +76,7 @@ public static class DashboardComposer
     /// A widget is hidden by the roles only when every one of the user's roles hides it, as for menu items: a role that
     /// shows it keeps it. Administrators and users without roles get nothing hidden by roles.
     /// </summary>
-    public static IEnumerable<string> HiddenByRoles(IReadOnlyCollection<DashboardPatch> roles, bool isAdministrator)
+    public virtual IEnumerable<string> HiddenByRoles(IReadOnlyCollection<DashboardPatch> roles, bool isAdministrator)
     {
         if (isAdministrator || roles == null || roles.Count == 0)
         {
@@ -91,7 +93,7 @@ public static class DashboardComposer
     }
 
     /// <summary>The ids a layer hides: its widgets marked hidden, and a role's list in the earlier format</summary>
-    public static IEnumerable<string> HiddenIds(DashboardPatch patch) =>
+    public virtual IEnumerable<string> HiddenIds(DashboardPatch patch) =>
         Widgets(patch).Where(x => x.Value.Hidden == true).Select(x => x.Key)
             .Concat(Normalize(patch?.HiddenWidgets))
             .Distinct(StringComparer.Ordinal);
@@ -100,7 +102,7 @@ public static class DashboardComposer
     /// A layer as stored: trimmed ids, without blanks or empty entries, and a role's earlier list folded into its widgets.
     /// Ids of widgets that aren't installed are kept: they do nothing, and work again if the module comes back.
     /// </summary>
-    public static DashboardPatch Normalize(DashboardPatch patch)
+    public virtual DashboardPatch Normalize(DashboardPatch patch)
     {
         var result = new DashboardPatch { LayoutVersion = Math.Max(0, patch?.LayoutVersion ?? 0) };
         foreach (var (id, widget) in Widgets(patch))
@@ -122,7 +124,7 @@ public static class DashboardComposer
         return result;
     }
 
-    public static UserDashboardPrefs Normalize(UserDashboardPrefs prefs)
+    public virtual UserDashboardPrefs Normalize(UserDashboardPrefs prefs)
     {
         var result = new UserDashboardPrefs { LayoutVersion = Math.Max(0, prefs?.LayoutVersion ?? 0) };
         foreach (var (id, widget) in Widgets(prefs?.Widgets))
@@ -139,7 +141,7 @@ public static class DashboardComposer
         return result;
     }
 
-    public static List<string> Normalize(IEnumerable<string> widgetIds) =>
+    public virtual List<string> Normalize(IEnumerable<string> widgetIds) =>
         (widgetIds ?? [])
             .Where(id => !string.IsNullOrWhiteSpace(id))
             .Select(id => id.Trim())
@@ -154,7 +156,7 @@ public static class DashboardComposer
             .Select(x => new KeyValuePair<string, WidgetPatch>(x.Key.Trim(), x.Value));
 
     // a place can't be negative and a size is at least a cell; hidden false is the same as not saying
-    private static WidgetPatch Clean(WidgetPatch widget, bool hidden = false) => new()
+    protected virtual WidgetPatch Clean(WidgetPatch widget, bool hidden = false) => new()
     {
         Hidden = hidden || widget?.Hidden == true ? true : null,
         X = AtLeast(widget?.X, 0),

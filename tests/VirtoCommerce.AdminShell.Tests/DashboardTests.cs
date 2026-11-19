@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VirtoCommerce.AdminShell.Core.Models;
 using VirtoCommerce.AdminShell.Core.Services;
+using VirtoCommerce.AdminShell.Data.Services;
 using VirtoCommerce.AdminShell.Web.Controllers.Api;
 using Xunit;
 
@@ -13,6 +14,8 @@ namespace VirtoCommerce.AdminShell.Tests;
 /// <summary>The dashboard layers: for everyone, per role and per user, and the API that saves them</summary>
 public class DashboardTests
 {
+    private static readonly IDashboardComposer Composer = new DashboardComposer();
+
     private static DashboardPatch Hide(params string[] ids)
     {
         var patch = new DashboardPatch();
@@ -30,7 +33,7 @@ public class DashboardTests
         UserDashboardPrefs user = null,
         DashboardPersonalization personalization = null,
         bool isAdministrator = false) =>
-        DashboardComposer.Compose(global, roles ?? [], user, personalization, isAdministrator, canManage: false);
+        Composer.Compose(global, roles ?? [], user, personalization, isAdministrator, canManage: false);
 
     [Fact]
     public void NothingConfigured_HidesNothing()
@@ -132,7 +135,7 @@ public class DashboardTests
         patch.Widgets["shell-activity"] = new WidgetPatch { Hidden = false };
         patch.Widgets["orders-sales"] = new WidgetPatch { Width = 40, X = -2 };
 
-        var result = DashboardComposer.Normalize(patch);
+        var result = Composer.Normalize(patch);
 
         Assert.Null(result.HiddenWidgets);
         Assert.Equal(0, result.LayoutVersion);
