@@ -148,7 +148,7 @@ Route `/dashboard-configurator`, permission `admin-shell:dashboard:manage`. It s
 
 | Tab | What it does |
 |---|---|
-| Rules | One list of rules, each hiding a widget from someone: *Everyone* or a role. *Add rule* picks the widget (with the permission it needs) and whom to hide it from; a rule that exists already, or one for a role without the widget's permission (its users don't see it anyway), isn't added. The trash icon removes a rule. *Save* writes the layers the rules touched. A new kind of rule (an account type, a user) is one more scope in this list. |
+| Rules | Every widget, with the permission it needs and who it is hidden from (*Everyone with the permission*, *Hidden from everyone*, or the roles). The pencil opens the widget's rule below its row: show it to everyone with the permission, hide it from everyone, or hide it from selected roles (searchable; a role without the widget's permission is greyed out, its users don't see it anyway). *Apply* keeps the rule; *Save* writes the layers the rules touched. A new kind of scope (an account type, a user) is one more option here. |
 | Layout | *Customize the layout on Home*, *Reset users' layouts*, and what users may change (move, resize). |
 | Edit as JSON | The layer for everyone as JSON, to copy for a backup or another environment, or to paste and save. |
 

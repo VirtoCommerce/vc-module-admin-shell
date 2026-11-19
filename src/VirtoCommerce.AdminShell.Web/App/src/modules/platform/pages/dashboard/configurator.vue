@@ -33,133 +33,161 @@
           {{ error }}
         </p>
 
-        <!-- rules: which widget is hidden from whom (everyone, a role; more kinds can follow) -->
+        <!-- rules: every widget with who it is hidden from; the pencil opens its rule below it -->
         <section v-if="tab === 'rules'">
           <p class="dash-config__hint">{{ $t("PLATFORM.DASHBOARD.RULES_HINT") }}</p>
-          <div class="dash-config__actions">
-            <button
-              type="button"
-              class="dash-config__button dash-config__button--primary"
-              :aria-expanded="adding"
-              @click="startAdding"
-            >
-              {{ $t("PLATFORM.DASHBOARD.ADD_RULE") }}
-            </button>
-          </div>
-
-          <form
-            v-if="adding"
-            class="dash-config__form"
-            @submit.prevent="addRule"
-          >
-            <label class="dash-config__field">
+          <div class="dash-config__rules">
+            <div class="dash-config__rules-head">
               <span>{{ $t("PLATFORM.DASHBOARD.WIDGET") }}</span>
-              <select v-model="draft.widgetId">
-                <option
-                  value=""
-                  disabled
-                >
-                  {{ $t("PLATFORM.DASHBOARD.PICK_WIDGET") }}
-                </option>
-                <option
-                  v-for="widget in widgetRows"
-                  :key="widget.id"
-                  :value="widget.id"
-                >
-                  {{ widget.label }}
-                </option>
-              </select>
-              <small v-if="draftWidget">{{ draftWidget.permission }}</small>
-            </label>
-            <label class="dash-config__field">
-              <span>{{ $t("PLATFORM.DASHBOARD.HIDE_FOR") }}</span>
-              <select v-model="draft.scope">
-                <option value="everyone">{{ $t("PLATFORM.DASHBOARD.EVERYONE") }}</option>
-                <optgroup :label="$t('PLATFORM.DASHBOARD.ROLES')">
-                  <option
-                    v-for="role in roles"
-                    :key="role.id"
-                    :value="`role:${role.id}`"
-                  >
-                    {{ role.name }}
-                  </option>
-                </optgroup>
-              </select>
-            </label>
-            <p
-              v-if="draftProblem"
-              class="dash-config__note"
-            >
-              {{ draftProblem }}
-            </p>
-            <div class="dash-config__actions">
-              <button
-                type="submit"
-                class="dash-config__button dash-config__button--primary"
-                :disabled="!draft.widgetId || !!draftProblem"
-              >
-                {{ $t("PLATFORM.DASHBOARD.ADD") }}
-              </button>
-              <button
-                type="button"
-                class="dash-config__button"
-                @click="adding = false"
-              >
-                {{ $t("PLATFORM.DASHBOARD.CANCEL") }}
-              </button>
+              <span>{{ $t("PLATFORM.DASHBOARD.VISIBILITY") }}</span>
+              <span />
             </div>
-          </form>
-
-          <table
-            v-if="sortedRules.length"
-            class="dash-config__table"
-          >
-            <thead>
-              <tr>
-                <th>{{ $t("PLATFORM.DASHBOARD.WIDGET") }}</th>
-                <th>{{ $t("PLATFORM.DASHBOARD.HIDDEN_FOR") }}</th>
-                <th>{{ $t("PLATFORM.DASHBOARD.PERMISSION") }}</th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="rule in sortedRules"
-                :key="ruleKey(rule)"
-              >
-                <td>{{ rule.widgetLabel }}</td>
-                <td>
+            <div
+              v-for="widget in ruleRows"
+              :key="widget.id"
+              class="dash-config__rule"
+              :class="{ 'dash-config__rule--open': editing === widget.id }"
+            >
+              <div class="dash-config__rule-row">
+                <div class="dash-config__rule-widget">
+                  <strong>{{ widget.label }}</strong>
+                  <small>{{ widget.permission }}</small>
+                </div>
+                <div class="dash-config__rule-chips">
                   <span
-                    class="dash-config__chip"
-                    :class="{ 'dash-config__chip--everyone': rule.scope.type === 'everyone' }"
-                  >
-                    {{ rule.scopeLabel }}
-                  </span>
-                </td>
-                <td class="dash-config__muted">{{ rule.permission }}</td>
-                <td class="dash-config__cell-action">
-                  <button
-                    type="button"
-                    class="dash-config__icon"
-                    :title="$t('PLATFORM.DASHBOARD.REMOVE_RULE')"
-                    :aria-label="$t('PLATFORM.DASHBOARD.REMOVE_RULE')"
-                    @click="removeRule(rule)"
+                    v-if="widget.everyone"
+                    class="dash-config__chip dash-config__chip--danger"
                   >
                     <VcIcon
-                      icon="lucide-trash-2"
-                      size="s"
+                      icon="lucide-eye-off"
+                      size="xs"
                     />
+                    {{ $t("PLATFORM.DASHBOARD.HIDDEN_ALL") }}
+                  </span>
+                  <template v-else-if="widget.roles.length">
+                    <span class="dash-config__chip-label">{{ $t("PLATFORM.DASHBOARD.HIDDEN_FROM") }}</span>
+                    <span
+                      v-for="role in widget.roles"
+                      :key="role.id"
+                      class="dash-config__chip"
+                    >
+                      {{ role.name }}
+                    </span>
+                  </template>
+                  <span
+                    v-else
+                    class="dash-config__chip dash-config__chip--ok"
+                  >
+                    <VcIcon
+                      icon="lucide-eye"
+                      size="xs"
+                    />
+                    {{ $t("PLATFORM.DASHBOARD.SHOWN_ALL") }}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  class="dash-config__icon"
+                  :title="$t('PLATFORM.DASHBOARD.EDIT_RULE')"
+                  :aria-label="`${$t('PLATFORM.DASHBOARD.EDIT_RULE')}: ${widget.label}`"
+                  :aria-expanded="editing === widget.id"
+                  @click="toggleEditor(widget.id)"
+                >
+                  <VcIcon
+                    :icon="editing === widget.id ? 'lucide-chevron-up' : 'lucide-pencil'"
+                    size="s"
+                  />
+                </button>
+              </div>
+
+              <!-- the widget's rule -->
+              <div
+                v-if="editing === widget.id"
+                class="dash-config__editor"
+              >
+                <fieldset class="dash-config__options">
+                  <legend>{{ $t("PLATFORM.DASHBOARD.WHO_SEES") }}</legend>
+                  <label
+                    v-for="option in modeOptions"
+                    :key="option.value"
+                    class="dash-config__option"
+                    :class="{ 'dash-config__option--on': editor.mode === option.value }"
+                  >
+                    <input
+                      v-model="editor.mode"
+                      type="radio"
+                      :value="option.value"
+                      :name="`mode-${widget.id}`"
+                    />
+                    <span>
+                      <strong>{{ option.title }}</strong>
+                      <small>{{ option.hint }}</small>
+                    </span>
+                  </label>
+                </fieldset>
+
+                <div
+                  v-if="editor.mode === 'roles'"
+                  class="dash-config__roles"
+                >
+                  <div class="dash-config__roles-head">
+                    <input
+                      v-model="roleSearch"
+                      type="search"
+                      class="dash-config__search"
+                      :placeholder="$t('PLATFORM.DASHBOARD.SEARCH_ROLES')"
+                      :aria-label="$t('PLATFORM.DASHBOARD.SEARCH_ROLES')"
+                    />
+                    <span class="dash-config__muted">
+                      {{ $t("PLATFORM.DASHBOARD.SELECTED", { count: editor.roles.length }) }}
+                    </span>
+                  </div>
+                  <div class="dash-config__role-list">
+                    <label
+                      v-for="role in visibleRoles"
+                      :key="role.id"
+                      class="dash-config__role"
+                      :class="{ 'dash-config__role--off': role.blind }"
+                    >
+                      <input
+                        v-model="editor.roles"
+                        type="checkbox"
+                        :value="role.id"
+                        :disabled="role.blind && !editor.roles.includes(role.id)"
+                      />
+                      <span>{{ role.name }}</span>
+                      <small v-if="role.blind">{{ $t("PLATFORM.DASHBOARD.NO_PERMISSION_ROLE") }}</small>
+                    </label>
+                    <p
+                      v-if="!visibleRoles.length"
+                      class="dash-config__muted"
+                    >
+                      {{ $t("PLATFORM.DASHBOARD.NO_ROLES_FOUND") }}
+                    </p>
+                  </div>
+                  <p class="dash-config__muted">{{ $t("PLATFORM.DASHBOARD.ROLES_RULE") }}</p>
+                </div>
+
+                <div class="dash-config__actions dash-config__actions--end">
+                  <button
+                    type="button"
+                    class="dash-config__button"
+                    @click="editing = ''"
+                  >
+                    {{ $t("PLATFORM.DASHBOARD.CANCEL") }}
                   </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <p
-            v-else
-            class="dash-config__empty"
-          >
-            {{ $t("PLATFORM.DASHBOARD.NO_RULES") }}
-          </p>
+                  <button
+                    type="button"
+                    class="dash-config__button dash-config__button--primary"
+                    :disabled="editor.mode === 'roles' && !editor.roles.length"
+                    @click="applyEditor(widget.id)"
+                  >
+                    {{ $t("PLATFORM.DASHBOARD.APPLY") }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
         <!-- the layout for everyone, set on Home itself, and what users may change in theirs -->
@@ -299,11 +327,10 @@ interface Rule {
 
 const global = ref<DashboardPatch>({});
 const roles = ref<{ id: string; name: string }[]>([]);
-const rolePermissions = new Map<string, string[]>();
+const rolePermissions = ref(new Map<string, string[]>());
 const rules = ref<Rule[]>([]);
-const savedRules = ref("");
-// the rules as loaded, to see which layers changed
-const savedRulesList = ref<Rule[]>([]);
+// the rules as loaded, to see what changed and which layers to save
+const savedRules = ref<Rule[]>([]);
 
 const scopeKey = (scope: RuleScope) => (scope.type === "everyone" ? "everyone" : `role:${scope.roleId}`);
 const ruleKey = (rule: Rule) => `${rule.widgetId}|${scopeKey(rule.scope)}`;
@@ -313,94 +340,98 @@ function labelOf(name: string, id: string) {
   return name ? (te(name) ? t(name) : name) : id;
 }
 // every widget installed here (the administrator's permissions allow them all), with the permission it needs
-const widgetRows = computed(() =>
-  registry
-    .getWidgets()
-    .map((w) => ({
-      id: w.id,
-      label: labelOf(w.name, w.id),
-      permissions: w.permissions,
-      permission: w.permissions?.length
-        ? t("SHELL.DASHBOARD.PERMISSION", { permission: w.permissions.join(", ") })
-        : t("SHELL.DASHBOARD.NO_PERMISSION"),
-    }))
-    .sort((a, b) => a.label.localeCompare(b.label)),
+const widgets = computed(() =>
+  registry.getWidgets().map((w) => ({
+    id: w.id,
+    label: labelOf(w.name, w.id),
+    permissions: w.permissions,
+    permission: w.permissions?.length
+      ? t("SHELL.DASHBOARD.PERMISSION", { permission: w.permissions.join(", ") })
+      : t("SHELL.DASHBOARD.NO_PERMISSION"),
+  })),
 );
-const widgetById = computed(() => new Map(widgetRows.value.map((w) => [w.id, w])));
+const roleName = (id: string) => roles.value.find((r) => r.id === id)?.name ?? id;
 
-function scopeLabel(scope: RuleScope) {
-  if (scope.type === "everyone") return t("PLATFORM.DASHBOARD.EVERYONE");
-  const name = roles.value.find((r) => r.id === scope.roleId)?.name ?? scope.roleId;
-  return t("PLATFORM.DASHBOARD.ROLE_SCOPE", { name });
-}
-// everyone first, then by widget; a widget that isn't installed here shows by its id
-const sortedRules = computed(() =>
-  rules.value
-    .map((rule) => {
-      const widget = widgetById.value.get(rule.widgetId);
+// a row per widget, and one for each id a rule names that isn't installed here
+const ruleRows = computed(() => {
+  const installed = new Set(widgets.value.map((w) => w.id));
+  const others = [...new Set(rules.value.map((r) => r.widgetId))]
+    .filter((id) => !installed.has(id))
+    .map((id) => ({ id, label: id, permissions: undefined, permission: t("PLATFORM.DASHBOARD.NOT_INSTALLED") }));
+  return [...widgets.value, ...others]
+    .map((w) => {
+      const own = rules.value.filter((r) => r.widgetId === w.id);
       return {
-        ...rule,
-        widgetLabel: widget?.label ?? rule.widgetId,
-        permission: widget?.permission ?? t("PLATFORM.DASHBOARD.NOT_INSTALLED"),
-        scopeLabel: scopeLabel(rule.scope),
+        ...w,
+        everyone: own.some((r) => r.scope.type === "everyone"),
+        roles: own
+          .flatMap((r) => (r.scope.type === "role" ? [{ id: r.scope.roleId, name: roleName(r.scope.roleId) }] : []))
+          .sort((a, b) => a.name.localeCompare(b.name)),
       };
     })
-    .sort(
-      (a, b) =>
-        Number(b.scope.type === "everyone") - Number(a.scope.type === "everyone") ||
-        a.widgetLabel.localeCompare(b.widgetLabel) ||
-        a.scopeLabel.localeCompare(b.scopeLabel),
-    ),
-);
-
-// the new rule's form
-const adding = ref(false);
-const draft = ref({ widgetId: "", scope: "everyone" });
-const draftWidget = computed(() => widgetById.value.get(draft.value.widgetId));
-const draftScope = computed<RuleScope>(() =>
-  draft.value.scope === "everyone" ? { type: "everyone" } : { type: "role", roleId: draft.value.scope.slice(5) },
-);
-const draftPermissions = ref<string[] | undefined>();
-watch(
-  () => draft.value.scope,
-  async (value) => {
-    draftPermissions.value = undefined;
-    if (!value.startsWith("role:")) return;
-    draftPermissions.value = await permissionsOf(value.slice(5));
-  },
-);
-// a rule that is there already, or a role that can't see the widget anyway, isn't added
-const draftProblem = computed(() => {
-  if (!draft.value.widgetId) return "";
-  const rule = { widgetId: draft.value.widgetId, scope: draftScope.value };
-  if (rules.value.some((r) => ruleKey(r) === ruleKey(rule))) return t("PLATFORM.DASHBOARD.RULE_EXISTS");
-  if (
-    rule.scope.type === "role" &&
-    draftPermissions.value &&
-    !roleCanSee(draftWidget.value?.permissions, draftPermissions.value)
-  )
-    return t("PLATFORM.DASHBOARD.ROLE_LACKS");
-  return "";
+    .sort((a, b) => a.label.localeCompare(b.label));
 });
-async function permissionsOf(roleId: string) {
-  if (!rolePermissions.has(roleId)) {
-    const name = roles.value.find((r) => r.id === roleId)?.name ?? roleId;
-    const role = await (await getApiClient()).getRole(name);
-    rolePermissions.set(roleId, (role.permissions ?? []).map((p) => p.name!).filter(Boolean));
+
+/* ---- a widget's rule, edited below its row ---- */
+
+type Mode = "shown" | "everyone" | "roles";
+const editing = ref("");
+const editor = ref<{ mode: Mode; roles: string[] }>({ mode: "shown", roles: [] });
+const roleSearch = ref("");
+const modeOptions = computed<{ value: Mode; title: string; hint: string }[]>(() => [
+  { value: "shown", title: t("PLATFORM.DASHBOARD.MODE_SHOWN"), hint: t("PLATFORM.DASHBOARD.MODE_SHOWN_HINT") },
+  { value: "everyone", title: t("PLATFORM.DASHBOARD.MODE_EVERYONE"), hint: t("PLATFORM.DASHBOARD.MODE_EVERYONE_HINT") },
+  { value: "roles", title: t("PLATFORM.DASHBOARD.MODE_ROLES"), hint: t("PLATFORM.DASHBOARD.MODE_ROLES_HINT") },
+]);
+
+async function toggleEditor(widgetId: string) {
+  if (editing.value === widgetId) {
+    editing.value = "";
+    return;
   }
-  return rolePermissions.get(roleId)!;
+  const own = rules.value.filter((r) => r.widgetId === widgetId);
+  const roleIds = own.flatMap((r) => (r.scope.type === "role" ? [r.scope.roleId] : []));
+  editor.value = {
+    mode: own.some((r) => r.scope.type === "everyone") ? "everyone" : roleIds.length ? "roles" : "shown",
+    roles: roleIds,
+  };
+  roleSearch.value = "";
+  editing.value = widgetId;
+  await loadRolePermissions();
 }
-function startAdding() {
-  draft.value = { widgetId: "", scope: "everyone" };
-  adding.value = !adding.value;
+
+// a role without the widget's permission doesn't see it anyway: it can't be picked (only unpicked)
+const editedWidget = computed(() => ruleRows.value.find((w) => w.id === editing.value));
+const visibleRoles = computed(() => {
+  const text = roleSearch.value.trim().toLowerCase();
+  return roles.value
+    .filter((r) => !text || r.name.toLowerCase().includes(text))
+    .map((r) => {
+      const held = rolePermissions.value.get(r.id);
+      return { ...r, blind: !!held && !roleCanSee(editedWidget.value?.permissions, held) };
+    });
+});
+
+async function loadRolePermissions() {
+  const missing = roles.value.filter((r) => !rolePermissions.value.has(r.id));
+  if (!missing.length) return;
+  const client = await getApiClient();
+  const found = await Promise.all(missing.map((r) => client.getRole(r.name).catch(() => undefined)));
+  const next = new Map(rolePermissions.value);
+  missing.forEach((r, i) => next.set(r.id, (found[i]?.permissions ?? []).map((p) => p.name!).filter(Boolean)));
+  rolePermissions.value = next;
 }
-function addRule() {
-  if (!draft.value.widgetId || draftProblem.value) return;
-  rules.value = [...rules.value, { widgetId: draft.value.widgetId, scope: draftScope.value }];
-  adding.value = false;
-}
-function removeRule(rule: Rule) {
-  rules.value = rules.value.filter((r) => ruleKey(r) !== ruleKey(rule));
+
+function applyEditor(widgetId: string) {
+  const others = rules.value.filter((r) => r.widgetId !== widgetId);
+  const mine: Rule[] =
+    editor.value.mode === "everyone"
+      ? [{ widgetId, scope: { type: "everyone" } }]
+      : editor.value.mode === "roles"
+        ? editor.value.roles.map((roleId) => ({ widgetId, scope: { type: "role", roleId } }))
+        : [];
+  rules.value = [...others, ...mine];
+  editing.value = "";
 }
 
 /* ---- the layout for everyone and what users may change ---- */
@@ -415,7 +446,8 @@ const personalizationItems = computed<{ key: keyof DashboardPersonalization; tit
 
 const dirty = computed(
   () =>
-    rulesKey(rules.value) !== savedRules.value || JSON.stringify(personalization.value) !== savedPersonalization.value,
+    rulesKey(rules.value) !== rulesKey(savedRules.value) ||
+    JSON.stringify(personalization.value) !== savedPersonalization.value,
 );
 useLeaveGuard(dirty, "/dashboard-configurator", () => t("PLATFORM.COMMON.CLOSE_CONFIRMATION"));
 
@@ -440,11 +472,12 @@ async function load() {
         })),
       ),
     ];
-    savedRules.value = rulesKey(rules.value);
-    savedRulesList.value = [...rules.value];
+    savedRules.value = [...rules.value];
+    rolePermissions.value = new Map();
     personalization.value = { allowMove: value?.allowMove ?? true, allowResize: value?.allowResize ?? true };
     savedPersonalization.value = JSON.stringify(personalization.value);
     jsonText.value = JSON.stringify(global.value, null, 2);
+    editing.value = "";
   } catch (e) {
     error.value = String((e as Error).message ?? e);
   } finally {
@@ -466,7 +499,7 @@ async function save() {
   loading.value = true;
   error.value = "";
   try {
-    const before = hiddenBy(savedRulesList.value);
+    const before = hiddenBy(savedRules.value);
     const after = hiddenBy(rules.value);
     const same = (a: string[] = [], b: string[] = []) => [...a].sort().join() === [...b].sort().join();
     for (const key of new Set([...before.keys(), ...after.keys()])) {
@@ -491,9 +524,9 @@ async function save() {
 }
 
 function reset() {
-  rules.value = [...savedRulesList.value];
+  rules.value = [...savedRules.value];
   personalization.value = JSON.parse(savedPersonalization.value);
-  adding.value = false;
+  editing.value = "";
 }
 
 async function customizeOnHome() {
@@ -602,16 +635,21 @@ load();
 }
 
 .dash-config__hint,
-.dash-config__meta,
-.dash-config__empty {
+.dash-config__meta {
   color: var(--color-neutral-600);
   font-size: 13px;
   margin: 0 0 12px;
-  max-width: 820px;
+  max-width: 860px;
 }
 
 .dash-config__meta {
   font-size: 12px;
+}
+
+.dash-config__muted {
+  color: var(--color-neutral-500);
+  font-size: 12px;
+  margin: 0;
 }
 
 .dash-config__subtitle {
@@ -625,18 +663,16 @@ load();
   margin: 0 0 12px;
 }
 
-.dash-config__note {
-  color: var(--color-warning-700, var(--color-neutral-700));
-  font-size: 12px;
-  margin: 0;
-  width: 100%;
-}
-
 .dash-config__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 12px;
+}
+
+.dash-config__actions--end {
+  justify-content: flex-end;
+  margin: 0;
 }
 
 .dash-config__button {
@@ -662,39 +698,44 @@ load();
   color: var(--color-neutral-0);
 }
 
-.dash-config__form {
-  align-items: flex-end;
-  background: var(--color-neutral-50);
+/* the rules list: a row per widget, its rule opening below it */
+.dash-config__rules {
   border: 1px solid var(--color-neutral-200);
   border-radius: 8px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 16px;
-  margin-bottom: 16px;
-  max-width: 820px;
-  padding: 12px 16px;
-
-  .dash-config__actions {
-    margin: 0;
-  }
+  max-width: 860px;
+  overflow: hidden;
 }
 
-.dash-config__field {
+.dash-config__rules-head,
+.dash-config__rule-row {
+  align-items: center;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: minmax(180px, 2fr) minmax(200px, 3fr) 36px;
+  padding: 10px 12px;
+}
+
+.dash-config__rules-head {
+  background: var(--color-neutral-50);
+  color: var(--color-neutral-600);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.dash-config__rule {
+  border-top: 1px solid var(--color-neutral-100);
+}
+
+.dash-config__rule--open {
+  background: var(--color-neutral-50);
+}
+
+.dash-config__rule-widget {
   display: flex;
-  flex: 1 1 240px;
   flex-direction: column;
   font-size: 13px;
-  gap: 4px;
-
-  select {
-    background: var(--color-neutral-0);
-    border: 1px solid var(--color-neutral-300);
-    border-radius: 6px;
-    font-family: inherit;
-    font-size: 13px;
-    height: 36px;
-    padding: 0 8px;
-  }
+  gap: 2px;
+  min-width: 0;
 
   small {
     color: var(--color-neutral-500);
@@ -702,66 +743,173 @@ load();
   }
 }
 
-.dash-config__table {
-  border: 1px solid var(--color-neutral-200);
-  border-collapse: separate;
-  border-radius: 8px;
-  border-spacing: 0;
-  font-size: 13px;
-  max-width: 820px;
-  width: 100%;
-
-  th {
-    background: var(--color-neutral-50);
-    color: var(--color-neutral-600);
-    font-weight: 600;
-    padding: 8px 12px;
-    text-align: start;
-  }
-
-  td {
-    border-top: 1px solid var(--color-neutral-100);
-    padding: 8px 12px;
-  }
+.dash-config__rule-chips {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 6px;
 }
 
-.dash-config__muted {
+.dash-config__chip-label {
   color: var(--color-neutral-500);
   font-size: 12px;
 }
 
-.dash-config__cell-action {
-  text-align: end;
-  width: 40px;
+.dash-config__chip {
+  align-items: center;
+  background: var(--color-neutral-100);
+  border-radius: 999px;
+  color: var(--color-neutral-700);
+  display: inline-flex;
+  font-size: 12px;
+  gap: 4px;
+  padding: 2px 10px;
+  white-space: nowrap;
+}
+
+.dash-config__chip--ok {
+  background: var(--color-success-50, var(--color-neutral-100));
+  color: var(--color-success-700, var(--color-neutral-700));
+}
+
+.dash-config__chip--danger {
+  background: var(--color-danger-50, var(--color-neutral-100));
+  color: var(--color-danger-700, var(--color-neutral-700));
 }
 
 .dash-config__icon {
+  align-items: center;
   background: none;
   border: 0;
   border-radius: 6px;
   color: var(--color-neutral-500);
   cursor: pointer;
   display: inline-flex;
-  padding: 4px;
+  height: 32px;
+  justify-content: center;
+  width: 32px;
 
-  &:hover {
+  &:hover,
+  &[aria-expanded="true"] {
     background: var(--color-neutral-100);
-    color: var(--color-danger-500);
+    color: var(--color-primary-500);
   }
 }
 
-.dash-config__chip {
-  background: var(--color-neutral-100);
-  border-radius: 999px;
-  color: var(--color-neutral-700);
-  font-size: 12px;
-  padding: 2px 10px;
-  white-space: nowrap;
+.dash-config__editor {
+  border-top: 1px dashed var(--color-neutral-200);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 12px 14px;
 }
 
-.dash-config__chip--everyone {
-  background: var(--color-primary-50);
-  color: var(--color-primary-700);
+.dash-config__options {
+  border: 0;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin: 0;
+  padding: 0;
+
+  legend {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+}
+
+.dash-config__option {
+  align-items: flex-start;
+  background: var(--color-neutral-0);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  font-size: 13px;
+  gap: 8px;
+  padding: 10px 12px;
+
+  span {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  small {
+    color: var(--color-neutral-500);
+    font-size: 11px;
+  }
+
+  input {
+    margin-top: 3px;
+  }
+}
+
+.dash-config__option--on {
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 1px var(--color-primary-500);
+}
+
+.dash-config__roles {
+  background: var(--color-neutral-0);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+}
+
+.dash-config__roles-head {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.dash-config__search {
+  border: 1px solid var(--color-neutral-300);
+  border-radius: 6px;
+  flex: 1;
+  font-family: inherit;
+  font-size: 13px;
+  height: 32px;
+  max-width: 320px;
+  padding: 0 10px;
+}
+
+.dash-config__role-list {
+  display: grid;
+  gap: 2px 16px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.dash-config__role {
+  align-items: center;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  font-size: 13px;
+  gap: 8px;
+  padding: 4px 6px;
+
+  &:hover {
+    background: var(--color-neutral-50);
+  }
+
+  small {
+    color: var(--color-neutral-500);
+    font-size: 11px;
+    margin-left: auto;
+  }
+}
+
+.dash-config__role--off {
+  color: var(--color-neutral-400);
+  cursor: default;
 }
 
 .dash-config__label {
@@ -794,7 +942,7 @@ load();
   font-size: 12px;
   height: 360px;
   margin-bottom: 8px;
-  max-width: 820px;
+  max-width: 860px;
   padding: 8px;
   width: 100%;
 }
