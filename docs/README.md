@@ -23,6 +23,7 @@ What modules, system integrators and customers can add or change without changin
 | Global search | module developers | `$globalSearch.registerProvider` | [global-search.md](global-search.md) |
 | Menu counters | module developers | `$menuCounters.register` | [menu-counters.md](menu-counters.md) |
 | Dashboard widgets | module developers | `registerDashboardWidget`, shared `.dash-*` styles | [dashboard-widgets.md](dashboard-widgets.md) |
+| Dashboard Editor | system integrators, administrators, users | Widgets hidden from everyone or per role, the layout for everyone, each user's layout; scenarios with screenshots | [dashboard-widgets.md › Layers](dashboard-widgets.md#layers) |
 | Blade widgets | module developers | `registerExternalWidget` on another module's or the platform's blades | [blade-widgets.md](blade-widgets.md) |
 | AngularJS screens | module developers | `legacy` menu targets, the `Legacy` route, `$globalSearch.openLegacy` | [legacy-screens.md](legacy-screens.md) |
 | Embedded apps | module developers | `<app>` with `MainMenu` placement; `app` and `url` menu targets | [embedded-apps.md](embedded-apps.md) |

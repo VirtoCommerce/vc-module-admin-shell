@@ -1,8 +1,8 @@
-# Dashboard Widgets — Developer Guide
+# Dashboard Widgets — Developer and Administrator Guide
 
 ## Overview
 
-The Admin Shell's home page is a dashboard of widgets on a 12-column grid. Users drag, resize and reset them; the layout is saved per browser. The shell adds the platform's widgets (alerts, recent activity, sign-ins); each module adds its own from its plugin with vc-shell's `registerDashboardWidget`. Today Orders adds sales, recent orders, orders to process, payments and fulfilment, Inventory adds *Low stock*, and Cart adds *Currently in carts*.
+The Admin Shell's home page is a dashboard of widgets on a 12-column grid. Users drag, resize and reset them, and their layout is saved for them on the server. Administrators decide in the Dashboard Editor which widgets each role sees and where the widgets are for everyone (see *Layers* and *Scenarios* below). The shell adds the platform's widgets (alerts, recent activity, sign-ins); each module adds its own from its plugin with vc-shell's `registerDashboardWidget`. Today Orders adds sales, recent orders, orders to process, payments and fulfilment, Inventory adds *Low stock*, and Cart adds *Currently in carts*.
 
 Source: `src/VirtoCommerce.AdminShell.Web/App/src/pages/Dashboard.vue` (the page), `src/shell/dashboard/` (the host's widgets and the planned layout), `src/styles/custom.scss` (`.dash-*` classes). Example plugin widget: `vc-module-inventory/src/VirtoCommerce.InventoryModule.Web/vue/src/modules/dashboard/`.
 
@@ -165,6 +165,62 @@ The toolbar, as the Menu Editor's: *Save*, *Reset*, *Refresh*, *Edit as JSON* an
 
   Roles are named, not by id, since ids differ between environments; a document naming a role that isn't there is refused.
 - *Undo all changes* drops every rule and the layout for everyone, and lets users move and resize again; *Save* stores it.
+
+### Scenarios
+
+Step by step, for an administrator or a system integrator with `admin-shell:dashboard:manage`. Each scenario says what the users of the role then see.
+
+![The Dashboard Editor: every widget with its permission and who sees it](images/dashboard-editor-rules.jpg)
+
+#### 1. Hide a widget a role doesn't need
+
+*Alerts and Notifications* is always empty for a role that runs no background jobs, imports or exports.
+
+1. Open *Configuration › Back Office › Dashboard Editor*.
+2. On *Rules*, find the widget and click its pencil.
+3. Choose *Hidden from selected roles*, search for the role and tick it. A role without the widget's permission is greyed out: its users don't see the widget anyway.
+4. *Apply*, then *Save* in the toolbar.
+
+The role's users no longer see the widget, and the others close up. A user who also has a role that doesn't hide it still sees it, and so do administrators.
+
+![The pencil opens the widget's rule: everyone with the permission, hidden from everyone, or hidden from selected roles](images/dashboard-editor-rule.jpg)
+
+#### 2. Hide a widget from everyone
+
+As in scenario 1, choose *Hidden from everyone*. Nobody sees the widget, administrators included. Choose *Everyone with the permission* to show it again.
+
+#### 3. Lay out Home for everyone
+
+1. On Home, click *Customize for everyone* (or *Customize the layout on Home* on the editor's *Personalization* tab).
+2. Move and resize the widgets. *Widgets* shows each widget with its permission, to hide or show it for everyone; *Modules' layout* starts again from the modules' own places.
+3. *Save for everyone*. Tick *Reset users' own layouts* to also drop the places and sizes users set for themselves.
+
+Users who never moved anything see the new layout at once; with the reset, everyone does at their next visit.
+
+![Customize for everyone on Home: move, resize and hide widgets for every user](images/dashboard-customize-everyone.jpg)
+
+#### 4. Decide what users may change
+
+On *Personalization*, turn off *Move widgets* or *Resize widgets* and *Save*. Users then see the places or sizes set for everyone, and their own come back when the option is on again. Users never hide widgets: only the rules do.
+
+![Personalization: what users may change, and the layout for everyone](images/dashboard-editor-personalization.jpg)
+
+#### 5. Move the setup to another environment
+
+1. *Edit as JSON* in the toolbar, then *Download*.
+2. On the other environment, open the Dashboard Editor, *Edit as JSON*, *Upload* the file, *Apply*, check the rules, then *Save*.
+
+Roles are matched by name; a document naming a role that isn't there is refused.
+
+![Edit as JSON beside the editor: rules, layout and personalization as one document](images/dashboard-editor-json.jpg)
+
+#### 6. Start over
+
+*Undo all changes* in the toolbar removes every rule and the layout for everyone and lets users move and resize again; *Save* stores it. *Reset* drops unsaved changes instead.
+
+#### What a user does
+
+A user moves and resizes widgets on Home; the layout is saved for the user and is the same in every browser. *Reset layout* appears once the user has changed something, and puts every widget back at its place for everyone.
 
 ## Shared styles (`.dash-*`)
 

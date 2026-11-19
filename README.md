@@ -18,6 +18,10 @@ The Menu Editor: sections and items to reorder, rename and hide, saved as the gl
 
 ![The Menu Editor](docs/images/menu-editor.jpg)
 
+The Dashboard Editor: every Home widget with its permission and who sees it; the pencil opens its rule (everyone, hidden from everyone, or hidden from selected roles). See the [scenarios](docs/dashboard-widgets.md#scenarios).
+
+![The Dashboard Editor](docs/images/dashboard-editor-rules.jpg)
+
 The sign-in page, with the installation's brand and a showcase of the platform.
 
 ![The sign-in page](docs/images/sign-in.jpg)
