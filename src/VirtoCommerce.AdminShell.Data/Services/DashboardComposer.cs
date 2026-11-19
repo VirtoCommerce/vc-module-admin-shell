@@ -92,14 +92,13 @@ public class DashboardComposer : IDashboardComposer
             });
     }
 
-    /// <summary>The ids a layer hides: its widgets marked hidden, and a role's list in the earlier format</summary>
+    /// <summary>The ids a layer hides: its widgets marked hidden</summary>
     public virtual IEnumerable<string> HiddenIds(DashboardPatch patch) =>
         Widgets(patch).Where(x => x.Value.Hidden == true).Select(x => x.Key)
-            .Concat(Normalize(patch?.HiddenWidgets))
             .Distinct(StringComparer.Ordinal);
 
     /// <summary>
-    /// A layer as stored: trimmed ids, without blanks or empty entries, and a role's earlier list folded into its widgets.
+    /// A layer as stored: trimmed ids, valid places and sizes, without blanks or empty entries.
     /// Ids of widgets that aren't installed are kept: they do nothing, and work again if the module comes back.
     /// </summary>
     public virtual DashboardPatch Normalize(DashboardPatch patch)
@@ -108,12 +107,6 @@ public class DashboardComposer : IDashboardComposer
         foreach (var (id, widget) in Widgets(patch))
         {
             result.Widgets[id] = Clean(widget);
-        }
-
-        foreach (var id in Normalize(patch?.HiddenWidgets))
-        {
-            result.Widgets.TryGetValue(id, out var widget);
-            result.Widgets[id] = Clean(widget, hidden: true);
         }
 
         foreach (var id in result.Widgets.Where(x => IsEmpty(x.Value)).Select(x => x.Key).ToList())
@@ -156,9 +149,9 @@ public class DashboardComposer : IDashboardComposer
             .Select(x => new KeyValuePair<string, WidgetPatch>(x.Key.Trim(), x.Value));
 
     // a place can't be negative and a size is at least a cell; hidden false is the same as not saying
-    protected virtual WidgetPatch Clean(WidgetPatch widget, bool hidden = false) => new()
+    protected virtual WidgetPatch Clean(WidgetPatch widget) => new()
     {
-        Hidden = hidden || widget?.Hidden == true ? true : null,
+        Hidden = widget?.Hidden == true ? true : null,
         X = AtLeast(widget?.X, 0),
         Y = AtLeast(widget?.Y, 0),
         Width = Within(widget?.Width, 1, GridColumns),

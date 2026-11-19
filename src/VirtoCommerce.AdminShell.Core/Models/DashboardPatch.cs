@@ -13,7 +13,4 @@ public class DashboardPatch
     public Dictionary<string, WidgetPatch> Widgets { get; set; } = new(StringComparer.Ordinal);
 
     public int LayoutVersion { get; set; }
-
-    /// <summary>Read only: a role's list in the earlier format, {"hiddenWidgets":[...]}</summary>
-    public List<string> HiddenWidgets { get; set; }
 }

@@ -83,14 +83,6 @@ public class DashboardTests
     }
 
     [Fact]
-    public void Roles_ReadTheEarlierListFormat()
-    {
-        var role = new DashboardPatch { HiddenWidgets = [" shell-alerts ", "", null] };
-
-        Assert.Equal(["shell-alerts"], Compose(roles: [role]).Hidden);
-    }
-
-    [Fact]
     public void User_LayoutApplies_HidingDoesNot()
     {
         var user = new UserDashboardPrefs();
@@ -129,15 +121,15 @@ public class DashboardTests
     }
 
     [Fact]
-    public void Normalize_FoldsTheListAndDropsEmptyEntries()
+    public void Normalize_ClampsAndDropsEmptyEntries()
     {
-        var patch = new DashboardPatch { HiddenWidgets = ["shell-alerts"], LayoutVersion = -3 };
+        var patch = new DashboardPatch { LayoutVersion = -3 };
+        patch.Widgets[" shell-alerts "] = new WidgetPatch { Hidden = true };
         patch.Widgets["shell-activity"] = new WidgetPatch { Hidden = false };
         patch.Widgets["orders-sales"] = new WidgetPatch { Width = 40, X = -2 };
 
         var result = Composer.Normalize(patch);
 
-        Assert.Null(result.HiddenWidgets);
         Assert.Equal(0, result.LayoutVersion);
         Assert.True(result.Widgets["shell-alerts"].Hidden);
         Assert.False(result.Widgets.ContainsKey("shell-activity"));

@@ -25,7 +25,7 @@ public interface IDashboardComposer
     /// </summary>
     IEnumerable<string> HiddenByRoles(IReadOnlyCollection<DashboardPatch> roles, bool isAdministrator);
 
-    /// <summary>The ids a layer hides, the earlier role format (<c>hiddenWidgets</c>) included</summary>
+    /// <summary>The ids a layer hides: its widgets marked hidden</summary>
     IEnumerable<string> HiddenIds(DashboardPatch patch);
 
     /// <summary>A layer as stored: trimmed ids, valid places and sizes, no empty entries</summary>

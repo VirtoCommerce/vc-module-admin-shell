@@ -132,7 +132,7 @@ Rules:
 
 - **Permissions first, unchanged.** A widget shows only to users with its `permissions`; no layer can show it to others. Hiding is not security: the widget's data stays protected by its endpoints.
 - **For everyone** hides a widget from every user, administrators too, and sets places and sizes. It is what every user starts from.
-- **Roles:** a widget is hidden only when **every** one of the user's roles hides it, as for menu items. Administrators and users without roles get nothing hidden by roles. A role's earlier format, `{"hiddenWidgets": [...]}`, still reads.
+- **Roles:** a widget is hidden only when **every** one of the user's roles hides it, as for menu items. Administrators and users without roles get nothing hidden by roles.
 - **The user** moves and resizes widgets, as far as the settings allow; users don't hide widgets (only everyone and role rules do). Turning a setting off deletes nothing: the user's layout applies again when it is on.
 - **Reset users' layouts** (when saving for everyone, or in the configurator) raises `layoutVersion`; a user's places and sizes made under an older version are dropped at the next visit.
 - **Diff only.** Saving for everyone keeps only what differs from the modules' own place and size, and a user's layer only what differs from the layout for everyone, so a later change of a default reaches the widgets nobody placed. Ids of widgets that aren't installed are kept and do nothing.
