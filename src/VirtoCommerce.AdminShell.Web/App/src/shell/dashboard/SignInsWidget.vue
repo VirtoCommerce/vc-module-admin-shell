@@ -58,6 +58,7 @@ import { VcIcon } from "@vc-shell/framework/ui";
 import { computed, onMounted, ref } from "vue";
 import { signInLogApi, type SignInLogStats } from "../../modules/platform/composables/security";
 import { criteriaDate, daysAgo } from "./api";
+import { regionalSettings } from "../regionalSettings";
 
 const stats = ref<SignInLogStats>();
 
@@ -71,7 +72,7 @@ const { loading, action: load } = useAsync(
 onMounted(load);
 
 const formatCount = (value: number, signed = false) =>
-  new Intl.NumberFormat(undefined, { signDisplay: signed ? "exceptZero" : "auto" }).format(value);
+  regionalSettings.formatNumber(value, { signDisplay: signed ? "exceptZero" : "auto" });
 
 // more failures is the bad direction, so it turns red when it goes up; no earlier period to compare (null) shows no
 // change, as the sign-in log does

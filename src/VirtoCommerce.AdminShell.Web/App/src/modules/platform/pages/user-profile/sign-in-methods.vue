@@ -168,6 +168,7 @@ import { VcBlade, VcButton, VcContainer, VcIcon } from "@vc-shell/framework/ui";
 import { computed, nextTick, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { rootedUrl } from "../../../../utils/url";
+import { regionalSettings } from "../../../../shell/regionalSettings";
 import {
   deleteSignInKey,
   loadUserSignInMethods,
@@ -183,7 +184,7 @@ defineBlade({
   name: "PlatformUserSignInMethods",
 });
 
-const { t, locale } = useI18n({ useScope: "global" });
+const { t } = useI18n({ useScope: "global" });
 const { openBlade, callParent, exposeToChildren } = useBlade();
 const { showConfirmation } = usePopup();
 
@@ -193,8 +194,7 @@ const { loading: loadLoading, action: load } = useAsync(async () => {
   methods.value = (await loadUserSignInMethods()) ?? [];
 });
 
-const date = (value?: string) =>
-  value ? new Date(value).toLocaleDateString(locale.value, { dateStyle: "medium" }) : undefined;
+const date = (value?: string) => regionalSettings.formatDate(value, { dateStyle: "medium" }) || undefined;
 
 // the platform's kinds read the same everywhere; a module's method reads as its plugin says, else as the platform names it
 const rows = computed(() =>
