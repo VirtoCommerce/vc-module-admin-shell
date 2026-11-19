@@ -82,7 +82,7 @@
       "CLOSE": "Sulje",
       "CUSTOMIZE_ALL": "Mukauta kaikille",
       "PERMISSION": "Vaatii {permission}",
-      "NO_PERMISSION": "Ei oikeutta: kaikki näkevät sen",
+      "NO_PERMISSION": "Kaikki",
       "SAVE_FAILED": "Koontinäytön tallennus epäonnistui",
       "EVERYONE": {
         "TITLE": "Etusivun mukautus kaikille",

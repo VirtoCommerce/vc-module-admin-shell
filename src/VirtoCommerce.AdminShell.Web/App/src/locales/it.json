@@ -82,7 +82,7 @@
       "CLOSE": "Chiudi",
       "CUSTOMIZE_ALL": "Personalizza per tutti",
       "PERMISSION": "Richiede {permission}",
-      "NO_PERMISSION": "Nessun permesso: lo vedono tutti",
+      "NO_PERMISSION": "Tutti",
       "SAVE_FAILED": "Impossibile salvare la dashboard",
       "EVERYONE": {
         "TITLE": "Personalizzazione della home per tutti",

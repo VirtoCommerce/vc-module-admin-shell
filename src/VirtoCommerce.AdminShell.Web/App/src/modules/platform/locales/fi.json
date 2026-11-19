@@ -610,8 +610,6 @@
     "DASHBOARD": {
       "TITLE": "Koontinäytön editori",
       "TAB_RULES": "Säännöt",
-      "TAB_LAYOUT": "Asettelu",
-      "TAB_PERSONALIZATION": "Mitä käyttäjät saavat muuttaa",
       "RULES_HINT": "Widgetit tulevat moduuleista, ja kukin näkyy vain käyttäjille, joilla on sen oikeus. Kynällä piilotat widgetin kaikilta tai joiltakin rooleilta. Käyttäjä näkee silti widgetin, jonka jokin hänen toinen roolinsa näyttää; ylläpitäjät näkevät roolisääntöjen piilottamat widgetit.",
       "WIDGET": "Widget",
       "CANCEL": "Peruuta",
@@ -629,11 +627,7 @@
       "ALLOW_MOVE_HINT": "Pois: kaikki näkevät kaikille asetetut paikat.",
       "ALLOW_RESIZE": "Muuttaa widgetien kokoa",
       "ALLOW_RESIZE_HINT": "Pois: kaikki näkevät kaikille asetetut koot.",
-      "JSON_HINT": "Kaikkien asetus (AdminShell.Dashboard.Global): widgetit tunnuksen mukaan, vain niiden muutokset. Kopioi se varmuuskopioksi tai toiseen ympäristöön, tai liitä ja ota käyttöön.",
-      "APPLY_JSON": "Tallenna kaikille",
-      "JSON_OBJECT": "JSON-objekti vaaditaan",
-      "JSON_WIDGETS": "\"widgets\" on oltava widget-tunnusten objekti",
-      "JSON_CONFIRM": "Korvataanko kaikkien koontinäyttö tällä JSONilla?",
+      "JSON_HINT": "Säännöt, kaikkien asettelu ja mitä käyttäjät saavat muuttaa, yhtenä dokumenttina: \"everyone\" (widgetit tunnuksen mukaan: hidden, x, y, width, height), \"roles\" (widgetien tunnukset, joita kunkin roolin käyttäjät eivät näe, roolin nimen mukaan) ja \"personalization\". Lataa se varmuuskopioksi tai toiseen ympäristöön, lähetä tai liitä oma, sitten Käytä ja Tallenna.",
       "VISIBILITY": "Kuka näkee",
       "SHOWN_ALL": "Kaikki, joilla on oikeus",
       "HIDDEN_ALL": "Piilotettu kaikilta",
@@ -651,7 +645,13 @@
       "NO_PERMISSION_ROLE": "ei näe sitä muutenkaan",
       "NO_ROLES_FOUND": "Ei vastaavia rooleja",
       "ROLES_RULE": "Käyttäjä, jolla on toinen valitsematon rooli, näkee widgetin silti.",
-      "APPLY": "Käytä"
+      "APPLY": "Käytä",
+      "LAYOUT_TITLE": "Asettelu kaikille",
+      "JSON_TITLE": "Koontinäyttö JSONina",
+      "JSON_LABEL": "Koontinäytön asetukset",
+      "JSON_SHAPE": "odotetaan objektia, jossa on \"everyone\" (ja \"widgets\"), \"roles\" (roolien nimet → widgettitunnusten luettelot) ja \"personalization\"",
+      "JSON_UNKNOWN_ROLES": "Rooleja, joita täällä ei ole: {roles}",
+      "UNDO_ALL_CONFIRM": "Kumotaanko kaikki koontinäytön muutokset? Säännöt poistuvat; tallennuksen jälkeen moduulien asettelu ja käyttäjien vapaus muuttaa omaansa ovat taas voimassa."
     }
   }
 }

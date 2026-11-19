@@ -82,7 +82,7 @@
       "CLOSE": "Fechar",
       "CUSTOMIZE_ALL": "Personalizar para todos",
       "PERMISSION": "Requer {permission}",
-      "NO_PERMISSION": "Sem permissão: todos veem",
+      "NO_PERMISSION": "Todos",
       "SAVE_FAILED": "Não foi possível salvar o painel",
       "EVERYONE": {
         "TITLE": "Personalizando o início para todos",

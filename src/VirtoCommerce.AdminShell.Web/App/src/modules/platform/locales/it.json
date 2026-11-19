@@ -610,8 +610,6 @@
     "DASHBOARD": {
       "TITLE": "Editor della dashboard",
       "TAB_RULES": "Regole",
-      "TAB_LAYOUT": "Layout",
-      "TAB_PERSONALIZATION": "Cosa possono cambiare gli utenti",
       "RULES_HINT": "I widget arrivano dai moduli e ognuno è visibile solo agli utenti con il suo permesso. Con la matita nascondi un widget a tutti o ad alcuni ruoli. Un utente vede comunque un widget mostrato da un altro suo ruolo; gli amministratori vedono i widget nascosti dalle regole di ruolo.",
       "WIDGET": "Widget",
       "CANCEL": "Annulla",
@@ -629,11 +627,7 @@
       "ALLOW_MOVE_HINT": "Disattivato: tutti vedono le posizioni impostate per tutti.",
       "ALLOW_RESIZE": "Ridimensionare i widget",
       "ALLOW_RESIZE_HINT": "Disattivato: tutti vedono le dimensioni impostate per tutti.",
-      "JSON_HINT": "L'impostazione per tutti (AdminShell.Dashboard.Global): widget per id, solo con ciò che cambiano. Copiala come backup o per un altro ambiente, oppure incollane una e applicala.",
-      "APPLY_JSON": "Salva per tutti",
-      "JSON_OBJECT": "È richiesto un oggetto JSON",
-      "JSON_WIDGETS": "\"widgets\" deve essere un oggetto di id dei widget",
-      "JSON_CONFIRM": "Sostituire la dashboard per tutti con questo JSON?",
+      "JSON_HINT": "Le regole, il layout per tutti e cosa possono cambiare gli utenti, in un documento: \"everyone\" (widget per id: hidden, x, y, width, height), \"roles\" (id dei widget che gli utenti di ogni ruolo non vedono, per nome del ruolo) e \"personalization\". Scaricalo come backup o per un altro ambiente, caricane o incollane uno, poi Applica e Salva.",
       "VISIBILITY": "Chi lo vede",
       "SHOWN_ALL": "Tutti con il permesso",
       "HIDDEN_ALL": "Nascosto a tutti",
@@ -651,7 +645,13 @@
       "NO_PERMISSION_ROLE": "non lo vede comunque",
       "NO_ROLES_FOUND": "Nessun ruolo corrisponde",
       "ROLES_RULE": "Un utente con un altro ruolo non scelto vede comunque il widget.",
-      "APPLY": "Applica"
+      "APPLY": "Applica",
+      "LAYOUT_TITLE": "Layout per tutti",
+      "JSON_TITLE": "Dashboard in JSON",
+      "JSON_LABEL": "Impostazioni della dashboard",
+      "JSON_SHAPE": "è atteso un oggetto con \"everyone\" (con \"widgets\"), \"roles\" (nomi di ruolo con liste di id dei widget) e \"personalization\"",
+      "JSON_UNKNOWN_ROLES": "Ruoli non presenti qui: {roles}",
+      "UNDO_ALL_CONFIRM": "Annullare tutte le modifiche alla dashboard? Le regole vengono rimosse; dopo il salvataggio tornano il layout dei moduli e la libertà degli utenti di cambiare il proprio."
     }
   }
 }

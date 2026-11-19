@@ -48,7 +48,7 @@ The sign-in page, with the installation's brand and a showcase of the platform.
 * **Dashboard:**
   * the host's and the modules' widgets on a draggable, resizable grid, each shown only to users with its permission;
   * layers as for the menu: for everyone (*Customize for everyone* on Home), per role, and each user's own places and sizes, kept on the server so they are the same in every browser;
-  * the Dashboard Editor (Configuration › Back Office): one list of rules hiding a widget from everyone or from a role, what users may change (move, resize), *Reset users' layouts*, *Edit as JSON*;
+  * the Dashboard Editor (Configuration › Back Office, next to the Menu Editor): every widget with its permission and who sees it; the pencil opens its rule: everyone with the permission, hidden from everyone, or hidden from selected roles (a role without the widget's permission is greyed out). *Personalization*: what users may change (move, resize), *Customize the layout on Home*, *Reset users' layouts*. Toolbar: *Edit as JSON* (rules, layout and personalization as one document, roles by name) and *Undo all changes*;
   * *Reset layout* restores the layout for everyone.
 * **Desktop and phone:**
   * a section rail and panel on desktop;
@@ -204,6 +204,20 @@ Base route: `api/admin-shell/menu`
 | `PUT` | `/global` | Save the global menu patch (`admin-shell:menu:manage`) |
 | `GET` | `/roles/{roleId}` | Get a role's menu patch (`admin-shell:menu:manage`) |
 | `PUT` | `/roles/{roleId}` | Save a role's menu patch (`admin-shell:menu:manage`) |
+
+Base route: `api/admin-shell/dashboard`
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/` | Get the current user's dashboard: widgets hidden for the user, places and sizes for everyone and the user's own, what users may change |
+| `GET` | `/me` | Get the current user's own places and sizes |
+| `PUT` | `/me` | Save the current user's own places and sizes |
+| `GET` | `/global` | Get the dashboard for everyone (`admin-shell:dashboard:manage`) |
+| `PUT` | `/global` | Save the dashboard for everyone; `?resetUserLayouts=true` drops every user's own layout (`admin-shell:dashboard:manage`) |
+| `GET` | `/roles/{roleId}` | Get the widgets a role's users don't see; 404 for a role that doesn't exist (`admin-shell:dashboard:manage`) |
+| `PUT` | `/roles/{roleId}` | Save them (`admin-shell:dashboard:manage`) |
+| `GET` | `/personalization` | Get what users may change (`admin-shell:dashboard:manage`) |
+| `PUT` | `/personalization` | Save what users may change (`admin-shell:dashboard:manage`) |
 
 ## Build
 

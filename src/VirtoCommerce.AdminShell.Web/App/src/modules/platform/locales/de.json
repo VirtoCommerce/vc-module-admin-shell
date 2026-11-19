@@ -610,8 +610,6 @@
     "DASHBOARD": {
       "TITLE": "Dashboard-Editor",
       "TAB_RULES": "Regeln",
-      "TAB_LAYOUT": "Layout",
-      "TAB_PERSONALIZATION": "Was Benutzer ändern dürfen",
       "RULES_HINT": "Widgets kommen aus den Modulen, und jedes sehen nur Benutzer mit seiner Berechtigung. Mit dem Stift blenden Sie ein Widget für alle oder für einige Rollen aus. Ein Benutzer sieht ein Widget weiterhin, wenn eine andere seiner Rollen es zeigt; Administratoren sehen Widgets, die Rollenregeln ausblenden.",
       "WIDGET": "Widget",
       "CANCEL": "Abbrechen",
@@ -629,11 +627,7 @@
       "ALLOW_MOVE_HINT": "Aus: Alle sehen die für alle festgelegten Plätze.",
       "ALLOW_RESIZE": "Widget-Größe ändern",
       "ALLOW_RESIZE_HINT": "Aus: Alle sehen die für alle festgelegten Größen.",
-      "JSON_HINT": "Die Einstellung für alle (AdminShell.Dashboard.Global): Widgets nach ID, nur mit ihren Änderungen. Kopieren Sie sie als Sicherung oder für eine andere Umgebung, oder fügen Sie eine ein und wenden Sie sie an.",
-      "APPLY_JSON": "Für alle speichern",
-      "JSON_OBJECT": "Ein JSON-Objekt ist erforderlich",
-      "JSON_WIDGETS": "„widgets“ muss ein Objekt mit Widget-IDs sein",
-      "JSON_CONFIRM": "Das Dashboard für alle durch dieses JSON ersetzen?",
+      "JSON_HINT": "Die Regeln, das Layout für alle und was Benutzer ändern dürfen, als ein Dokument: \"everyone\" (Widgets nach ID: hidden, x, y, width, height), \"roles\" (Widget-IDs, die die Benutzer einer Rolle nicht sehen, nach Rollenname) und \"personalization\". Laden Sie es als Sicherung oder für eine andere Umgebung herunter, laden Sie eines hoch oder fügen Sie es ein, dann Übernehmen und Speichern.",
       "VISIBILITY": "Wer es sieht",
       "SHOWN_ALL": "Alle mit der Berechtigung",
       "HIDDEN_ALL": "Für alle ausgeblendet",
@@ -651,7 +645,13 @@
       "NO_PERMISSION_ROLE": "sieht es ohnehin nicht",
       "NO_ROLES_FOUND": "Keine passenden Rollen",
       "ROLES_RULE": "Ein Benutzer mit einer weiteren, nicht gewählten Rolle sieht das Widget weiterhin.",
-      "APPLY": "Übernehmen"
+      "APPLY": "Übernehmen",
+      "LAYOUT_TITLE": "Layout für alle",
+      "JSON_TITLE": "Dashboard als JSON",
+      "JSON_LABEL": "Dashboard-Einstellungen",
+      "JSON_SHAPE": "erwartet wird ein Objekt mit \"everyone\" (mit \"widgets\"), \"roles\" (Rollennamen zu Listen von Widget-IDs) und \"personalization\"",
+      "JSON_UNKNOWN_ROLES": "Diese Rollen gibt es hier nicht: {roles}",
+      "UNDO_ALL_CONFIRM": "Alle Änderungen am Dashboard rückgängig machen? Die Regeln entfallen; nach dem Speichern gelten wieder das Layout der Module und die Freiheit der Benutzer, ihres zu ändern."
     }
   }
 }

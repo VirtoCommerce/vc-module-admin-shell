@@ -82,7 +82,7 @@
       "CLOSE": "关闭",
       "CUSTOMIZE_ALL": "为所有人自定义",
       "PERMISSION": "需要 {permission}",
-      "NO_PERMISSION": "无需权限：所有人可见",
+      "NO_PERMISSION": "所有人",
       "SAVE_FAILED": "无法保存仪表板",
       "EVERYONE": {
         "TITLE": "正在为所有人自定义主页",

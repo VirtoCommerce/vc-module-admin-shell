@@ -610,8 +610,6 @@
     "DASHBOARD": {
       "TITLE": "Dashboard Editor",
       "TAB_RULES": "Rules",
-      "TAB_LAYOUT": "Layout",
-      "TAB_PERSONALIZATION": "What users may change",
       "RULES_HINT": "Widgets come from the modules, and each shows only to users with its permission. Use the pencil to hide a widget from everyone or from some roles. A user still sees a widget another of their roles shows, and administrators see every widget a role rule hides.",
       "WIDGET": "Widget",
       "CANCEL": "Cancel",
@@ -629,11 +627,7 @@
       "ALLOW_MOVE_HINT": "Off: everyone sees the places set for everyone.",
       "ALLOW_RESIZE": "Resize widgets",
       "ALLOW_RESIZE_HINT": "Off: everyone sees the sizes set for everyone.",
-      "JSON_HINT": "The setting for everyone (AdminShell.Dashboard.Global): widgets by id, with only what they change. Copy it for a backup or another environment, or paste one and apply it.",
-      "APPLY_JSON": "Save for everyone",
-      "JSON_OBJECT": "A JSON object is required",
-      "JSON_WIDGETS": "\"widgets\" must be an object of widget ids",
-      "JSON_CONFIRM": "Replace the dashboard for everyone with this JSON?",
+      "JSON_HINT": "The rules, the layout for everyone and what users may change, as one document: \"everyone\" (widgets by id: hidden, x, y, width, height), \"roles\" (widget ids each role's users don't see, by role name) and \"personalization\". Download it for a backup or another environment, upload or paste one, then Apply and Save.",
       "VISIBILITY": "Who sees it",
       "SHOWN_ALL": "Everyone with the permission",
       "HIDDEN_ALL": "Hidden from everyone",
@@ -651,7 +645,13 @@
       "NO_PERMISSION_ROLE": "can't see it anyway",
       "NO_ROLES_FOUND": "No roles match",
       "ROLES_RULE": "A user with another role that isn't chosen still sees the widget.",
-      "APPLY": "Apply"
+      "APPLY": "Apply",
+      "LAYOUT_TITLE": "Layout for everyone",
+      "JSON_TITLE": "Dashboard as JSON",
+      "JSON_LABEL": "Dashboard settings",
+      "JSON_SHAPE": "an object with \"everyone\" (with \"widgets\"), \"roles\" (role names to lists of widget ids) and \"personalization\" is expected",
+      "JSON_UNKNOWN_ROLES": "Roles that aren't here: {roles}",
+      "UNDO_ALL_CONFIRM": "Undo all changes to the dashboard? The rules go, the modules' layout and the users' freedom to change theirs apply again once you save."
     }
   }
 }

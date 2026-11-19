@@ -82,7 +82,7 @@
       "CLOSE": "Fermer",
       "CUSTOMIZE_ALL": "Personnaliser pour tous",
       "PERMISSION": "Nécessite {permission}",
-      "NO_PERMISSION": "Aucune autorisation : tout le monde le voit",
+      "NO_PERMISSION": "Tous",
       "SAVE_FAILED": "Impossible d'enregistrer le tableau de bord",
       "EVERYONE": {
         "TITLE": "Personnalisation de l'accueil pour tous",

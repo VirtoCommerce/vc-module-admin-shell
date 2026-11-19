@@ -82,7 +82,7 @@
       "CLOSE": "Закрыть",
       "CUSTOMIZE_ALL": "Настроить для всех",
       "PERMISSION": "Требует {permission}",
-      "NO_PERMISSION": "Права не нужны: видят все",
+      "NO_PERMISSION": "Все",
       "SAVE_FAILED": "Не удалось сохранить дашборд",
       "EVERYONE": {
         "TITLE": "Настройка главной для всех",

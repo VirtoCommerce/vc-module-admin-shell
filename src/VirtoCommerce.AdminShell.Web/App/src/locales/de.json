@@ -82,7 +82,7 @@
       "CLOSE": "Schließen",
       "CUSTOMIZE_ALL": "Für alle anpassen",
       "PERMISSION": "Erfordert {permission}",
-      "NO_PERMISSION": "Keine Berechtigung nötig: alle sehen es",
+      "NO_PERMISSION": "Alle",
       "SAVE_FAILED": "Das Dashboard konnte nicht gespeichert werden",
       "EVERYONE": {
         "TITLE": "Startseite für alle anpassen",

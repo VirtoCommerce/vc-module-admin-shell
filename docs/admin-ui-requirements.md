@@ -37,7 +37,7 @@ Roles are personas. Access is granted by platform permissions assigned through r
 | **Platform administrator** | Configures the platform: settings, modules, license, dynamic properties, cache; watches background jobs and the environment. | `platform:setting:*`, `platform:module:*`, `platform:dynamic_properties:*`, `cache:reset` |
 | **Security administrator** | Manages users, roles, permissions with scopes, API keys, OAuth applications, sessions; audits sign-ins and changes. | `platform:security:*`, `platform:security:sign_in_log:read` |
 | **Developer / integrator** | Explores APIs and tools, creates API keys and OAuth apps for integrations, reads logs and diagnostics. | `platform:developer-tools:access`, `platform:security:*` |
-| **System integrator / partner** | Deploys the platform for a customer: installs modules, brands the UI, sets menu layers per role. | `admin-shell:menu:manage`, `platform:setting:update`, `platform:module:manage` |
+| **System integrator / partner** | Deploys the platform for a customer: installs modules, brands the UI, sets menu layers per role, sets the dashboard for everyone and per role. | `admin-shell:menu:manage`, `admin-shell:dashboard:manage`, `platform:setting:update`, `platform:module:manage` |
 | **Module developer** | Extends the UI from a module: screens, menu items, widgets on other blades, search providers, dashboard widgets, counters. | (development) |
 | **Customer IT / operator** | Runs the platform on-premises or in a private network; needs the UI to work offline, behind SSO and with its own brand. | `platform:setting:update` |
 
@@ -284,6 +284,7 @@ The UI MUST use only platform and module APIs; it has no server of its own beyon
 | Second factor | `POST api/mfa/signin/send`, `POST api/mfa/signin/verify` (vc-module-mfa, anonymous, two-factor cookie; section 7.10) |
 | Sign-in methods | `GET api/platform/security/sign-in-methods` (anonymous), `GET api/platform/security/currentuser/sign-in-methods`, `PUT`/`DELETE …/currentuser/sign-in-methods/{name}/keys/{id}`, `POST api/platform/security/sign-in` (cookie, any grant type), `POST …/currentuser/changepassword` (sets a password when there is none); passkeys: `api/passkeys` (vc-module-passkeys) |
 | Menu | `GET api/admin-shell/menu` (effective menu), `me/prefs`, `me/recent/{itemId}`, global and role layers (`admin-shell:menu:manage`) |
+| Dashboard | `GET api/admin-shell/dashboard` (the user's dashboard), `me`, global and role layers, personalization (`admin-shell:dashboard:manage`) |
 | Branding | `GET api/admin-shell/branding` (anonymous) |
 | Plugins and apps | `GET api/apps/admin-shell/manifest` (plugins), `api/platform/apps` |
 | Settings | `api/platform/settings/v2/global/{schema,values}`, `…/me/values`, dictionary values |

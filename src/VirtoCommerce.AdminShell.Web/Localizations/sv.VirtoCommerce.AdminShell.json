@@ -1,6 +1,7 @@
 {
   "permissions": {
-    "admin-shell:menu:manage": "Hantera Admin Shell-menyn: menyredigeraren, global nivå och rollnivå, vad användare får ändra"
+    "admin-shell:menu:manage": "Hantera Admin Shell-menyn: menyredigeraren, global nivå och rollnivå, vad användare får ändra",
+    "admin-shell:dashboard:manage": "Hantera Admin Shells instrumentpanel: redigerarens regler, layouten för alla, vad användare får ändra"
   },
   "settings": {
     "AdminShell": {
@@ -106,6 +107,28 @@
         "UserChoice": {
           "title": "Användare väljer sitt tema",
           "description": "Av: alla har standardtemat och temaväljarna är dolda"
+        }
+      },
+      "Dashboard": {
+        "Global": {
+          "title": "Instrumentpanel för alla",
+          "description": "JSON: widgetar dolda för alla, platser och storlekar per widget-id samt layoutversionen. Anges i redigeraren och med Anpassa för alla på startsidan"
+        },
+        "Role": {
+          "title": "Rollens instrumentpanel",
+          "description": "JSON: widgetarna som rollens användare inte ser; dold bara om alla användarens roller döljer den"
+        },
+        "User": {
+          "title": "Instrumentpanelens layout",
+          "description": "Användarens platser och storlekar för startsidans widgetar"
+        },
+        "AllowMove": {
+          "title": "Användare får flytta widgetar",
+          "description": "Av: alla ser platserna för alla; användarnas egna gäller igen när det slås på"
+        },
+        "AllowResize": {
+          "title": "Användare får ändra storlek på widgetar",
+          "description": "Av: alla ser storlekarna för alla; användarnas egna gäller igen när det slås på"
         }
       }
     }

@@ -78,3 +78,9 @@ test("a role sees a widget it has a permission of, or one that asks for none", (
   assert.equal(roleCanSee(["platform:security:read"], ["platform:security:read"]), true);
   assert.equal(roleCanSee(["platform:security:read"], ["order:read"]), false);
 });
+
+test("a layer read from the server drops its empty fields", () => {
+  const widgets = { "shell-alerts": { x: 1, y: null, width: null, height: 4, hidden: null } } as never;
+  assert.deepEqual(layoutIn(widgets), { "shell-alerts": { x: 1, height: 4 } });
+  assert.deepEqual(hiddenIn(widgets), []);
+});

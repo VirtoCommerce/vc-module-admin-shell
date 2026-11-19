@@ -82,7 +82,7 @@
       "CLOSE": "Lukk",
       "CUSTOMIZE_ALL": "Tilpass for alle",
       "PERMISSION": "Krever {permission}",
-      "NO_PERMISSION": "Ingen tillatelse kreves: alle ser den",
+      "NO_PERMISSION": "Alle",
       "SAVE_FAILED": "Kunne ikke lagre dashbordet",
       "EVERYONE": {
         "TITLE": "Tilpasser startsiden for alle",

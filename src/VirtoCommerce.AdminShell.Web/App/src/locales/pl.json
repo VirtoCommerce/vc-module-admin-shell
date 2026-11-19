@@ -82,7 +82,7 @@
       "CLOSE": "Zamknij",
       "CUSTOMIZE_ALL": "Dostosuj dla wszystkich",
       "PERMISSION": "Wymaga {permission}",
-      "NO_PERMISSION": "Bez uprawnień: widzą wszyscy",
+      "NO_PERMISSION": "Wszyscy",
       "SAVE_FAILED": "Nie udało się zapisać pulpitu",
       "EVERYONE": {
         "TITLE": "Dostosowywanie strony głównej dla wszystkich",

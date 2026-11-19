@@ -82,7 +82,7 @@
       "CLOSE": "閉じる",
       "CUSTOMIZE_ALL": "全員向けにカスタマイズ",
       "PERMISSION": "{permission} が必要",
-      "NO_PERMISSION": "権限不要：全員に表示",
+      "NO_PERMISSION": "全員",
       "SAVE_FAILED": "ダッシュボードを保存できませんでした",
       "EVERYONE": {
         "TITLE": "全員のホームをカスタマイズ中",

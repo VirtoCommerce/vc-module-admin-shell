@@ -82,7 +82,7 @@
       "CLOSE": "إغلاق",
       "CUSTOMIZE_ALL": "تخصيص للجميع",
       "PERMISSION": "يتطلب {permission}",
-      "NO_PERMISSION": "لا يلزم إذن: يراه الجميع",
+      "NO_PERMISSION": "الجميع",
       "SAVE_FAILED": "تعذر حفظ لوحة المعلومات",
       "EVERYONE": {
         "TITLE": "تخصيص الصفحة الرئيسية للجميع",

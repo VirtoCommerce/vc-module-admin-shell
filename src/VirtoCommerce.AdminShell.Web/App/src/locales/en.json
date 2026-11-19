@@ -83,7 +83,7 @@
       "CLOSE": "Close",
       "CUSTOMIZE_ALL": "Customize for everyone",
       "PERMISSION": "Needs {permission}",
-      "NO_PERMISSION": "No permission needed: everyone sees it",
+      "NO_PERMISSION": "Everyone",
       "SAVE_FAILED": "Couldn't save the dashboard",
       "EVERYONE": {
         "TITLE": "Customizing Home for everyone",

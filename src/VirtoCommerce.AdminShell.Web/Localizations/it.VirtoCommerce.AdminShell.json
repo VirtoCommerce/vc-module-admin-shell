@@ -1,6 +1,7 @@
 {
   "permissions": {
-    "admin-shell:menu:manage": "Gestire il menu di Admin Shell: l'editor del menu, i livelli globale e per ruolo, ciò che gli utenti possono modificare"
+    "admin-shell:menu:manage": "Gestire il menu di Admin Shell: l'editor del menu, i livelli globale e per ruolo, ciò che gli utenti possono modificare",
+    "admin-shell:dashboard:manage": "Gestire la dashboard di Admin Shell: regole dell'editor, layout per tutti, cosa possono cambiare gli utenti"
   },
   "settings": {
     "AdminShell": {
@@ -106,6 +107,28 @@
         "UserChoice": {
           "title": "Gli utenti scelgono il proprio tema",
           "description": "Disattivato: tutti hanno il tema predefinito e i selettori del tema sono nascosti"
+        }
+      },
+      "Dashboard": {
+        "Global": {
+          "title": "Dashboard per tutti",
+          "description": "JSON: widget nascosti a tutti, posizioni e dimensioni per id del widget e versione del layout. Impostato nell'editor e con Personalizza per tutti nella home"
+        },
+        "Role": {
+          "title": "Dashboard del ruolo",
+          "description": "JSON: i widget che gli utenti di questo ruolo non vedono; nascosto solo se tutti i ruoli dell'utente lo nascondono"
+        },
+        "User": {
+          "title": "Layout della dashboard",
+          "description": "Posizioni e dimensioni dei widget della home dell'utente"
+        },
+        "AllowMove": {
+          "title": "Gli utenti possono spostare i widget",
+          "description": "Disattivato: tutti vedono le posizioni per tutti; quelle degli utenti tornano quando lo riattivi"
+        },
+        "AllowResize": {
+          "title": "Gli utenti possono ridimensionare i widget",
+          "description": "Disattivato: tutti vedono le dimensioni per tutti; quelle degli utenti tornano quando lo riattivi"
         }
       }
     }

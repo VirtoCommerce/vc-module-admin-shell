@@ -610,8 +610,6 @@
     "DASHBOARD": {
       "TITLE": "Éditeur du tableau de bord",
       "TAB_RULES": "Règles",
-      "TAB_LAYOUT": "Disposition",
-      "TAB_PERSONALIZATION": "Ce que les utilisateurs peuvent modifier",
       "RULES_HINT": "Les widgets viennent des modules et chacun n'est visible que des utilisateurs ayant son autorisation. Le crayon masque un widget pour tous ou pour certains rôles. Un utilisateur voit toujours un widget qu'un autre de ses rôles affiche ; les administrateurs voient les widgets masqués par les règles de rôle.",
       "WIDGET": "Widget",
       "CANCEL": "Annuler",
@@ -629,11 +627,7 @@
       "ALLOW_MOVE_HINT": "Désactivé : chacun voit les places définies pour tous.",
       "ALLOW_RESIZE": "Redimensionner des widgets",
       "ALLOW_RESIZE_HINT": "Désactivé : chacun voit les tailles définies pour tous.",
-      "JSON_HINT": "Le paramètre pour tous (AdminShell.Dashboard.Global) : widgets par id, avec seulement ce qu'ils modifient. Copiez-le pour une sauvegarde ou un autre environnement, ou collez-en un et appliquez-le.",
-      "APPLY_JSON": "Enregistrer pour tous",
-      "JSON_OBJECT": "Un objet JSON est requis",
-      "JSON_WIDGETS": "« widgets » doit être un objet d'id de widgets",
-      "JSON_CONFIRM": "Remplacer le tableau de bord pour tous par ce JSON ?",
+      "JSON_HINT": "Les règles, la disposition pour tous et ce que les utilisateurs peuvent modifier, en un document : \"everyone\" (widgets par id : hidden, x, y, width, height), \"roles\" (ids des widgets que les utilisateurs de chaque rôle ne voient pas, par nom de rôle) et \"personalization\". Téléchargez-le pour une sauvegarde ou un autre environnement, importez ou collez-en un, puis Appliquer et Enregistrer.",
       "VISIBILITY": "Qui le voit",
       "SHOWN_ALL": "Tous ceux qui ont l'autorisation",
       "HIDDEN_ALL": "Masqué pour tous",
@@ -651,7 +645,13 @@
       "NO_PERMISSION_ROLE": "ne le voit pas de toute façon",
       "NO_ROLES_FOUND": "Aucun rôle ne correspond",
       "ROLES_RULE": "Un utilisateur ayant un autre rôle non choisi voit toujours le widget.",
-      "APPLY": "Appliquer"
+      "APPLY": "Appliquer",
+      "LAYOUT_TITLE": "Disposition pour tous",
+      "JSON_TITLE": "Tableau de bord en JSON",
+      "JSON_LABEL": "Paramètres du tableau de bord",
+      "JSON_SHAPE": "un objet avec \"everyone\" (avec \"widgets\"), \"roles\" (noms de rôle vers des listes d'id de widgets) et \"personalization\" est attendu",
+      "JSON_UNKNOWN_ROLES": "Rôles absents ici : {roles}",
+      "UNDO_ALL_CONFIRM": "Annuler toutes les modifications du tableau de bord ? Les règles disparaissent ; après l'enregistrement, la disposition des modules et la liberté des utilisateurs de modifier la leur s'appliquent à nouveau."
     }
   }
 }

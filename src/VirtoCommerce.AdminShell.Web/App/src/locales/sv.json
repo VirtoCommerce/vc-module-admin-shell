@@ -82,7 +82,7 @@
       "CLOSE": "Stäng",
       "CUSTOMIZE_ALL": "Anpassa för alla",
       "PERMISSION": "Kräver {permission}",
-      "NO_PERMISSION": "Ingen behörighet krävs: alla ser den",
+      "NO_PERMISSION": "Alla",
       "SAVE_FAILED": "Det gick inte att spara instrumentpanelen",
       "EVERYONE": {
         "TITLE": "Anpassar startsidan för alla",

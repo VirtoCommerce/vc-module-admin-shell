@@ -82,7 +82,7 @@
       "CLOSE": "סגירה",
       "CUSTOMIZE_ALL": "התאמה לכולם",
       "PERMISSION": "דורש {permission}",
-      "NO_PERMISSION": "ללא הרשאה: כולם רואים",
+      "NO_PERMISSION": "כולם",
       "SAVE_FAILED": "לא ניתן היה לשמור את לוח המחוונים",
       "EVERYONE": {
         "TITLE": "התאמת דף הבית לכולם",

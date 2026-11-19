@@ -1,6 +1,7 @@
 {
   "permissions": {
-    "admin-shell:menu:manage": "Administrer Admin Shell-menyen: menyredigeringen, globalt nivå og rollenivå, hva brukere kan endre"
+    "admin-shell:menu:manage": "Administrer Admin Shell-menyen: menyredigeringen, globalt nivå og rollenivå, hva brukere kan endre",
+    "admin-shell:dashboard:manage": "Administrere Admin Shell-dashbordet: redigeringsreglene, oppsettet for alle, hva brukere kan endre"
   },
   "settings": {
     "AdminShell": {
@@ -106,6 +107,28 @@
         "UserChoice": {
           "title": "Brukere velger sitt eget tema",
           "description": "Av: alle har standardtemaet, og temavelgerne er skjult"
+        }
+      },
+      "Dashboard": {
+        "Global": {
+          "title": "Dashbord for alle",
+          "description": "JSON: widgeter skjult for alle, plasser og størrelser etter widget-id og oppsettversjonen. Settes i redigeringen og med Tilpass for alle på startsiden"
+        },
+        "Role": {
+          "title": "Rollens dashbord",
+          "description": "JSON: widgetene rollens brukere ikke ser; skjult bare hvis alle brukerens roller skjuler den"
+        },
+        "User": {
+          "title": "Dashbordoppsett",
+          "description": "Brukerens plasser og størrelser for startsidens widgeter"
+        },
+        "AllowMove": {
+          "title": "Brukere kan flytte widgeter",
+          "description": "Av: alle ser plassene for alle; brukernes egne gjelder igjen når det slås på"
+        },
+        "AllowResize": {
+          "title": "Brukere kan endre størrelse på widgeter",
+          "description": "Av: alle ser størrelsene for alle; brukernes egne gjelder igjen når det slås på"
         }
       }
     }

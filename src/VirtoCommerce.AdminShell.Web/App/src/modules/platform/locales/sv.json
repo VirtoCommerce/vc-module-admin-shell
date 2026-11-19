@@ -610,8 +610,6 @@
     "DASHBOARD": {
       "TITLE": "Instrumentpanelredigerare",
       "TAB_RULES": "Regler",
-      "TAB_LAYOUT": "Layout",
-      "TAB_PERSONALIZATION": "Vad användare får ändra",
       "RULES_HINT": "Widgetar kommer från modulerna och var och en visas bara för användare med dess behörighet. Med pennan döljer du en widget för alla eller för vissa roller. En användare ser ändå en widget som en annan av hens roller visar; administratörer ser widgetar som rollregler döljer.",
       "WIDGET": "Widget",
       "CANCEL": "Avbryt",
@@ -629,11 +627,7 @@
       "ALLOW_MOVE_HINT": "Av: alla ser platserna som angetts för alla.",
       "ALLOW_RESIZE": "Ändra storlek på widgetar",
       "ALLOW_RESIZE_HINT": "Av: alla ser storlekarna som angetts för alla.",
-      "JSON_HINT": "Inställningen för alla (AdminShell.Dashboard.Global): widgetar per id, bara med det de ändrar. Kopiera den som säkerhetskopia eller till en annan miljö, eller klistra in en och tillämpa den.",
-      "APPLY_JSON": "Spara för alla",
-      "JSON_OBJECT": "Ett JSON-objekt krävs",
-      "JSON_WIDGETS": "\"widgets\" måste vara ett objekt med widget-id:n",
-      "JSON_CONFIRM": "Ersätta instrumentpanelen för alla med denna JSON?",
+      "JSON_HINT": "Reglerna, layouten för alla och vad användare får ändra, i ett dokument: \"everyone\" (widgetar per id: hidden, x, y, width, height), \"roles\" (widget-id:n som varje rolls användare inte ser, per rollnamn) och \"personalization\". Ladda ner det som säkerhetskopia eller till en annan miljö, ladda upp eller klistra in ett, sedan Tillämpa och Spara.",
       "VISIBILITY": "Vem som ser den",
       "SHOWN_ALL": "Alla med behörigheten",
       "HIDDEN_ALL": "Dold för alla",
@@ -651,7 +645,13 @@
       "NO_PERMISSION_ROLE": "ser den ändå inte",
       "NO_ROLES_FOUND": "Inga roller matchar",
       "ROLES_RULE": "En användare med en annan roll som inte valts ser ändå widgeten.",
-      "APPLY": "Använd"
+      "APPLY": "Använd",
+      "LAYOUT_TITLE": "Layout för alla",
+      "JSON_TITLE": "Instrumentpanel som JSON",
+      "JSON_LABEL": "Inställningar för instrumentpanelen",
+      "JSON_SHAPE": "ett objekt med \"everyone\" (med \"widgets\"), \"roles\" (rollnamn till listor med widget-id:n) och \"personalization\" förväntas",
+      "JSON_UNKNOWN_ROLES": "Roller som inte finns här: {roles}",
+      "UNDO_ALL_CONFIRM": "Ångra alla ändringar av instrumentpanelen? Reglerna försvinner; när du sparar gäller modulernas layout och användarnas frihet att ändra sin igen."
     }
   }
 }

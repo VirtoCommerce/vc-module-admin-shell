@@ -32,6 +32,7 @@ The module has no database tables: everything it stores is in platform settings.
 | Permission | Meaning |
 |---|---|
 | `admin-shell:menu:manage` | Read and change the global and role menu layers through the API. |
+| `admin-shell:dashboard:manage` | The Dashboard Editor and *Customize for everyone* on Home: the dashboard for everyone, per role, and what users may change. |
 
 Who may open the Admin Shell is the platform's admin UI access policy, `VirtoCommerce:PlatformUI:Access` in the platform's appsettings (administrators, required permissions, account types, allowed and denied permission masks; https://github.com/VirtoCommerce/vc-platform/pull/3092), the same rules as the AngularJS admin. A user it denies sees an *Access denied* page with a button to sign in with another account. The client reads the decision from `canAccessAdminUI` on `GET api/platform/security/currentuser` (`App/src/shell/adminUIAccess.ts`).
 
@@ -43,6 +44,10 @@ Who may open the Admin Shell is the platform's admin UI access policy, `VirtoCom
 | `AdminShell.Menu.Recent` (hidden) | each user | `[]` | Usage scores for *Recent* (`RecentUse[]`). |
 | `AdminShell.UI.Appearance` | each user | `dark` | `system`, `light` or `dark`. |
 | `AdminShell.UI.Theme` | each user | `virto` | `virto`, `warm`, `blue` or `indigo`. |
+| `AdminShell.Dashboard.Global` | the platform | `{}` | The dashboard for everyone (`DashboardPatch`): widgets hidden, places and sizes, layout version. |
+| `AdminShell.Dashboard.Role` | each role | `{}` | The widgets the role's users don't see (`DashboardPatch`). |
+| `AdminShell.Dashboard.User` (hidden) | each user | `{}` | The user's own places and sizes (`UserDashboardPrefs`). |
+| `AdminShell.Dashboard.AllowMove`, `.AllowResize` (Boolean) | the platform | `true` | What users may change on their Home. |
 
 A setting that isn't valid JSON is treated as empty and doesn't take the menu down. Writes of the user's settings are serialised per user with a distributed lock.
 
@@ -59,7 +64,9 @@ A setting that isn't valid JSON is treated as empty and doesn't take the menu do
 | `GET /global`, `PUT /global` | `admin-shell:menu:manage` | The global patch. |
 | `GET /roles/{roleId}`, `PUT /roles/{roleId}` | `admin-shell:menu:manage` | A role's patch. |
 
-There is no UI for the global and role layers yet; they are managed through this API or the platform settings. See [Menu layers](menu-layers.md).
+The Menu Editor (Configuration › Back Office) edits the global layer; role layers are managed through this API or the platform settings. See [Menu layers](menu-layers.md).
+
+The dashboard has the same kind of layers under `api/admin-shell/dashboard` (`AdminShellDashboardController`, `DashboardComposer`), edited in the Dashboard Editor; see [Dashboard widgets › Layers](dashboard-widgets.md#layers).
 
 ### 2.4 How the menu is built
 

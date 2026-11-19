@@ -4,7 +4,7 @@
     :toolbar-items="toolbar"
     :loading="loading"
     :modified="dirty"
-    width="100%"
+    :width="jsonOpen ? '50%' : '100%'"
   >
     <div class="dash-config">
       <nav
@@ -82,7 +82,11 @@
                       icon="lucide-eye"
                       size="xs"
                     />
-                    {{ $t("PLATFORM.DASHBOARD.SHOWN_ALL") }}
+                    {{
+                      widget.permissions?.length
+                        ? $t("PLATFORM.DASHBOARD.SHOWN_ALL")
+                        : $t("SHELL.DASHBOARD.NO_PERMISSION")
+                    }}
                   </span>
                 </div>
                 <button
@@ -190,8 +194,24 @@
           </div>
         </section>
 
-        <!-- the layout for everyone, set on Home itself, and what users may change in theirs -->
-        <section v-if="tab === 'layout'">
+        <!-- what users may change on their Home (as in the Menu Editor), and the layout for everyone, set on Home -->
+        <section v-if="tab === 'personalization'">
+          <p class="dash-config__hint">{{ $t("PLATFORM.DASHBOARD.PERSONALIZATION_HINT") }}</p>
+          <label
+            v-for="item in personalizationItems"
+            :key="item.key"
+            class="dash-config__label"
+          >
+            <input
+              v-model="personalization[item.key]"
+              type="checkbox"
+            />
+            <span>
+              <strong>{{ item.title }}</strong>
+              <small>{{ item.hint }}</small>
+            </span>
+          </label>
+          <h3 class="dash-config__subtitle">{{ $t("PLATFORM.DASHBOARD.LAYOUT_TITLE") }}</h3>
           <p class="dash-config__hint">{{ $t("PLATFORM.DASHBOARD.LAYOUT_HINT") }}</p>
           <div class="dash-config__actions">
             <button
@@ -216,49 +236,6 @@
             {{ $t("PLATFORM.DASHBOARD.PLACED", { count: placedCount }) }} ·
             {{ $t("PLATFORM.DASHBOARD.LAYOUT_VERSION", { version: global.layoutVersion ?? 0 }) }}
           </p>
-          <h3 class="dash-config__subtitle">{{ $t("PLATFORM.DASHBOARD.TAB_PERSONALIZATION") }}</h3>
-          <p class="dash-config__hint">{{ $t("PLATFORM.DASHBOARD.PERSONALIZATION_HINT") }}</p>
-          <label
-            v-for="item in personalizationItems"
-            :key="item.key"
-            class="dash-config__label"
-          >
-            <input
-              v-model="personalization[item.key]"
-              type="checkbox"
-            />
-            <span>
-              <strong>{{ item.title }}</strong>
-              <small>{{ item.hint }}</small>
-            </span>
-          </label>
-        </section>
-
-        <!-- the layer for everyone as JSON, for a backup or another environment -->
-        <section v-if="tab === 'json'">
-          <p class="dash-config__hint">{{ $t("PLATFORM.DASHBOARD.JSON_HINT") }}</p>
-          <textarea
-            v-model="jsonText"
-            class="dash-config__json"
-            spellcheck="false"
-            :aria-invalid="!!jsonError"
-          />
-          <p
-            v-if="jsonError"
-            class="dash-config__error"
-          >
-            {{ jsonError }}
-          </p>
-          <div class="dash-config__actions">
-            <button
-              type="button"
-              class="dash-config__button dash-config__button--primary"
-              :disabled="!!jsonError"
-              @click="applyJson"
-            >
-              {{ $t("PLATFORM.DASHBOARD.APPLY_JSON") }}
-            </button>
-          </div>
         </section>
       </div>
     </div>
@@ -270,13 +247,14 @@ import {
   notification,
   SecurityClient,
   useApiClient,
+  useBlade,
   useBladeStack,
   useDashboard,
   usePopup,
   type IBladeToolbar,
 } from "@vc-shell/framework";
 import { VcBlade, VcIcon } from "@vc-shell/framework/ui";
-import { computed, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { adminDashboardApi } from "../../../../api/adminDashboard";
@@ -287,7 +265,9 @@ import {
   toPatch,
   type DashboardPatch,
   type DashboardPersonalization,
+  type WidgetLayout,
 } from "../../../../shell/dashboard/layers";
+import type { DashboardDocument } from "./document";
 import { useLeaveGuard } from "../../../../shell/leaveGuard";
 import { refreshItem } from "../../composables/blade";
 
@@ -301,16 +281,19 @@ defineBlade({
 const { t, te } = useI18n({ useScope: "global" });
 const { showConfirmation } = usePopup();
 const router = useRouter();
-const { closeBlade } = useBladeStack();
+const { closeBlade, blades } = useBladeStack();
+// the whole width, and half of it while the JSON blade is open beside it (as the Menu Editor)
+const jsonOpen = computed(() => blades.value.some((x: { name: string }) => x.name === "PlatformDashboardEditorJson"));
+const { openBlade, exposeToChildren } = useBlade();
 const { getApiClient } = useApiClient(SecurityClient);
 const registry = useDashboard();
 
-type Tab = "rules" | "layout" | "json";
+type Tab = "rules" | "personalization";
 const tab = ref<Tab>("rules");
 const tabs = computed<{ id: Tab; title: string }[]>(() => [
   { id: "rules", title: t("PLATFORM.DASHBOARD.TAB_RULES") },
-  { id: "layout", title: t("PLATFORM.DASHBOARD.TAB_LAYOUT") },
-  { id: "json", title: t("PLATFORM.SETTINGS.LIST.EDIT_JSON") },
+  // the Menu Editor's name for the same tab
+  { id: "personalization", title: t("PLATFORM.MENU_EDITOR.TABS.PERSONALIZATION") },
 ]);
 
 const loading = ref(false);
@@ -436,7 +419,7 @@ function applyEditor(widgetId: string) {
 
 /* ---- the layout for everyone and what users may change ---- */
 
-const placedCount = computed(() => Object.keys(layoutIn(global.value.widgets)).length);
+const placedCount = computed(() => Object.keys(layout.value).length);
 const personalization = ref<DashboardPersonalization>({ allowMove: true, allowResize: true });
 const savedPersonalization = ref("");
 const personalizationItems = computed<{ key: keyof DashboardPersonalization; title: string; hint: string }[]>(() => [
@@ -444,9 +427,15 @@ const personalizationItems = computed<{ key: keyof DashboardPersonalization; tit
   { key: "allowResize", title: t("PLATFORM.DASHBOARD.ALLOW_RESIZE"), hint: t("PLATFORM.DASHBOARD.ALLOW_RESIZE_HINT") },
 ]);
 
+// the places and sizes for everyone, as loaded and as edited (by the JSON blade, or Undo all)
+const layout = ref<Record<string, WidgetLayout>>({});
+const savedLayout = ref("{}");
+const layoutChanged = computed(() => JSON.stringify(layout.value) !== savedLayout.value);
+
 const dirty = computed(
   () =>
     rulesKey(rules.value) !== rulesKey(savedRules.value) ||
+    layoutChanged.value ||
     JSON.stringify(personalization.value) !== savedPersonalization.value,
 );
 useLeaveGuard(dirty, "/dashboard-configurator", () => t("PLATFORM.COMMON.CLOSE_CONFIRMATION"));
@@ -473,10 +462,11 @@ async function load() {
       ),
     ];
     savedRules.value = [...rules.value];
+    layout.value = layoutIn(global.value.widgets);
+    savedLayout.value = JSON.stringify(layout.value);
     rolePermissions.value = new Map();
     personalization.value = { allowMove: value?.allowMove ?? true, allowResize: value?.allowResize ?? true };
     savedPersonalization.value = JSON.stringify(personalization.value);
-    jsonText.value = JSON.stringify(global.value, null, 2);
     editing.value = "";
   } catch (e) {
     error.value = String((e as Error).message ?? e);
@@ -503,14 +493,18 @@ async function save() {
     const after = hiddenBy(rules.value);
     const same = (a: string[] = [], b: string[] = []) => [...a].sort().join() === [...b].sort().join();
     for (const key of new Set([...before.keys(), ...after.keys()])) {
+      if (key === "everyone" && layoutChanged.value) continue; // saved below with the layout
       if (same(before.get(key), after.get(key))) continue;
       const hidden = after.get(key) ?? [];
       if (key === "everyone") {
         // the places and sizes set on Home stay as they are
-        await adminDashboardApi.saveGlobal({ widgets: toPatch(hidden, layoutIn(global.value.widgets)) });
+        await adminDashboardApi.saveGlobal({ widgets: toPatch(hidden, layout.value) });
       } else {
         await adminDashboardApi.saveRole(key.slice(5), { widgets: toPatch(hidden, {}) });
       }
+    }
+    if (layoutChanged.value) {
+      await adminDashboardApi.saveGlobal({ widgets: toPatch(after.get("everyone") ?? [], layout.value) });
     }
     if (JSON.stringify(personalization.value) !== savedPersonalization.value) {
       await adminDashboardApi.savePersonalization(personalization.value);
@@ -525,6 +519,7 @@ async function save() {
 
 function reset() {
   rules.value = [...savedRules.value];
+  layout.value = JSON.parse(savedLayout.value);
   personalization.value = JSON.parse(savedPersonalization.value);
   editing.value = "";
 }
@@ -545,33 +540,62 @@ async function resetUserLayouts() {
   }
 }
 
-/* ---- JSON ---- */
+/* ---- the whole dashboard as a document (Edit as JSON), and Undo all changes ---- */
 
-const jsonText = ref("");
-const jsonError = computed(() => {
-  try {
-    const value = JSON.parse(jsonText.value);
-    if (!value || typeof value !== "object" || Array.isArray(value)) return t("PLATFORM.DASHBOARD.JSON_OBJECT");
-    if (value.widgets !== undefined && (typeof value.widgets !== "object" || Array.isArray(value.widgets)))
-      return t("PLATFORM.DASHBOARD.JSON_WIDGETS");
-    return "";
-  } catch (e) {
-    return String((e as Error).message ?? e);
+/** Roles by name, so a document moves between environments; a role the document names that isn't here is refused */
+function toDocument(): DashboardDocument {
+  const byScope = hiddenBy(rules.value);
+  const roleRules: Record<string, string[]> = {};
+  for (const role of [...roles.value].sort((a, b) => a.name.localeCompare(b.name))) {
+    const hidden = byScope.get(`role:${role.id}`);
+    if (hidden?.length) roleRules[role.name] = [...hidden].sort();
   }
-});
-async function applyJson() {
-  if (!(await showConfirmation(t("PLATFORM.DASHBOARD.JSON_CONFIRM")))) return;
-  try {
-    await adminDashboardApi.saveGlobal(JSON.parse(jsonText.value));
-    notification.success(t("PLATFORM.COMMON.SAVED"));
-    await load();
-  } catch (e) {
-    error.value = String((e as Error).message ?? e);
-  }
+  return {
+    everyone: { widgets: toPatch(byScope.get("everyone") ?? [], layout.value) },
+    roles: roleRules,
+    personalization: { ...personalization.value },
+  };
 }
-watch(tab, (value) => {
-  if (value === "json") jsonText.value = JSON.stringify(global.value, null, 2);
+
+function applyDocument(doc: DashboardDocument) {
+  const byName = new Map(roles.value.map((r) => [r.name, r.id]));
+  const unknown = Object.keys(doc.roles ?? {}).filter((name) => !byName.has(name));
+  if (unknown.length) throw new Error(t("PLATFORM.DASHBOARD.JSON_UNKNOWN_ROLES", { roles: unknown.join(", ") }));
+  rules.value = [
+    ...hiddenIn(doc.everyone?.widgets).map((widgetId): Rule => ({ widgetId, scope: { type: "everyone" } })),
+    ...Object.entries(doc.roles ?? {}).flatMap(([name, ids]) =>
+      (ids ?? []).map((widgetId): Rule => ({ widgetId, scope: { type: "role", roleId: byName.get(name)! } })),
+    ),
+  ];
+  layout.value = layoutIn(doc.everyone?.widgets);
+  personalization.value = {
+    allowMove: doc.personalization?.allowMove ?? true,
+    allowResize: doc.personalization?.allowResize ?? true,
+  };
+  editing.value = "";
+}
+
+exposeToChildren({
+  getDocument: () => toDocument(),
+  applyDocument: (doc: DashboardDocument) => applyDocument(doc),
 });
+
+const hasAnything = computed(
+  () =>
+    rules.value.length > 0 ||
+    Object.keys(layout.value).length > 0 ||
+    !personalization.value.allowMove ||
+    !personalization.value.allowResize,
+);
+
+// back to the modules' own dashboard: no rules, the modules' places and sizes, users may change theirs. Saved with Save
+async function undoAll() {
+  if (!(await showConfirmation(t("PLATFORM.DASHBOARD.UNDO_ALL_CONFIRM")))) return;
+  rules.value = [];
+  layout.value = {};
+  personalization.value = { allowMove: true, allowResize: true };
+  editing.value = "";
+}
 
 const toolbar = computed<IBladeToolbar[]>(() => [
   {
@@ -589,6 +613,20 @@ const toolbar = computed<IBladeToolbar[]>(() => [
     clickHandler: () => reset(),
   },
   refreshItem(() => load()),
+  {
+    id: "json",
+    // the settings screen's and the Menu Editor's name for the same kind of view
+    title: t("PLATFORM.SETTINGS.LIST.EDIT_JSON"),
+    icon: "lucide-braces",
+    clickHandler: () => openBlade({ name: "PlatformDashboardEditorJson" }),
+  },
+  {
+    id: "undo-all",
+    title: t("PLATFORM.MENU_EDITOR.UNDO_ALL"),
+    icon: "lucide-rotate-ccw",
+    disabled: !hasAnything.value,
+    clickHandler: () => undoAll(),
+  },
 ]);
 
 load();
@@ -933,17 +971,5 @@ load();
   input {
     margin-top: 3px;
   }
-}
-
-.dash-config__json {
-  border: 1px solid var(--color-neutral-300);
-  border-radius: 6px;
-  font-family: ui-monospace, monospace;
-  font-size: 12px;
-  height: 360px;
-  margin-bottom: 8px;
-  max-width: 860px;
-  padding: 8px;
-  width: 100%;
 }
 </style>

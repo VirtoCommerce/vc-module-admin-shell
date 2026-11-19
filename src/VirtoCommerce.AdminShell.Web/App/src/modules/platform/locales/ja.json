@@ -610,8 +610,6 @@
     "DASHBOARD": {
       "TITLE": "ダッシュボードエディター",
       "TAB_RULES": "ルール",
-      "TAB_LAYOUT": "レイアウト",
-      "TAB_PERSONALIZATION": "ユーザーが変更できる内容",
       "RULES_HINT": "ウィジェットはモジュールから提供され、各ウィジェットはその権限を持つユーザーにのみ表示されます。鉛筆アイコンでウィジェットを全員または一部のロールから非表示にできます。ほかのロールが表示するウィジェットは引き続き表示され、ロールのルールで非表示のウィジェットも管理者には表示されます。",
       "WIDGET": "ウィジェット",
       "CANCEL": "キャンセル",
@@ -629,11 +627,7 @@
       "ALLOW_MOVE_HINT": "オフ：全員が全員向けの位置を表示します。",
       "ALLOW_RESIZE": "ウィジェットのサイズ変更",
       "ALLOW_RESIZE_HINT": "オフ：全員が全員向けのサイズを表示します。",
-      "JSON_HINT": "全員向けの設定（AdminShell.Dashboard.Global）：ウィジェットを ID ごとに、変更点のみ記録します。バックアップや別環境用にコピーするか、貼り付けて適用します。",
-      "APPLY_JSON": "全員向けに保存",
-      "JSON_OBJECT": "JSON オブジェクトが必要です",
-      "JSON_WIDGETS": "\"widgets\" はウィジェット ID のオブジェクトである必要があります",
-      "JSON_CONFIRM": "全員のダッシュボードをこの JSON で置き換えますか？",
+      "JSON_HINT": "ルール、全員の配置、ユーザーが変更できる内容を 1 つのドキュメントにまとめます。\"everyone\"（ID ごとのウィジェット：hidden、x、y、width、height）、\"roles\"（各ロールのユーザーに表示しないウィジェット ID、ロール名ごと）、\"personalization\"。バックアップや別環境用にダウンロードし、アップロードまたは貼り付けて、適用して保存します。",
       "VISIBILITY": "表示対象",
       "SHOWN_ALL": "権限を持つ全員",
       "HIDDEN_ALL": "全員に非表示",
@@ -651,7 +645,13 @@
       "NO_PERMISSION_ROLE": "もともと表示されません",
       "NO_ROLES_FOUND": "一致するロールがありません",
       "ROLES_RULE": "選択されていない別のロールを持つユーザーには、引き続き表示されます。",
-      "APPLY": "適用"
+      "APPLY": "適用",
+      "LAYOUT_TITLE": "全員の配置",
+      "JSON_TITLE": "JSON のダッシュボード",
+      "JSON_LABEL": "ダッシュボード設定",
+      "JSON_SHAPE": "\"everyone\"（\"widgets\" を含む）、\"roles\"（ロール名 → ウィジェット ID の一覧）、\"personalization\" を持つオブジェクトが必要です",
+      "JSON_UNKNOWN_ROLES": "ここにないロール：{roles}",
+      "UNDO_ALL_CONFIRM": "ダッシュボードの変更をすべて元に戻しますか？ルールは削除され、保存するとモジュールの配置とユーザーが自分の配置を変更できる状態に戻ります。"
     }
   }
 }

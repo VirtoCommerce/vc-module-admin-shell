@@ -1,6 +1,7 @@
 {
   "permissions": {
-    "admin-shell:menu:manage": "管理 Admin Shell 菜单：菜单编辑器、全局层和角色层，以及用户可以更改的内容"
+    "admin-shell:menu:manage": "管理 Admin Shell 菜单：菜单编辑器、全局层和角色层，以及用户可以更改的内容",
+    "admin-shell:dashboard:manage": "管理 Admin Shell 仪表板：仪表板编辑器的规则、所有人的布局、用户可更改的内容"
   },
   "settings": {
     "AdminShell": {
@@ -106,6 +107,28 @@
         "UserChoice": {
           "title": "允许用户选择主题",
           "description": "关闭：所有用户使用默认主题，并隐藏主题选择器"
+        }
+      },
+      "Dashboard": {
+        "Global": {
+          "title": "所有人的仪表板",
+          "description": "JSON：对所有人隐藏的小组件、按小组件 id 的位置和大小以及布局版本。在仪表板编辑器和主页的“为所有人自定义”中设置"
+        },
+        "Role": {
+          "title": "角色仪表板",
+          "description": "JSON：此角色的用户看不到的小组件；仅当用户的所有角色都隐藏时才会隐藏"
+        },
+        "User": {
+          "title": "仪表板布局",
+          "description": "用户主页小组件的位置和大小"
+        },
+        "AllowMove": {
+          "title": "用户可以移动小组件",
+          "description": "关闭：所有人看到为所有人设置的位置；重新开启后用户自己的位置会恢复"
+        },
+        "AllowResize": {
+          "title": "用户可以调整小组件大小",
+          "description": "关闭：所有人看到为所有人设置的大小；重新开启后用户自己的大小会恢复"
         }
       }
     }

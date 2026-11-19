@@ -1,6 +1,7 @@
 {
   "permissions": {
-    "admin-shell:menu:manage": "Hallinnoi Admin Shellin valikkoa: valikkoeditori, yleinen ja roolikohtainen taso sekä se, mitä käyttäjät saavat muuttaa"
+    "admin-shell:menu:manage": "Hallinnoi Admin Shellin valikkoa: valikkoeditori, yleinen ja roolikohtainen taso sekä se, mitä käyttäjät saavat muuttaa",
+    "admin-shell:dashboard:manage": "Hallitse Admin Shellin koontinäyttöä: editorin säännöt, kaikkien asettelu, mitä käyttäjät saavat muuttaa"
   },
   "settings": {
     "AdminShell": {
@@ -106,6 +107,28 @@
         "UserChoice": {
           "title": "Käyttäjät valitsevat teemansa",
           "description": "Pois: kaikilla on oletusteema, ja teemavalitsimet on piilotettu"
+        }
+      },
+      "Dashboard": {
+        "Global": {
+          "title": "Koontinäyttö kaikille",
+          "description": "JSON: kaikilta piilotetut widgetit, paikat ja koot widgetin tunnuksen mukaan sekä asetteluversio. Asetetaan editorissa ja etusivun Mukauta kaikille -toiminnolla"
+        },
+        "Role": {
+          "title": "Roolin koontinäyttö",
+          "description": "JSON: widgetit, joita roolin käyttäjät eivät näe; piilotettu vain, jos kaikki käyttäjän roolit piilottavat sen"
+        },
+        "User": {
+          "title": "Koontinäytön asettelu",
+          "description": "Käyttäjän etusivun widgetien paikat ja koot"
+        },
+        "AllowMove": {
+          "title": "Käyttäjät saavat siirtää widgetejä",
+          "description": "Pois: kaikki näkevät kaikille asetetut paikat; omat palaavat, kun asetus otetaan käyttöön"
+        },
+        "AllowResize": {
+          "title": "Käyttäjät saavat muuttaa widgetien kokoa",
+          "description": "Pois: kaikki näkevät kaikille asetetut koot; omat palaavat, kun asetus otetaan käyttöön"
         }
       }
     }

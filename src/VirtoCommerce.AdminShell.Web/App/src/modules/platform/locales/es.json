@@ -610,8 +610,6 @@
     "DASHBOARD": {
       "TITLE": "Editor del panel",
       "TAB_RULES": "Reglas",
-      "TAB_LAYOUT": "Diseño",
-      "TAB_PERSONALIZATION": "Qué pueden cambiar los usuarios",
       "RULES_HINT": "Los widgets vienen de los módulos y cada uno solo lo ven usuarios con su permiso. Con el lápiz oculta un widget para todos o para algunos roles. Un usuario sigue viendo un widget si otro de sus roles lo muestra; los administradores ven los widgets que ocultan las reglas de rol.",
       "WIDGET": "Widget",
       "CANCEL": "Cancelar",
@@ -629,11 +627,7 @@
       "ALLOW_MOVE_HINT": "Desactivado: todos ven los lugares fijados para todos.",
       "ALLOW_RESIZE": "Cambiar el tamaño de widgets",
       "ALLOW_RESIZE_HINT": "Desactivado: todos ven los tamaños fijados para todos.",
-      "JSON_HINT": "El ajuste para todos (AdminShell.Dashboard.Global): widgets por id, solo con lo que cambian. Cópielo como copia de seguridad o para otro entorno, o pegue uno y aplíquelo.",
-      "APPLY_JSON": "Guardar para todos",
-      "JSON_OBJECT": "Se requiere un objeto JSON",
-      "JSON_WIDGETS": "\"widgets\" debe ser un objeto con ids de widgets",
-      "JSON_CONFIRM": "¿Reemplazar el panel para todos con este JSON?",
+      "JSON_HINT": "Las reglas, el diseño para todos y lo que pueden cambiar los usuarios, en un documento: \"everyone\" (widgets por id: hidden, x, y, width, height), \"roles\" (ids de widgets que no ven los usuarios de cada rol, por nombre de rol) y \"personalization\". Descárguelo como copia o para otro entorno, suba o pegue uno, luego Aplicar y Guardar.",
       "VISIBILITY": "Quién lo ve",
       "SHOWN_ALL": "Todos con el permiso",
       "HIDDEN_ALL": "Oculto para todos",
@@ -651,7 +645,13 @@
       "NO_PERMISSION_ROLE": "no lo ve de todos modos",
       "NO_ROLES_FOUND": "Ningún rol coincide",
       "ROLES_RULE": "Un usuario con otro rol no elegido sigue viendo el widget.",
-      "APPLY": "Aplicar"
+      "APPLY": "Aplicar",
+      "LAYOUT_TITLE": "Diseño para todos",
+      "JSON_TITLE": "Panel en JSON",
+      "JSON_LABEL": "Ajustes del panel",
+      "JSON_SHAPE": "se espera un objeto con \"everyone\" (con \"widgets\"), \"roles\" (nombres de rol con listas de ids de widgets) y \"personalization\"",
+      "JSON_UNKNOWN_ROLES": "Roles que no existen aquí: {roles}",
+      "UNDO_ALL_CONFIRM": "¿Deshacer todos los cambios del panel? Las reglas se eliminan; al guardar vuelven el diseño de los módulos y la libertad de los usuarios de cambiar el suyo."
     }
   }
 }

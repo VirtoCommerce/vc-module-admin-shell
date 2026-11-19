@@ -171,7 +171,7 @@ export function layoutIn(widgets: Record<string, WidgetPatch> | undefined): Reco
   const result: Record<string, WidgetLayout> = {};
   for (const [id, w] of Object.entries(widgets ?? {})) {
     const layout: WidgetLayout = { x: w?.x, y: w?.y, width: w?.width, height: w?.height };
-    for (const key of Object.keys(layout) as (keyof WidgetLayout)[]) if (layout[key] === undefined) delete layout[key];
+    for (const key of Object.keys(layout) as (keyof WidgetLayout)[]) if (layout[key] == null) delete layout[key];
     if (Object.keys(layout).length) result[id] = layout;
   }
   return result;

@@ -1,6 +1,7 @@
 {
   "permissions": {
-    "admin-shell:menu:manage": "Zarządzanie menu Admin Shell: edytor menu, warstwy globalna i ról, co mogą zmieniać użytkownicy"
+    "admin-shell:menu:manage": "Zarządzanie menu Admin Shell: edytor menu, warstwy globalna i ról, co mogą zmieniać użytkownicy",
+    "admin-shell:dashboard:manage": "Zarządzanie pulpitem Admin Shell: reguły edytora pulpitu, układ dla wszystkich, co mogą zmieniać użytkownicy"
   },
   "settings": {
     "AdminShell": {
@@ -106,6 +107,28 @@
         "UserChoice": {
           "title": "Użytkownicy wybierają motyw",
           "description": "Wyłączone: wszyscy mają motyw domyślny, a wybór motywu jest ukryty"
+        }
+      },
+      "Dashboard": {
+        "Global": {
+          "title": "Pulpit dla wszystkich",
+          "description": "JSON: widżety ukryte przed wszystkimi, miejsca i rozmiary według id widżetu oraz wersja układu. Ustawiane w edytorze pulpitu i przyciskiem Dostosuj dla wszystkich"
+        },
+        "Role": {
+          "title": "Pulpit roli",
+          "description": "JSON: widżety, których nie widzą użytkownicy tej roli; ukryty tylko, gdy ukrywają go wszystkie role użytkownika"
+        },
+        "User": {
+          "title": "Układ pulpitu",
+          "description": "Miejsca i rozmiary widżetów strony głównej użytkownika"
+        },
+        "AllowMove": {
+          "title": "Użytkownicy mogą przesuwać widżety",
+          "description": "Wyłączone: wszyscy widzą miejsca ustawione dla wszystkich; własne wrócą po włączeniu"
+        },
+        "AllowResize": {
+          "title": "Użytkownicy mogą zmieniać rozmiar widżetów",
+          "description": "Wyłączone: wszyscy widzą rozmiary ustawione dla wszystkich; własne wrócą po włączeniu"
         }
       }
     }

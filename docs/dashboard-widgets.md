@@ -148,9 +148,23 @@ Route `/dashboard-configurator`, permission `admin-shell:dashboard:manage`. It s
 
 | Tab | What it does |
 |---|---|
-| Rules | Every widget, with the permission it needs and who it is hidden from (*Everyone with the permission*, *Hidden from everyone*, or the roles). The pencil opens the widget's rule below its row: show it to everyone with the permission, hide it from everyone, or hide it from selected roles (searchable; a role without the widget's permission is greyed out, its users don't see it anyway). *Apply* keeps the rule; *Save* writes the layers the rules touched. A new kind of scope (an account type, a user) is one more option here. |
-| Layout | *Customize the layout on Home*, *Reset users' layouts*, and what users may change (move, resize). |
-| Edit as JSON | The layer for everyone as JSON, to copy for a backup or another environment, or to paste and save. |
+| Rules | Every widget, with the permission it needs (*Everyone* for one that needs none) and who it is hidden from. The pencil opens the widget's rule below its row: show it to everyone with the permission, hide it from everyone, or hide it from selected roles (searchable; a role without the widget's permission is greyed out, its users don't see it anyway). *Apply* keeps the rule; *Save* writes the layers the rules touched. A new kind of scope (an account type, a user) is one more option here. |
+| Personalization | What users may change (move, resize), as in the Menu Editor; the layout for everyone: *Customize the layout on Home*, *Reset users' layouts*. |
+
+The toolbar, as the Menu Editor's: *Save*, *Reset*, *Refresh*, *Edit as JSON* and *Undo all changes*.
+
+- *Edit as JSON* opens the editor's settings as one document beside it, to download for a backup or another environment, upload or paste, then *Apply* (the editor shows the result) and *Save*:
+
+  ```json
+  {
+    "everyone": { "widgets": { "shell-alerts": { "hidden": true }, "orders-recent": { "x": 0, "y": 10, "width": 12 } } },
+    "roles": { "Order manager": ["orders-to-process"] },
+    "personalization": { "allowMove": true, "allowResize": true }
+  }
+  ```
+
+  Roles are named, not by id, since ids differ between environments; a document naming a role that isn't there is refused.
+- *Undo all changes* drops every rule and the layout for everyone, and lets users move and resize again; *Save* stores it.
 
 ## Shared styles (`.dash-*`)
 

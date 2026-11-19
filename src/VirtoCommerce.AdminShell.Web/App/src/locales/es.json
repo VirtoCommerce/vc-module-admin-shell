@@ -82,7 +82,7 @@
       "CLOSE": "Cerrar",
       "CUSTOMIZE_ALL": "Personalizar para todos",
       "PERMISSION": "Requiere {permission}",
-      "NO_PERMISSION": "Sin permiso: todos lo ven",
+      "NO_PERMISSION": "Todos",
       "SAVE_FAILED": "No se pudo guardar el panel",
       "EVERYONE": {
         "TITLE": "Personalizando el inicio para todos",
