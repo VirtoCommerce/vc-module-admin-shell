@@ -79,7 +79,6 @@
         "DISABLED": "登录记录功能已关闭"
       },
       "WIDGETS": "小组件",
-      "WIDGETS_TITLE": "您主页上的小组件",
       "CLOSE": "关闭",
       "CUSTOMIZE_ALL": "为所有人自定义",
       "PERMISSION": "需要 {permission}",

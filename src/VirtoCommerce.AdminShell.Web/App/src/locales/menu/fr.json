@@ -33,7 +33,8 @@
       "configuration_catalogSearch": "Catalogue et recherche",
       "configuration_securityPrivacy": "Sécurité et confidentialité",
       "configuration_dataFiles": "Données et fichiers",
-      "configuration_monitoringTools": "Supervision et outils"
+      "configuration_monitoringTools": "Supervision et outils",
+      "configuration_backOffice": "Back-office"
     },
     "ITEMS": {
       "home": "Tableau de bord",
@@ -57,7 +58,7 @@
       "algolia": "Algolia Search",
       "appsearch": "App Search",
       "platform_settings": "Paramètres",
-      "platform_menu": "Éditeur de menu Admin Shell",
+      "platform_menu": "Éditeur de menu",
       "platform_security": "Sécurité",
       "platform_modules": "Modules",
       "platform_modules_browse": "Parcourir",
@@ -103,7 +104,7 @@
       "stores": "Boutiques",
       "subscriptions": "Abonnements",
       "webhooks": "Webhooks",
-      "platform_dashboard": "Configurateur du tableau de bord Admin Shell"
+      "platform_dashboard": "Éditeur du tableau de bord"
     }
   }
 }

@@ -1,5 +1,5 @@
 // The dashboard layers on the client (docs/dashboard-widgets.md, "Layers"): the widgets the modules register → the
-// layout for everyone → the roles' hidden widgets → the user's own. The server composes the layers into the user's
+// layout for everyone → the roles' hidden widgets → the user's own places and sizes. The server composes the layers into the user's
 // dashboard; this file applies it to the registered widgets and turns the grid's layout back into a layer. No Vue here,
 // so Node's test runner covers it (tests/dashboardLayers.test.mts).
 
@@ -21,14 +21,13 @@ export interface DashboardPatch {
   layoutVersion?: number;
 }
 
-/** The user's own layer: widgets hidden, places and sizes, made under a layout version */
+/** The user's own layer: places and sizes (users don't hide widgets), made under a layout version */
 export interface UserDashboardPrefs {
   widgets?: Record<string, WidgetPatch>;
   layoutVersion?: number;
 }
 
 export interface DashboardPersonalization {
-  allowHide: boolean;
   allowMove: boolean;
   allowResize: boolean;
 }
@@ -37,7 +36,6 @@ export interface DashboardPersonalization {
 export interface EffectiveDashboard {
   defaults: Record<string, WidgetLayout>;
   hidden: string[];
-  userHidden: string[];
   layout: Record<string, WidgetLayout>;
   personalization: DashboardPersonalization;
   layoutVersion: number;
@@ -66,9 +64,8 @@ export const LAYOUT_STORAGE_KEY = "vc-dashboard-layout";
 export const OPEN_DASHBOARD: EffectiveDashboard = {
   defaults: {},
   hidden: [],
-  userHidden: [],
   layout: {},
-  personalization: { allowHide: true, allowMove: true, allowResize: true },
+  personalization: { allowMove: true, allowResize: true },
   layoutVersion: 0,
   canManage: false,
 };
@@ -78,7 +75,6 @@ export function readEffective(value: Partial<EffectiveDashboard> | undefined | n
   return {
     defaults: value?.defaults ?? {},
     hidden: value?.hidden ?? [],
-    userHidden: value?.userHidden ?? [],
     layout: value?.layout ?? {},
     personalization: { ...OPEN_DASHBOARD.personalization, ...value?.personalization },
     layoutVersion: value?.layoutVersion ?? 0,
@@ -99,7 +95,7 @@ export function withDefaults<T extends WidgetLike>(widget: T, defaults: Record<s
 
 /** The widgets the user sees: the registered ones (already filtered by permissions) less the hidden, at their defaults */
 export function visibleWidgets<T extends WidgetLike>(widgets: T[], dashboard: EffectiveDashboard): T[] {
-  const hidden = new Set([...dashboard.hidden, ...dashboard.userHidden]);
+  const hidden = new Set(dashboard.hidden);
   return widgets.filter((w) => !hidden.has(w.id)).map((w) => withDefaults(w, dashboard.defaults));
 }
 

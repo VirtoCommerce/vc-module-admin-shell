@@ -79,14 +79,12 @@ public class AdminDashboardService(
 
     public async Task<DashboardPersonalization> GetPersonalizationAsync() => new()
     {
-        AllowHide = await settingsManager.GetValueAsync<bool>(Settings.DashboardAllowHide),
         AllowMove = await settingsManager.GetValueAsync<bool>(Settings.DashboardAllowMove),
         AllowResize = await settingsManager.GetValueAsync<bool>(Settings.DashboardAllowResize),
     };
 
     public async Task SavePersonalizationAsync(DashboardPersonalization personalization)
     {
-        await settingsManager.SetValueAsync(Settings.DashboardAllowHide.Name, personalization.AllowHide);
         await settingsManager.SetValueAsync(Settings.DashboardAllowMove.Name, personalization.AllowMove);
         await settingsManager.SetValueAsync(Settings.DashboardAllowResize.Name, personalization.AllowResize);
     }

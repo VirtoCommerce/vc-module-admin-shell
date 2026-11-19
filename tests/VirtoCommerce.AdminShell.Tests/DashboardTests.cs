@@ -38,7 +38,6 @@ public class DashboardTests
         var result = Compose();
 
         Assert.Empty(result.Hidden);
-        Assert.Empty(result.UserHidden);
         Assert.Empty(result.Defaults);
         Assert.Empty(result.Layout);
     }
@@ -89,7 +88,7 @@ public class DashboardTests
     }
 
     [Fact]
-    public void User_HiddenAndLayoutApply()
+    public void User_LayoutApplies_HidingDoesNot()
     {
         var user = new UserDashboardPrefs();
         user.Widgets["shell-alerts"] = new WidgetPatch { Hidden = true };
@@ -97,21 +96,10 @@ public class DashboardTests
 
         var result = Compose(user: user);
 
-        Assert.Equal(["shell-alerts"], result.UserHidden);
+        Assert.Empty(result.Hidden);
+        Assert.False(result.Layout.ContainsKey("shell-alerts"));
         Assert.Equal((1, 2, 6, 3), (result.Layout["shell-activity"].X, result.Layout["shell-activity"].Y,
             result.Layout["shell-activity"].Width, result.Layout["shell-activity"].Height));
-    }
-
-    [Fact]
-    public void User_ForcedHiddenIsNotTheUsers()
-    {
-        var user = new UserDashboardPrefs();
-        user.Widgets["shell-alerts"] = new WidgetPatch { Hidden = true };
-
-        var result = Compose(global: Hide("shell-alerts"), user: user);
-
-        Assert.Equal(["shell-alerts"], result.Hidden);
-        Assert.Empty(result.UserHidden);
     }
 
     [Fact]
@@ -119,24 +107,20 @@ public class DashboardTests
     {
         var user = new UserDashboardPrefs { LayoutVersion = 1 };
         user.Widgets["shell-activity"] = new WidgetPatch { X = 1, Y = 2 };
-        user.Widgets["shell-alerts"] = new WidgetPatch { Hidden = true };
 
         var result = Compose(global: new DashboardPatch { LayoutVersion = 2 }, user: user);
 
         Assert.Empty(result.Layout);
-        Assert.Equal(["shell-alerts"], result.UserHidden);
     }
 
     [Fact]
     public void Personalization_OffDropsWhatUsersMayNotChange()
     {
         var user = new UserDashboardPrefs();
-        user.Widgets["shell-alerts"] = new WidgetPatch { Hidden = true };
         user.Widgets["shell-activity"] = new WidgetPatch { X = 1, Y = 2, Width = 6, Height = 3 };
 
-        var result = Compose(user: user, personalization: new DashboardPersonalization { AllowHide = false, AllowMove = false });
+        var result = Compose(user: user, personalization: new DashboardPersonalization { AllowMove = false });
 
-        Assert.Empty(result.UserHidden);
         var layout = result.Layout["shell-activity"];
         Assert.Equal((null, null, 6, 3), (layout.X, layout.Y, layout.Width, layout.Height));
     }

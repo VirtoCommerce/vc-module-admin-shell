@@ -54,7 +54,7 @@
       :style="editingAll ? undefined : { right: resetRight }"
     >
       <button
-        v-if="editingAll || dashboardState.personalization.allowHide"
+        v-if="editingAll"
         type="button"
         class="as-dashboard__reset"
         :aria-expanded="panelOpen"
@@ -92,18 +92,14 @@
         {{ $t("SHELL.DASHBOARD.CUSTOMIZE_ALL") }}
       </button>
     </div>
-    <!-- the widgets list: the user's own choice, or for everyone while customizing -->
+    <!-- the widgets list while customizing: which widgets everyone sees -->
     <div
-      v-if="panelOpen"
+      v-if="panelOpen && editingAll"
       id="as-dashboard-widgets"
-      class="as-dashboard__panel"
-      :class="{ 'as-dashboard__panel--everyone': editingAll }"
-      :style="editingAll ? undefined : { right: resetRight }"
+      class="as-dashboard__panel as-dashboard__panel--everyone"
     >
       <div class="as-dashboard__panel-head">
-        <strong>{{
-          editingAll ? $t("SHELL.DASHBOARD.EVERYONE.PANEL_TITLE") : $t("SHELL.DASHBOARD.WIDGETS_TITLE")
-        }}</strong>
+        <strong>{{ $t("SHELL.DASHBOARD.EVERYONE.PANEL_TITLE") }}</strong>
         <button
           type="button"
           class="as-dashboard__close"
@@ -128,7 +124,7 @@
         />
         <span class="as-dashboard__row-text">
           <span>{{ widget.label }}</span>
-          <small v-if="editingAll">{{ widget.permission }}</small>
+          <small>{{ widget.permission }}</small>
         </span>
       </label>
     </div>
@@ -220,17 +216,15 @@ provide(DashboardServiceKey, {
 function labelOf(name: string, id: string) {
   return name ? (te(name) ? t(name) : name) : id;
 }
-// the list: while customizing, every widget with the permission it needs; else those the user may hide or show (not
-// the ones hidden for everyone or by the user's roles)
+// the list while customizing: every widget, with the permission it needs. Users don't hide widgets; they place and
+// size them
 const panelWidgets = computed(() => {
-  const forced = new Set(dashboardState.value.hidden);
   return registry
     .getWidgets()
-    .filter((w) => editingAll.value || !forced.has(w.id))
     .map((w) => ({
       id: w.id,
       label: labelOf(w.name, w.id),
-      hidden: editingAll.value ? everyoneHidden.value.includes(w.id) : dashboardState.value.userHidden.includes(w.id),
+      hidden: everyoneHidden.value.includes(w.id),
       permission: w.permissions?.length
         ? t("SHELL.DASHBOARD.PERMISSION", { permission: w.permissions.join(", ") })
         : t("SHELL.DASHBOARD.NO_PERMISSION"),
@@ -262,7 +256,7 @@ async function carryOver(state: EffectiveDashboard) {
   try {
     if (localStorage.getItem(MIGRATED_KEY)) return;
     localStorage.setItem(MIGRATED_KEY, "1");
-    if (Object.keys(state.layout).length || state.userHidden.length || !state.personalization.allowMove) return;
+    if (Object.keys(state.layout).length || !state.personalization.allowMove) return;
     const layout = diffLayout(readStorage(), visibleWidgets(registry.getWidgets(), state));
     if (!Object.keys(layout).length) return;
     state.layout = layout;
@@ -284,7 +278,7 @@ async function load() {
   }
 }
 
-// the user's own layer: the widgets the user hid, and the places and sizes that differ from the defaults
+// the user's own layer: the places and sizes that differ from the defaults
 let saveTimer: ReturnType<typeof setTimeout> | undefined;
 function saveMine(delay = 600) {
   if (!synced.value || editingAll.value) return;
@@ -294,7 +288,7 @@ function saveMine(delay = 600) {
     state.layout = diffLayout(readStorage(), base.value);
     try {
       await adminDashboardApi.savePrefs({
-        widgets: toPatch(state.userHidden, state.layout),
+        widgets: toPatch([], state.layout),
         layoutVersion: state.layoutVersion,
       });
     } catch {
@@ -304,13 +298,7 @@ function saveMine(delay = 600) {
 }
 
 function toggleWidget(id: string, show: boolean) {
-  if (editingAll.value) {
-    everyoneHidden.value = show ? everyoneHidden.value.filter((x) => x !== id) : [...everyoneHidden.value, id];
-    return;
-  }
-  const state = dashboardState.value;
-  state.userHidden = show ? state.userHidden.filter((x) => x !== id) : [...state.userHidden, id];
-  saveMine(0);
+  everyoneHidden.value = show ? everyoneHidden.value.filter((x) => x !== id) : [...everyoneHidden.value, id];
 }
 
 /* ---- customizing for everyone ---- */

@@ -33,7 +33,8 @@
       "configuration_catalogSearch": "Catalogo e ricerca",
       "configuration_securityPrivacy": "Sicurezza e privacy",
       "configuration_dataFiles": "Dati e file",
-      "configuration_monitoringTools": "Monitoraggio e strumenti"
+      "configuration_monitoringTools": "Monitoraggio e strumenti",
+      "configuration_backOffice": "Back office"
     },
     "ITEMS": {
       "home": "Dashboard",
@@ -57,7 +58,7 @@
       "algolia": "Algolia Search",
       "appsearch": "App Search",
       "platform_settings": "Impostazioni",
-      "platform_menu": "Editor del menu di Admin Shell",
+      "platform_menu": "Editor del menu",
       "platform_security": "Sicurezza",
       "platform_modules": "Moduli",
       "platform_modules_browse": "Sfoglia",
@@ -103,7 +104,7 @@
       "stores": "Negozi",
       "subscriptions": "Abbonamenti",
       "webhooks": "Webhook",
-      "platform_dashboard": "Configuratore della dashboard di Admin Shell"
+      "platform_dashboard": "Editor della dashboard"
     }
   }
 }

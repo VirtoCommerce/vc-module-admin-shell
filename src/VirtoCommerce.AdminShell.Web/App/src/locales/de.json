@@ -79,7 +79,6 @@
         "DISABLED": "Die Protokollierung von Anmeldungen ist ausgeschaltet"
       },
       "WIDGETS": "Widgets",
-      "WIDGETS_TITLE": "Widgets auf Ihrer Startseite",
       "CLOSE": "Schließen",
       "CUSTOMIZE_ALL": "Für alle anpassen",
       "PERMISSION": "Erfordert {permission}",

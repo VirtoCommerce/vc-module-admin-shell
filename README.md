@@ -14,9 +14,9 @@ An order open beside the Orders list, with its widgets (payments, shipments, add
 
 ![An order open beside the Orders list](docs/images/orders.jpg)
 
-The Admin Shell Menu Editor: sections and items to reorder, rename and hide, saved as the global menu patch.
+The Menu Editor: sections and items to reorder, rename and hide, saved as the global menu patch.
 
-![The Admin Shell Menu Editor](docs/images/menu-editor.jpg)
+![The Menu Editor](docs/images/menu-editor.jpg)
 
 The sign-in page, with the installation's brand and a showcase of the platform.
 
@@ -29,7 +29,7 @@ The sign-in page, with the installation's brand and a showcase of the platform.
   * menu items open Vue screens, AngularJS screens (the classic admin in a persistent embedded frame), platform apps (embedded) or external links;
   * a default menu item opens its module's Vue screen once the module's Admin Shell plugin is installed, and its AngularJS screen until then, keeping its place, group, pins and user settings.
 * **Server-driven, layered menu:** the default menu (`default-menu.json`, installed apps, plugin contributions) → a global patch → role patches → each user's pins and hidden items. The result is filtered by permission, and a section or item stays visible when any role keeps it.
-* **Admin Shell Menu Editor (Configuration › Monitoring & Tools):** drag sections and items (mouse, touch or keyboard) to reorder them or move them to another section or group, rename (per language), hide, add sections and links, saved as the global patch; *Edit as JSON* to view, download, upload and edit the changes for backup and restore; choose what users may personalize (pin, hide, reorder: turning one off stops applying users' changes without deleting them); find the AngularJS admin's screens and add the ones the menu doesn't have.
+* **Menu Editor (Configuration › Back Office):** drag sections and items (mouse, touch or keyboard) to reorder them or move them to another section or group, rename (per language), hide, add sections and links, saved as the global patch; *Edit as JSON* to view, download, upload and edit the changes for backup and restore; choose what users may personalize (pin, hide, reorder: turning one off stops applying users' changes without deleting them); find the AngularJS admin's screens and add the ones the menu doesn't have.
 * **Nothing missing from the menu:** a workspace blade that no menu entry opens is listed in *More*, as is a contribution to a section the menu doesn't have.
 * **Translated menu:** section, group and item titles in 15 languages from the menu's own locale files (`App/src/locales/menu`), plugin keys and the platform's server texts; renames by language from the editor.
 * **Menu counters:** menu items show what waits (new orders, returns requested, reviews to moderate). Each module registers its counter from its plugin, and the shell polls them every minute while the tab is visible.
@@ -47,8 +47,8 @@ The sign-in page, with the installation's brand and a showcase of the platform.
   * a table opts in with `search-bar`; other lists, module plugins included, keep the classic search header.
 * **Dashboard:**
   * the host's and the modules' widgets on a draggable, resizable grid, each shown only to users with its permission;
-  * layers as for the menu: for everyone (*Customize for everyone* on Home), per role, and each user's own, kept on the server so it is the same in every browser;
-  * the Admin Shell Dashboard Configurator (Configuration › Monitoring & Tools): widgets hidden for everyone and per role, what users may change (hide, move, resize), *Reset users' layouts*, *Edit as JSON*;
+  * layers as for the menu: for everyone (*Customize for everyone* on Home), per role, and each user's own places and sizes, kept on the server so they are the same in every browser;
+  * the Dashboard Editor (Configuration › Back Office): one list of rules hiding a widget from everyone or from a role, what users may change (move, resize), *Reset users' layouts*, *Edit as JSON*;
   * *Reset layout* restores the layout for everyone.
 * **Desktop and phone:**
   * a section rail and panel on desktop;
@@ -98,11 +98,10 @@ See the platform's [Admin UI](https://github.com/VirtoCommerce/vc-platform/blob/
 | `AdminShell.Menu.User` | Json (per user, hidden) | `{}` | The user's pinned and hidden items, set from the shell (and an item order, API only) |
 | `AdminShell.Menu.Recent` | Json (per user, hidden) | `[]` | Usage scores behind *Recent*, recorded by the shell |
 | `AdminShell.Dashboard.Global` | Json | `{}` | The dashboard for everyone: widgets hidden, places and sizes, and the layout version (see [Layers](docs/dashboard-widgets.md#layers)) |
-| `AdminShell.Dashboard.AllowHide` | Boolean | `true` | Users may hide widgets on their Home |
 | `AdminShell.Dashboard.AllowMove` | Boolean | `true` | Users may move widgets |
 | `AdminShell.Dashboard.AllowResize` | Boolean | `true` | Users may resize widgets |
 | `AdminShell.Dashboard.Role` | Json (per role) | `{}` | The widgets a role's users don't need; hidden only if every role of the user hides it |
-| `AdminShell.Dashboard.User` | Json (per user, hidden) | `{}` | The user's hidden widgets, places and sizes, set on Home |
+| `AdminShell.Dashboard.User` | Json (per user, hidden) | `{}` | The user's places and sizes, set on Home |
 | `AdminShell.UI.Appearance` | ShortText (per user) | `dark` | Light, dark or the system's appearance; set in the user menu or the profile, and follows the user to every browser |
 | `AdminShell.UI.Theme` | ShortText (per user) | `virto` | The color theme: Virto, Warm, Blue or Indigo; set like the appearance |
 

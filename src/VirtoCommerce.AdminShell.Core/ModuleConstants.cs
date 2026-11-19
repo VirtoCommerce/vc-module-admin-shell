@@ -133,15 +133,6 @@ public static class ModuleConstants
             IsHidden = true,
         };
 
-        /// <summary>Whether users may hide widgets on their dashboard (off: the widgets they hid show again)</summary>
-        public static SettingDescriptor DashboardAllowHide { get; } = new()
-        {
-            Name = "AdminShell.Dashboard.AllowHide",
-            GroupName = DashboardGroup,
-            ValueType = SettingValueType.Boolean,
-            DefaultValue = true,
-        };
-
         /// <summary>Whether users may move widgets (off: everyone sees the places set for everyone)</summary>
         public static SettingDescriptor DashboardAllowMove { get; } = new()
         {
@@ -160,7 +151,7 @@ public static class ModuleConstants
             DefaultValue = true,
         };
 
-        public static IEnumerable<SettingDescriptor> DashboardSettings => [GlobalDashboard, DashboardAllowHide, DashboardAllowMove, DashboardAllowResize];
+        public static IEnumerable<SettingDescriptor> DashboardSettings => [GlobalDashboard, DashboardAllowMove, DashboardAllowResize];
 
         /// <summary>Per-user uses of menu items for Recent (score and last use per item). Hidden, like the prefs.</summary>
         public static SettingDescriptor UserRecent { get; } = new()

@@ -79,7 +79,6 @@
         "DISABLED": "Kirjautumisten tallennus on poissa käytöstä"
       },
       "WIDGETS": "Widgetit",
-      "WIDGETS_TITLE": "Etusivusi widgetit",
       "CLOSE": "Sulje",
       "CUSTOMIZE_ALL": "Mukauta kaikille",
       "PERMISSION": "Vaatii {permission}",

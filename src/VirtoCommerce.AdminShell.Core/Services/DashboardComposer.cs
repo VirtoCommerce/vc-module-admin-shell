@@ -42,11 +42,6 @@ public static class DashboardComposer
             }
         }
 
-        if (personalization.AllowHide)
-        {
-            result.UserHidden = [.. HiddenIds(user).Where(id => !hidden.Contains(id)).Order(StringComparer.Ordinal)];
-        }
-
         // the user's places count only under the layout version they were made in: a reset by an administrator raises it
         if (user.LayoutVersion == global.LayoutVersion && (personalization.AllowMove || personalization.AllowResize))
         {
@@ -95,9 +90,6 @@ public static class DashboardComposer
             .Concat(Normalize(patch?.HiddenWidgets))
             .Distinct(StringComparer.Ordinal);
 
-    public static IEnumerable<string> HiddenIds(UserDashboardPrefs prefs) =>
-        Widgets(prefs?.Widgets).Where(x => x.Value.Hidden == true).Select(x => x.Key);
-
     /// <summary>
     /// A layer as stored: trimmed ids, without blanks or empty entries, and a role's earlier list folded into its widgets.
     /// Ids of widgets that aren't installed are kept: they do nothing, and work again if the module comes back.
@@ -129,7 +121,9 @@ public static class DashboardComposer
         var result = new UserDashboardPrefs { LayoutVersion = Math.Max(0, prefs?.LayoutVersion ?? 0) };
         foreach (var (id, widget) in Widgets(prefs?.Widgets))
         {
+            // users place and size widgets; hiding is for everyone and for roles
             var clean = Clean(widget);
+            clean.Hidden = null;
             if (!IsEmpty(clean))
             {
                 result.Widgets[id] = clean;

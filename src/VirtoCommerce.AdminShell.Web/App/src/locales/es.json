@@ -79,7 +79,6 @@
         "DISABLED": "El registro de inicios de sesión está desactivado"
       },
       "WIDGETS": "Widgets",
-      "WIDGETS_TITLE": "Widgets de su inicio",
       "CLOSE": "Cerrar",
       "CUSTOMIZE_ALL": "Personalizar para todos",
       "PERMISSION": "Requiere {permission}",

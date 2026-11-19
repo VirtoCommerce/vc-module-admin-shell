@@ -175,7 +175,7 @@ The appearance (`system` / `light` / `dark`), the color theme (`virto` / `warm` 
 
 The module also registers the menu settings (`AdminShell.Menu.Global`, `.Role`, `.User`, `.Recent`); [menu-layers.md](menu-layers.md) describes them. `.User` and `.Recent` are hidden, so they don't appear on the Settings screen.
 
-The dashboard settings (`AdminShell.Dashboard.Global`, `.Role`, `.User`, `.AllowHide`, `.AllowMove`, `.AllowResize`) are described in [dashboard-widgets.md](dashboard-widgets.md#layers). `.User` is hidden.
+The dashboard settings (`AdminShell.Dashboard.Global`, `.Role`, `.User`, `.AllowMove`, `.AllowResize`) are described in [dashboard-widgets.md](dashboard-widgets.md#layers). `.User` is hidden.
 
 ## Adding a setting (module developers)
 

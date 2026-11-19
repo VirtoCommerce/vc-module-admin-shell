@@ -28,11 +28,11 @@ Source: `src/VirtoCommerce.AdminShell.Core/Services/MenuComposer.cs`, `src/Virto
 | Role patch | `AdminShell.Menu.Role` | each role | `GET` / `PUT /roles/{roleId}` |
 | User preferences | `AdminShell.Menu.User` (hidden) | each user | `GET` / `PUT /me/prefs` (the user's own) |
 
-The global and role endpoints need the permission `admin-shell:menu:manage`; the user's own need only a signed-in user. The values are JSON; property names are case-insensitive. A value that isn't valid JSON is ignored (that layer counts as empty) so a typo can't take the menu down for everyone. A `PUT` whose body is missing, isn't valid JSON or doesn't have the layer's shape (`"pinned": "x"` for a list) is refused with `400` and the stored layer is kept; to clear a layer, send an empty object, `{}`. The global patch is what the menu editor (*Configuration › Monitoring & Tools › Admin Shell Menu Editor*, below) writes; it is also a platform setting (group *Admin Shell → Menu*), so it can be edited as JSON in the platform's settings. Role patches have no editor yet: use the API.
+The global and role endpoints need the permission `admin-shell:menu:manage`; the user's own need only a signed-in user. The values are JSON; property names are case-insensitive. A value that isn't valid JSON is ignored (that layer counts as empty) so a typo can't take the menu down for everyone. A `PUT` whose body is missing, isn't valid JSON or doesn't have the layer's shape (`"pinned": "x"` for a list) is refused with `400` and the stored layer is kept; to clear a layer, send an empty object, `{}`. The global patch is what the Menu Editor (*Configuration › Back Office › Menu Editor*, below) writes; it is also a platform setting (group *Admin Shell → Menu*), so it can be edited as JSON in the platform's settings. Role patches have no editor yet: use the API.
 
-## The menu editor (Configuration › Monitoring & Tools › Admin Shell Menu Editor)
+## The Menu Editor (Configuration › Back Office › Menu Editor)
 
-Users with `admin-shell:menu:manage` open *Configuration › Monitoring & Tools › Admin Shell Menu Editor* (route `/menu-editor`). It edits the global patch and shows the result at once, without saving:
+Users with `admin-shell:menu:manage` open *Configuration › Back Office › Menu Editor* (route `/menu-editor`). It edits the global patch and shows the result at once, without saving:
 
 | Tab | What it does |
 |---|---|

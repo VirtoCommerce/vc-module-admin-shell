@@ -94,7 +94,7 @@ How the layout behaves:
 - **The layers decide** which widgets show, where and how big (see *Layers* below). A widget no layer names takes its declared position and size, so a new module's widget shows up on its own.
 - **The user's layout is kept on the server** (`AdminShell.Dashboard.User`), so it is the same in every browser. vc-shell's grid still reads and writes `localStorage["vc-dashboard-layout"]`; Home fills it from the server before the grid starts and saves the grid's changes back.
 - **Closing up.** After the user's own move, the widgets close up in reading order, so no holes stay.
-- **Reset layout** (top right) puts every widget back at its place for everyone, and keeps the widgets the user hid.
+- **Reset layout** (top right) puts every widget back at its place for everyone.
 - **Phones:** widgets are stacked full width in registration order (the host's first, then the plugins' as they load), not in grid order.
 
 ## Layers
@@ -103,16 +103,16 @@ The dashboard is composed like the menu ([menu-layers.md](menu-layers.md)). Each
 
 ```
 widgets the modules register ──► for everyone ──► roles ──► the user's own ──► the widgets' permissions ──► Home
-(id, size, position,             (hide; place    (hide)    (hide, place,      (checked by vc-shell: a widget
- permissions)                     and size)                  size)              the user may not see never shows)
+(id, size, position,             (hide; place    (hide)    (place, size)      (checked by vc-shell: a widget
+ permissions)                     and size)                                     the user may not see never shows)
 ```
 
 | Layer | Platform setting | Who changes it | API (`/api/admin-shell/dashboard`) |
 |---|---|---|---|
-| For everyone | `AdminShell.Dashboard.Global` | `admin-shell:dashboard:manage`: *Customize for everyone* on Home, the configurator | `GET` / `PUT /global` (`?resetUserLayouts=true`) |
-| Role | `AdminShell.Dashboard.Role` (tenant `Role`) | `admin-shell:dashboard:manage`: the configurator's *Roles* | `GET` / `PUT /roles/{roleId}` (404 for a role that doesn't exist) |
+| For everyone | `AdminShell.Dashboard.Global` | `admin-shell:dashboard:manage`: *Customize for everyone* on Home, the Dashboard Editor's rules | `GET` / `PUT /global` (`?resetUserLayouts=true`) |
+| Role | `AdminShell.Dashboard.Role` (tenant `Role`) | `admin-shell:dashboard:manage`: the Dashboard Editor's rules | `GET` / `PUT /roles/{roleId}` (404 for a role that doesn't exist) |
 | User | `AdminShell.Dashboard.User` (tenant `UserProfile`, hidden) | the user, on Home | `GET` / `PUT /me` |
-| What users may change | `AdminShell.Dashboard.AllowHide`, `.AllowMove`, `.AllowResize` | the configurator's *Personalization* | `GET` / `PUT /personalization` |
+| What users may change | `AdminShell.Dashboard.AllowMove`, `.AllowResize` | the Dashboard Editor's *Layout* | `GET` / `PUT /personalization` |
 
 `GET /api/admin-shell/dashboard` returns the user's dashboard with the layers composed.
 
@@ -133,8 +133,8 @@ Rules:
 - **Permissions first, unchanged.** A widget shows only to users with its `permissions`; no layer can show it to others. Hiding is not security: the widget's data stays protected by its endpoints.
 - **For everyone** hides a widget from every user, administrators too, and sets places and sizes. It is what every user starts from.
 - **Roles:** a widget is hidden only when **every** one of the user's roles hides it, as for menu items. Administrators and users without roles get nothing hidden by roles. A role's earlier format, `{"hiddenWidgets": [...]}`, still reads.
-- **The user** hides widgets (*Widgets* on Home) and moves and resizes them, as far as the personalization settings allow. Turning a setting off deletes nothing: the user's choice applies again when it is on.
-- **Reset users' layouts** (when saving for everyone, or in the configurator) raises `layoutVersion`; a user's places and sizes made under an older version are dropped at the next visit. The widgets users hid stay hidden.
+- **The user** moves and resizes widgets, as far as the settings allow; users don't hide widgets (only everyone and role rules do). Turning a setting off deletes nothing: the user's layout applies again when it is on.
+- **Reset users' layouts** (when saving for everyone, or in the configurator) raises `layoutVersion`; a user's places and sizes made under an older version are dropped at the next visit.
 - **Diff only.** Saving for everyone keeps only what differs from the modules' own place and size, and a user's layer only what differs from the layout for everyone, so a later change of a default reaches the widgets nobody placed. Ids of widgets that aren't installed are kept and do nothing.
 - A value that doesn't read as a layer (edited by hand, with a typo) counts as empty: everyone then sees every widget their permissions allow. A `PUT` whose body doesn't bind is refused with 400 and the layer is kept.
 
@@ -142,15 +142,14 @@ Rules:
 
 Users with `admin-shell:dashboard:manage` see *Customize for everyone* on Home. It shows every installed widget at its place for everyone, to move and resize; *Widgets* hides or shows a widget for everyone, with the permission each needs. *Modules' layout* goes back to the modules' own places and sizes. *Save for everyone* stores the layer; *Reset users' own layouts* also drops every user's places and sizes. *Cancel* leaves without saving.
 
-### The configurator (Configuration › Monitoring & Tools › Admin Shell Dashboard Configurator)
+### The Dashboard Editor (Configuration › Back Office › Dashboard Editor)
 
-Route `/dashboard-configurator`, permission `admin-shell:dashboard:manage`.
+Route `/dashboard-configurator`, permission `admin-shell:dashboard:manage`. It sits with the Menu Editor in the *Back Office* group.
 
 | Tab | What it does |
 |---|---|
-| For everyone | Hide or show each widget for everyone, with the permission it needs; *Customize the layout on Home*; *Reset users' layouts*. |
-| Roles | Pick a role and hide the widgets its users don't need. A widget the role has no permission for is shown as such and can't be changed: the role doesn't see it anyway. |
-| Personalization | Whether users may hide, move and resize widgets. |
+| Rules | One list of rules, each hiding a widget from someone: *Everyone* or a role. *Add rule* picks the widget (with the permission it needs) and whom to hide it from; a rule that exists already, or one for a role without the widget's permission (its users don't see it anyway), isn't added. The trash icon removes a rule. *Save* writes the layers the rules touched. A new kind of rule (an account type, a user) is one more scope in this list. |
+| Layout | *Customize the layout on Home*, *Reset users' layouts*, and what users may change (move, resize). |
 | Edit as JSON | The layer for everyone as JSON, to copy for a backup or another environment, or to paste and save. |
 
 ## Shared styles (`.dash-*`)
@@ -186,5 +185,5 @@ Styles that only one widget needs go into the widget's own `<style scoped>`. Use
 - The widget shows for a user with the permission and not for one without.
 - Clear `localStorage["vc-dashboard-layout"]` (a first visit): the widget is at its declared position and doesn't push others.
 - Move a widget, reload (the layout is kept, in another browser too), then *Reset layout* (all back to the defaults).
-- Hide the widget for a role and sign in as a user with only that role: it is gone, and the others close up.
+- Add a rule hiding the widget from a role and sign in as a user with only that role: it is gone, and the others close up.
 - Light and dark themes; a phone-sized window.

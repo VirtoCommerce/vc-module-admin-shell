@@ -22,8 +22,8 @@ test("nothing configured: every widget at its module's place", () => {
   assert.deepEqual(visibleWidgets([alerts, activity], readEffective(undefined)), [alerts, activity]);
 });
 
-test("hidden for everyone, by the roles or by the user: left out", () => {
-  const dashboard = readEffective({ hidden: ["shell-alerts"], userHidden: ["orders-sales"] });
+test("hidden for everyone or by the roles: left out", () => {
+  const dashboard = readEffective({ hidden: ["shell-alerts", "orders-sales"] });
   assert.deepEqual(
     visibleWidgets([alerts, activity, sales], dashboard).map((w) => w.id),
     ["shell-activity"],

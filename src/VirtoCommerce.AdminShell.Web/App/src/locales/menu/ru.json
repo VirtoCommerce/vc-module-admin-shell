@@ -33,7 +33,8 @@
       "configuration_catalogSearch": "Каталог и поиск",
       "configuration_securityPrivacy": "Безопасность и конфиденциальность",
       "configuration_dataFiles": "Данные и файлы",
-      "configuration_monitoringTools": "Мониторинг и инструменты"
+      "configuration_monitoringTools": "Мониторинг и инструменты",
+      "configuration_backOffice": "Бэк-офис"
     },
     "ITEMS": {
       "home": "Панель",
@@ -57,7 +58,7 @@
       "algolia": "Algolia Search",
       "appsearch": "App Search",
       "platform_settings": "Настройки",
-      "platform_menu": "Редактор меню Admin Shell",
+      "platform_menu": "Редактор меню",
       "platform_security": "Безопасность",
       "platform_modules": "Модули",
       "platform_modules_browse": "Обзор",
@@ -103,7 +104,7 @@
       "stores": "Магазины",
       "subscriptions": "Подписки",
       "webhooks": "Вебхуки",
-      "platform_dashboard": "Настройка дашборда Admin Shell"
+      "platform_dashboard": "Редактор дашборда"
     }
   }
 }

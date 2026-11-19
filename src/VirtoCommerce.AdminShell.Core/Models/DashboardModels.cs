@@ -32,9 +32,10 @@ public class DashboardPatch
 }
 
 /// <summary>
-/// A user's own dashboard (setting AdminShell.Dashboard.User): the widgets the user hid, and where the user put and how
-/// big the user made the others. Kept on the server, so it is the same in every browser. LayoutVersion is the global
-/// one the places were made under: an older one means an administrator reset the users' layouts.
+/// A user's own dashboard (setting AdminShell.Dashboard.User): where the user put the widgets and how big the user made
+/// them. Kept on the server, so it is the same in every browser. Users don't hide widgets: a "hidden" here is ignored.
+/// LayoutVersion is the global one the places were made under: an older one means an administrator reset the users'
+/// layouts.
 /// </summary>
 public class UserDashboardPrefs
 {
@@ -46,7 +47,6 @@ public class UserDashboardPrefs
 /// <summary>What users may change on their own dashboard</summary>
 public class DashboardPersonalization
 {
-    public bool AllowHide { get; set; } = true;
     public bool AllowMove { get; set; } = true;
     public bool AllowResize { get; set; } = true;
 }
@@ -68,9 +68,6 @@ public class EffectiveDashboard
 
     /// <summary>Hidden for this user by the global layer or by every one of the user's roles; the user can't show them</summary>
     public List<string> Hidden { get; set; } = [];
-
-    /// <summary>The widgets the user hid (when users may hide)</summary>
-    public List<string> UserHidden { get; set; } = [];
 
     /// <summary>The user's own places and sizes (as far as users may move and resize), under the current layout version</summary>
     public Dictionary<string, WidgetLayout> Layout { get; set; } = new(StringComparer.Ordinal);
