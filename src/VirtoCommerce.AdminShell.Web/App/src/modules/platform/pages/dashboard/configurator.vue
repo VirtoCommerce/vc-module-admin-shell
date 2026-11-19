@@ -243,16 +243,7 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  notification,
-  SecurityClient,
-  useApiClient,
-  useBlade,
-  useBladeStack,
-  useDashboard,
-  usePopup,
-  type IBladeToolbar,
-} from "@vc-shell/framework";
+import { notification, useBlade, useBladeStack, useDashboard, usePopup, type IBladeToolbar } from "@vc-shell/framework";
 import { VcBlade, VcIcon } from "@vc-shell/framework/ui";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
@@ -285,7 +276,6 @@ const { closeBlade, blades } = useBladeStack();
 // the whole width, and half of it while the JSON blade is open beside it (as the Menu Editor)
 const jsonOpen = computed(() => blades.value.some((x: { name: string }) => x.name === "PlatformDashboardEditorJson"));
 const { openBlade, exposeToChildren } = useBlade();
-const { getApiClient } = useApiClient(SecurityClient);
 const registry = useDashboard();
 
 type Tab = "rules" | "personalization";
@@ -380,7 +370,6 @@ async function toggleEditor(widgetId: string) {
   };
   roleSearch.value = "";
   editing.value = widgetId;
-  await loadRolePermissions();
 }
 
 // a role without the widget's permission doesn't see it anyway: it can't be picked (only unpicked)
@@ -394,16 +383,6 @@ const visibleRoles = computed(() => {
       return { ...r, blind: !!held && !roleCanSee(editedWidget.value?.permissions, held) };
     });
 });
-
-async function loadRolePermissions() {
-  const missing = roles.value.filter((r) => !rolePermissions.value.has(r.id));
-  if (!missing.length) return;
-  const client = await getApiClient();
-  const found = await Promise.all(missing.map((r) => client.getRole(r.name).catch(() => undefined)));
-  const next = new Map(rolePermissions.value);
-  missing.forEach((r, i) => next.set(r.id, (found[i]?.permissions ?? []).map((p) => p.name!).filter(Boolean)));
-  rolePermissions.value = next;
-}
 
 function applyEditor(widgetId: string) {
   const others = rules.value.filter((r) => r.widgetId !== widgetId);
@@ -444,18 +423,19 @@ async function load() {
   loading.value = true;
   error.value = "";
   try {
+    // every role with its permissions and its rules comes in one answer
     const [patch, value, found] = await Promise.all([
       adminDashboardApi.getGlobal(),
       adminDashboardApi.getPersonalization(),
-      (await getApiClient()).searchRoles({ sort: "name:asc", take: 1000 }),
+      adminDashboardApi.getRoles(),
     ]);
     global.value = patch ?? {};
-    roles.value = (found.results ?? []).map((r) => ({ id: r.id!, name: r.name ?? r.id! }));
-    const rolePatches = await Promise.all(roles.value.map((r) => adminDashboardApi.getRole(r.id)));
+    roles.value = (found ?? []).map((r) => ({ id: r.id, name: r.name || r.id }));
+    rolePermissions.value = new Map((found ?? []).map((r) => [r.id, r.permissions ?? []]));
     rules.value = [
       ...hiddenIn(global.value.widgets).map((widgetId): Rule => ({ widgetId, scope: { type: "everyone" } })),
-      ...roles.value.flatMap((role, i) =>
-        hiddenIn(rolePatches[i]?.widgets).map((widgetId): Rule => ({
+      ...(found ?? []).flatMap((role) =>
+        hiddenIn(role.dashboard?.widgets).map((widgetId): Rule => ({
           widgetId,
           scope: { type: "role", roleId: role.id },
         })),
@@ -464,7 +444,6 @@ async function load() {
     savedRules.value = [...rules.value];
     layout.value = layoutIn(global.value.widgets);
     savedLayout.value = JSON.stringify(layout.value);
-    rolePermissions.value = new Map();
     personalization.value = { allowMove: value?.allowMove ?? true, allowResize: value?.allowResize ?? true };
     savedPersonalization.value = JSON.stringify(personalization.value);
     editing.value = "";

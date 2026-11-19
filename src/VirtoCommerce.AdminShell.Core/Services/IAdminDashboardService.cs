@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using VirtoCommerce.AdminShell.Core.Models;
@@ -19,6 +20,9 @@ public interface IAdminDashboardService
     Task<bool> RoleExistsAsync(string roleId);
 
     Task<DashboardPatch> GetRoleAsync(string roleId);
+
+    /// <summary>Every role with its permissions and its dashboard layer, by name: the editor's one request</summary>
+    Task<IList<RoleDashboard>> GetRolesAsync();
 
     Task SaveRoleAsync(string roleId, DashboardPatch patch);
 

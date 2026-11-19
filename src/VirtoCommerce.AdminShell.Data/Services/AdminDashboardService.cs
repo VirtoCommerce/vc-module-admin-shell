@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -58,6 +59,31 @@ public class AdminDashboardService(
 
     public async Task<bool> RoleExistsAsync(string roleId) =>
         !string.IsNullOrWhiteSpace(roleId) && await roleManager.FindByIdAsync(roleId) != null;
+
+    public async Task<IList<RoleDashboard>> GetRolesAsync()
+    {
+        // the role store's list, then each role with its permissions (the role manager loads them) and its layer
+        var ids = roleManager.Roles.Select(x => x.Id).ToList();
+        var result = new List<RoleDashboard>();
+        foreach (var id in ids)
+        {
+            var role = await roleManager.FindByIdAsync(id);
+            if (role == null)
+            {
+                continue;
+            }
+
+            result.Add(new RoleDashboard
+            {
+                Id = role.Id,
+                Name = role.Name ?? role.Id,
+                Permissions = (role.Permissions ?? []).Select(x => x.Name).Where(x => !string.IsNullOrEmpty(x)).Distinct().ToList(),
+                Dashboard = await GetRoleAsync(role.Id),
+            });
+        }
+
+        return result.OrderBy(x => x.Name, StringComparer.OrdinalIgnoreCase).ToList();
+    }
 
     public Task<DashboardPatch> GetRoleAsync(string roleId) => ReadPatchAsync(Settings.RoleDashboard, ModuleConstants.RoleTenant, roleId);
 

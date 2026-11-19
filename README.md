@@ -214,6 +214,7 @@ Base route: `api/admin-shell/dashboard`
 | `PUT` | `/me` | Save the current user's own places and sizes |
 | `GET` | `/global` | Get the dashboard for everyone (`admin-shell:dashboard:manage`) |
 | `PUT` | `/global` | Save the dashboard for everyone; `?resetUserLayouts=true` drops every user's own layout (`admin-shell:dashboard:manage`) |
+| `GET` | `/roles` | Get every role with its permissions and the widgets it hides, in one answer (`admin-shell:dashboard:manage`) |
 | `GET` | `/roles/{roleId}` | Get the widgets a role's users don't see; 404 for a role that doesn't exist (`admin-shell:dashboard:manage`) |
 | `PUT` | `/roles/{roleId}` | Save them (`admin-shell:dashboard:manage`) |
 | `GET` | `/personalization` | Get what users may change (`admin-shell:dashboard:manage`) |

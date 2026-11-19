@@ -110,7 +110,7 @@ widgets the modules register ──► for everyone ──► roles ──► th
 | Layer | Platform setting | Who changes it | API (`/api/admin-shell/dashboard`) |
 |---|---|---|---|
 | For everyone | `AdminShell.Dashboard.Global` | `admin-shell:dashboard:manage`: *Customize for everyone* on Home, the Dashboard Editor's rules | `GET` / `PUT /global` (`?resetUserLayouts=true`) |
-| Role | `AdminShell.Dashboard.Role` (tenant `Role`) | `admin-shell:dashboard:manage`: the Dashboard Editor's rules | `GET` / `PUT /roles/{roleId}` (404 for a role that doesn't exist) |
+| Role | `AdminShell.Dashboard.Role` (tenant `Role`) | `admin-shell:dashboard:manage`: the Dashboard Editor's rules | `GET /roles` (every role with its permissions and rules, the editor's one request), `GET` / `PUT /roles/{roleId}` (404 for a role that doesn't exist) |
 | User | `AdminShell.Dashboard.User` (tenant `UserProfile`, hidden) | the user, on Home | `GET` / `PUT /me` |
 | What users may change | `AdminShell.Dashboard.AllowMove`, `.AllowResize` | the Dashboard Editor's *Layout* | `GET` / `PUT /personalization` |
 

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -55,6 +56,11 @@ public class AdminShellDashboardController(IAdminDashboardService dashboardServi
         await dashboardService.SaveGlobalAsync(patch, resetUserLayouts);
         return NoContent();
     }
+
+    /// <summary>Every role with its permissions and the widgets it hides, for the Dashboard Editor</summary>
+    [HttpGet("roles")]
+    [Authorize(Permissions.DashboardManage)]
+    public async Task<ActionResult<IList<RoleDashboard>>> GetRoles() => Ok(await dashboardService.GetRolesAsync());
 
     [HttpGet("roles/{roleId}")]
     [Authorize(Permissions.DashboardManage)]

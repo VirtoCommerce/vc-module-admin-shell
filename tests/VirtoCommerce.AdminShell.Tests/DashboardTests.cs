@@ -142,6 +142,17 @@ public class DashboardTests
     }
 
     [Fact]
+    public async Task GetRoles_ReturnsEveryRoleInOneAnswer()
+    {
+        var (controller, _) = Create();
+
+        var result = Assert.IsType<OkObjectResult>((await controller.GetRoles()).Result);
+        var roles = Assert.IsAssignableFrom<IList<RoleDashboard>>(result.Value);
+
+        Assert.Equal(["order:read"], Assert.Single(roles).Permissions);
+    }
+
+    [Fact]
     public async Task SaveRole_WithoutBody_Returns400AndSavesNothing()
     {
         var (controller, service) = Create();
@@ -235,6 +246,9 @@ public class DashboardTests
         public Task<bool> RoleExistsAsync(string roleId) => Task.FromResult(roleId == "role-1");
 
         public Task<DashboardPatch> GetRoleAsync(string roleId) => Task.FromResult(new DashboardPatch());
+
+        public Task<IList<RoleDashboard>> GetRolesAsync() =>
+            Task.FromResult<IList<RoleDashboard>>([new RoleDashboard { Id = "role-1", Name = "Role 1", Permissions = ["order:read"] }]);
 
         public Task SaveRoleAsync(string roleId, DashboardPatch patch)
         {
