@@ -116,7 +116,9 @@
         "LOCK_CONFIRM": "Lukitaanko tili {name}? Käyttäjä ei voi kirjautua sisään.",
         "UNLOCK": "Avaa lukitus",
         "SEND_VERIFICATION": "Lähetä vahvistussähköposti uudelleen",
-        "VERIFICATION_SENT": "Vahvistussähköposti lähetetty"
+        "VERIFICATION_SENT": "Vahvistussähköposti lähetetty",
+        "LOGIN_ON_BEHALF": "Kirjaudu sisään puolesta",
+        "LOGIN_ON_BEHALF_NO_URL": "Kirjautuminen puolesta ei onnistu: käyttäjällä ei ole kauppaa tai kaupalla ei ole URL-osoitetta."
       },
       "APIKEYS": {
         "TITLE": "API-avaimet",
@@ -231,7 +233,15 @@
         "URI_HTTP_LEGACY": "{uri} käyttää HTTP:tä osoitteelle, joka ei ole loopback-osoite. Se säilytetään, mutta uutta samanlaista ei voi lisätä.",
         "OTHER_PERMISSIONS": "Muut luvat",
         "OTHER_PERMISSIONS_HINT": "Luvat, joita tämä näkymä ei muokkaa, säilyvät ennallaan. Päätepisteiden luvat määräytyvät myöntötyyppien mukaan.",
-        "PERMISSION_PLACEHOLDER": "Kirjoita lupa ja paina Enter"
+        "PERMISSION_PLACEHOLDER": "Kirjoita lupa ja paina Enter",
+        "REGISTRATION": "Rekisteröinti",
+        "REGISTRATIONS": {
+          "SELF": "Itse rekisteröity",
+          "ADMINISTRATOR": "Ylläpitäjän rekisteröimä",
+          "CLIENT_ID_METADATA_DOCUMENT": "Itse rekisteröity: metatietoasiakirja",
+          "DYNAMIC_REGISTRATION": "Itse rekisteröity: dynaaminen"
+        },
+        "SELF_REGISTERED_READONLY": "Tämä sovellus rekisteröi itsensä: se noudattaa metatietoasiakirjaansa tai rekisteröintiään, joten sitä ei voi muuttaa täällä. Poista se katkaistaksesi asiakkaan yhteyden."
       },
       "SIGNIN": {
         "TITLE": "Kirjautumisloki",

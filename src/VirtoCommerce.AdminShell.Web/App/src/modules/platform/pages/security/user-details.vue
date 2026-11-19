@@ -53,7 +53,8 @@
           searchable
         />
         <VcRow class="tw-gap-4">
-          <VcCol>
+          <!-- full access: only an administrator may see and grant it, not anyone who may edit accounts -->
+          <VcCol v-if="isCurrentUserAdministrator">
             <VcSwitch
               v-model="item.isAdministrator"
               :label="$t('PLATFORM.SECURITY.USER.ADMINISTRATOR')"
@@ -181,6 +182,7 @@ import {
   useLoading,
   usePermissions,
   usePopup,
+  useUser,
   type ApplicationUser,
   type IBladeToolbar,
 } from "@vc-shell/framework";
@@ -199,6 +201,8 @@ import {
 import { computed, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { saveResetItems, usePlatformBladeForm } from "../../composables/blade";
+import { modules } from "../../../../shell/modules";
+import { api } from "../../api";
 import { ensureSucceeded, usePasswordCheck, useSecurityLookups } from "../../composables/security";
 
 defineBlade({
@@ -210,6 +214,7 @@ defineBlade({
 const { t } = useI18n({ useScope: "global" });
 const { param, openBlade, closeSelf, replaceWith, callParent, exposeToChildren } = useBlade();
 const { hasAccess } = usePermissions();
+const { isAdministrator: isCurrentUserAdministrator } = useUser();
 const { showConfirmation } = usePopup();
 const { getApiClient } = useApiClient(SecurityClient);
 const lookups = useSecurityLookups();
@@ -361,6 +366,15 @@ const toolbar = computed<IBladeToolbar[]>(() =>
             }),
         },
         {
+          // as the AngularJS account blade did: the storefront signs in as this user (its /account/impersonate page)
+          id: "login-on-behalf",
+          title: t("PLATFORM.SECURITY.USER.LOGIN_ON_BEHALF"),
+          icon: "lucide-user-round-key",
+          permissions: ["platform:security:loginOnBehalf"],
+          isVisible: computed(() => modules.isInstalled("VirtoCommerce.Store")),
+          clickHandler: () => loginOnBehalf(),
+        },
+        {
           id: "delete",
           title: t("PLATFORM.COMMON.DELETE"),
           icon: "lucide-trash-2",
@@ -377,6 +391,24 @@ const toolbar = computed<IBladeToolbar[]>(() =>
         },
       ],
 );
+
+// The user's store's site, signed in as the user. The tab opens in the click (a browser blocks a window opened after an
+// await) and gets its address once the store answers; without a store URL it closes and says why.
+async function loginOnBehalf() {
+  const tab = window.open("about:blank", "_blank");
+  const storeId = item.value.storeId;
+  const store = storeId
+    ? await api<{ url?: string } | null>("GET", `/api/stores/${encodeURIComponent(storeId)}`).catch(() => null)
+    : null;
+  const url = store?.url?.trim().replace(/\/+$/, "");
+  if (!tab || !url) {
+    tab?.close();
+    notification.error(t("PLATFORM.SECURITY.USER.LOGIN_ON_BEHALF_NO_URL"));
+    return;
+  }
+  tab.opener = null;
+  tab.location.href = `${url}/account/impersonate/${encodeURIComponent(item.value.id!)}`;
+}
 
 useBladeWidgets([
   {

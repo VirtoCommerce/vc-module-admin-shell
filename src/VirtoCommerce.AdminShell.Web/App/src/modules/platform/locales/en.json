@@ -116,7 +116,9 @@
         "LOCK_CONFIRM": "Lock the account {name}? The user won't be able to sign in.",
         "UNLOCK": "Unlock",
         "SEND_VERIFICATION": "Resend verification email",
-        "VERIFICATION_SENT": "Verification email sent"
+        "VERIFICATION_SENT": "Verification email sent",
+        "LOGIN_ON_BEHALF": "Login on behalf",
+        "LOGIN_ON_BEHALF_NO_URL": "Can't sign in on behalf: the user has no store, or the store has no URL."
       },
       "APIKEYS": {
         "TITLE": "API keys",
@@ -231,7 +233,15 @@
         "URI_HTTP_LEGACY": "{uri} uses HTTP for an address that is not a loopback address. It is kept, but a new one like it can't be added.",
         "OTHER_PERMISSIONS": "Other permissions",
         "OTHER_PERMISSIONS_HINT": "Permissions the screen doesn't edit, kept as they are. Endpoint permissions follow the grant types.",
-        "PERMISSION_PLACEHOLDER": "Type a permission and press Enter"
+        "PERMISSION_PLACEHOLDER": "Type a permission and press Enter",
+        "REGISTRATION": "Registration",
+        "REGISTRATIONS": {
+          "SELF": "Self-registered",
+          "ADMINISTRATOR": "By an administrator",
+          "CLIENT_ID_METADATA_DOCUMENT": "Self-registered: metadata document",
+          "DYNAMIC_REGISTRATION": "Self-registered: dynamic"
+        },
+        "SELF_REGISTERED_READONLY": "This application registered itself: it follows its client metadata document or registration, so it can't be changed here. Delete it to disconnect the client."
       },
       "SIGNIN": {
         "TITLE": "Sign-in log",

@@ -16,8 +16,8 @@ namespace VirtoCommerce.AdminShell.Data.Services;
 /// Builds the default menu from what is installed:
 /// the seed (default-menu.json) filtered by installed modules, each of its screens opening the module's Vue plugin route
 /// when the plugin is built and its AngularJS screen otherwise; MainMenu apps; menu contributions declared by Vue plugins
-/// in {module}/plugins/admin-shell/plugin.json for screens the seed doesn't place; and the workspace blades the client
-/// found that none of these opens (More).
+/// in {module}/plugins/admin-shell/plugin.json for screens the seed doesn't place, and the sections they declare for them;
+/// and the workspace blades the client found that none of these opens (More).
 /// </summary>
 public class DefaultMenuBuilder(IModuleService moduleService, ILogger<DefaultMenuBuilder> logger) : IDefaultMenuBuilder
 {
@@ -113,7 +113,12 @@ public class DefaultMenuBuilder(IModuleService moduleService, ILogger<DefaultMen
 
     private void AddContributions(MenuDocument menu, IEnumerable<ManifestModuleInfo> modules)
     {
-        foreach (var (module, item) in modules.SelectMany(module => ReadContributions(module).Select(item => (module, item))))
+        var plugins = modules.Select(module => (module, contributions: ReadContributions(module))).ToList();
+
+        // the plugins' own sections first, so their items find them
+        MenuComposer.AddContributedSections(menu, plugins.SelectMany(x => x.contributions.Sections));
+
+        foreach (var (module, item) in plugins.SelectMany(x => x.contributions.Items.Select(item => (x.module, item))))
         {
             // a screen the seed places: the seed owns its title, place and route; the contribution's id names it too
             var placed = PlacedItem(menu, item);
@@ -163,19 +168,22 @@ public class DefaultMenuBuilder(IModuleService moduleService, ILogger<DefaultMen
     private static bool HasBuiltPlugin(ManifestModuleInfo module) =>
         File.Exists(Path.Combine(PluginFolder(module), "plugin.json")) && File.Exists(Path.Combine(PluginFolder(module), "remoteEntry.js"));
 
-    private List<MenuItem> ReadContributions(ManifestModuleInfo module)
+    // plugin.json: contributions.menu (items) and contributions.menuSections (sections for them)
+    private (List<MenuSection> Sections, List<MenuItem> Items) ReadContributions(ManifestModuleInfo module)
     {
         var pluginFile = Path.Combine(PluginFolder(module), "plugin.json");
 
         try
         {
             var plugin = JObject.Parse(File.ReadAllText(pluginFile));
-            return plugin.SelectToken("contributions.menu")?.ToObject<List<MenuItem>>() ?? [];
+            return (
+                plugin.SelectToken("contributions.menuSections")?.ToObject<List<MenuSection>>() ?? [],
+                plugin.SelectToken("contributions.menu")?.ToObject<List<MenuItem>>() ?? []);
         }
         catch (JsonException ex)
         {
             logger.LogWarning(ex, "Invalid {File} in module {Module}", pluginFile, module.Id);
-            return [];
+            return ([], []);
         }
     }
 

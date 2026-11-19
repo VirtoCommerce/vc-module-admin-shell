@@ -116,7 +116,9 @@
         "LOCK_CONFIRM": "Verrouiller le compte {name} ? L'utilisateur ne pourra plus se connecter.",
         "UNLOCK": "Déverrouiller",
         "SEND_VERIFICATION": "Renvoyer l'email de vérification",
-        "VERIFICATION_SENT": "Email de vérification envoyé"
+        "VERIFICATION_SENT": "Email de vérification envoyé",
+        "LOGIN_ON_BEHALF": "Se connecter au nom de",
+        "LOGIN_ON_BEHALF_NO_URL": "Impossible de se connecter au nom de l'utilisateur : il n'a pas de boutique, ou la boutique n'a pas d'URL."
       },
       "APIKEYS": {
         "TITLE": "Clés API",
@@ -231,7 +233,15 @@
         "URI_HTTP_LEGACY": "{uri} utilise HTTP pour une adresse qui n'est pas une adresse de bouclage. Il est conservé, mais un nouvel URI de ce type ne peut pas être ajouté.",
         "OTHER_PERMISSIONS": "Autres permissions",
         "OTHER_PERMISSIONS_HINT": "Permissions que cet écran ne modifie pas, conservées telles quelles. Les permissions des points de terminaison suivent les types d'octroi.",
-        "PERMISSION_PLACEHOLDER": "Saisissez une permission et appuyez sur Entrée"
+        "PERMISSION_PLACEHOLDER": "Saisissez une permission et appuyez sur Entrée",
+        "REGISTRATION": "Enregistrement",
+        "REGISTRATIONS": {
+          "SELF": "Auto-enregistrée",
+          "ADMINISTRATOR": "Par un administrateur",
+          "CLIENT_ID_METADATA_DOCUMENT": "Auto-enregistrée : document de métadonnées",
+          "DYNAMIC_REGISTRATION": "Auto-enregistrée : dynamique"
+        },
+        "SELF_REGISTERED_READONLY": "Cette application s'est enregistrée elle-même : elle suit son document de métadonnées ou son enregistrement et ne peut pas être modifiée ici. Supprimez-la pour déconnecter le client."
       },
       "SIGNIN": {
         "TITLE": "Journal des connexions",
