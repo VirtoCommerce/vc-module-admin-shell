@@ -77,6 +77,23 @@
         "FAILED": "Mislykkede innlogginger",
         "USERS": "Innloggede brukere",
         "DISABLED": "Registrering av innlogginger er slått av"
+      },
+      "WIDGETS": "Widgeter",
+      "CLOSE": "Lukk",
+      "CUSTOMIZE_ALL": "Tilpass for alle",
+      "PERMISSION": "Krever {permission}",
+      "NO_PERMISSION": "Alle",
+      "SAVE_FAILED": "Kunne ikke lagre dashbordet",
+      "CHANGED_ELSEWHERE": "Noen andre har endret dashbordet i mellomtiden. Oppdater og gjør endringene på nytt.",
+      "EVERYONE": {
+        "TITLE": "Tilpasser startsiden for alle",
+        "HINT": "Flytt, endre størrelse og skjul widgeter. Lagret er dette alles start; de som har endret sin, beholder den med mindre du tilbakestiller den.",
+        "RESET_USERS": "Tilbakestill brukernes egne oppsett",
+        "SAVE": "Lagre for alle",
+        "CANCEL": "Avbryt",
+        "MODULE_DEFAULTS": "Modulenes oppsett",
+        "SAVED": "Startsiden lagret for alle",
+        "PANEL_TITLE": "Widgeter for alle"
       }
     },
     "AUTH": {

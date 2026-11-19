@@ -77,6 +77,23 @@
         "FAILED": "Acessos com falha",
         "USERS": "Usuários que entraram",
         "DISABLED": "O registro de acessos está desativado"
+      },
+      "WIDGETS": "Widgets",
+      "CLOSE": "Fechar",
+      "CUSTOMIZE_ALL": "Personalizar para todos",
+      "PERMISSION": "Requer {permission}",
+      "NO_PERMISSION": "Todos",
+      "SAVE_FAILED": "Não foi possível salvar o painel",
+      "CHANGED_ELSEWHERE": "Outra pessoa alterou o painel nesse meio-tempo. Atualize e faça suas alterações novamente.",
+      "EVERYONE": {
+        "TITLE": "Personalizando o início para todos",
+        "HINT": "Mova, redimensione e oculte widgets. Salvo, é assim que todos começam; quem alterou o seu o mantém, a menos que você o redefina.",
+        "RESET_USERS": "Redefinir os layouts dos usuários",
+        "SAVE": "Salvar para todos",
+        "CANCEL": "Cancelar",
+        "MODULE_DEFAULTS": "Layout dos módulos",
+        "SAVED": "Início salvo para todos",
+        "PANEL_TITLE": "Widgets para todos"
       }
     },
     "AUTH": {

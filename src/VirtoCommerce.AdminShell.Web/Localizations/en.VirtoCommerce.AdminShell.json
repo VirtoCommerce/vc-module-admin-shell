@@ -1,6 +1,7 @@
 {
   "permissions": {
-    "admin-shell:menu:manage": "Manage the Admin Shell menu: the menu editor, the global and role layers, what users may change"
+    "admin-shell:menu:manage": "Manage the Admin Shell menu: the menu editor, the global and role layers, what users may change",
+    "admin-shell:dashboard:manage": "Manage the Admin Shell dashboard: the Dashboard Editor's rules, the layout for everyone, what users may change"
   },
   "settings": {
     "AdminShell": {
@@ -106,6 +107,28 @@
         "UserChoice": {
           "title": "Users choose their theme",
           "description": "Off: everyone has the default theme and the theme pickers are hidden"
+        }
+      },
+      "Dashboard": {
+        "Global": {
+          "title": "Dashboard for everyone",
+          "description": "JSON: widgets hidden from everyone, places and sizes by widget id, and the layout version. Set in the Dashboard Editor and with Customize for everyone on Home"
+        },
+        "Role": {
+          "title": "Role dashboard",
+          "description": "JSON: the widgets this role's users don't see; a widget is hidden only if every role of the user hides it"
+        },
+        "User": {
+          "title": "Dashboard layout",
+          "description": "The user's places and sizes of the Home widgets"
+        },
+        "AllowMove": {
+          "title": "Users may move widgets",
+          "description": "Off: everyone sees the places set for everyone; the users' own places apply again when this is turned on"
+        },
+        "AllowResize": {
+          "title": "Users may resize widgets",
+          "description": "Off: everyone sees the sizes set for everyone; the users' own sizes apply again when this is turned on"
         }
       }
     }

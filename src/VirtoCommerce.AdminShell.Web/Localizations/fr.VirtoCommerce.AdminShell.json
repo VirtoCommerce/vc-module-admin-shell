@@ -1,6 +1,7 @@
 {
   "permissions": {
-    "admin-shell:menu:manage": "Gérer le menu de l'Admin Shell : l'éditeur de menu, les niveaux global et par rôle, ce que les utilisateurs peuvent modifier"
+    "admin-shell:menu:manage": "Gérer le menu de l'Admin Shell : l'éditeur de menu, les niveaux global et par rôle, ce que les utilisateurs peuvent modifier",
+    "admin-shell:dashboard:manage": "Gérer le tableau de bord d'Admin Shell : règles de l'éditeur, disposition pour tous, ce que les utilisateurs peuvent modifier"
   },
   "settings": {
     "AdminShell": {
@@ -106,6 +107,28 @@
         "UserChoice": {
           "title": "Les utilisateurs choisissent leur thème",
           "description": "Désactivé : tout le monde a le thème par défaut et les sélecteurs de thème sont masqués"
+        }
+      },
+      "Dashboard": {
+        "Global": {
+          "title": "Tableau de bord pour tous",
+          "description": "JSON : widgets masqués pour tous, places et tailles par id de widget, et version de la disposition. Réglé dans l'éditeur et avec Personnaliser pour tous sur l'accueil"
+        },
+        "Role": {
+          "title": "Tableau de bord du rôle",
+          "description": "JSON : les widgets que les utilisateurs de ce rôle ne voient pas ; masqué seulement si tous les rôles de l'utilisateur le masquent"
+        },
+        "User": {
+          "title": "Disposition du tableau de bord",
+          "description": "Places et tailles des widgets de l'accueil de l'utilisateur"
+        },
+        "AllowMove": {
+          "title": "Les utilisateurs peuvent déplacer les widgets",
+          "description": "Désactivé : chacun voit les places définies pour tous ; celles des utilisateurs reviennent à l'activation"
+        },
+        "AllowResize": {
+          "title": "Les utilisateurs peuvent redimensionner les widgets",
+          "description": "Désactivé : chacun voit les tailles définies pour tous ; celles des utilisateurs reviennent à l'activation"
         }
       }
     }

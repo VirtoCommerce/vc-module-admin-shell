@@ -13,6 +13,8 @@ export { default as PlatformUserSetPassword } from "./user-profile/set-password.
 export { default as PlatformLicense } from "./license/main.vue";
 export { default as PlatformMenuEditor } from "./menu/editor.vue";
 export { default as PlatformMenuEditorJson } from "./menu/json.vue";
+export { default as PlatformDashboardConfigurator } from "./dashboard/configurator.vue";
+export { default as PlatformDashboardEditorJson } from "./dashboard/json.vue";
 export { default as PlatformSecurityUsers } from "./security/users.vue";
 export { default as PlatformSecurityUserDetails } from "./security/user-details.vue";
 export { default as PlatformSecurityUserPassword } from "./security/user-password.vue";

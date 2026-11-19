@@ -77,6 +77,23 @@
         "FAILED": "Fehlgeschlagene Anmeldungen",
         "USERS": "Angemeldete Benutzer",
         "DISABLED": "Die Protokollierung von Anmeldungen ist ausgeschaltet"
+      },
+      "WIDGETS": "Widgets",
+      "CLOSE": "Schließen",
+      "CUSTOMIZE_ALL": "Für alle anpassen",
+      "PERMISSION": "Erfordert {permission}",
+      "NO_PERMISSION": "Alle",
+      "SAVE_FAILED": "Das Dashboard konnte nicht gespeichert werden",
+      "CHANGED_ELSEWHERE": "Jemand anderes hat das Dashboard inzwischen geändert. Aktualisieren Sie und nehmen Sie Ihre Änderungen erneut vor.",
+      "EVERYONE": {
+        "TITLE": "Startseite für alle anpassen",
+        "HINT": "Widgets verschieben, Größe ändern und ausblenden. Gespeichert ist dies der Start für alle; wer sein Layout geändert hat, behält es, außer Sie setzen es zurück.",
+        "RESET_USERS": "Eigene Layouts der Benutzer zurücksetzen",
+        "SAVE": "Für alle speichern",
+        "CANCEL": "Abbrechen",
+        "MODULE_DEFAULTS": "Layout der Module",
+        "SAVED": "Startseite für alle gespeichert",
+        "PANEL_TITLE": "Widgets für alle"
       }
     },
     "AUTH": {

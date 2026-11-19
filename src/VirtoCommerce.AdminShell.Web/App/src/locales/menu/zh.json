@@ -33,7 +33,8 @@
       "configuration_catalogSearch": "目录与搜索",
       "configuration_securityPrivacy": "安全与隐私",
       "configuration_dataFiles": "数据与文件",
-      "configuration_monitoringTools": "监控与工具"
+      "configuration_monitoringTools": "监控与工具",
+      "configuration_backOffice": "后台"
     },
     "ITEMS": {
       "home": "仪表板",
@@ -57,7 +58,7 @@
       "algolia": "Algolia Search",
       "appsearch": "App Search",
       "platform_settings": "设置",
-      "platform_menu": "Admin Shell 菜单编辑器",
+      "platform_menu": "菜单编辑器",
       "platform_security": "安全",
       "platform_modules": "模块",
       "platform_modules_browse": "浏览",
@@ -102,7 +103,8 @@
       "state_machines": "状态机",
       "stores": "商店",
       "subscriptions": "订阅",
-      "webhooks": "Webhook"
+      "webhooks": "Webhook",
+      "platform_dashboard": "仪表板编辑器"
     }
   }
 }

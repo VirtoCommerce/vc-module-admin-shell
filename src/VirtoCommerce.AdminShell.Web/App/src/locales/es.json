@@ -77,6 +77,23 @@
         "FAILED": "Inicios de sesión fallidos",
         "USERS": "Usuarios que iniciaron sesión",
         "DISABLED": "El registro de inicios de sesión está desactivado"
+      },
+      "WIDGETS": "Widgets",
+      "CLOSE": "Cerrar",
+      "CUSTOMIZE_ALL": "Personalizar para todos",
+      "PERMISSION": "Requiere {permission}",
+      "NO_PERMISSION": "Todos",
+      "SAVE_FAILED": "No se pudo guardar el panel",
+      "CHANGED_ELSEWHERE": "Otra persona cambió el panel mientras tanto. Actualice y vuelva a hacer sus cambios.",
+      "EVERYONE": {
+        "TITLE": "Personalizando el inicio para todos",
+        "HINT": "Mueva, cambie el tamaño y oculte widgets. Al guardar, así empiezan todos; quien cambió el suyo lo conserva salvo que lo restablezca.",
+        "RESET_USERS": "Restablecer los diseños de los usuarios",
+        "SAVE": "Guardar para todos",
+        "CANCEL": "Cancelar",
+        "MODULE_DEFAULTS": "Diseño de los módulos",
+        "SAVED": "Inicio guardado para todos",
+        "PANEL_TITLE": "Widgets para todos"
       }
     },
     "AUTH": {

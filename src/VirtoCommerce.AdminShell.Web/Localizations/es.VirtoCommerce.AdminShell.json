@@ -1,6 +1,7 @@
 {
   "permissions": {
-    "admin-shell:menu:manage": "Gestionar el menú de Admin Shell: el editor del menú, los niveles global y de rol, y lo que los usuarios pueden cambiar"
+    "admin-shell:menu:manage": "Gestionar el menú de Admin Shell: el editor del menú, los niveles global y de rol, y lo que los usuarios pueden cambiar",
+    "admin-shell:dashboard:manage": "Administrar el panel de Admin Shell: reglas del editor del panel, diseño para todos, qué pueden cambiar los usuarios"
   },
   "settings": {
     "AdminShell": {
@@ -106,6 +107,28 @@
         "UserChoice": {
           "title": "Los usuarios eligen su tema",
           "description": "Desactivado: todos tienen el tema predeterminado y los selectores de tema se ocultan"
+        }
+      },
+      "Dashboard": {
+        "Global": {
+          "title": "Panel para todos",
+          "description": "JSON: widgets ocultos para todos, lugares y tamaños por id de widget y la versión del diseño. Se fija en el editor del panel y con Personalizar para todos en el inicio"
+        },
+        "Role": {
+          "title": "Panel del rol",
+          "description": "JSON: los widgets que no ven los usuarios de este rol; se oculta solo si todos los roles del usuario lo ocultan"
+        },
+        "User": {
+          "title": "Diseño del panel",
+          "description": "Lugares y tamaños de los widgets del inicio del usuario"
+        },
+        "AllowMove": {
+          "title": "Los usuarios pueden mover widgets",
+          "description": "Desactivado: todos ven los lugares fijados para todos; los propios vuelven al activarlo"
+        },
+        "AllowResize": {
+          "title": "Los usuarios pueden cambiar el tamaño de widgets",
+          "description": "Desactivado: todos ven los tamaños fijados para todos; los propios vuelven al activarlo"
         }
       }
     }

@@ -14,9 +14,13 @@ An order open beside the Orders list, with its widgets (payments, shipments, add
 
 ![An order open beside the Orders list](docs/images/orders.jpg)
 
-The Admin Shell Menu Editor: sections and items to reorder, rename and hide, saved as the global menu patch.
+The Menu Editor: sections and items to reorder, rename and hide, saved as the global menu patch.
 
-![The Admin Shell Menu Editor](docs/images/menu-editor.jpg)
+![The Menu Editor](docs/images/menu-editor.jpg)
+
+The Dashboard Editor: every Home widget with its permission and who sees it; the pencil opens its rule (everyone, hidden from everyone, or hidden from selected roles). See the [scenarios](docs/dashboard-widgets.md#scenarios).
+
+![The Dashboard Editor](docs/images/dashboard-editor-rules.jpg)
 
 The sign-in page, with the installation's brand and a showcase of the platform.
 
@@ -29,7 +33,7 @@ The sign-in page, with the installation's brand and a showcase of the platform.
   * menu items open Vue screens, AngularJS screens (the classic admin in a persistent embedded frame), platform apps (embedded) or external links;
   * a default menu item opens its module's Vue screen once the module's Admin Shell plugin is installed, and its AngularJS screen until then, keeping its place, group, pins and user settings.
 * **Server-driven, layered menu:** the default menu (`default-menu.json`, installed apps, plugin contributions) → a global patch → role patches → each user's pins and hidden items. The result is filtered by permission, and a section or item stays visible when any role keeps it.
-* **Admin Shell Menu Editor (Configuration › Monitoring & Tools):** drag sections and items (mouse, touch or keyboard) to reorder them or move them to another section or group, rename (per language), hide, add sections and links, saved as the global patch; *Edit as JSON* to view, download, upload and edit the changes for backup and restore; choose what users may personalize (pin, hide, reorder: turning one off stops applying users' changes without deleting them); find the AngularJS admin's screens and add the ones the menu doesn't have.
+* **Menu Editor (Configuration › Back Office):** drag sections and items (mouse, touch or keyboard) to reorder them or move them to another section or group, rename (per language), hide, add sections and links, saved as the global patch; *Edit as JSON* to view, download, upload and edit the changes for backup and restore; choose what users may personalize (pin, hide, reorder: turning one off stops applying users' changes without deleting them); find the AngularJS admin's screens and add the ones the menu doesn't have.
 * **Nothing missing from the menu:** a workspace blade that no menu entry opens is listed in *More*, as is a contribution to a section the menu doesn't have.
 * **Translated menu:** section, group and item titles in 15 languages from the menu's own locale files (`App/src/locales/menu`), plugin keys and the platform's server texts; renames by language from the editor.
 * **Menu counters:** menu items show what waits (new orders, returns requested, reviews to moderate). Each module registers its counter from its plugin, and the shell polls them every minute while the tab is visible.
@@ -46,9 +50,10 @@ The sign-in page, with the installation's brand and a showcase of the platform.
   * each screen offers built-in views (*Locked accounts*, *Failed sign-ins*, *With errors*...) next to the views a user saves, which stay in that browser;
   * a table opts in with `search-bar`; other lists, module plugins included, keep the classic search header.
 * **Dashboard:**
-  * the host's and the modules' widgets on a draggable, resizable grid;
-  * the layout is saved per browser;
-  * *Reset layout* restores the defaults.
+  * the host's and the modules' widgets on a draggable, resizable grid, each shown only to users with its permission;
+  * layers as for the menu: for everyone (*Customize for everyone* on Home), per role, and each user's own places and sizes, kept on the server so they are the same in every browser;
+  * the Dashboard Editor (Configuration › Back Office, next to the Menu Editor): every widget with its permission and who sees it; the pencil opens its rule: everyone with the permission, hidden from everyone, or hidden from selected roles (a role without the widget's permission is greyed out). *Personalization*: what users may change (move, resize), *Customize the layout on Home*, *Reset users' layouts*. Toolbar: *Edit as JSON* (rules, layout and personalization as one document, roles by name) and *Undo all changes*;
+  * *Reset layout* restores the layout for everyone.
 * **Desktop and phone:**
   * a section rail and panel on desktop;
   * a top bar and drawer on phones;
@@ -96,6 +101,11 @@ See the platform's [Admin UI](https://github.com/VirtoCommerce/vc-platform/blob/
 | `AdminShell.Menu.Role` | Json (per role) | `{}` | A role's menu patch; an item is hidden only if every role of the user hides it |
 | `AdminShell.Menu.User` | Json (per user, hidden) | `{}` | The user's pinned and hidden items, set from the shell (and an item order, API only) |
 | `AdminShell.Menu.Recent` | Json (per user, hidden) | `[]` | Usage scores behind *Recent*, recorded by the shell |
+| `AdminShell.Dashboard.Global` | Json | `{}` | The dashboard for everyone: widgets hidden, places and sizes, and the layout version (see [Layers](docs/dashboard-widgets.md#layers)) |
+| `AdminShell.Dashboard.AllowMove` | Boolean | `true` | Users may move widgets |
+| `AdminShell.Dashboard.AllowResize` | Boolean | `true` | Users may resize widgets |
+| `AdminShell.Dashboard.Role` | Json (per role) | `{}` | The widgets a role's users don't need; hidden only if every role of the user hides it |
+| `AdminShell.Dashboard.User` | Json (per user, hidden) | `{}` | The user's places and sizes, set on Home |
 | `AdminShell.UI.Appearance` | ShortText (per user) | `dark` | Light, dark or the system's appearance; set in the user menu or the profile, and follows the user to every browser |
 | `AdminShell.UI.Theme` | ShortText (per user) | `virto` | The color theme: Virto, Warm, Blue or Indigo; set like the appearance |
 
@@ -106,6 +116,7 @@ A setting that isn't valid JSON is ignored, so one typo can't take the menu down
 | Permission | Description |
 |------------|-------------|
 | `admin-shell:menu:manage` | Read and change the global and role menu layers through the API |
+| `admin-shell:dashboard:manage` | Change the dashboard for everyone and per role, and what users may change on theirs |
 
 Who may open the Admin Shell is the platform's admin UI access policy, `VirtoCommerce:PlatformUI:Access` in the platform's appsettings (administrators, required permissions, account types, allowed and denied permission masks; https://github.com/VirtoCommerce/vc-platform/pull/3092), the same rules as the AngularJS admin. A user it denies sees an *Access denied* page with a button to sign in with another account.
 
@@ -197,6 +208,21 @@ Base route: `api/admin-shell/menu`
 | `PUT` | `/global` | Save the global menu patch (`admin-shell:menu:manage`) |
 | `GET` | `/roles/{roleId}` | Get a role's menu patch (`admin-shell:menu:manage`) |
 | `PUT` | `/roles/{roleId}` | Save a role's menu patch (`admin-shell:menu:manage`) |
+
+Base route: `api/admin-shell/dashboard`
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/` | Get the current user's dashboard: widgets hidden for the user, places and sizes for everyone and the user's own, what users may change |
+| `GET` | `/me` | Get the current user's own places and sizes |
+| `PUT` | `/me` | Save the current user's own places and sizes |
+| `GET` | `/global` | Get the dashboard for everyone (`admin-shell:dashboard:manage`) |
+| `PUT` | `/global` | Save the dashboard for everyone; `?resetUserLayouts=true` drops every user's own layout (`admin-shell:dashboard:manage`) |
+| `GET` | `/roles` | Get every role with its permissions and the widgets it hides, in one answer (`admin-shell:dashboard:manage`) |
+| `GET` | `/roles/{roleId}` | Get the widgets a role's users don't see; 404 for a role that doesn't exist (`admin-shell:dashboard:manage`) |
+| `PUT` | `/roles/{roleId}` | Save them (`admin-shell:dashboard:manage`) |
+| `GET` | `/personalization` | Get what users may change (`admin-shell:dashboard:manage`) |
+| `PUT` | `/personalization` | Save what users may change (`admin-shell:dashboard:manage`) |
 
 ## Build
 

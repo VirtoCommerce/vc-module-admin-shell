@@ -77,6 +77,23 @@
         "FAILED": "Accessi non riusciti",
         "USERS": "Utenti che hanno effettuato l'accesso",
         "DISABLED": "La registrazione degli accessi è disattivata"
+      },
+      "WIDGETS": "Widget",
+      "CLOSE": "Chiudi",
+      "CUSTOMIZE_ALL": "Personalizza per tutti",
+      "PERMISSION": "Richiede {permission}",
+      "NO_PERMISSION": "Tutti",
+      "SAVE_FAILED": "Impossibile salvare la dashboard",
+      "CHANGED_ELSEWHERE": "Qualcun altro ha modificato la dashboard nel frattempo. Aggiorna e ripeti le modifiche.",
+      "EVERYONE": {
+        "TITLE": "Personalizzazione della home per tutti",
+        "HINT": "Sposta, ridimensiona e nascondi i widget. Salvato, è il punto di partenza di tutti; chi ha cambiato il proprio lo mantiene, a meno che tu non lo reimposti.",
+        "RESET_USERS": "Reimposta i layout degli utenti",
+        "SAVE": "Salva per tutti",
+        "CANCEL": "Annulla",
+        "MODULE_DEFAULTS": "Layout dei moduli",
+        "SAVED": "Home salvata per tutti",
+        "PANEL_TITLE": "Widget per tutti"
       }
     },
     "AUTH": {

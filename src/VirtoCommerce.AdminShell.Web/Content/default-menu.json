@@ -92,10 +92,11 @@
       "groups": [
         { "id": "store", "title": "Store", "items": ["stores", "nativePaymentMethods", "notifications"] },
         { "id": "platform", "title": "Platform", "items": ["platform.settings", "platform.modules", "platform.dynamicProperties", "state-machines", "webhooks", "platform.license"] },
+        { "id": "backOffice", "title": "Back Office", "items": ["platform.menu", "platform.dashboard"] },
         { "id": "catalogSearch", "title": "Catalog & Search", "items": ["measures", "thumbnails", "search-index", "channels"] },
         { "id": "securityPrivacy", "title": "Security & Privacy", "items": ["platform.security", "audit-log", "gdpr"] },
         { "id": "dataFiles", "title": "Data & Files", "items": ["assets", "backup-restore", "generic-export", "environments-compare", "sql-queries"] },
-        { "id": "monitoringTools", "title": "Monitoring & Tools", "items": ["platform.developerTools", "appinsights", "platform.menu"] }
+        { "id": "monitoringTools", "title": "Monitoring & Tools", "items": ["platform.developerTools", "appinsights"] }
       ],
       "items": [
         { "id": "stores", "title": "Stores", "icon": "lucide-store", "priority": 100, "moduleId": "VirtoCommerce.Store", "permission": "store:access", "route": "/stores", "target": { "type": "legacy", "legacyUrl": "/workspace/store" }, "aliases": ["legacy.stores"] },
@@ -122,7 +123,8 @@
         { "id": "backup-restore", "title": "Backup & Restore", "icon": "lucide-database-backup", "priority": 1400, "moduleId": "VirtoCommerce.BackupRestore", "permission": "platform:backuprestore:access", "route": "/backup-restore", "target": { "type": "legacy", "legacyUrl": "/workspace/exportImport" }, "aliases": ["legacy.exportImport"] },
         { "id": "generic-export", "title": "Generic Export", "icon": "lucide-database", "priority": 1500, "moduleId": "VirtoCommerce.Export", "permission": "export:access", "route": "/generic-export", "target": { "type": "legacy", "legacyUrl": "/workspace/generic-export" }, "aliases": ["legacy.genericExport"] },
         { "id": "webhooks", "title": "Webhooks", "icon": "lucide-webhook", "priority": 1600, "moduleId": "VirtoCommerce.WebHooks", "permission": "webhooks:access", "route": "/webhooks" },
-        { "id": "platform.menu", "title": "Admin Shell Menu Editor", "icon": "lucide-panel-left", "priority": 2250, "permission": "admin-shell:menu:manage", "target": { "type": "vue", "route": "/menu-editor" } },
+        { "id": "platform.menu", "title": "Menu Editor", "icon": "lucide-panel-left", "priority": 2250, "permission": "admin-shell:menu:manage", "target": { "type": "vue", "route": "/menu-editor" } },
+        { "id": "platform.dashboard", "title": "Dashboard Editor", "icon": "lucide-layout-dashboard", "priority": 2260, "permission": "admin-shell:dashboard:manage", "target": { "type": "vue", "route": "/dashboard-configurator" } },
         { "id": "audit-log", "title": "Audit Log", "icon": "lucide-calendar", "priority": 1800, "moduleId": "VirtoCommerce.AuditLog", "permission": "AuditLog:access", "route": "/audit-log" },
         { "id": "gdpr", "title": "GDPR", "icon": "lucide-key-round", "priority": 1900, "moduleId": "VirtoCommerce.GDPR", "permission": "gdpr:access", "route": "/gdpr" },
         { "id": "platform.developerTools", "title": "Developer Tools", "icon": "lucide-terminal", "priority": 2000, "permission": "platform:developer-tools:access", "target": { "type": "vue", "route": "/developer-tools" } },

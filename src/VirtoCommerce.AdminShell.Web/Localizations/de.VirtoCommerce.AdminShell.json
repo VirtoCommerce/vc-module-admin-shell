@@ -1,6 +1,7 @@
 {
   "permissions": {
-    "admin-shell:menu:manage": "Menü der Admin Shell verwalten: Menü-Editor, globale und Rollenebene, was Benutzer ändern dürfen"
+    "admin-shell:menu:manage": "Menü der Admin Shell verwalten: Menü-Editor, globale und Rollenebene, was Benutzer ändern dürfen",
+    "admin-shell:dashboard:manage": "Admin-Shell-Dashboard verwalten: Regeln des Dashboard-Editors, Layout für alle, was Benutzer ändern dürfen"
   },
   "settings": {
     "AdminShell": {
@@ -106,6 +107,28 @@
         "UserChoice": {
           "title": "Benutzer wählen ihr Design",
           "description": "Aus: Alle haben das Standarddesign und die Designauswahl ist ausgeblendet"
+        }
+      },
+      "Dashboard": {
+        "Global": {
+          "title": "Dashboard für alle",
+          "description": "JSON: für alle ausgeblendete Widgets, Plätze und Größen nach Widget-ID und die Layoutversion. Im Dashboard-Editor und mit „Für alle anpassen“ auf der Startseite festgelegt"
+        },
+        "Role": {
+          "title": "Rollen-Dashboard",
+          "description": "JSON: die Widgets, die die Benutzer dieser Rolle nicht sehen; ausgeblendet nur, wenn alle Rollen des Benutzers es ausblenden"
+        },
+        "User": {
+          "title": "Dashboard-Layout",
+          "description": "Plätze und Größen der Startseiten-Widgets des Benutzers"
+        },
+        "AllowMove": {
+          "title": "Benutzer dürfen Widgets verschieben",
+          "description": "Aus: Alle sehen die für alle festgelegten Plätze; die eigenen Plätze der Benutzer gelten wieder, wenn dies an ist"
+        },
+        "AllowResize": {
+          "title": "Benutzer dürfen die Widget-Größe ändern",
+          "description": "Aus: Alle sehen die für alle festgelegten Größen; die eigenen Größen der Benutzer gelten wieder, wenn dies an ist"
         }
       }
     }

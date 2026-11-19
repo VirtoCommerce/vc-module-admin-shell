@@ -33,7 +33,8 @@
       "configuration_catalogSearch": "الكتالوج والبحث",
       "configuration_securityPrivacy": "الأمان والخصوصية",
       "configuration_dataFiles": "البيانات والملفات",
-      "configuration_monitoringTools": "المراقبة والأدوات"
+      "configuration_monitoringTools": "المراقبة والأدوات",
+      "configuration_backOffice": "المكتب الخلفي"
     },
     "ITEMS": {
       "home": "لوحة التحكم",
@@ -57,7 +58,7 @@
       "algolia": "Algolia Search",
       "appsearch": "App Search",
       "platform_settings": "الإعدادات",
-      "platform_menu": "محرر قائمة Admin Shell",
+      "platform_menu": "محرر القائمة",
       "platform_security": "الأمان",
       "platform_modules": "الوحدات",
       "platform_modules_browse": "استعراض",
@@ -102,7 +103,8 @@
       "state_machines": "آلات الحالة",
       "stores": "المتاجر",
       "subscriptions": "الاشتراكات",
-      "webhooks": "خطافات الويب"
+      "webhooks": "خطافات الويب",
+      "platform_dashboard": "محرر لوحة المعلومات"
     }
   }
 }
