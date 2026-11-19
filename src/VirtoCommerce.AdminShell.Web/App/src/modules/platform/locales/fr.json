@@ -81,12 +81,15 @@
         "ACCOUNT_TYPE": "Type de compte",
         "STATUS": "Statut",
         "ROLE": "Rôle",
-        "STATE": "État",
         "LOCKED": "Verrouillé",
-        "LOCKED_ONLY": "Verrouillés uniquement",
         "EMAIL_NOT_VERIFIED": "Email non vérifié",
         "LAST_LOGIN": "Dernière connexion",
-        "DELETE_CONFIRM": "Supprimer {count} utilisateur(s) sélectionné(s) ?"
+        "DELETE_CONFIRM": "Supprimer {count} utilisateur(s) sélectionné(s) ?",
+        "PRESETS": {
+          "LOCKED": "Comptes verrouillés",
+          "UNVERIFIED": "E-mail non vérifié",
+          "RECENT": "Connectés, 7 derniers jours"
+        }
       },
       "USER": {
         "NEW_TITLE": "Nouvel utilisateur",
@@ -233,7 +236,15 @@
         "URI_HTTP_LEGACY": "{uri} utilise HTTP pour une adresse qui n'est pas une adresse de bouclage. Il est conservé, mais un nouvel URI de ce type ne peut pas être ajouté.",
         "OTHER_PERMISSIONS": "Autres permissions",
         "OTHER_PERMISSIONS_HINT": "Permissions que cet écran ne modifie pas, conservées telles quelles. Les permissions des points de terminaison suivent les types d'octroi.",
-        "PERMISSION_PLACEHOLDER": "Saisissez une permission et appuyez sur Entrée"
+        "PERMISSION_PLACEHOLDER": "Saisissez une permission et appuyez sur Entrée",
+        "REGISTRATION": "Enregistrement",
+        "REGISTRATIONS": {
+          "SELF": "Auto-enregistrée",
+          "ADMINISTRATOR": "Par un administrateur",
+          "CLIENT_ID_METADATA_DOCUMENT": "Auto-enregistrée : document de métadonnées",
+          "DYNAMIC_REGISTRATION": "Auto-enregistrée : dynamique"
+        },
+        "SELF_REGISTERED_READONLY": "Cette application s'est enregistrée elle-même : elle suit son document de métadonnées ou son enregistrement et ne peut pas être modifiée ici. Supprimez-la pour déconnecter le client."
       },
       "SIGNIN": {
         "TITLE": "Journal des connexions",
@@ -283,6 +294,12 @@
           "storeName": "Boutique",
           "organizationName": "Organisation",
           "organizationId": "ID de l'organisation"
+        },
+        "SEARCH": "Rechercher par nom d'utilisateur",
+        "FAILURE_REASON": "Motif de l'échec",
+        "STORE": "Boutique",
+        "PRESETS": {
+          "FAILED": "Connexions échouées"
         }
       },
       "CHANGES": {

@@ -1,6 +1,7 @@
 // Platform and module endpoints used by the host's dashboard widgets (same-origin, cookie auth).
 import { DiagnosticsClient, type SystemInfo } from "@vc-shell/framework";
 import { request } from "../../api/http";
+import { regionalSettings } from "../regionalSettings";
 
 export type { SystemInfo };
 
@@ -25,4 +26,4 @@ export const criteriaDate = (date: Date) => date.toISOString().replace("Z", "");
 
 /** "Oct 12, 4:15 PM" (the design's alert/announcement timestamp). */
 export const formatWhen = (value?: string | Date) =>
-  value ? new Date(value).toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) : "";
+  regionalSettings.formatDate(value, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });

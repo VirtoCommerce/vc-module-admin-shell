@@ -15,6 +15,8 @@
       :items="visible"
       :total-count="visible.length"
       :searchable="true"
+      search-bar
+      :search-views="searchViews"
       :state-key="'PLATFORM_MODULES'"
       :active-item-id="activeId"
       :show-all-columns="!activeId"
@@ -44,7 +46,9 @@
         <template #body="{ data }">
           <div class="platform-module-cell">
             <span class="platform-module-cell__title">{{ data.title || data.id }}</span>
-            <span class="platform-module-cell__descr">{{ data.hasErrors ? data.validationErrors.join(" ") : data.description }}</span>
+            <span class="platform-module-cell__descr">{{
+              data.hasErrors ? data.validationErrors.join(" ") : data.description
+            }}</span>
           </div>
         </template>
       </VcColumn>
@@ -69,13 +73,14 @@
 </template>
 
 <script setup lang="ts">
-import { useAsync, useBlade, useBladeStack, type IBladeToolbar } from "@vc-shell/framework";
+import { useAsync, useBlade, useBladeStack, type IBladeToolbar, type SearchBarView } from "@vc-shell/framework";
 import { VcBlade, VcColumn, VcDataTable, VcStatus } from "@vc-shell/framework/ui";
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 import { refreshItem } from "../../composables/blade";
 import { useModules, type ModuleAction, type ModuleRow } from "../../composables/modules";
+import { tableFilters } from "../../composables/search";
 import { rootedUrl } from "../../../../utils/url";
 
 defineBlade({
@@ -126,6 +131,7 @@ watch(
 
 const keyword = ref("");
 const group = ref<string>();
+const errorsOnly = ref(false);
 const selection = ref<ModuleRow[]>([]);
 const activeId = ref<string>();
 
@@ -159,31 +165,41 @@ const visible = computed(() => {
   return modules.rows.value.filter(
     (m) =>
       inView(m, view.value) &&
+      (!errorsOnly.value || m.hasErrors) &&
       (!group.value || (m.groups?.length ? m.groups.includes(group.value) : group.value === "ungrouped")) &&
       (!text || [m.title, m.id, m.description].some((x) => x?.toLowerCase().includes(text))),
   );
 });
 
-const globalFilters = computed(() => [
-  {
-    id: "group",
-    label: t("PLATFORM.MODULES.GROUP"),
-    filter: {
-      options: [...new Set(modules.rows.value.flatMap((m) => (m.groups?.length ? m.groups : ["ungrouped"])))]
-        .sort()
-        .map((g) => ({ value: g, label: g })),
+const globalFilters = computed(() =>
+  tableFilters([
+    {
+      id: "group",
+      label: t("PLATFORM.MODULES.GROUP"),
+      filter: {
+        options: [...new Set(modules.rows.value.flatMap((m) => (m.groups?.length ? m.groups : ["ungrouped"])))]
+          .sort()
+          .map((g) => ({ value: g, label: g })),
+      },
     },
-  },
+    // the legacy tree's "With errors" node, as a filter and a view
+    { id: "errors", label: t("PLATFORM.MODULES.FILTERS.ERRORS"), filter: { toggle: true } },
+  ]),
+);
+const searchViews = computed<SearchBarView[]>(() => [
+  { id: "errors", name: t("PLATFORM.MODULES.FILTERS.ERRORS"), values: { errors: true } },
 ]);
 
 function onFilter(event: { filters: Record<string, unknown> }) {
   group.value = (event.filters.group as string) || undefined;
+  errorsOnly.value = !!event.filters.errors;
   selection.value = [];
 }
 
 function statusOf(m: ModuleRow): { variant: "success" | "warning" | "danger" | "info"; text: string } {
   if (m.hasErrors) return { variant: "danger", text: t("PLATFORM.MODULES.FILTERS.ERRORS") };
-  if (m.isInstalled && m.hasUpdate) return { variant: "warning", text: t("PLATFORM.MODULES.UPDATE_TO", { version: m.latestVersion }) };
+  if (m.isInstalled && m.hasUpdate)
+    return { variant: "warning", text: t("PLATFORM.MODULES.UPDATE_TO", { version: m.latestVersion }) };
   if (m.isInstalled) return { variant: "success", text: t("PLATFORM.MODULES.INSTALLED") };
   return { variant: "info", text: t("PLATFORM.MODULES.FILTERS.NOTINSTALLED") };
 }
@@ -220,7 +236,9 @@ const toolbar = ref<IBladeToolbar[]>([
     title: t("PLATFORM.MODULES.UNINSTALL"),
     icon: "lucide-trash-2",
     permissions: ["platform:module:manage"],
-    disabled: computed(() => !selection.value.length || selection.value.some((m) => !m.isInstalled || m.isRemovable === false)),
+    disabled: computed(
+      () => !selection.value.length || selection.value.some((m) => !m.isInstalled || m.isRemovable === false),
+    ),
     clickHandler: () => run("uninstall"),
   },
 ]);
@@ -234,5 +252,4 @@ exposeToChildren({ reload: () => load(false) });
   height: 32px;
   object-fit: contain;
 }
-
 </style>

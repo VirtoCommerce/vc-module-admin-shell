@@ -112,7 +112,7 @@
           v-model="values.TimeZone"
           :label="$t('PLATFORM.PROFILE.TIME_ZONE')"
           :placeholder="$t('PLATFORM.PROFILE.TIME_ZONE_AUTO', { zone: browserZone })"
-          :options="timeZones()"
+          :options="zones"
           searchable
         />
         <VcSwitch
@@ -174,7 +174,8 @@ import { api } from "../../api";
 import { ensureSucceeded } from "../../composables/security";
 import { colorTheme, colorThemeOptions, themeChoice, themeMode } from "../../../../shell/themeMode";
 import { loadUserSignInMethods } from "../../../../shell/signInMethods";
-import { browserZone, languageName, timeZones } from "./intl";
+import { regionalSettings } from "../../../../shell/regionalSettings";
+import { browserZone, browserZones, languageName, timeZones } from "./intl";
 
 defineBlade({
   url: "/user-profile",
@@ -253,6 +254,7 @@ const profile = ref<Profile>();
 const values = ref<Partial<Record<Field, unknown>>>({});
 const languages = ref<{ id: string; title: string }[]>([]);
 const regionalFormats = ref<{ id: string; title: string }[]>([]);
+const zones = ref<{ id: string; title: string }[]>([]);
 let saved = "";
 // true while loaded values are put in place: the language watch below applies only what the user picks
 let loadingValues = false;
@@ -319,10 +321,12 @@ const { loading: loadLoading, action: load } = useAsync(async () => {
   // shows what the session knows, read-only, and the rest of the profile still loads
   const me: UserDetail = user.value ?? {};
   const known = { userName: me.userName, memberId: me.memberId } as ApplicationUser;
-  const [result, locales, formats, record] = await Promise.all([
+  const [result, locales, formats, zoneIds, record] = await Promise.all([
     api<Profile>("GET", "/api/platform/profiles/currentuser"),
     api<string[]>("GET", "/api/platform/localization/locales"),
     api<string[]>("GET", "/api/platform/localization/regionalformats"),
+    // the platform's time zones (the same list as the AngularJS admin's); a platform without the list gets the browser's
+    api<string[]>("GET", "/api/platform/localization/timezones").catch(() => undefined),
     hasAccess("platform:security:query") && me.userName
       ? securityClient()
           .then((c) => c.getUserByName(me.userName!))
@@ -335,6 +339,7 @@ const { loading: loadLoading, action: load } = useAsync(async () => {
   profile.value = result;
   languages.value = (locales ?? []).map((code) => ({ id: code, title: languageName(code) }));
   regionalFormats.value = (formats ?? []).map((code) => ({ id: code, title: `${languageName(code, "en")} (${code})` }));
+  zones.value = timeZones(zoneIds?.length ? zoneIds : browserZones());
   // what is loaded is shown, not applied: the language field follows the UI's language when the profile has none (its
   // platform default would otherwise switch the UI, e.g. from a language picked on the sign-in page)
   loadingValues = true;
@@ -367,6 +372,10 @@ const { loading: saveLoading, action: save } = useAsync(async () => {
   const own = profile.value.settings.filter((s) => FIELDS.some((f) => s.name === PREFIX + f));
   await api("POST", "/api/platform/profiles/currentuser", { ...profile.value, settings: own });
   saved = snapshot;
+  // the regional format and time zone apply as soon as they are saved
+  const regionalFields: Field[] = ["RegionalFormat", "TimeZone"];
+  const changed = (f: Field) => JSON.stringify(values.value[f] ?? null) !== JSON.stringify(previous[f] ?? null);
+  if (regionalFields.some(changed)) void regionalSettings.reload();
 });
 
 const loading = useLoading(loadLoading, saveLoading, accountSaving);

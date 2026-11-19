@@ -13,9 +13,11 @@
       :pagination="pagination"
       :state-key="'PLATFORM_OAUTH_APPS'"
       :active-item-id="activeId"
+      :global-filters="globalFilters"
       :empty-state="{ icon: 'lucide-app-window', title: $t('PLATFORM.SECURITY.OAUTH.EMPTY') }"
       @row-click="(e: { data: AppRow }) => openApp(e.data)"
       @pagination-click="pagination.goToPage"
+      @filter="onFilter"
     >
       <VcColumn
         id="displayName"
@@ -30,6 +32,24 @@
         id="clientType"
         :title="$t('PLATFORM.SECURITY.OAUTH.CLIENT_TYPE')"
       />
+      <VcColumn
+        id="registration"
+        :title="$t('PLATFORM.SECURITY.OAUTH.REGISTRATION')"
+      >
+        <template #body="{ data }">
+          <div
+            v-if="isSelfRegistered(data)"
+            class="tw-inline-flex platform-badges"
+          >
+            <VcStatus
+              variant="warning"
+              :title="registrationTitle(data)"
+            >
+              {{ $t("PLATFORM.SECURITY.OAUTH.REGISTRATIONS.SELF") }}
+            </VcStatus>
+          </div>
+        </template>
+      </VcColumn>
     </VcDataTable>
   </VcBlade>
 </template>
@@ -40,17 +60,16 @@ import {
   useApiClient,
   useAsync,
   useBlade,
-  useDataTablePagination,
   useLoading,
   usePopup,
   type IBladeToolbar,
-  type OpenIddictApplicationDescriptor,
 } from "@vc-shell/framework";
-import { VcBlade, VcColumn, VcDataTable } from "@vc-shell/framework/ui";
-import { computed, ref, watch } from "vue";
+import { VcBlade, VcColumn, VcDataTable, VcStatus } from "@vc-shell/framework/ui";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { refreshItem } from "../../composables/blade";
-import { PAGE_SIZE } from "../../composables/list";
+import { PAGE_SIZE, useSearchableList } from "../../composables/list";
+import { isSelfRegistered, registrationOf, selfRegisteredFilter, type OAuthApp } from "../../composables/oauth-apps";
 
 defineBlade({
   url: "/oauth-apps",
@@ -58,7 +77,7 @@ defineBlade({
   permissions: ["platform:security:access"],
 });
 
-type AppRow = OpenIddictApplicationDescriptor & { id: string };
+type AppRow = OAuthApp & { id: string };
 
 const { t } = useI18n({ useScope: "global" });
 const { openBlade, exposeToChildren } = useBlade();
@@ -66,14 +85,26 @@ const { showConfirmation } = usePopup();
 const { getApiClient } = useApiClient(OAuthAppsClient);
 
 const apps = ref<AppRow[]>([]);
-const totalCount = ref(0);
 const selection = ref<AppRow[]>([]);
 const activeId = ref<string>();
-const pagination = useDataTablePagination({ stateKey: "PLATFORM_OAUTH_APPS", pageSize: PAGE_SIZE, totalCount });
+const selfRegistered = ref<boolean>();
+
+const { totalCount, pagination } = useSearchableList({
+  stateKey: "PLATFORM_OAUTH_APPS",
+  load: () => load(),
+  resetOn: [selfRegistered],
+});
 
 const { loading: searchLoading, action: load } = useAsync(async () => {
-  const result = await (await getApiClient()).search({ sort: "DisplayName:ASC", skip: pagination.skip, take: PAGE_SIZE });
-  apps.value = (result.results ?? []).map((x) => ({ ...x, id: x.clientId! }));
+  // selfRegistered is newer than the generated criteria type
+  const criteria = {
+    sort: "DisplayName:ASC",
+    skip: pagination.skip,
+    take: PAGE_SIZE,
+    selfRegistered: selfRegistered.value,
+  };
+  const result = await (await getApiClient()).search(criteria);
+  apps.value = (result.results ?? []).map((x) => ({ ...(x as OAuthApp), id: x.clientId! }));
   totalCount.value = result.totalCount ?? 0;
 });
 
@@ -83,8 +114,30 @@ const { loading: deleteLoading, action: remove } = useAsync<string[]>(async (cli
 
 const loading = useLoading(searchLoading, deleteLoading);
 
+function registrationTitle(app: OAuthApp) {
+  const type = registrationOf(app);
+  return type ? t(`PLATFORM.SECURITY.OAUTH.REGISTRATIONS.${type.toUpperCase()}`) : undefined;
+}
+
+const globalFilters = computed(() => [
+  {
+    id: "registration",
+    label: t("PLATFORM.SECURITY.OAUTH.REGISTRATION"),
+    filter: {
+      options: [
+        { value: "self", label: t("PLATFORM.SECURITY.OAUTH.REGISTRATIONS.SELF") },
+        { value: "administrator", label: t("PLATFORM.SECURITY.OAUTH.REGISTRATIONS.ADMINISTRATOR") },
+      ],
+    },
+  },
+]);
+
+function onFilter(event: { filters: Record<string, unknown> }) {
+  selfRegistered.value = selfRegisteredFilter(event.filters.registration);
+  selection.value = [];
+}
+
 load();
-watch(() => pagination.skip, () => load());
 
 // the details blade reads the row's application again; without a row it starts a new one
 function openApp(app?: AppRow) {

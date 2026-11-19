@@ -15,6 +15,8 @@
       :total-count="totalCount"
       :pagination="pagination"
       :searchable="true"
+      search-bar
+      :search-views="searchViews"
       :state-key="'PLATFORM_USERS'"
       :active-item-id="activeId"
       :show-all-columns="!activeId"
@@ -86,12 +88,14 @@ import {
   usePopup,
   type ApplicationUser,
   type IBladeToolbar,
+  type SearchBarView,
 } from "@vc-shell/framework";
 import { VcBlade, VcColumn, VcDataTable, VcStatus } from "@vc-shell/framework/ui";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { refreshItem } from "../../composables/blade";
 import { PAGE_SIZE, useSearchableList } from "../../composables/list";
+import { dayRange, tableFilters } from "../../composables/search";
 import { ensureSucceeded, useSecurityLookups } from "../../composables/security";
 
 defineBlade({
@@ -133,6 +137,7 @@ const isLocked = (u: ApplicationUser) => !!u.lockoutEnd && new Date(u.lockoutEnd
 const { loading: searchLoading, action: load } = useAsync(async () => {
   const f = filters.value;
   const flags = (f.flags as string[] | undefined) ?? [];
+  const lastLogin = dayRange(f.loginStartDate, f.loginEndDate);
   const result = await (
     await getApiClient()
   ).searchUsers({
@@ -145,8 +150,8 @@ const { loading: searchLoading, action: load } = useAsync(async () => {
     roles: f.role ? [f.role as string] : undefined,
     onlyLocked: flags.includes("locked") || undefined,
     emailConfirmed: flags.includes("unverified") ? false : undefined,
-    loginStartDate: f.loginStartDate ? new Date(f.loginStartDate as string) : undefined,
-    loginEndDate: f.loginEndDate ? new Date(f.loginEndDate as string) : undefined,
+    loginStartDate: lastLogin.from,
+    loginEndDate: lastLogin.to,
   });
   users.value = result.results ?? [];
   totalCount.value = result.totalCount ?? 0;
@@ -160,30 +165,44 @@ const { loading: deleteLoading, action: remove } = useAsync<string[]>(async (nam
 
 const loading = useLoading(searchLoading, deleteLoading);
 
-const globalFilters = computed(() => [
-  { id: "userType", label: t("PLATFORM.SECURITY.USERS.ACCOUNT_TYPE"), filter: { options: lookups.accountTypes.value.map((x) => ({ value: x.id, label: x.title })) } },
-  { id: "status", label: t("PLATFORM.SECURITY.USERS.STATUS"), filter: { options: lookups.accountStatuses.value.map((x) => ({ value: x.id, label: x.title })) } },
-  { id: "role", label: t("PLATFORM.SECURITY.USERS.ROLE"), filter: { options: lookups.roles.value.map((r) => ({ value: r.name!, label: r.name! })) } },
-  {
-    id: "flags",
-    label: t("PLATFORM.SECURITY.USERS.STATE"),
-    filter: {
-      multiple: true,
-      options: [
-        { value: "locked", label: t("PLATFORM.SECURITY.USERS.LOCKED_ONLY") },
-        { value: "unverified", label: t("PLATFORM.SECURITY.USERS.EMAIL_NOT_VERIFIED") },
-      ],
+const globalFilters = computed(() =>
+  tableFilters([
+    {
+      id: "status",
+      label: t("PLATFORM.SECURITY.USERS.STATUS"),
+      filter: { options: lookups.accountStatuses.value.map((x) => ({ value: x.id, label: x.title })) },
     },
-  },
-  { id: "lastLogin", label: t("PLATFORM.SECURITY.USERS.LAST_LOGIN"), filter: { range: ["loginStartDate", "loginEndDate"] as [string, string] } },
+    {
+      id: "role",
+      label: t("PLATFORM.SECURITY.USERS.ROLE"),
+      filter: { options: lookups.roles.value.map((r) => ({ value: r.name!, label: r.name! })) },
+    },
+    {
+      id: "lastLogin",
+      label: t("PLATFORM.SECURITY.USERS.LAST_LOGIN"),
+      filter: { range: ["loginStartDate", "loginEndDate"] as [string, string] },
+    },
+    // yes/no states as their own filters ("Locked")
+    {
+      id: "userType",
+      label: t("PLATFORM.SECURITY.USERS.ACCOUNT_TYPE"),
+      filter: { options: lookups.accountTypes.value.map((x) => ({ value: x.id, label: x.title })) },
+    },
+    { id: "locked", label: t("PLATFORM.SECURITY.USERS.LOCKED"), filter: { toggle: true } },
+    { id: "unverified", label: t("PLATFORM.SECURITY.USERS.EMAIL_NOT_VERIFIED"), filter: { toggle: true } },
+  ]),
+);
+
+// the views the list offers everyone: the accounts an administrator checks most
+const searchViews = computed<SearchBarView[]>(() => [
+  { id: "locked", name: t("PLATFORM.SECURITY.USERS.PRESETS.LOCKED"), values: { locked: true } },
+  { id: "unverified", name: t("PLATFORM.SECURITY.USERS.PRESETS.UNVERIFIED"), values: { unverified: true } },
+  { id: "recent", name: t("PLATFORM.SECURITY.USERS.PRESETS.RECENT"), values: { lastLogin: { relative: "7d" } } },
 ]);
 
 function onFilter(event: { filters: Record<string, unknown> }) {
-  const flags = event.filters.flags;
-  let flagList: unknown[] = [];
-  if (Array.isArray(flags)) flagList = flags;
-  else if (flags) flagList = [flags];
-  filters.value = { ...event.filters, flags: flagList };
+  const { locked, unverified, ...rest } = event.filters;
+  filters.value = { ...rest, flags: [locked && "locked", unverified && "unverified"].filter(Boolean) };
 }
 
 load();
@@ -227,4 +246,3 @@ const toolbar = ref<IBladeToolbar[]>([
 
 exposeToChildren({ reload: () => load() });
 </script>
-

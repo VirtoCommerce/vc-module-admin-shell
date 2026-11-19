@@ -23,6 +23,8 @@ import { installModules } from "./shell/modules";
 import { installSharedWidgets } from "./shell/sharedWidgets";
 // sign-in methods: module plugins add theirs (a passkey) through the app ($signInMethods)
 import { installSignInMethods } from "./shell/signInMethods";
+// the user's regional format and time zone for dates and numbers ($regional)
+import { installRegionalSettings } from "./shell/regionalSettings";
 // white-labeling: the brand, the sign-in page, Home's welcome card, the theme files
 import { loadBranding } from "./shell/branding";
 // unsaved changes on a screen are asked about before the shell leaves it
@@ -62,6 +64,7 @@ async function startApp() {
   installModules(app);
   installSharedWidgets(app);
   installSignInMethods(app);
+  installRegionalSettings(app);
 
   app.use(router);
 

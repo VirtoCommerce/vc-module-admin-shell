@@ -81,12 +81,15 @@
         "ACCOUNT_TYPE": "账户类型",
         "STATUS": "状态",
         "ROLE": "角色",
-        "STATE": "状态",
         "LOCKED": "已锁定",
-        "LOCKED_ONLY": "仅已锁定",
         "EMAIL_NOT_VERIFIED": "电子邮件未验证",
         "LAST_LOGIN": "最后登录",
-        "DELETE_CONFIRM": "删除选中的 {count} 个用户？"
+        "DELETE_CONFIRM": "删除选中的 {count} 个用户？",
+        "PRESETS": {
+          "LOCKED": "已锁定的账户",
+          "UNVERIFIED": "邮箱未验证",
+          "RECENT": "最近 7 天登录过"
+        }
       },
       "USER": {
         "NEW_TITLE": "新用户",
@@ -233,7 +236,15 @@
         "URI_HTTP_LEGACY": "{uri} 对非环回地址使用 HTTP。该 URI 会被保留，但无法添加新的同类 URI。",
         "OTHER_PERMISSIONS": "其他权限",
         "OTHER_PERMISSIONS_HINT": "此界面不编辑的权限将保持不变。端点权限由授权类型决定。",
-        "PERMISSION_PLACEHOLDER": "输入权限后按 Enter"
+        "PERMISSION_PLACEHOLDER": "输入权限后按 Enter",
+        "REGISTRATION": "注册方式",
+        "REGISTRATIONS": {
+          "SELF": "自行注册",
+          "ADMINISTRATOR": "由管理员注册",
+          "CLIENT_ID_METADATA_DOCUMENT": "自行注册：元数据文档",
+          "DYNAMIC_REGISTRATION": "自行注册：动态注册"
+        },
+        "SELF_REGISTERED_READONLY": "此应用程序为自行注册：它遵循其元数据文档或注册信息，因此无法在此更改。删除它即可断开该客户端。"
       },
       "SIGNIN": {
         "TITLE": "登录日志",
@@ -283,6 +294,12 @@
           "storeName": "商店",
           "organizationName": "组织",
           "organizationId": "组织 ID"
+        },
+        "SEARCH": "按用户名搜索",
+        "FAILURE_REASON": "失败原因",
+        "STORE": "商店",
+        "PRESETS": {
+          "FAILED": "登录失败"
         }
       },
       "CHANGES": {

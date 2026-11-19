@@ -81,12 +81,15 @@
         "ACCOUNT_TYPE": "Kontotyp",
         "STATUS": "Status",
         "ROLE": "Rolle",
-        "STATE": "Zustand",
         "LOCKED": "Gesperrt",
-        "LOCKED_ONLY": "Nur gesperrte",
         "EMAIL_NOT_VERIFIED": "E-Mail nicht bestätigt",
         "LAST_LOGIN": "Letzte Anmeldung",
-        "DELETE_CONFIRM": "{count} ausgewählte(n) Benutzer löschen?"
+        "DELETE_CONFIRM": "{count} ausgewählte(n) Benutzer löschen?",
+        "PRESETS": {
+          "LOCKED": "Gesperrte Konten",
+          "UNVERIFIED": "E-Mail nicht bestätigt",
+          "RECENT": "Angemeldet, letzte 7 Tage"
+        }
       },
       "USER": {
         "NEW_TITLE": "Neuer Benutzer",
@@ -233,7 +236,15 @@
         "URI_HTTP_LEGACY": "{uri} verwendet HTTP für eine Adresse, die keine Loopback-Adresse ist. Der URI bleibt erhalten, aber ein neuer dieser Art kann nicht hinzugefügt werden.",
         "OTHER_PERMISSIONS": "Weitere Berechtigungen",
         "OTHER_PERMISSIONS_HINT": "Berechtigungen, die dieser Bildschirm nicht bearbeitet, bleiben unverändert. Endpunkt-Berechtigungen richten sich nach den Grant-Typen.",
-        "PERMISSION_PLACEHOLDER": "Berechtigung eingeben und Enter drücken"
+        "PERMISSION_PLACEHOLDER": "Berechtigung eingeben und Enter drücken",
+        "REGISTRATION": "Registrierung",
+        "REGISTRATIONS": {
+          "SELF": "Selbst registriert",
+          "ADMINISTRATOR": "Durch einen Administrator",
+          "CLIENT_ID_METADATA_DOCUMENT": "Selbst registriert: Metadatendokument",
+          "DYNAMIC_REGISTRATION": "Selbst registriert: dynamisch"
+        },
+        "SELF_REGISTERED_READONLY": "Diese Anwendung hat sich selbst registriert: Sie folgt ihrem Metadatendokument oder ihrer Registrierung und kann hier nicht geändert werden. Löschen Sie sie, um den Client zu trennen."
       },
       "SIGNIN": {
         "TITLE": "Anmeldeprotokoll",
@@ -283,6 +294,12 @@
           "storeName": "Shop",
           "organizationName": "Organisation",
           "organizationId": "Organisations-ID"
+        },
+        "SEARCH": "Nach Benutzername suchen",
+        "FAILURE_REASON": "Fehlergrund",
+        "STORE": "Shop",
+        "PRESETS": {
+          "FAILED": "Fehlgeschlagene Anmeldungen"
         }
       },
       "CHANGES": {

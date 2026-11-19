@@ -5,10 +5,13 @@ import { afterEach, test } from "node:test";
 import {
   findApp,
   hasGrantType,
+  isSelfRegistered,
   otherPermissions,
+  registrationOf,
   requiresPkce,
   resourcesOf,
   saveApp,
+  selfRegisteredFilter,
   setPermission,
   setPkce,
   setResources,
@@ -94,6 +97,32 @@ test("other permissions are those the form doesn't edit or derive", () => {
   ]);
 });
 
+const registrations: OAuthApp[] = [
+  { properties: { vc_registration: "client_id_metadata_document" } },
+  { properties: { vc_registration: "dynamic_registration" } },
+  { properties: { vc_registration: "something else" } },
+  { properties: { vc_registration: "" } },
+  { properties: { vc_registration: 1 } },
+  { properties: {} },
+  {},
+];
+
+test("registrationOf reads only known registration types from vc_registration", () => {
+  assert.deepEqual(registrations.map(registrationOf), [
+    "client_id_metadata_document",
+    "dynamic_registration",
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+  ]);
+});
+
+test("isSelfRegistered is true for any non-empty vc_registration string", () => {
+  assert.deepEqual(registrations.map(isSelfRegistered), [true, true, true, false, false, false, false]);
+});
+
 test("PKCE is the ft:pkce requirement", () => {
   const app: OAuthApp = { requirements: ["ft:other"] };
 
@@ -110,6 +139,19 @@ test("findApp reads the application by client id and answers undefined for an un
 
   serve(404);
   assert.equal(await findApp("missing"), undefined);
+});
+
+test("findApp encodes slashes of URL client id", async () => {
+  const calls = serve(200, { clientId: "https://agent.example.com/client.json" });
+  await findApp("https://agent.example.com/client.json");
+  assert.equal(calls[0].url, "/api/platform/oauthapps/https%3A%2F%2Fagent.example.com%2Fclient.json");
+});
+
+test("Registration filter maps to selfRegistered criterion", () => {
+  assert.equal(selfRegisteredFilter("self"), true);
+  assert.equal(selfRegisteredFilter("administrator"), false);
+  assert.equal(selfRegisteredFilter(undefined), undefined);
+  assert.equal(selfRegisteredFilter(""), undefined);
 });
 
 test("saveApp posts the application and throws with the platform's reasons", async () => {

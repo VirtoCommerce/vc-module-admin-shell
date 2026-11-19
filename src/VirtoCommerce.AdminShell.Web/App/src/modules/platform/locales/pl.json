@@ -81,12 +81,15 @@
         "ACCOUNT_TYPE": "Typ konta",
         "STATUS": "Status",
         "ROLE": "Rola",
-        "STATE": "Stan",
-        "LOCKED": "Zablokowany",
-        "LOCKED_ONLY": "Tylko zablokowani",
+        "LOCKED": "Zablokowane",
         "EMAIL_NOT_VERIFIED": "Email niezweryfikowany",
         "LAST_LOGIN": "Ostatnie logowanie",
-        "DELETE_CONFIRM": "Usunąć zaznaczonych użytkowników ({count})?"
+        "DELETE_CONFIRM": "Usunąć zaznaczonych użytkowników ({count})?",
+        "PRESETS": {
+          "LOCKED": "Zablokowane konta",
+          "UNVERIFIED": "E-mail niezweryfikowany",
+          "RECENT": "Logowanie w ostatnich 7 dniach"
+        }
       },
       "USER": {
         "NEW_TITLE": "Nowy użytkownik",
@@ -233,7 +236,15 @@
         "URI_HTTP_LEGACY": "{uri} używa HTTP dla adresu, który nie jest adresem loopback. Zostaje zachowany, ale nie można dodać nowego takiego URI.",
         "OTHER_PERMISSIONS": "Inne uprawnienia",
         "OTHER_PERMISSIONS_HINT": "Uprawnienia, których ten ekran nie edytuje, pozostają bez zmian. Uprawnienia punktów końcowych wynikają z typów grantów.",
-        "PERMISSION_PLACEHOLDER": "Wpisz uprawnienie i naciśnij Enter"
+        "PERMISSION_PLACEHOLDER": "Wpisz uprawnienie i naciśnij Enter",
+        "REGISTRATION": "Rejestracja",
+        "REGISTRATIONS": {
+          "SELF": "Zarejestrowana samodzielnie",
+          "ADMINISTRATOR": "Przez administratora",
+          "CLIENT_ID_METADATA_DOCUMENT": "Zarejestrowana samodzielnie: dokument metadanych",
+          "DYNAMIC_REGISTRATION": "Zarejestrowana samodzielnie: dynamicznie"
+        },
+        "SELF_REGISTERED_READONLY": "Ta aplikacja zarejestrowała się samodzielnie: podąża za swoim dokumentem metadanych lub rejestracją, więc nie można jej tu zmienić. Usuń ją, aby odłączyć klienta."
       },
       "SIGNIN": {
         "TITLE": "Dziennik logowań",
@@ -283,6 +294,12 @@
           "storeName": "Sklep",
           "organizationName": "Organizacja",
           "organizationId": "ID organizacji"
+        },
+        "SEARCH": "Szukaj po nazwie użytkownika",
+        "FAILURE_REASON": "Przyczyna niepowodzenia",
+        "STORE": "Sklep",
+        "PRESETS": {
+          "FAILED": "Nieudane logowania"
         }
       },
       "CHANGES": {

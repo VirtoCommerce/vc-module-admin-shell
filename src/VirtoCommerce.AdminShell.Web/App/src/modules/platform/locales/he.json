@@ -81,12 +81,15 @@
         "ACCOUNT_TYPE": "סוג חשבון",
         "STATUS": "סטטוס",
         "ROLE": "תפקיד",
-        "STATE": "מצב",
         "LOCKED": "נעול",
-        "LOCKED_ONLY": "נעולים בלבד",
         "EMAIL_NOT_VERIFIED": "הדוא״ל לא אומת",
         "LAST_LOGIN": "כניסה אחרונה",
-        "DELETE_CONFIRM": "האם למחוק את המשתמשים שנבחרו ({count})?"
+        "DELETE_CONFIRM": "האם למחוק את המשתמשים שנבחרו ({count})?",
+        "PRESETS": {
+          "LOCKED": "חשבונות נעולים",
+          "UNVERIFIED": "דוא\"ל לא אומת",
+          "RECENT": "התחברו ב-7 הימים האחרונים"
+        }
       },
       "USER": {
         "NEW_TITLE": "משתמש חדש",
@@ -233,7 +236,15 @@
         "URI_HTTP_LEGACY": "{uri} משתמש ב-HTTP לכתובת שאינה כתובת loopback. הוא נשמר, אך לא ניתן להוסיף חדש כמותו.",
         "OTHER_PERMISSIONS": "הרשאות אחרות",
         "OTHER_PERMISSIONS_HINT": "הרשאות שמסך זה אינו עורך נשמרות כפי שהן. הרשאות נקודות הקצה נקבעות לפי סוגי ההענקה.",
-        "PERMISSION_PLACEHOLDER": "יש להקליד הרשאה וללחוץ Enter"
+        "PERMISSION_PLACEHOLDER": "יש להקליד הרשאה וללחוץ Enter",
+        "REGISTRATION": "רישום",
+        "REGISTRATIONS": {
+          "SELF": "נרשם בעצמו",
+          "ADMINISTRATOR": "על ידי מנהל",
+          "CLIENT_ID_METADATA_DOCUMENT": "נרשם בעצמו: מסמך מטא-נתונים",
+          "DYNAMIC_REGISTRATION": "נרשם בעצמו: דינמי"
+        },
+        "SELF_REGISTERED_READONLY": "היישום הזה נרשם בעצמו: הוא פועל לפי מסמך המטא-נתונים או הרישום שלו, ולכן לא ניתן לשנות אותו כאן. מחקו אותו כדי לנתק את הלקוח."
       },
       "SIGNIN": {
         "TITLE": "יומן כניסות",
@@ -283,6 +294,12 @@
           "storeName": "חנות",
           "organizationName": "ארגון",
           "organizationId": "מזהה ארגון"
+        },
+        "SEARCH": "חיפוש לפי שם משתמש",
+        "FAILURE_REASON": "סיבת הכישלון",
+        "STORE": "חנות",
+        "PRESETS": {
+          "FAILED": "התחברויות שנכשלו"
         }
       },
       "CHANGES": {

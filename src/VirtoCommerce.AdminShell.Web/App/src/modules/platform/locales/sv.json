@@ -81,12 +81,15 @@
         "ACCOUNT_TYPE": "Kontotyp",
         "STATUS": "Status",
         "ROLE": "Roll",
-        "STATE": "Tillstånd",
         "LOCKED": "Låst",
-        "LOCKED_ONLY": "Endast låsta",
         "EMAIL_NOT_VERIFIED": "E-posten är inte verifierad",
         "LAST_LOGIN": "Senaste inloggning",
-        "DELETE_CONFIRM": "Ta bort {count} markerade användare?"
+        "DELETE_CONFIRM": "Ta bort {count} markerade användare?",
+        "PRESETS": {
+          "LOCKED": "Låsta konton",
+          "UNVERIFIED": "E-post ej verifierad",
+          "RECENT": "Inloggade, senaste 7 dagarna"
+        }
       },
       "USER": {
         "NEW_TITLE": "Ny användare",
@@ -233,7 +236,15 @@
         "URI_HTTP_LEGACY": "{uri} använder HTTP för en adress som inte är en loopback-adress. Den behålls, men en ny av samma slag kan inte läggas till.",
         "OTHER_PERMISSIONS": "Andra behörigheter",
         "OTHER_PERMISSIONS_HINT": "Behörigheter som den här vyn inte redigerar behålls som de är. Slutpunktsbehörigheter följer beviljandetyperna.",
-        "PERMISSION_PLACEHOLDER": "Skriv en behörighet och tryck på Enter"
+        "PERMISSION_PLACEHOLDER": "Skriv en behörighet och tryck på Enter",
+        "REGISTRATION": "Registrering",
+        "REGISTRATIONS": {
+          "SELF": "Självregistrerad",
+          "ADMINISTRATOR": "Av en administratör",
+          "CLIENT_ID_METADATA_DOCUMENT": "Självregistrerad: metadatadokument",
+          "DYNAMIC_REGISTRATION": "Självregistrerad: dynamisk"
+        },
+        "SELF_REGISTERED_READONLY": "Den här applikationen registrerade sig själv: den följer sitt metadatadokument eller sin registrering och kan inte ändras här. Ta bort den för att koppla från klienten."
       },
       "SIGNIN": {
         "TITLE": "Inloggningslogg",
@@ -283,6 +294,12 @@
           "storeName": "Butik",
           "organizationName": "Organisation",
           "organizationId": "Organisations-ID"
+        },
+        "SEARCH": "Sök på användarnamn",
+        "FAILURE_REASON": "Orsak till fel",
+        "STORE": "Butik",
+        "PRESETS": {
+          "FAILED": "Misslyckade inloggningar"
         }
       },
       "CHANGES": {
