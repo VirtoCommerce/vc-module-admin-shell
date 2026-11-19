@@ -41,6 +41,10 @@ The sign-in page, with the installation's brand and a showcase of the platform.
   * slow groups don't hold back the others;
   * a group that fails or takes over 8 seconds shows *Search failed* with *Retry*.
 * **Platform screens in Vue:** Settings, Security, Modules, Dynamic properties, Developer tools, License and the user profile ship with the host.
+* **Search and filter bar:** Users, Sign-in log, Modules, Settings and Dynamic properties search and filter through vc-shell's `VcSearchBar`.
+  * applied filters are chips you change or remove in one click, kept in the blade URL (`<state-key>_filters`, `<state-key>_view`), so a link or a reload opens the same list;
+  * each screen offers built-in views (*Locked accounts*, *Failed sign-ins*, *With errors*...) next to the views a user saves, which stay in that browser;
+  * a table opts in with `search-bar`; other lists, module plugins included, keep the classic search header.
 * **Dashboard:**
   * the host's and the modules' widgets on a draggable, resizable grid;
   * the layout is saved per browser;
@@ -198,7 +202,8 @@ Base route: `api/admin-shell/menu`
 
 * **Server:** `dotnet build`.
 * **Host app:** in `src/VirtoCommerce.AdminShell.Web/App`, run `yarn install` and `yarn build:app`, then copy `dist` to `../Content/admin-shell`; vc-build's `BuildCustomApp` does this in CI. Unit tests of the host app's scripts: `yarn test` (Node's test runner, no browser).
-* The host applies one fix to `@vc-shell/framework` 2.7.0 through a Yarn patch in `App/.yarn/patches`: the phone back button is one named button, not a button inside a button.
+* The host uses `@vc-shell/framework` `2.11.0-pr410.b85d2c7`, a preview of [vc-shell#410](https://github.com/VirtoCommerce/vc-shell/pull/410) (the search bar), until a vc-shell release includes it.
+* The host applies one fix to `@vc-shell/framework` through a Yarn patch in `App/.yarn/patches`: the phone back button is one named button, not a button inside a button. Re-make the patch when the framework version changes.
 
 ## Documentation
 
