@@ -308,6 +308,7 @@ import { VcIcon } from "@vc-shell/framework/ui";
 import { computed, nextTick, reactive, ref, watch } from "vue";
 import { globalSearch, highlight, type SearchGroup, type SearchProvider } from "./globalSearch";
 import type { SearchBox } from "./useSearchBox";
+import { regionalSettings } from "../regionalSettings";
 
 const props = defineProps<{ box: SearchBox; listId: string; sheet?: boolean }>();
 
@@ -328,8 +329,7 @@ const entryOf = (group: SearchGroup, id: string) => props.box.entries.value.find
 const optionId = (group: SearchGroup, id: string) =>
   `${props.listId}-o${props.box.entries.value.findIndex((x) => x.key === keyOf(group, id))}`;
 
-const numberFormat = new Intl.NumberFormat();
-const formatCount = (n: number) => numberFormat.format(n);
+const formatCount = (n: number) => regionalSettings.formatNumber(n);
 
 /** the groups whose search failed, each offered a Retry below the results */
 const failedGroups = computed(() => props.box.groups.value.filter((group) => group.status === "error"));

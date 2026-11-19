@@ -174,6 +174,7 @@ import { api } from "../../api";
 import { ensureSucceeded } from "../../composables/security";
 import { colorTheme, colorThemeOptions, themeChoice, themeMode } from "../../../../shell/themeMode";
 import { loadUserSignInMethods } from "../../../../shell/signInMethods";
+import { regionalSettings } from "../../../../shell/regionalSettings";
 import { browserZone, browserZones, languageName, timeZones } from "./intl";
 
 defineBlade({
@@ -371,6 +372,10 @@ const { loading: saveLoading, action: save } = useAsync(async () => {
   const own = profile.value.settings.filter((s) => FIELDS.some((f) => s.name === PREFIX + f));
   await api("POST", "/api/platform/profiles/currentuser", { ...profile.value, settings: own });
   saved = snapshot;
+  // the regional format and time zone apply as soon as they are saved
+  const regionalFields: Field[] = ["RegionalFormat", "TimeZone"];
+  const changed = (f: Field) => JSON.stringify(values.value[f] ?? null) !== JSON.stringify(previous[f] ?? null);
+  if (regionalFields.some(changed)) void regionalSettings.reload();
 });
 
 const loading = useLoading(loadLoading, saveLoading, accountSaving);
