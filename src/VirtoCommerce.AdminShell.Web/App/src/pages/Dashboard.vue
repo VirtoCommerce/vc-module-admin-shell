@@ -217,8 +217,10 @@ provide(DashboardServiceKey, {
   },
 });
 
+// a widget's name is a translation key or a text; a widget without one shows its id
 function labelOf(name: string, id: string) {
-  return name ? (te(name) ? t(name) : name) : id;
+  if (!name) return id;
+  return te(name) ? t(name) : name;
 }
 // the list while customizing: every widget, with the permission it needs. Users don't hide widgets; they place and
 // size them

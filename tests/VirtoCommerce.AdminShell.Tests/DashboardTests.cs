@@ -147,7 +147,7 @@ public class DashboardTests
         var (controller, _) = Create();
 
         var result = Assert.IsType<OkObjectResult>((await controller.GetRoles()).Result);
-        var roles = Assert.IsAssignableFrom<IList<RoleDashboard>>(result.Value);
+        var roles = Assert.IsType<IList<RoleDashboard>>(result.Value, exactMatch: false);
 
         Assert.Equal(["order:read"], Assert.Single(roles).Permissions);
     }

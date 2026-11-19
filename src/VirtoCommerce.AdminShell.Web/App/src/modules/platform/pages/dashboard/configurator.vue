@@ -307,10 +307,13 @@ const savedRules = ref<Rule[]>([]);
 
 const scopeKey = (scope: RuleScope) => (scope.type === "everyone" ? "everyone" : `role:${scope.roleId}`);
 const ruleKey = (rule: Rule) => `${rule.widgetId}|${scopeKey(rule.scope)}`;
-const rulesKey = (list: Rule[]) => list.map(ruleKey).sort().join();
+const byText = (a: string, b: string) => a.localeCompare(b);
+const rulesKey = (list: Rule[]) => list.map(ruleKey).sort(byText).join();
 
+// a widget's name is a translation key or a text; a widget without one shows its id
 function labelOf(name: string, id: string) {
-  return name ? (te(name) ? t(name) : name) : id;
+  if (!name) return id;
+  return te(name) ? t(name) : name;
 }
 // every widget installed here (the administrator's permissions allow them all), with the permission it needs
 const widgets = computed(() =>
@@ -364,10 +367,10 @@ async function toggleEditor(widgetId: string) {
   }
   const own = rules.value.filter((r) => r.widgetId === widgetId);
   const roleIds = own.flatMap((r) => (r.scope.type === "role" ? [r.scope.roleId] : []));
-  editor.value = {
-    mode: own.some((r) => r.scope.type === "everyone") ? "everyone" : roleIds.length ? "roles" : "shown",
-    roles: roleIds,
-  };
+  let mode: Mode = "shown";
+  if (own.some((r) => r.scope.type === "everyone")) mode = "everyone";
+  else if (roleIds.length) mode = "roles";
+  editor.value = { mode, roles: roleIds };
   roleSearch.value = "";
   editing.value = widgetId;
 }
@@ -386,12 +389,10 @@ const visibleRoles = computed(() => {
 
 function applyEditor(widgetId: string) {
   const others = rules.value.filter((r) => r.widgetId !== widgetId);
-  const mine: Rule[] =
-    editor.value.mode === "everyone"
-      ? [{ widgetId, scope: { type: "everyone" } }]
-      : editor.value.mode === "roles"
-        ? editor.value.roles.map((roleId) => ({ widgetId, scope: { type: "role", roleId } }))
-        : [];
+  let mine: Rule[] = [];
+  if (editor.value.mode === "everyone") mine = [{ widgetId, scope: { type: "everyone" } }];
+  else if (editor.value.mode === "roles")
+    mine = editor.value.roles.map((roleId): Rule => ({ widgetId, scope: { type: "role", roleId } }));
   rules.value = [...others, ...mine];
   editing.value = "";
 }
@@ -470,7 +471,7 @@ async function save() {
   try {
     const before = hiddenBy(savedRules.value);
     const after = hiddenBy(rules.value);
-    const same = (a: string[] = [], b: string[] = []) => [...a].sort().join() === [...b].sort().join();
+    const same = (a: string[] = [], b: string[] = []) => [...a].sort(byText).join() === [...b].sort(byText).join();
     for (const key of new Set([...before.keys(), ...after.keys()])) {
       if (key === "everyone" && layoutChanged.value) continue; // saved below with the layout
       if (same(before.get(key), after.get(key))) continue;
@@ -527,7 +528,7 @@ function toDocument(): DashboardDocument {
   const roleRules: Record<string, string[]> = {};
   for (const role of [...roles.value].sort((a, b) => a.name.localeCompare(b.name))) {
     const hidden = byScope.get(`role:${role.id}`);
-    if (hidden?.length) roleRules[role.name] = [...hidden].sort();
+    if (hidden?.length) roleRules[role.name] = [...hidden].sort(byText);
   }
   return {
     everyone: { widgets: toPatch(byScope.get("everyone") ?? [], layout.value) },
@@ -719,6 +720,7 @@ load();
 .dash-config__rules {
   border: 1px solid var(--color-neutral-200);
   border-radius: 8px;
+  container: dash-rules / inline-size;
   max-width: 860px;
   overflow: hidden;
 }
@@ -810,6 +812,22 @@ load();
   &[aria-expanded="true"] {
     background: var(--color-neutral-100);
     color: var(--color-primary-500);
+  }
+}
+
+/* narrow (a phone, a narrow blade): who sees it goes below the widget's name, so the pencil stays in reach */
+@container dash-rules (max-width: 560px) {
+  .dash-config__rules-head {
+    display: none;
+  }
+
+  .dash-config__rule-row {
+    grid-template-columns: minmax(0, 1fr) 36px;
+  }
+
+  .dash-config__rule-chips {
+    grid-column: 1 / -1;
+    grid-row: 2;
   }
 }
 

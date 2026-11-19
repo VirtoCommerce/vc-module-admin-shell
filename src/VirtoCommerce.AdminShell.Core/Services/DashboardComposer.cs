@@ -11,6 +11,9 @@ namespace VirtoCommerce.AdminShell.Core.Services;
 /// </summary>
 public static class DashboardComposer
 {
+    /// <summary>The grid's columns: no widget is wider</summary>
+    public const int GridColumns = 12;
+
     public static EffectiveDashboard Compose(
         DashboardPatch global,
         IReadOnlyCollection<DashboardPatch> roles,
@@ -34,30 +37,33 @@ public static class DashboardComposer
             CanManage = canManage,
         };
 
-        foreach (var (id, patch) in Widgets(global))
-        {
-            if (patch.X != null || patch.Y != null || patch.Width != null || patch.Height != null)
-            {
-                result.Defaults[id] = new WidgetLayout { X = patch.X, Y = patch.Y, Width = patch.Width, Height = patch.Height };
-            }
-        }
+        result.Defaults = LayoutOf(global.Widgets, move: true, resize: true);
 
         // the user's places count only under the layout version they were made in: a reset by an administrator raises it
-        if (user.LayoutVersion == global.LayoutVersion && (personalization.AllowMove || personalization.AllowResize))
+        if (user.LayoutVersion == global.LayoutVersion)
         {
-            foreach (var (id, patch) in Widgets(user))
+            result.Layout = LayoutOf(user.Widgets, personalization.AllowMove, personalization.AllowResize);
+        }
+
+        return result;
+    }
+
+    /// <summary>The places (when <paramref name="move"/>) and sizes (when <paramref name="resize"/>) a layer sets</summary>
+    private static Dictionary<string, WidgetLayout> LayoutOf(Dictionary<string, WidgetPatch> widgets, bool move, bool resize)
+    {
+        var result = new Dictionary<string, WidgetLayout>(StringComparer.Ordinal);
+        foreach (var (id, patch) in Widgets(widgets))
+        {
+            var layout = new WidgetLayout
             {
-                var layout = new WidgetLayout
-                {
-                    X = personalization.AllowMove ? patch.X : null,
-                    Y = personalization.AllowMove ? patch.Y : null,
-                    Width = personalization.AllowResize ? patch.Width : null,
-                    Height = personalization.AllowResize ? patch.Height : null,
-                };
-                if (layout.X != null || layout.Y != null || layout.Width != null || layout.Height != null)
-                {
-                    result.Layout[id] = layout;
-                }
+                X = move ? patch.X : null,
+                Y = move ? patch.Y : null,
+                Width = resize ? patch.Width : null,
+                Height = resize ? patch.Height : null,
+            };
+            if (HasAny(layout.X, layout.Y, layout.Width, layout.Height))
+            {
+                result[id] = layout;
             }
         }
 
@@ -142,8 +148,6 @@ public static class DashboardComposer
 
     private static IEnumerable<KeyValuePair<string, WidgetPatch>> Widgets(DashboardPatch patch) => Widgets(patch?.Widgets);
 
-    private static IEnumerable<KeyValuePair<string, WidgetPatch>> Widgets(UserDashboardPrefs prefs) => Widgets(prefs?.Widgets);
-
     private static IEnumerable<KeyValuePair<string, WidgetPatch>> Widgets(Dictionary<string, WidgetPatch> widgets) =>
         (widgets ?? [])
             .Where(x => !string.IsNullOrWhiteSpace(x.Key) && x.Value != null)
@@ -153,12 +157,18 @@ public static class DashboardComposer
     private static WidgetPatch Clean(WidgetPatch widget, bool hidden = false) => new()
     {
         Hidden = hidden || widget?.Hidden == true ? true : null,
-        X = widget?.X is { } x ? Math.Max(0, x) : null,
-        Y = widget?.Y is { } y ? Math.Max(0, y) : null,
-        Width = widget?.Width is { } w ? Math.Clamp(w, 1, 12) : null,
-        Height = widget?.Height is { } h ? Math.Max(1, h) : null,
+        X = AtLeast(widget?.X, 0),
+        Y = AtLeast(widget?.Y, 0),
+        Width = Within(widget?.Width, 1, GridColumns),
+        Height = AtLeast(widget?.Height, 1),
     };
 
+    private static int? AtLeast(int? value, int min) => value is { } v ? Math.Max(min, v) : null;
+
+    private static int? Within(int? value, int min, int max) => value is { } v ? Math.Clamp(v, min, max) : null;
+
+    private static bool HasAny(params int?[] values) => values.Any(x => x != null);
+
     private static bool IsEmpty(WidgetPatch widget) =>
-        widget.Hidden == null && widget.X == null && widget.Y == null && widget.Width == null && widget.Height == null;
+        widget.Hidden == null && !HasAny(widget.X, widget.Y, widget.Width, widget.Height);
 }
