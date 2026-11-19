@@ -161,6 +161,7 @@ Build the plugin before the module is published, so `vc-build Compress` packs it
 | `$menuCounters` | `app.config.globalProperties`, `inject("adminShell.menuCounters")` | The menu counter registry. Guard for its absence too. |
 | `$modules` | `app.config.globalProperties`, `inject("adminShell.modules")` | The installed modules: `isInstalled(id)`, `whenInstalled(id)`, `version(id)`. See [Using other modules](#using-other-modules). |
 | `$sharedWidgets` | `app.config.globalProperties`, `inject("adminShell.sharedWidgets")` | Widgets one module provides and another places on its own blades. See [Blade widgets](blade-widgets.md#shared-widgets). |
+| `$regional` | `app.config.globalProperties`, `inject("adminShell.regionalSettings")` | The user's regional format and time zone (profile). See [Dates and numbers](#dates-and-numbers). |
 | `ModulesReadyKey` | `inject` (vc-shell) | `true` once all plugins have loaded. |
 | Design tokens | global CSS | `--color-{primary,secondary,accent,neutral,warning,danger,success,info}-50…950`, `--fg-*`, `--bg-*`, `--border-*`, with dark-theme values. |
 | `.dash-*` classes | global CSS | Dashboard widget markup. See [Dashboard widgets](dashboard-widgets.md). |
@@ -200,6 +201,25 @@ if (await modules?.whenInstalled("VirtoCommerce.Catalog")) openBlade({ name: "Ca
 A widget on another module's blade needs no check: without that module the blade doesn't exist and the widget never shows. To put a widget on blades of a module that depends on yours, don't register it there: provide it and let that module place it ([shared widgets](blade-widgets.md#shared-widgets)).
 
 **Testing without a module.** This browser can treat modules as missing, without uninstalling them: set `localStorage.setItem("adminShell.debug.missingModules", "VirtoCommerce.Customer,VirtoCommerce.Inventory")` in the browser console and reload. The console warns while it is set; remove the key to go back.
+
+### Dates and numbers
+
+Users choose a regional format and a time zone in their profile (`VirtoCommerce.Platform.UI.RegionalFormat` and `TimeZone`, shared with the AngularJS admin). `$regional` applies them: `formatDate(value, options?)`, `formatDateTime(value, options?)` and `formatNumber(value, options?)` take `Intl` options, and `locale` and `timeZone` are refs for code that builds its own `Intl` formatter. Without a choice, or with a zone the browser doesn't know, they are the browser's. They change when the user saves the profile, and a template that formats with them updates.
+
+```vue
+<template>
+  <span>{{ $regional.formatDateTime(order.createdDate) }}</span>
+</template>
+```
+
+```ts
+const regional = inject<{ formatDate(value: unknown, options?: Intl.DateTimeFormatOptions): string } | undefined>(
+  "adminShell.regionalSettings",
+);
+const shown = regional?.formatDate(item.createdDate) ?? new Date(item.createdDate).toLocaleDateString();
+```
+
+vc-shell's own components (data table date and money cells, the date picker, notifications) don't take them yet: they use the browser's language and zone.
 
 ### Translations
 
