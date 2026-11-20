@@ -17,7 +17,9 @@ Source: `src/VirtoCommerce.AdminShell.Web/App/src/shell/menuCounters.ts` (the re
 | `quotes` | Quote | quotes waiting for a proposal (`statuses: ["Processing"]`) | `POST api/quote/requests/search` | `quote:read` |
 | `customerReviews` | Customer Reviews | reviews to moderate (`reviewStatus: ["New"]`) | `POST api/customerReviews/search` | `customerReviews:read` |
 | `tasks` | (the shell) | open tasks (`isActive: true`) | `POST api/task-management/search` | `task:read` |
-| `platform.modules`, `platform.modules.updates` | (the shell) | installed modules with a newer version | `GET api/platform/modules` | `platform:module:access` |
+| `platform.modules` | (the shell) | modules that failed to start plus installed modules with a newer version | `GET api/platform/modules` | `platform:module:access` |
+| `platform.modules.failed` | (the shell) | modules that failed to start (the same read also feeds the notice above the screens) | `GET api/platform/modules` | `platform:module:access` |
+| `platform.modules.updates` | (the shell) | installed modules with a newer version | `GET api/platform/modules` | `platform:module:access` |
 | `platform.modules.installed`, `platform.modules.browse` | (the shell) | installed modules, all modules (totals) | `GET api/platform/modules` | `platform:module:access` |
 
 Each module's counter is in its plugin (branch `feat/VCST-6327-admin-shell`), in `src/<Module>.Web/vue/src/modules/menuCounter.ts`, registered from the plugin's `install(app)`. Tasks is registered by the shell itself: its menu item is the shell's (`default-menu.json`), as Task Management runs as an embedded app without a plugin.
@@ -84,6 +86,7 @@ A plugin can't import the host's code, so it reaches the registry through the ap
 | `hint` | string | yes | The tooltip: a translation key (or text) given `{ count }`. Say what waits, not what the number is: *12 new orders*, *3 reviews to moderate*. |
 | `permission` | string \| string[] | | The counter is asked only for users with it (an array means *any of*). Use the read permission of the endpoint; the item's own permission is already checked by the menu. |
 | `tone` | `"attention"` \| `"total"` | | `"attention"` (default): work waiting, a badge, added to the rail section's sum and the phone menu button. `"total"`: how many there are (*58 modules installed*), a muted number shown in full, never added to sums. A sub-item's attention count repeats its item's, so only items (not sub-items) are summed. |
+| `hideWhenZero` | boolean | | The menu item (or sub-item) shows only while its count is above zero, and stays hidden until the first count arrives. Modules · Failed uses it. |
 | `count({ signal })` | function | yes | Returns a promise of the count. Pass `signal` to `fetch`: it is aborted when the counts are asked again before the answer came. A rejected promise or a non-number shows no counter, rather than a wrong one. |
 
 ### Registry — `$menuCounters`

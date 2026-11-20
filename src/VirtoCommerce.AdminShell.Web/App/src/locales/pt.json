@@ -44,8 +44,19 @@
     "BADGES": {
       "TASKS": "Tarefas abertas: {count}",
       "MODULE_UPDATES": "Atualizações de módulos: {count}",
+      "MODULES_ATTENTION": "Módulos que precisam de atenção: {count}",
+      "MODULES_FAILED": "Não iniciados: {count}",
       "MODULES_INSTALLED": "Módulos instalados: {count}",
       "MODULES_AVAILABLE": "Módulos: {count}"
+    },
+    "MODULE_ERRORS": {
+      "TITLE": "{count} módulo não foi iniciado | {count} módulos não foram iniciados",
+      "MESSAGE": "As telas e a API dele estão indisponíveis. | As telas e as APIs deles estão indisponíveis.",
+      "SHOW": "Ver módulos com falha",
+      "HIDE": "Ocultar até recarregar a página",
+      "COPY": "Copiar detalhes",
+      "COPIED": "Copiado",
+      "MORE": "e mais {count}"
     },
     "FRAME": {
       "REFRESH": "Atualizar",

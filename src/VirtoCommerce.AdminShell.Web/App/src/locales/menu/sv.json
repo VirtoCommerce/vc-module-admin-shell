@@ -64,6 +64,7 @@
       "platform_modules_browse": "Bläddra",
       "platform_modules_installed": "Installerade",
       "platform_modules_updates": "Uppdateringar",
+      "platform_modules_failed": "Misslyckade",
       "platform_modules_advanced": "Avancerat",
       "platform_dynamicProperties": "Dynamiska egenskaper",
       "platform_developerTools": "Utvecklarverktyg",

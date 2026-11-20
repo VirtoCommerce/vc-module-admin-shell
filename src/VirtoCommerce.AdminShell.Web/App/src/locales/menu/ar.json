@@ -64,6 +64,7 @@
       "platform_modules_browse": "استعراض",
       "platform_modules_installed": "المثبّتة",
       "platform_modules_updates": "التحديثات",
+      "platform_modules_failed": "المتعطلة",
       "platform_modules_advanced": "متقدم",
       "platform_dynamicProperties": "الخصائص الديناميكية",
       "platform_developerTools": "أدوات المطوّر",

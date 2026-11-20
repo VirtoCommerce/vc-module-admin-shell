@@ -44,8 +44,19 @@
     "BADGES": {
       "TASKS": "Открытые задачи: {count}",
       "MODULE_UPDATES": "Обновления модулей: {count}",
+      "MODULES_ATTENTION": "Модули, требующие внимания: {count}",
+      "MODULES_FAILED": "Не запустились: {count}",
       "MODULES_INSTALLED": "Установлено модулей: {count}",
       "MODULES_AVAILABLE": "Модулей: {count}"
+    },
+    "MODULE_ERRORS": {
+      "TITLE": "{count} модуль не запустился | Не запустились модули: {count}",
+      "MESSAGE": "Его экраны и API недоступны. | Их экраны и API недоступны.",
+      "SHOW": "Показать модули с ошибками",
+      "HIDE": "Скрыть до перезагрузки страницы",
+      "COPY": "Скопировать подробности",
+      "COPIED": "Скопировано",
+      "MORE": "и ещё {count}"
     },
     "FRAME": {
       "REFRESH": "Обновить",

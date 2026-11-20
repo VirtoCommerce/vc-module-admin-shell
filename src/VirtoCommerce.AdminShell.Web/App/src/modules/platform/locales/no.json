@@ -335,7 +335,8 @@
       "VIEWS": {
         "BROWSE": "Bla gjennom",
         "INSTALLED": "Installerte",
-        "UPDATES": "Oppdateringer"
+        "UPDATES": "Oppdateringer",
+        "FAILED": "Feilet"
       },
       "ADVANCED": {
         "TITLE": "Avansert",

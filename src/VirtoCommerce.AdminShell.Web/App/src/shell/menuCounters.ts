@@ -30,6 +30,8 @@ export interface MenuCounter {
    * are (Modules · Installed), a muted number, not added to the section
    */
   tone?: "attention" | "total";
+  /** The menu item shows only while its count is above zero (Modules · Failed) */
+  hideWhenZero?: boolean;
 }
 
 export interface MenuCounters {
@@ -59,6 +61,10 @@ const counters = shallowRef(new Map<string, MenuCounter>());
 export const counterValues = ref<Record<string, number>>({});
 
 export const counterHint = (itemId: string) => counters.value.get(itemId)?.hint;
+
+/** An item whose counter hides it while nothing is counted (or the count is not known yet) */
+export const hiddenByCounter = (itemId: string) =>
+  !!counters.value.get(itemId)?.hideWhenZero && !counterValues.value[itemId];
 
 /** A counter that is a plain total (muted, not in the section's sum) rather than work waiting */
 export const isTotalCounter = (itemId: string) => counters.value.get(itemId)?.tone === "total";

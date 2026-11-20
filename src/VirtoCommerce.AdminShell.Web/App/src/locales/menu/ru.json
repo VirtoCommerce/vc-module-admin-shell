@@ -64,6 +64,7 @@
       "platform_modules_browse": "Обзор",
       "platform_modules_installed": "Установленные",
       "platform_modules_updates": "Обновления",
+      "platform_modules_failed": "С ошибками",
       "platform_modules_advanced": "Дополнительно",
       "platform_dynamicProperties": "Динамические свойства",
       "platform_developerTools": "Инструменты разработчика",

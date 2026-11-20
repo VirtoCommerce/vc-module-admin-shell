@@ -45,8 +45,19 @@
     "BADGES": {
       "TASKS": "{count} open tasks",
       "MODULE_UPDATES": "{count} module updates",
+      "MODULES_ATTENTION": "Modules that need attention: {count}",
+      "MODULES_FAILED": "Failed to start: {count}",
       "MODULES_INSTALLED": "{count} modules installed",
       "MODULES_AVAILABLE": "{count} modules"
+    },
+    "MODULE_ERRORS": {
+      "TITLE": "{count} module failed to start | {count} modules failed to start",
+      "MESSAGE": "Its screens and API are unavailable. | Their screens and API are unavailable.",
+      "SHOW": "Show failed modules",
+      "HIDE": "Hide until the page is reloaded",
+      "COPY": "Copy details",
+      "COPIED": "Copied",
+      "MORE": "and {count} more"
     },
     "FRAME": {
       "REFRESH": "Refresh",

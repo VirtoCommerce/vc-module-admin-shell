@@ -335,7 +335,8 @@
       "VIEWS": {
         "BROWSE": "עיון",
         "INSTALLED": "מותקנים",
-        "UPDATES": "עדכונים"
+        "UPDATES": "עדכונים",
+        "FAILED": "שנכשלו"
       },
       "ADVANCED": {
         "TITLE": "מתקדם",

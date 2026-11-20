@@ -64,6 +64,7 @@
       "platform_modules_browse": "Selaa",
       "platform_modules_installed": "Asennetut",
       "platform_modules_updates": "Päivitykset",
+      "platform_modules_failed": "Virheelliset",
       "platform_modules_advanced": "Edistynyt",
       "platform_dynamicProperties": "Dynaamiset ominaisuudet",
       "platform_developerTools": "Kehittäjätyökalut",

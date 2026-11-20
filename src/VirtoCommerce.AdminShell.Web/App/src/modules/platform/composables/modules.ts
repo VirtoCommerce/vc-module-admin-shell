@@ -25,6 +25,15 @@ export interface ModuleRow extends ModuleDescriptor {
 
 export type ModuleAction = "install" | "update" | "uninstall";
 
+/** The picture of a module without its own, or whose own doesn't load (a module that failed to start serves no files) */
+export const MODULE_FALLBACK_ICON = "/images/module-logo.svg";
+
+/** An img's @error: shows the fallback picture once, so a missing fallback can't loop */
+export function showFallbackIcon(event: Event) {
+  const img = event.target as HTMLImageElement | null;
+  if (img && !img.src.endsWith(MODULE_FALLBACK_ICON)) img.src = MODULE_FALLBACK_ICON;
+}
+
 const rows = ref<ModuleRow[]>([]);
 
 const compareVersions = (a = "", b = "") => a.localeCompare(b, undefined, { numeric: true });

@@ -1,11 +1,12 @@
 /**
- * The Modules menu item's counters (default-menu.json: Modules with Browse, Installed, Updates): updates waiting, as a
- * badge on Modules and on Updates, and how many modules there are and are installed, as muted totals. One read of the
- * module catalog serves the four counts of a refresh.
+ * The Modules menu item's counters (default-menu.json: Modules with Browse, Installed, Updates, Failed): modules that
+ * failed to start and updates waiting, as badges on Modules, Failed and Updates, and how many modules there are and are
+ * installed, as muted totals. One read of the module catalog serves the counts of a refresh.
  */
 import type { ModuleDescriptor } from "@vc-shell/framework";
 import { request } from "../../api/http";
 import { menuCounters } from "../../shell/menuCounters";
+import { failedModules } from "../../shell/moduleErrors";
 import { buildRows, type ModuleRow } from "./composables/modules";
 
 const PERMISSION = "platform:module:access";
@@ -26,12 +27,35 @@ function rows(signal: AbortSignal) {
 
 const updates = (list: ModuleRow[]) => list.filter((m) => m.isInstalled && m.hasUpdate).length;
 
+/** The modules that failed to start, kept for the shell's notice (moduleErrors.ts) */
+function failed(list: ModuleRow[]) {
+  const modules = list.filter((m) => m.hasErrors);
+  failedModules.value = modules.map((m) => ({
+    id: m.id,
+    title: m.title || m.id,
+    version: m.version,
+    errors: m.validationErrors ?? [],
+  }));
+  return modules.length;
+}
+
 export function registerModuleCounters() {
   menuCounters.register({
     itemId: "platform.modules",
-    hint: "SHELL.BADGES.MODULE_UPDATES",
+    hint: "SHELL.BADGES.MODULES_ATTENTION",
     permission: PERMISSION,
-    count: async ({ signal }) => updates(await rows(signal)),
+    count: async ({ signal }) => {
+      const list = await rows(signal);
+      return failed(list) + updates(list);
+    },
+  });
+  menuCounters.register({
+    itemId: "platform.modules.failed",
+    hint: "SHELL.BADGES.MODULES_FAILED",
+    permission: PERMISSION,
+    // Failed shows only while a module failed to start
+    hideWhenZero: true,
+    count: async ({ signal }) => failed(await rows(signal)),
   });
   menuCounters.register({
     itemId: "platform.modules.updates",

@@ -335,7 +335,8 @@
       "VIEWS": {
         "BROWSE": "استعراض",
         "INSTALLED": "المثبّتة",
-        "UPDATES": "التحديثات"
+        "UPDATES": "التحديثات",
+        "FAILED": "المتعطلة"
       },
       "ADVANCED": {
         "TITLE": "متقدم",

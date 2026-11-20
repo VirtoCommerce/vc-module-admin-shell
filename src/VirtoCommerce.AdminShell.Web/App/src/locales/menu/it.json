@@ -64,6 +64,7 @@
       "platform_modules_browse": "Sfoglia",
       "platform_modules_installed": "Installati",
       "platform_modules_updates": "Aggiornamenti",
+      "platform_modules_failed": "Con errori",
       "platform_modules_advanced": "Avanzate",
       "platform_dynamicProperties": "Proprietà dinamiche",
       "platform_developerTools": "Strumenti per sviluppatori",

@@ -335,7 +335,8 @@
       "VIEWS": {
         "BROWSE": "Przeglądaj",
         "INSTALLED": "Zainstalowane",
-        "UPDATES": "Aktualizacje"
+        "UPDATES": "Aktualizacje",
+        "FAILED": "Z błędami"
       },
       "ADVANCED": {
         "TITLE": "Zaawansowane",

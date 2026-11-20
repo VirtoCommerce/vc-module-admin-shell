@@ -335,7 +335,8 @@
       "VIEWS": {
         "BROWSE": "Bläddra",
         "INSTALLED": "Installerade",
-        "UPDATES": "Uppdateringar"
+        "UPDATES": "Uppdateringar",
+        "FAILED": "Misslyckade"
       },
       "ADVANCED": {
         "TITLE": "Avancerat",

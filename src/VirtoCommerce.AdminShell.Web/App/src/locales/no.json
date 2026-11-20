@@ -44,8 +44,19 @@
     "BADGES": {
       "TASKS": "Åpne oppgaver: {count}",
       "MODULE_UPDATES": "Moduloppdateringer: {count}",
+      "MODULES_ATTENTION": "Moduler som trenger oppmerksomhet: {count}",
+      "MODULES_FAILED": "Startet ikke: {count}",
       "MODULES_INSTALLED": "Installerte moduler: {count}",
       "MODULES_AVAILABLE": "Moduler: {count}"
+    },
+    "MODULE_ERRORS": {
+      "TITLE": "{count} modul kunne ikke starte | {count} moduler kunne ikke starte",
+      "MESSAGE": "Skjermbildene og API-et er utilgjengelige. | Skjermbildene og API-ene er utilgjengelige.",
+      "SHOW": "Vis moduler som feilet",
+      "HIDE": "Skjul til siden lastes inn på nytt",
+      "COPY": "Kopier detaljer",
+      "COPIED": "Kopiert",
+      "MORE": "og {count} til"
     },
     "FRAME": {
       "REFRESH": "Oppdater",

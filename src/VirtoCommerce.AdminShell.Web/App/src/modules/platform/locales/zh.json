@@ -335,7 +335,8 @@
       "VIEWS": {
         "BROWSE": "浏览",
         "INSTALLED": "已安装",
-        "UPDATES": "更新"
+        "UPDATES": "更新",
+        "FAILED": "失败"
       },
       "ADVANCED": {
         "TITLE": "高级",

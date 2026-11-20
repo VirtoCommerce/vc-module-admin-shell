@@ -251,7 +251,7 @@
               class="as-sub"
             >
               <button
-                v-for="child in item.children"
+                v-for="child in pagesOf(group, item)"
                 :key="child.id"
                 type="button"
                 class="as-sub__item"
@@ -294,7 +294,7 @@ import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 import type { MenuItem, MenuSection } from "../api/adminMenu";
 import { HOME_SECTION_ID, useAdminMenu } from "../composables/useAdminMenu";
-import { counterHint, counterValues, isTotalCounter, waitingOn } from "./menuCounters";
+import { counterHint, counterValues, hiddenByCounter, isTotalCounter, waitingOn } from "./menuCounters";
 import { foldedGroups, groupItems, panelOpen, panelSection, railLabel, searchSheetOpen, toggleFolded } from "./navState";
 import ShellSearch from "./ShellSearch.vue";
 import UserMenu from "./UserMenu.vue";
@@ -384,7 +384,8 @@ const groups = computed(() => {
 });
 // a folded group still opens when it holds the screen that's open
 const isFolded = (group: Group) => !!foldedGroups.value[group.key] && !group.items.some(inside);
-const pagesOf = (group: Group, item: MenuItem) => (group.shortcut ? [] : (item.children ?? []));
+const pagesOf = (group: Group, item: MenuItem) =>
+  group.shortcut ? [] : (item.children ?? []).filter((child) => !hiddenByCounter(child.id));
 
 // the Home section shows the logo in place of its title
 const isHome = computed(() => shown.value?.id === HOME_SECTION_ID);

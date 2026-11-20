@@ -335,7 +335,8 @@
       "VIEWS": {
         "BROWSE": "Selaa",
         "INSTALLED": "Asennetut",
-        "UPDATES": "Päivitykset"
+        "UPDATES": "Päivitykset",
+        "FAILED": "Virheelliset"
       },
       "ADVANCED": {
         "TITLE": "Edistynyt",

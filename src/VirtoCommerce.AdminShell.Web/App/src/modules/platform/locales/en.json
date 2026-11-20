@@ -335,7 +335,8 @@
       "VIEWS": {
         "BROWSE": "Browse",
         "INSTALLED": "Installed",
-        "UPDATES": "Updates"
+        "UPDATES": "Updates",
+        "FAILED": "Failed"
       },
       "ADVANCED": {
         "TITLE": "Advanced",

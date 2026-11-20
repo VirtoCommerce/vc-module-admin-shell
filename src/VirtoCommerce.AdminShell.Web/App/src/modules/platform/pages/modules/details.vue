@@ -11,8 +11,9 @@
         <div class="platform-module-head">
           <img
             class="platform-module-head__icon"
-            :src="rootedUrl(module.iconUrl) ?? '/images/module-logo.svg'"
+            :src="rootedUrl(module.iconUrl) ?? MODULE_FALLBACK_ICON"
             alt=""
+            @error="showFallbackIcon"
           />
           <div>
             <div class="platform-module-head__title">{{ module.title }}</div>
@@ -153,7 +154,7 @@ import {
 } from "@vc-shell/framework/ui";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
-import { useModules, versionText } from "../../composables/modules";
+import { MODULE_FALLBACK_ICON, showFallbackIcon, useModules, versionText } from "../../composables/modules";
 import { rootedUrl } from "../../../../utils/url";
 
 defineBlade({
