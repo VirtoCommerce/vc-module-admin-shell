@@ -30,6 +30,9 @@ export const routes: RouteRecordRaw[] = [
     path: "/",
     component: App,
     name: "App",
+    // vc-shell comes here by name when an address has no screen or the user may not open it; by name, Home isn't
+    // matched with this route and the page stays empty
+    redirect: { name: "Home" },
     meta: {
       root: true,
     },
