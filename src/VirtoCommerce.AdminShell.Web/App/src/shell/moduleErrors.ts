@@ -18,7 +18,7 @@ export const failedModules = shallowRef<FailedModule[]>([]);
 export const failureKey = (modules: FailedModule[]) =>
   modules
     .map((m) => m.id)
-    .sort()
+    .sort((a, b) => a.localeCompare(b))
     .join(",");
 
 /** The first line of a module's error, which says what went wrong (the rest is the stack trace) */
