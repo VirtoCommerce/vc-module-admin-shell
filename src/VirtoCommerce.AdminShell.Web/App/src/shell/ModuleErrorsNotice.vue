@@ -96,16 +96,12 @@ let copiedTimer: ReturnType<typeof setTimeout> | undefined;
 async function copyDetails() {
   const title = t("SHELL.MODULE_ERRORS.TITLE", { count: count.value }, count.value);
   const text = failureReport(failedModules.value, title);
+  // the admin runs on https (or localhost), where the clipboard is there; a refused permission copies nothing, and the
+  // button then doesn't claim it did
   try {
     await navigator.clipboard.writeText(text);
   } catch {
-    // no clipboard access (an http page, a refused permission): the older way, through a selected text area
-    const area = Object.assign(document.createElement("textarea"), { value: text, readOnly: true });
-    area.style.cssText = "position:fixed;opacity:0;pointer-events:none";
-    document.body.append(area);
-    area.select();
-    document.execCommand("copy");
-    area.remove();
+    return;
   }
   copied.value = true;
   clearTimeout(copiedTimer);
