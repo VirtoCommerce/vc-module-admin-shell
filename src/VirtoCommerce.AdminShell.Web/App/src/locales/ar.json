@@ -44,8 +44,19 @@
     "BADGES": {
       "TASKS": "المهام المفتوحة: {count}",
       "MODULE_UPDATES": "تحديثات الوحدات: {count}",
+      "MODULES_ATTENTION": "وحدات تحتاج إلى انتباه: {count}",
+      "MODULES_FAILED": "تعذّر تشغيلها: {count}",
       "MODULES_INSTALLED": "الوحدات المثبّتة: {count}",
       "MODULES_AVAILABLE": "الوحدات: {count}"
+    },
+    "MODULE_ERRORS": {
+      "TITLE": "تعذّر تشغيل {count} وحدة | تعذّر تشغيل {count} وحدات",
+      "MESSAGE": "شاشاتها وواجهة API الخاصة بها غير متاحة. | شاشاتها وواجهات API الخاصة بها غير متاحة.",
+      "SHOW": "عرض الوحدات المتعطلة",
+      "HIDE": "إخفاء حتى إعادة تحميل الصفحة",
+      "COPY": "نسخ التفاصيل",
+      "COPIED": "تم النسخ",
+      "MORE": "و{count} أخرى"
     },
     "FRAME": {
       "REFRESH": "تحديث",

@@ -257,6 +257,17 @@
         "SUCCEEDED": "הצליחו",
         "OUTCOME": "תוצאה",
         "TYPE": "סוג כניסה",
+        "TYPES": {
+          "PASSWORD": "סיסמה",
+          "EXTERNAL": "ספק חיצוני",
+          "IMPERSONATION": "התחזות",
+          "IMPERSONATION_REVERT": "סיום התחזות",
+          "CLIENT_CREDENTIALS": "אישורי לקוח",
+          "LOGOUT": "יציאה",
+          "PASSKEY": "מפתח גישה",
+          "OTP": "קוד חד-פעמי (OTP)",
+          "MFA": "אימות דו-שלבי (MFA)"
+        },
         "DATE": "תאריך",
         "TOP_FAILED_IPS": "כתובות IP מובילות בכניסות שנכשלו",
         "TOP_FAILED_USERS": "שמות משתמש מובילים בכניסות שנכשלו",
@@ -335,7 +346,8 @@
       "VIEWS": {
         "BROWSE": "עיון",
         "INSTALLED": "מותקנים",
-        "UPDATES": "עדכונים"
+        "UPDATES": "עדכונים",
+        "FAILED": "שנכשלו"
       },
       "ADVANCED": {
         "TITLE": "מתקדם",

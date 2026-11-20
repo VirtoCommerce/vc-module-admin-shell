@@ -44,8 +44,19 @@
     "BADGES": {
       "TASKS": "{count} 个待处理任务",
       "MODULE_UPDATES": "{count} 个模块更新",
+      "MODULES_ATTENTION": "需要处理的模块：{count}",
+      "MODULES_FAILED": "启动失败：{count}",
       "MODULES_INSTALLED": "已安装 {count} 个模块",
       "MODULES_AVAILABLE": "{count} 个模块"
+    },
+    "MODULE_ERRORS": {
+      "TITLE": "{count} 个模块未能启动 | {count} 个模块未能启动",
+      "MESSAGE": "其界面和 API 不可用。 | 这些模块的界面和 API 不可用。",
+      "SHOW": "查看失败的模块",
+      "HIDE": "隐藏，直到重新加载页面",
+      "COPY": "复制详细信息",
+      "COPIED": "已复制",
+      "MORE": "等另外 {count} 个"
     },
     "FRAME": {
       "REFRESH": "刷新",

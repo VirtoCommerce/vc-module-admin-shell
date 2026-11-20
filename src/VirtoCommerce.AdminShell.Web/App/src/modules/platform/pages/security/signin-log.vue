@@ -113,7 +113,9 @@
         <VcColumn
           id="signInType"
           :title="$t('PLATFORM.SECURITY.SIGNIN.TYPE')"
-        />
+        >
+          <template #body="{ data }">{{ signInTypeLabel(data.signInType) }}</template>
+        </VcColumn>
         <VcColumn
           id="ipAddress"
           :title="$t('PLATFORM.SECURITY.SESSIONS.IP')"
@@ -146,6 +148,7 @@ import {
   type UserSignInLog,
 } from "../../composables/security";
 import { criteriaDate } from "../../../../shell/dashboard/api";
+import { useSignInLogTypes } from "../../../../shell/useSignInLogTypes";
 
 defineBlade({
   url: "/sign-in-log",
@@ -153,7 +156,8 @@ defineBlade({
   permissions: ["platform:security:sign_in_log:read"],
 });
 
-const SIGN_IN_TYPES = ["Password", "External", "Impersonation", "ImpersonationRevert", "ClientCredentials", "Logout"];
+// the types the platform and the installed modules write, as the AngularJS admin's signInLogTypes registry
+const { options: signInTypeOptions, labelOf: signInTypeLabel } = useSignInLogTypes();
 const { t } = useI18n({ useScope: "global" });
 const { options, openBlade } = useBlade<{ userId?: string; userName?: string }>();
 
@@ -321,7 +325,7 @@ const fields = computed<SearchBarField[]>(() => [
   {
     id: "signInTypes",
     label: t("PLATFORM.SECURITY.SIGNIN.TYPE"),
-    filter: { multiple: true, options: SIGN_IN_TYPES.map((x) => ({ value: x, label: x })) },
+    filter: { multiple: true, options: signInTypeOptions.value },
   },
   // what the drill-downs set, in the Filters panel too: the reasons and stores the period has
   {

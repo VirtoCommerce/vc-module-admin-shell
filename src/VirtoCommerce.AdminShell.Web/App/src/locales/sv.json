@@ -44,8 +44,19 @@
     "BADGES": {
       "TASKS": "Öppna uppgifter: {count}",
       "MODULE_UPDATES": "Moduluppdateringar: {count}",
+      "MODULES_ATTENTION": "Moduler som behöver åtgärdas: {count}",
+      "MODULES_FAILED": "Startade inte: {count}",
       "MODULES_INSTALLED": "Installerade moduler: {count}",
       "MODULES_AVAILABLE": "Moduler: {count}"
+    },
+    "MODULE_ERRORS": {
+      "TITLE": "{count} modul kunde inte starta | {count} moduler kunde inte starta",
+      "MESSAGE": "Dess vyer och API är inte tillgängliga. | Deras vyer och API:er är inte tillgängliga.",
+      "SHOW": "Visa misslyckade moduler",
+      "HIDE": "Dölj tills sidan laddas om",
+      "COPY": "Kopiera detaljer",
+      "COPIED": "Kopierat",
+      "MORE": "och {count} till"
     },
     "FRAME": {
       "REFRESH": "Uppdatera",

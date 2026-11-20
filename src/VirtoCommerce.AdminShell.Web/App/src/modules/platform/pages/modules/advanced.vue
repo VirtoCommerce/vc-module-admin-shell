@@ -63,8 +63,9 @@
           <header class="pm-adv__module-head">
             <img
               class="platform-module-icon"
-              :src="rootedUrl(module.iconUrl) ?? '/images/module-logo.svg'"
+              :src="rootedUrl(module.iconUrl) ?? MODULE_FALLBACK_ICON"
               alt=""
+              @error="showFallbackIcon"
             />
             <div>
               <h3 class="pm-adv__heading">{{ module.title || module.id }}</h3>
@@ -155,7 +156,7 @@ import { ModulesClient, useApiClient, useBlade, usePopup, type ModuleDescriptor 
 import { VcBanner, VcBlade, VcButton, VcContainer, VcIcon, VcProgress } from "@vc-shell/framework/ui";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { useModules, versionText } from "../../composables/modules";
+import { MODULE_FALLBACK_ICON, showFallbackIcon, useModules, versionText } from "../../composables/modules";
 import { rootedUrl } from "../../../../utils/url";
 
 defineBlade({

@@ -44,8 +44,19 @@
     "BADGES": {
       "TASKS": "Otwarte zadania: {count}",
       "MODULE_UPDATES": "Aktualizacje modułów: {count}",
+      "MODULES_ATTENTION": "Moduły wymagające uwagi: {count}",
+      "MODULES_FAILED": "Nie uruchomiono: {count}",
       "MODULES_INSTALLED": "Zainstalowane moduły: {count}",
       "MODULES_AVAILABLE": "Moduły: {count}"
+    },
+    "MODULE_ERRORS": {
+      "TITLE": "{count} moduł nie uruchomił się | Moduły, które się nie uruchomiły: {count}",
+      "MESSAGE": "Jego ekrany i API są niedostępne. | Ich ekrany i API są niedostępne.",
+      "SHOW": "Pokaż moduły z błędami",
+      "HIDE": "Ukryj do ponownego załadowania strony",
+      "COPY": "Kopiuj szczegóły",
+      "COPIED": "Skopiowano",
+      "MORE": "i {count} więcej"
     },
     "FRAME": {
       "REFRESH": "Odśwież",

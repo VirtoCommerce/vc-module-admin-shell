@@ -33,14 +33,16 @@
         <template #body="{ data }">
           <img
             class="platform-module-icon"
-            :src="rootedUrl(data.iconUrl) ?? fallbackIcon"
+            :src="rootedUrl(data.iconUrl) ?? MODULE_FALLBACK_ICON"
             alt=""
+            @error="showFallbackIcon"
           />
         </template>
       </VcColumn>
       <VcColumn
         id="title"
         :title="$t('PLATFORM.MODULES.MODULE')"
+        sortable
         always-visible
       >
         <template #body="{ data }">
@@ -56,6 +58,7 @@
         id="version"
         :title="$t('PLATFORM.MODULES.VERSION')"
         width="120px"
+        sortable
       />
       <VcColumn
         id="status"
@@ -79,7 +82,13 @@ import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 import { refreshItem } from "../../composables/blade";
-import { useModules, type ModuleAction, type ModuleRow } from "../../composables/modules";
+import {
+  MODULE_FALLBACK_ICON,
+  showFallbackIcon,
+  useModules,
+  type ModuleAction,
+  type ModuleRow,
+} from "../../composables/modules";
 import { tableFilters } from "../../composables/search";
 import { rootedUrl } from "../../../../utils/url";
 
@@ -90,7 +99,6 @@ defineBlade({
   permissions: ["platform:module:access"],
 });
 
-const fallbackIcon = "/images/module-logo.svg";
 const { t } = useI18n({ useScope: "global" });
 const { id: bladeId, openBlade, exposeToChildren, closeChildren } = useBlade();
 const { updateBladeQuery } = useBladeStack();
@@ -100,7 +108,7 @@ const route = useRoute();
 const router = useRouter();
 
 /* the view comes from the menu (Modules · Browse, Installed, Updates: ?view=), as the AngularJS tree's nodes did */
-const VIEWS = ["browse", "installed", "updates"] as const;
+const VIEWS = ["browse", "installed", "updates", "failed"] as const;
 type View = (typeof VIEWS)[number];
 const isView = (x: unknown): x is View => VIEWS.includes(x as View);
 // a link opened in a new browser: the shell's start drops the query before this blade reads it (see settings/list.vue)
@@ -141,13 +149,15 @@ const { loading, action: load } = useAsync<boolean | undefined>(async (rescan) =
 });
 load();
 
-// legacy tree nodes: Browse (all), Installed (with errors among them, marked), Updates
+// legacy tree nodes: Browse (all), Installed (with errors among them, marked), Updates; Failed: the "With errors" node
 function inView(m: ModuleRow, v: View) {
   switch (v) {
     case "installed":
       return !!m.isInstalled;
     case "updates":
       return !!m.isInstalled && m.hasUpdate;
+    case "failed":
+      return m.hasErrors;
     default:
       return true;
   }

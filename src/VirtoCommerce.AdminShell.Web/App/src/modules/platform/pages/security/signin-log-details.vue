@@ -1,7 +1,7 @@
 <template>
   <VcBlade
     :title="record?.userName || $t('PLATFORM.SECURITY.SIGNIN.RECORD')"
-    :subtitle="record?.signInType"
+    :subtitle="signInTypeLabel(record?.signInType)"
     width="40%"
   >
     <VcContainer>
@@ -27,6 +27,7 @@ import { VcBlade, VcContainer, VcField, VcForm } from "@vc-shell/framework/ui";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import type { UserSignInLog } from "../../composables/security";
+import { useSignInLogTypes } from "../../../../shell/useSignInLogTypes";
 
 defineBlade({
   url: "/sign-in-record",
@@ -37,6 +38,7 @@ defineBlade({
 const { t } = useI18n({ useScope: "global" });
 const { options } = useBlade<{ record?: UserSignInLog }>();
 const record = computed(() => options.value?.record);
+const { labelOf: signInTypeLabel } = useSignInLogTypes();
 
 // legacy metaform "signInLogDetails": every non-empty field, in this order
 const KEYS = [
@@ -49,9 +51,16 @@ function textOf(value: unknown) {
   return t(value ? "PLATFORM.COMMON.YES" : "PLATFORM.COMMON.NO");
 }
 
+// a field's shown value: the date as a date, the sign-in type by its name, yes/no for flags
+function shownValue(key: (typeof KEYS)[number], value: unknown) {
+  if (key === "createdDate") return new Date(value as string);
+  if (key === "signInType") return signInTypeLabel(value as string);
+  return textOf(value);
+}
+
 const fields = computed(() =>
   KEYS.map((key) => ({ key, label: t(`PLATFORM.SECURITY.SIGNIN.FIELDS.${key}`), value: record.value?.[key] }))
     .filter((f) => f.value !== null && f.value !== undefined && f.value !== "")
-    .map((f) => ({ ...f, value: f.key === "createdDate" ? new Date(f.value as string) : textOf(f.value) })),
+    .map((f) => ({ ...f, value: shownValue(f.key, f.value) })),
 );
 </script>

@@ -44,8 +44,19 @@
     "BADGES": {
       "TASKS": "{count} offene Aufgaben",
       "MODULE_UPDATES": "{count} Modul-Updates",
+      "MODULES_ATTENTION": "Module, die Aufmerksamkeit brauchen: {count}",
+      "MODULES_FAILED": "Nicht gestartet: {count}",
       "MODULES_INSTALLED": "{count} Module installiert",
       "MODULES_AVAILABLE": "{count} Module"
+    },
+    "MODULE_ERRORS": {
+      "TITLE": "{count} Modul konnte nicht starten | {count} Module konnten nicht starten",
+      "MESSAGE": "Seine Bildschirme und API sind nicht verfügbar. | Ihre Bildschirme und APIs sind nicht verfügbar.",
+      "SHOW": "Fehlerhafte Module anzeigen",
+      "HIDE": "Bis zum Neuladen der Seite ausblenden",
+      "COPY": "Details kopieren",
+      "COPIED": "Kopiert",
+      "MORE": "und {count} weitere"
     },
     "FRAME": {
       "REFRESH": "Aktualisieren",

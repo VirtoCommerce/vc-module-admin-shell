@@ -64,6 +64,7 @@
       "platform_modules_browse": "浏览",
       "platform_modules_installed": "已安装",
       "platform_modules_updates": "更新",
+      "platform_modules_failed": "失败",
       "platform_modules_advanced": "高级",
       "platform_dynamicProperties": "动态属性",
       "platform_developerTools": "开发者工具",

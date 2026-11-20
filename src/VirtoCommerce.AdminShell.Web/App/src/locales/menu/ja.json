@@ -64,6 +64,7 @@
       "platform_modules_browse": "参照",
       "platform_modules_installed": "インストール済み",
       "platform_modules_updates": "更新",
+      "platform_modules_failed": "失敗",
       "platform_modules_advanced": "詳細設定",
       "platform_dynamicProperties": "動的プロパティ",
       "platform_developerTools": "開発者ツール",

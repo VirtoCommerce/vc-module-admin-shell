@@ -5,6 +5,7 @@
 import type { UserDetail } from "@vc-shell/framework";
 import type { Router } from "vue-router";
 import { canAccessAdminUI } from "./adminUIAccess";
+import { forgetHidden } from "./moduleErrors";
 
 // the sign-in pages themselves, which a finished sign-in must not land on again
 const SIGN_IN_PATHS = ["/login", "/sign-in-code"];
@@ -18,6 +19,8 @@ export function takeRedirectTarget() {
 }
 
 export async function goAfterSignIn(router: Router, user: UserDetail | undefined) {
+  // a hidden notice about modules that failed to start shows again after a sign-in
+  forgetHidden();
   // as the AngularJS admin: a user the platform keeps out of the admin UI isn't sent through a password change first
   if (!canAccessAdminUI(user)) {
     await router.push({ name: "AccessDenied" });

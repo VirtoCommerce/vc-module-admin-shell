@@ -257,6 +257,17 @@
         "SUCCEEDED": "Riuscito",
         "OUTCOME": "Esito",
         "TYPE": "Tipo di accesso",
+        "TYPES": {
+          "PASSWORD": "Password",
+          "EXTERNAL": "Provider esterno",
+          "IMPERSONATION": "Impersonificazione",
+          "IMPERSONATION_REVERT": "Fine impersonificazione",
+          "CLIENT_CREDENTIALS": "Credenziali client",
+          "LOGOUT": "Disconnessione",
+          "PASSKEY": "Passkey",
+          "OTP": "Codice monouso (OTP)",
+          "MFA": "Verifica in due passaggi (MFA)"
+        },
         "DATE": "Data",
         "TOP_FAILED_IPS": "Indirizzi IP con più errori",
         "TOP_FAILED_USERS": "Nomi utente con più errori",
@@ -335,7 +346,8 @@
       "VIEWS": {
         "BROWSE": "Sfoglia",
         "INSTALLED": "Installati",
-        "UPDATES": "Aggiornamenti"
+        "UPDATES": "Aggiornamenti",
+        "FAILED": "Con errori"
       },
       "ADVANCED": {
         "TITLE": "Avanzate",

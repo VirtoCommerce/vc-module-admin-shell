@@ -107,6 +107,7 @@
         {
           "id": "platform.modules", "title": "Modules", "icon": "lucide-blocks", "priority": 600, "permission": "platform:module:access", "target": { "type": "vue", "route": "/modules?view=installed" },
           "children": [
+            { "id": "platform.modules.failed", "title": "Failed", "target": { "type": "vue", "route": "/modules?view=failed" } },
             { "id": "platform.modules.browse", "title": "Browse", "target": { "type": "vue", "route": "/modules?view=browse" } },
             { "id": "platform.modules.installed", "title": "Installed", "target": { "type": "vue", "route": "/modules?view=installed" } },
             { "id": "platform.modules.updates", "title": "Updates", "target": { "type": "vue", "route": "/modules?view=updates" } },
