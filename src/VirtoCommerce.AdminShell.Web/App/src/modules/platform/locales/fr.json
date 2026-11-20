@@ -257,6 +257,17 @@
         "SUCCEEDED": "Réussie",
         "OUTCOME": "Résultat",
         "TYPE": "Type de connexion",
+        "TYPES": {
+          "PASSWORD": "Mot de passe",
+          "EXTERNAL": "Fournisseur externe",
+          "IMPERSONATION": "Usurpation d'identité",
+          "IMPERSONATION_REVERT": "Fin d'usurpation d'identité",
+          "CLIENT_CREDENTIALS": "Identifiants client",
+          "LOGOUT": "Déconnexion",
+          "PASSKEY": "Clé d'accès",
+          "OTP": "Code à usage unique (OTP)",
+          "MFA": "Validation en deux étapes (MFA)"
+        },
         "DATE": "Date",
         "TOP_FAILED_IPS": "Adresses IP avec le plus d'échecs",
         "TOP_FAILED_USERS": "Noms d'utilisateur avec le plus d'échecs",

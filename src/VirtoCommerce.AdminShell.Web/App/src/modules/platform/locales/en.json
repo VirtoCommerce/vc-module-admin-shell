@@ -257,6 +257,17 @@
         "SUCCEEDED": "Succeeded",
         "OUTCOME": "Outcome",
         "TYPE": "Sign-in type",
+        "TYPES": {
+          "PASSWORD": "Password",
+          "EXTERNAL": "External provider",
+          "IMPERSONATION": "Impersonation",
+          "IMPERSONATION_REVERT": "Impersonation ended",
+          "CLIENT_CREDENTIALS": "Client credentials",
+          "LOGOUT": "Sign-out",
+          "PASSKEY": "Passkey",
+          "OTP": "One-time code (OTP)",
+          "MFA": "Two-step verification (MFA)"
+        },
         "DATE": "Date",
         "TOP_FAILED_IPS": "Top failed IP addresses",
         "TOP_FAILED_USERS": "Top failed user names",

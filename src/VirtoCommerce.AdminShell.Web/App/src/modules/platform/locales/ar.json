@@ -257,6 +257,17 @@
         "SUCCEEDED": "ناجح",
         "OUTCOME": "النتيجة",
         "TYPE": "نوع تسجيل الدخول",
+        "TYPES": {
+          "PASSWORD": "كلمة المرور",
+          "EXTERNAL": "موفّر خارجي",
+          "IMPERSONATION": "انتحال الهوية",
+          "IMPERSONATION_REVERT": "انتهاء انتحال الهوية",
+          "CLIENT_CREDENTIALS": "بيانات اعتماد العميل",
+          "LOGOUT": "تسجيل الخروج",
+          "PASSKEY": "مفتاح المرور",
+          "OTP": "رمز لمرة واحدة (OTP)",
+          "MFA": "التحقق بخطوتين (MFA)"
+        },
         "DATE": "التاريخ",
         "TOP_FAILED_IPS": "عناوين IP الأكثر فشلًا",
         "TOP_FAILED_USERS": "أسماء المستخدمين الأكثر فشلًا",

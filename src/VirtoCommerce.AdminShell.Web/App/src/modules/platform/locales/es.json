@@ -257,6 +257,17 @@
         "SUCCEEDED": "Correcto",
         "OUTCOME": "Resultado",
         "TYPE": "Tipo de inicio de sesión",
+        "TYPES": {
+          "PASSWORD": "Contraseña",
+          "EXTERNAL": "Proveedor externo",
+          "IMPERSONATION": "Suplantación",
+          "IMPERSONATION_REVERT": "Fin de suplantación",
+          "CLIENT_CREDENTIALS": "Credenciales de cliente",
+          "LOGOUT": "Cierre de sesión",
+          "PASSKEY": "Clave de acceso",
+          "OTP": "Código de un solo uso (OTP)",
+          "MFA": "Verificación en dos pasos (MFA)"
+        },
         "DATE": "Fecha",
         "TOP_FAILED_IPS": "Direcciones IP con más fallos",
         "TOP_FAILED_USERS": "Nombres de usuario con más fallos",

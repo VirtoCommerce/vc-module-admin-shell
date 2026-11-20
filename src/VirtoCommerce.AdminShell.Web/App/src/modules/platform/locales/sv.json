@@ -257,6 +257,17 @@
         "SUCCEEDED": "Lyckades",
         "OUTCOME": "Resultat",
         "TYPE": "Inloggningstyp",
+        "TYPES": {
+          "PASSWORD": "Lösenord",
+          "EXTERNAL": "Extern leverantör",
+          "IMPERSONATION": "Personifiering",
+          "IMPERSONATION_REVERT": "Personifiering avslutad",
+          "CLIENT_CREDENTIALS": "Klientautentiseringsuppgifter",
+          "LOGOUT": "Utloggning",
+          "PASSKEY": "Nyckel",
+          "OTP": "Engångskod (OTP)",
+          "MFA": "Tvåstegsverifiering (MFA)"
+        },
         "DATE": "Datum",
         "TOP_FAILED_IPS": "IP-adresser med flest misslyckade försök",
         "TOP_FAILED_USERS": "Användarnamn med flest misslyckade försök",

@@ -257,6 +257,17 @@
         "SUCCEEDED": "Erfolgreich",
         "OUTCOME": "Ergebnis",
         "TYPE": "Anmeldeart",
+        "TYPES": {
+          "PASSWORD": "Passwort",
+          "EXTERNAL": "Externer Anbieter",
+          "IMPERSONATION": "Identitätswechsel",
+          "IMPERSONATION_REVERT": "Identitätswechsel beendet",
+          "CLIENT_CREDENTIALS": "Client-Anmeldedaten",
+          "LOGOUT": "Abmeldung",
+          "PASSKEY": "Passkey",
+          "OTP": "Einmalcode (OTP)",
+          "MFA": "Zweistufige Verifizierung (MFA)"
+        },
         "DATE": "Datum",
         "TOP_FAILED_IPS": "IP-Adressen mit den meisten Fehlversuchen",
         "TOP_FAILED_USERS": "Benutzernamen mit den meisten Fehlversuchen",

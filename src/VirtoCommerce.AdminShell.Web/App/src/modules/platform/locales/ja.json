@@ -257,6 +257,17 @@
         "SUCCEEDED": "成功",
         "OUTCOME": "結果",
         "TYPE": "サインインの種類",
+        "TYPES": {
+          "PASSWORD": "パスワード",
+          "EXTERNAL": "外部プロバイダー",
+          "IMPERSONATION": "なりすまし",
+          "IMPERSONATION_REVERT": "なりすまし終了",
+          "CLIENT_CREDENTIALS": "クライアント資格情報",
+          "LOGOUT": "サインアウト",
+          "PASSKEY": "パスキー",
+          "OTP": "ワンタイムコード (OTP)",
+          "MFA": "2 段階認証 (MFA)"
+        },
         "DATE": "日時",
         "TOP_FAILED_IPS": "失敗の多い IP アドレス",
         "TOP_FAILED_USERS": "失敗の多いユーザー名",

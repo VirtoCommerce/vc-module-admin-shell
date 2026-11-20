@@ -257,6 +257,17 @@
         "SUCCEEDED": "Vellykket",
         "OUTCOME": "Resultat",
         "TYPE": "Innloggingstype",
+        "TYPES": {
+          "PASSWORD": "Passord",
+          "EXTERNAL": "Ekstern leverandør",
+          "IMPERSONATION": "Etterligning",
+          "IMPERSONATION_REVERT": "Etterligning avsluttet",
+          "CLIENT_CREDENTIALS": "Klientlegitimasjon",
+          "LOGOUT": "Avlogging",
+          "PASSKEY": "Tilgangsnøkkel",
+          "OTP": "Engangskode (OTP)",
+          "MFA": "Totrinnsbekreftelse (MFA)"
+        },
         "DATE": "Dato",
         "TOP_FAILED_IPS": "IP-adresser med flest mislykkede forsøk",
         "TOP_FAILED_USERS": "Brukernavn med flest mislykkede forsøk",
