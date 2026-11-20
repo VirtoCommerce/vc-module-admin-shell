@@ -44,8 +44,19 @@
     "BADGES": {
       "TASKS": "未完了のタスク {count} 件",
       "MODULE_UPDATES": "モジュールの更新 {count} 件",
+      "MODULES_ATTENTION": "対応が必要なモジュール: {count}",
+      "MODULES_FAILED": "起動失敗: {count}",
       "MODULES_INSTALLED": "インストール済みモジュール {count} 件",
       "MODULES_AVAILABLE": "モジュール {count} 件"
+    },
+    "MODULE_ERRORS": {
+      "TITLE": "{count} 個のモジュールを起動できませんでした | {count} 個のモジュールを起動できませんでした",
+      "MESSAGE": "その画面と API は利用できません。 | それらの画面と API は利用できません。",
+      "SHOW": "失敗したモジュールを表示",
+      "HIDE": "ページを再読み込みするまで非表示",
+      "COPY": "詳細をコピー",
+      "COPIED": "コピーしました",
+      "MORE": "ほか {count} 件"
     },
     "FRAME": {
       "REFRESH": "更新",

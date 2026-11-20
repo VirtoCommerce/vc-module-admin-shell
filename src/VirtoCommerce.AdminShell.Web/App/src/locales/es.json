@@ -44,8 +44,19 @@
     "BADGES": {
       "TASKS": "{count} tareas abiertas",
       "MODULE_UPDATES": "{count} actualizaciones de módulos",
+      "MODULES_ATTENTION": "Módulos que requieren atención: {count}",
+      "MODULES_FAILED": "No iniciados: {count}",
       "MODULES_INSTALLED": "{count} módulos instalados",
       "MODULES_AVAILABLE": "{count} módulos"
+    },
+    "MODULE_ERRORS": {
+      "TITLE": "{count} módulo no se pudo iniciar | {count} módulos no se pudieron iniciar",
+      "MESSAGE": "Sus pantallas y su API no están disponibles. | Sus pantallas y sus API no están disponibles.",
+      "SHOW": "Ver módulos con errores",
+      "HIDE": "Ocultar hasta recargar la página",
+      "COPY": "Copiar detalles",
+      "COPIED": "Copiado",
+      "MORE": "y {count} más"
     },
     "FRAME": {
       "REFRESH": "Actualizar",

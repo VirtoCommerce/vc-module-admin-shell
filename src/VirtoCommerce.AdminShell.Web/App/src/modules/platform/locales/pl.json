@@ -257,6 +257,17 @@
         "SUCCEEDED": "Udane",
         "OUTCOME": "Wynik",
         "TYPE": "Typ logowania",
+        "TYPES": {
+          "PASSWORD": "Hasło",
+          "EXTERNAL": "Dostawca zewnętrzny",
+          "IMPERSONATION": "Personifikacja",
+          "IMPERSONATION_REVERT": "Koniec personifikacji",
+          "CLIENT_CREDENTIALS": "Poświadczenia klienta",
+          "LOGOUT": "Wylogowanie",
+          "PASSKEY": "Klucz dostępu",
+          "OTP": "Kod jednorazowy (OTP)",
+          "MFA": "Weryfikacja dwuetapowa (MFA)"
+        },
         "DATE": "Data",
         "TOP_FAILED_IPS": "Adresy IP z największą liczbą nieudanych prób",
         "TOP_FAILED_USERS": "Nazwy użytkowników z największą liczbą nieudanych prób",
@@ -335,7 +346,8 @@
       "VIEWS": {
         "BROWSE": "Przeglądaj",
         "INSTALLED": "Zainstalowane",
-        "UPDATES": "Aktualizacje"
+        "UPDATES": "Aktualizacje",
+        "FAILED": "Z błędami"
       },
       "ADVANCED": {
         "TITLE": "Zaawansowane",

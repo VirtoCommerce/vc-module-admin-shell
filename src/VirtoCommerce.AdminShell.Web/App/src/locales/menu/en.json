@@ -64,6 +64,7 @@
       "platform_modules_browse": "Browse",
       "platform_modules_installed": "Installed",
       "platform_modules_updates": "Updates",
+      "platform_modules_failed": "Failed",
       "platform_modules_advanced": "Advanced",
       "platform_dynamicProperties": "Dynamic Properties",
       "platform_developerTools": "Developer Tools",

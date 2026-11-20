@@ -257,6 +257,17 @@
         "SUCCEEDED": "Onnistui",
         "OUTCOME": "Tulos",
         "TYPE": "Kirjautumisen tyyppi",
+        "TYPES": {
+          "PASSWORD": "Salasana",
+          "EXTERNAL": "Ulkoinen palveluntarjoaja",
+          "IMPERSONATION": "Käyttäjänä toimiminen",
+          "IMPERSONATION_REVERT": "Käyttäjänä toimiminen päättyi",
+          "CLIENT_CREDENTIALS": "Asiakastunnistetiedot",
+          "LOGOUT": "Uloskirjautuminen",
+          "PASSKEY": "Pääsyavain",
+          "OTP": "Kertakäyttökoodi (OTP)",
+          "MFA": "Kaksivaiheinen vahvistus (MFA)"
+        },
         "DATE": "Päivämäärä",
         "TOP_FAILED_IPS": "Eniten epäonnistuneita IP-osoitteita",
         "TOP_FAILED_USERS": "Eniten epäonnistuneita käyttäjätunnuksia",
@@ -335,7 +346,8 @@
       "VIEWS": {
         "BROWSE": "Selaa",
         "INSTALLED": "Asennetut",
-        "UPDATES": "Päivitykset"
+        "UPDATES": "Päivitykset",
+        "FAILED": "Virheelliset"
       },
       "ADVANCED": {
         "TITLE": "Edistynyt",

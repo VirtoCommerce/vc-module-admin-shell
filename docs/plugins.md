@@ -18,6 +18,7 @@ What a plugin can bring:
 | Widgets in other modules' blades | `registerExternalWidget` | [Blade widgets](blade-widgets.md) |
 | Content on the sign-in page | `useExtensionPoint("auth:after-form")` | [Sign-in page](sign-in-page.md) |
 | Opening AngularJS screens | `$globalSearch.openLegacy` | [AngularJS screens](legacy-screens.md) |
+| Sign-in types in the sign-in log | `$signInLogTypes.register` | [What the host provides](#what-the-host-provides) |
 
 Real plugins to copy, on the `feat/VCST-6327-admin-shell` branches: **Cart** (`vc-module-cart`, the smallest: one dashboard widget, no screens), **Inventory** (`vc-module-inventory`, small: blades, blade widgets, a dashboard widget), **Store** (blades, search), **Orders** (blades, search, dashboard widgets, a blade widget), **Customer**, **Catalog**.
 
@@ -160,6 +161,7 @@ Build the plugin before the module is published, so `vc-build Compress` packs it
 | `$globalSearch` | `app.config.globalProperties`, `inject("adminShell.globalSearch")` | The search registry and the navigation helpers (`openBlade`, `openLegacy`, `goTo`, `waitFor`). Guard for its absence to run in other vc-shell hosts. |
 | `$menuCounters` | `app.config.globalProperties`, `inject("adminShell.menuCounters")` | The menu counter registry. Guard for its absence too. |
 | `$modules` | `app.config.globalProperties`, `inject("adminShell.modules")` | The installed modules: `isInstalled(id)`, `whenInstalled(id)`, `version(id)`. See [Using other modules](#using-other-modules). |
+| `$signInLogTypes` | `app.config.globalProperties`, `inject("adminShell.signInLogTypes")` | The sign-in log's types (the Type filter and column), as AngularJS' `platformWebApp.signInLogTypes`: `register({ value, label, moduleId? })`, where `value` is the module's `SignInType`, `label` a translation key or text. Passkey, OTP and MFA are known to the shell and shown while their module is installed. |
 | `$sharedWidgets` | `app.config.globalProperties`, `inject("adminShell.sharedWidgets")` | Widgets one module provides and another places on its own blades. See [Blade widgets](blade-widgets.md#shared-widgets). |
 | `$regional` | `app.config.globalProperties`, `inject("adminShell.regionalSettings")` | The user's regional format and time zone (profile). See [Dates and numbers](#dates-and-numbers). |
 | `ModulesReadyKey` | `inject` (vc-shell) | `true` once all plugins have loaded. |

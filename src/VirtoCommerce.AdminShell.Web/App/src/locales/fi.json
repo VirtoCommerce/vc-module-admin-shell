@@ -44,8 +44,19 @@
     "BADGES": {
       "TASKS": "Avoimia tehtäviä: {count}",
       "MODULE_UPDATES": "Moduulipäivityksiä: {count}",
+      "MODULES_ATTENTION": "Huomiota vaativat moduulit: {count}",
+      "MODULES_FAILED": "Ei käynnistynyt: {count}",
       "MODULES_INSTALLED": "Asennettuja moduuleja: {count}",
       "MODULES_AVAILABLE": "Moduuleja: {count}"
+    },
+    "MODULE_ERRORS": {
+      "TITLE": "{count} moduuli ei käynnistynyt | {count} moduulia ei käynnistynyt",
+      "MESSAGE": "Sen näkymät ja API eivät ole käytettävissä. | Niiden näkymät ja API eivät ole käytettävissä.",
+      "SHOW": "Näytä virheelliset moduulit",
+      "HIDE": "Piilota, kunnes sivu ladataan uudelleen",
+      "COPY": "Kopioi tiedot",
+      "COPIED": "Kopioitu",
+      "MORE": "ja {count} muuta"
     },
     "FRAME": {
       "REFRESH": "Päivitä",

@@ -2,6 +2,7 @@ import { useLatestRequest, useUser } from "@vc-shell/framework";
 import { computed, effectScope, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { adminMenuApi, type EffectiveMenu, type MenuItem, type MenuTarget, type UserMenuPrefs } from "../api/adminMenu";
+import { opensLegacy } from "../shell/menuTargets";
 import { loadServerTexts, localizeMenu, menuLocale } from "../shell/menuTitles";
 
 const EVERYTHING_ALLOWED = { allowPin: true, allowHide: true, allowReorder: true };
@@ -159,6 +160,8 @@ export function useAdminMenu() {
   const onApp = (target: MenuTarget) => route.name === "EmbeddedApp" && String(route.params.appId) === target.appId;
 
   function isActive(item: MenuItem) {
+    // a classic screen belongs to the item that opens it, or whose Vue screen took it over (a link to it still does)
+    if (route.name === "Legacy") return opensLegacy(item, String(route.query.url ?? ""));
     const target = item.target;
     switch (target?.type) {
       case "vue": {
@@ -168,8 +171,6 @@ export function useAdminMenu() {
         const onPath = route.path === path || route.path.startsWith(path + "/");
         return onPath && Object.entries(query).every(([key, value]) => route.query[key] === value);
       }
-      case "legacy":
-        return route.name === "Legacy" && route.query.url === target.legacyUrl;
       case "app":
         return onApp(target) && (route.query.path ?? "") === (target.route ?? "");
       default:

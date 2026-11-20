@@ -19,6 +19,7 @@
         :class="{ 'as-workspace--stacked': stacked }"
         tabindex="-1"
       >
+        <ModuleErrorsNotice />
         <ShellHeader v-if="!isMobile" />
         <VcBladeNavigation v-if="pluginsSettled" />
       </main>
@@ -42,6 +43,7 @@ import { computed, inject, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { takeRequestedPath } from "../shell/deepLink";
 import LegacyHost from "../shell/LegacyHost.vue";
+import ModuleErrorsNotice from "../shell/ModuleErrorsNotice.vue";
 import ShellHeader from "../shell/ShellHeader.vue";
 import ShellLayout from "../shell/ShellLayout.vue";
 import { useThemeMode } from "../shell/themeMode";

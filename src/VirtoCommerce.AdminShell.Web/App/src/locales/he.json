@@ -44,8 +44,19 @@
     "BADGES": {
       "TASKS": "משימות פתוחות: {count}",
       "MODULE_UPDATES": "עדכוני מודולים: {count}",
+      "MODULES_ATTENTION": "מודולים שדורשים טיפול: {count}",
+      "MODULES_FAILED": "לא עלו: {count}",
       "MODULES_INSTALLED": "מודולים מותקנים: {count}",
       "MODULES_AVAILABLE": "מודולים: {count}"
+    },
+    "MODULE_ERRORS": {
+      "TITLE": "מודול {count} לא הצליח לעלות | {count} מודולים לא הצליחו לעלות",
+      "MESSAGE": "המסכים וה-API שלו אינם זמינים. | המסכים וה-API שלהם אינם זמינים.",
+      "SHOW": "הצג מודולים שנכשלו",
+      "HIDE": "הסתר עד לטעינה מחדש של הדף",
+      "COPY": "העתק פרטים",
+      "COPIED": "הועתק",
+      "MORE": "ועוד {count}"
     },
     "FRAME": {
       "REFRESH": "רענון",

@@ -160,6 +160,7 @@
             class="as-gs__row"
             :class="{ 'as-gs__row--active': box.activeKey.value === keyOf(group, item.id) }"
             role="option"
+            :aria-label="optionLabel(item)"
             :aria-selected="box.activeKey.value === keyOf(group, item.id)"
             @mousedown.prevent
             @mousemove="hover(keyOf(group, item.id))"
@@ -238,6 +239,7 @@
             class="as-gs__row as-gs__row--all"
             :class="{ 'as-gs__row--active': box.activeKey.value === keyOf(group, '*') }"
             role="option"
+            :aria-label="$t('SHELL.SEARCH.SHOW_ALL', { count: formatCount(group.total!), group: group.title })"
             :aria-selected="box.activeKey.value === keyOf(group, '*')"
             @mousedown.prevent
             @mousemove="hover(keyOf(group, '*'))"
@@ -324,6 +326,9 @@ const exampleAlias = computed(() => {
 });
 
 const titleOf = (provider: SearchProvider) => globalSearch.translate(provider.title);
+// a result's name for screen readers: its parts as one phrase (the row's own text is split by highlighting and icons)
+const optionLabel = (item: SearchGroup["items"][number]) =>
+  [item.title, item.description, item.badge, item.meta].filter(Boolean).join(", ");
 const keyOf = (group: SearchGroup, id: string) => `${group.provider.id}\u0000${id}`;
 const entryOf = (group: SearchGroup, id: string) => props.box.entries.value.find((x) => x.key === keyOf(group, id));
 const optionId = (group: SearchGroup, id: string) =>

@@ -257,6 +257,17 @@
         "SUCCEEDED": "成功",
         "OUTCOME": "结果",
         "TYPE": "登录类型",
+        "TYPES": {
+          "PASSWORD": "密码",
+          "EXTERNAL": "外部提供方",
+          "IMPERSONATION": "模拟登录",
+          "IMPERSONATION_REVERT": "结束模拟登录",
+          "CLIENT_CREDENTIALS": "客户端凭据",
+          "LOGOUT": "注销",
+          "PASSKEY": "通行密钥",
+          "OTP": "一次性验证码 (OTP)",
+          "MFA": "两步验证 (MFA)"
+        },
         "DATE": "日期",
         "TOP_FAILED_IPS": "失败次数最多的 IP 地址",
         "TOP_FAILED_USERS": "失败次数最多的用户名",
@@ -335,7 +346,8 @@
       "VIEWS": {
         "BROWSE": "浏览",
         "INSTALLED": "已安装",
-        "UPDATES": "更新"
+        "UPDATES": "更新",
+        "FAILED": "失败"
       },
       "ADVANCED": {
         "TITLE": "高级",

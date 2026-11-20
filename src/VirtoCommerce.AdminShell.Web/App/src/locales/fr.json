@@ -44,8 +44,19 @@
     "BADGES": {
       "TASKS": "{count} tâches ouvertes",
       "MODULE_UPDATES": "{count} mises à jour de modules",
+      "MODULES_ATTENTION": "Modules à vérifier : {count}",
+      "MODULES_FAILED": "Non démarrés : {count}",
       "MODULES_INSTALLED": "{count} modules installés",
       "MODULES_AVAILABLE": "{count} modules"
+    },
+    "MODULE_ERRORS": {
+      "TITLE": "{count} module n'a pas pu démarrer | {count} modules n'ont pas pu démarrer",
+      "MESSAGE": "Ses écrans et son API sont indisponibles. | Leurs écrans et leurs API sont indisponibles.",
+      "SHOW": "Voir les modules en échec",
+      "HIDE": "Masquer jusqu'au rechargement de la page",
+      "COPY": "Copier les détails",
+      "COPIED": "Copié",
+      "MORE": "et {count} autres"
     },
     "FRAME": {
       "REFRESH": "Actualiser",

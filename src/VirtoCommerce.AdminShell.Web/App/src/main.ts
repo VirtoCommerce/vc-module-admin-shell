@@ -22,6 +22,7 @@ import { installMenuCounters } from "./shell/menuCounters";
 import { installModules } from "./shell/modules";
 import { installSharedWidgets } from "./shell/sharedWidgets";
 // sign-in methods: module plugins add theirs (a passkey) through the app ($signInMethods)
+import { installSignInLogTypes } from "./shell/signInLogTypes";
 import { installSignInMethods } from "./shell/signInMethods";
 // the user's regional format and time zone for dates and numbers ($regional)
 import { installRegionalSettings } from "./shell/regionalSettings";
@@ -64,6 +65,7 @@ async function startApp() {
   installModules(app);
   installSharedWidgets(app);
   installSignInMethods(app);
+  installSignInLogTypes(app);
   installRegionalSettings(app);
 
   app.use(router);

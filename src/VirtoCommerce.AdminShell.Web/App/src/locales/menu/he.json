@@ -64,6 +64,7 @@
       "platform_modules_browse": "עיון",
       "platform_modules_installed": "מותקנים",
       "platform_modules_updates": "עדכונים",
+      "platform_modules_failed": "שנכשלו",
       "platform_modules_advanced": "מתקדם",
       "platform_dynamicProperties": "מאפיינים דינמיים",
       "platform_developerTools": "כלי מפתחים",
