@@ -1,8 +1,8 @@
-diff --git a/dist/chunks/VcScheduler.vue_vue_type_script_setup_true_lang-USsjgh1w.js b/dist/chunks/VcScheduler.vue_vue_type_script_setup_true_lang-USsjgh1w.js
-index b48222fc843c4a0d746ddaa069d5c0fc6c653dbe..5cfcac54d76ef43b98f4ba8ba2a63b4688d8bb0c 100644
---- a/dist/chunks/VcScheduler.vue_vue_type_script_setup_true_lang-USsjgh1w.js
-+++ b/dist/chunks/VcScheduler.vue_vue_type_script_setup_true_lang-USsjgh1w.js
-@@ -1452,13 +1452,14 @@ const bv = hc, hv = /* @__PURE__ */ X({
+diff --git a/dist/chunks/VcScheduler.vue_vue_type_script_setup_true_lang-CyMKhRGD.js b/dist/chunks/VcScheduler.vue_vue_type_script_setup_true_lang-CyMKhRGD.js
+index f1e1c371de567d3da7a2d5f0048f293f9fed1d0a..d831d9e7ea2f2abd01dc14230f9b37f748c3c1dc 100644
+--- a/dist/chunks/VcScheduler.vue_vue_type_script_setup_true_lang-CyMKhRGD.js
++++ b/dist/chunks/VcScheduler.vue_vue_type_script_setup_true_lang-CyMKhRGD.js
+@@ -1457,13 +1457,14 @@ const hv = hc, yv = /* @__PURE__ */ X({
      }, {
        trigger: P(({ click: d }) => [
          M(a(Td), {
