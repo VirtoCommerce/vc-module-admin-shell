@@ -7,14 +7,14 @@ import { availableSignInTypes, registeredSignInTypes, signInTypeLabel } from "./
 export function useSignInLogTypes() {
   const { t } = useI18n({ useScope: "global" });
 
-  // offered: the modules' types only while installed (the list loads once per page, then this follows it)
-  const options = computed(() => {
-    void modules.installed.value;
-    return availableSignInTypes(registeredSignInTypes.value, modules.isInstalled).map((type) => ({
+  // offered: the modules' types only while installed. isInstalled reads the reactive list (loaded once per page), so
+  // the options follow it
+  const options = computed(() =>
+    availableSignInTypes(registeredSignInTypes.value, modules.isInstalled).map((type) => ({
       value: type.value,
       label: t(type.label),
-    }));
-  });
+    })),
+  );
 
   // labelled: every type the shell knows, installed or not, as the log may hold rows of a module removed since
   const everyType = computed(() => availableSignInTypes(registeredSignInTypes.value, () => true));

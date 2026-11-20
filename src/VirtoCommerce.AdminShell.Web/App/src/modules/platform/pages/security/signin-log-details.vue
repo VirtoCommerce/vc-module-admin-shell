@@ -51,17 +51,16 @@ function textOf(value: unknown) {
   return t(value ? "PLATFORM.COMMON.YES" : "PLATFORM.COMMON.NO");
 }
 
+// a field's shown value: the date as a date, the sign-in type by its name, yes/no for flags
+function shownValue(key: (typeof KEYS)[number], value: unknown) {
+  if (key === "createdDate") return new Date(value as string);
+  if (key === "signInType") return signInTypeLabel(value as string);
+  return textOf(value);
+}
+
 const fields = computed(() =>
   KEYS.map((key) => ({ key, label: t(`PLATFORM.SECURITY.SIGNIN.FIELDS.${key}`), value: record.value?.[key] }))
     .filter((f) => f.value !== null && f.value !== undefined && f.value !== "")
-    .map((f) => ({
-      ...f,
-      value:
-        f.key === "createdDate"
-          ? new Date(f.value as string)
-          : f.key === "signInType"
-            ? signInTypeLabel(f.value as string)
-            : textOf(f.value),
-    })),
+    .map((f) => ({ ...f, value: shownValue(f.key, f.value) })),
 );
 </script>
