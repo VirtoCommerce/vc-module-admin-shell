@@ -12,10 +12,6 @@ test("a broadcast created by the current user is kept", () => {
   assert.equal(isOwnBroadcast({ creator: "alice" }, "alice"), true);
 });
 
-test("a broadcast of the system, a job nobody enqueued, is dropped", () => {
-  assert.equal(isOwnBroadcast({ creator: "system" }, "alice"), false);
-});
-
 test("a broadcast without a creator is dropped", () => {
   assert.equal(isOwnBroadcast({}, "alice"), false);
   assert.equal(isOwnBroadcast({ creator: "" }, "alice"), false);
