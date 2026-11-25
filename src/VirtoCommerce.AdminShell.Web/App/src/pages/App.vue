@@ -59,7 +59,7 @@ const version = import.meta.env.PACKAGE_VERSION;
 const { isAuthenticated, user } = useUser();
 const { isMobile } = useResponsive();
 
-// a background job's progress is broadcast to every signed-in admin: show only the current user's. The filter reads
+// every notification with a creator is broadcast to every signed-in admin: show only the current user's. The filter reads
 // the user when a notification arrives, so it follows a sign-in as another user, and drops them all before the name loads
 useBroadcastFilter().setBroadcastFilter((x) => isOwnBroadcast(x, user.value?.userName));
 
