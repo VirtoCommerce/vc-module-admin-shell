@@ -260,8 +260,7 @@ import {
   type WidgetLayout,
 } from "../../../../shell/dashboard/layers";
 import type { DashboardDocument } from "./document";
-import { useLeaveGuard } from "../../../../shell/leaveGuard";
-import { refreshItem } from "../../composables/blade";
+import { refreshItem, useCloseConfirmation } from "../../composables/blade";
 
 defineBlade({
   url: "/dashboard-configurator",
@@ -419,7 +418,7 @@ const dirty = computed(
     layoutChanged.value ||
     JSON.stringify(personalization.value) !== savedPersonalization.value,
 );
-useLeaveGuard(dirty, "/dashboard-configurator", () => t("PLATFORM.COMMON.CLOSE_CONFIRMATION"));
+useCloseConfirmation(dirty);
 
 async function load() {
   loading.value = true;

@@ -254,39 +254,6 @@
         "ADMIN": "Admin",
         "LOCKED": "Lukittu"
       }
-    },
-    "FRAMEWORK": {
-      "PROGRESS": "Edistyminen",
-      "CLOSE_SIDEBAR": "Sulje sivupalkki",
-      "DASHBOARD_GRID": "Koontinäytön pienoisohjelmat. Vedä pienoisohjelmaa tai valitse se ja paina Enter järjestääksesi sen nuolinäppäimillä.",
-      "DATE_PICKER": {
-        "TOGGLE_OVERLAY": "Näytä tai piilota valitsin",
-        "MENU": "Päivämäärävalitsimen valikko",
-        "INPUT": "Päivämääräkenttä",
-        "OPEN_TIME_PICKER": "Avaa ajan valitsin",
-        "CLOSE_TIME_PICKER": "Sulje ajan valitsin",
-        "INCREMENT": "Suurenna: {unit}",
-        "DECREMENT": "Pienennä: {unit}",
-        "OPEN_TIME_OVERLAY": "Valitse: {unit}",
-        "AM_PM": "Vaihda AM/PM",
-        "OPEN_YEARS": "Valitse vuosi",
-        "OPEN_MONTHS": "Valitse kuukausi",
-        "NEXT_MONTH": "Seuraava kuukausi",
-        "PREV_MONTH": "Edellinen kuukausi",
-        "NEXT_YEAR": "Seuraava vuosi",
-        "PREV_YEAR": "Edellinen vuosi",
-        "CLEAR": "Tyhjennä arvo",
-        "CALENDAR_ICON": "Avaa kalenteri",
-        "TIME_PICKER": "Ajan valitsin",
-        "MONTH_PICKER": "Kuukauden valitsin",
-        "YEAR_PICKER": "Vuoden valitsin",
-        "TIME_OVERLAY": "Valitsin: {unit}",
-        "UNITS": {
-          "hours": "tunnit",
-          "minutes": "minuutit",
-          "seconds": "sekunnit"
-        }
-      }
     }
   }
 }

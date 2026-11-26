@@ -254,39 +254,6 @@
         "ADMIN": "Admin",
         "LOCKED": "Verrouillé"
       }
-    },
-    "FRAMEWORK": {
-      "PROGRESS": "Progression",
-      "CLOSE_SIDEBAR": "Fermer la barre latérale",
-      "DASHBOARD_GRID": "Widgets du tableau de bord. Faites glisser un widget, ou sélectionnez-le et appuyez sur Entrée pour le déplacer avec les flèches.",
-      "DATE_PICKER": {
-        "TOGGLE_OVERLAY": "Afficher ou masquer le sélecteur",
-        "MENU": "Menu du sélecteur de date",
-        "INPUT": "Champ de date",
-        "OPEN_TIME_PICKER": "Ouvrir le sélecteur d'heure",
-        "CLOSE_TIME_PICKER": "Fermer le sélecteur d'heure",
-        "INCREMENT": "Augmenter : {unit}",
-        "DECREMENT": "Diminuer : {unit}",
-        "OPEN_TIME_OVERLAY": "Choisir : {unit}",
-        "AM_PM": "Basculer AM/PM",
-        "OPEN_YEARS": "Choisir l'année",
-        "OPEN_MONTHS": "Choisir le mois",
-        "NEXT_MONTH": "Mois suivant",
-        "PREV_MONTH": "Mois précédent",
-        "NEXT_YEAR": "Année suivante",
-        "PREV_YEAR": "Année précédente",
-        "CLEAR": "Effacer la valeur",
-        "CALENDAR_ICON": "Ouvrir le calendrier",
-        "TIME_PICKER": "Sélecteur d'heure",
-        "MONTH_PICKER": "Sélecteur de mois",
-        "YEAR_PICKER": "Sélecteur d'année",
-        "TIME_OVERLAY": "Sélecteur : {unit}",
-        "UNITS": {
-          "hours": "heures",
-          "minutes": "minutes",
-          "seconds": "secondes"
-        }
-      }
     }
   }
 }

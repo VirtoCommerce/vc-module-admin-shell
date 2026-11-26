@@ -254,39 +254,6 @@
         "ADMIN": "Админ",
         "LOCKED": "Заблокирован"
       }
-    },
-    "FRAMEWORK": {
-      "PROGRESS": "Прогресс",
-      "CLOSE_SIDEBAR": "Закрыть боковую панель",
-      "DASHBOARD_GRID": "Виджеты панели. Перетащите виджет или выберите его и нажмите Enter, чтобы переставить его клавишами со стрелками.",
-      "DATE_PICKER": {
-        "TOGGLE_OVERLAY": "Показать или скрыть выбор",
-        "MENU": "Меню выбора даты",
-        "INPUT": "Поле даты",
-        "OPEN_TIME_PICKER": "Открыть выбор времени",
-        "CLOSE_TIME_PICKER": "Закрыть выбор времени",
-        "INCREMENT": "Увеличить: {unit}",
-        "DECREMENT": "Уменьшить: {unit}",
-        "OPEN_TIME_OVERLAY": "Выбрать: {unit}",
-        "AM_PM": "Переключить AM/PM",
-        "OPEN_YEARS": "Выбрать год",
-        "OPEN_MONTHS": "Выбрать месяц",
-        "NEXT_MONTH": "Следующий месяц",
-        "PREV_MONTH": "Предыдущий месяц",
-        "NEXT_YEAR": "Следующий год",
-        "PREV_YEAR": "Предыдущий год",
-        "CLEAR": "Очистить значение",
-        "CALENDAR_ICON": "Открыть календарь",
-        "TIME_PICKER": "Выбор времени",
-        "MONTH_PICKER": "Выбор месяца",
-        "YEAR_PICKER": "Выбор года",
-        "TIME_OVERLAY": "Выбор: {unit}",
-        "UNITS": {
-          "hours": "часы",
-          "minutes": "минуты",
-          "seconds": "секунды"
-        }
-      }
     }
   }
 }

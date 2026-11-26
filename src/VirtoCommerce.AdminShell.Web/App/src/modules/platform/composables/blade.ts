@@ -1,6 +1,6 @@
 // What the platform screens' blades share: the form with its close confirmation, and the Save, Reset and Refresh toolbar
 // items, so a change of an icon, a title or a rule is one edit.
-import { i18n, useBladeForm, type IBladeToolbar } from "@vc-shell/framework";
+import { i18n, useBeforeUnload, useBlade, useBladeForm, usePopup, type IBladeToolbar } from "@vc-shell/framework";
 import { computed, type ComputedRef } from "vue";
 
 type BladeFormOptions = Parameters<typeof useBladeForm>[0];
@@ -12,6 +12,17 @@ const t = (key: string) => i18n.global.t(key);
 /** useBladeForm that asks before a blade with unsaved changes closes */
 export function usePlatformBladeForm(options: Omit<BladeFormOptions, "closeConfirmMessage">): BladeForm {
   return useBladeForm({ ...options, closeConfirmMessage: computed(() => t("PLATFORM.COMMON.CLOSE_CONFIRMATION")) });
+}
+
+/**
+ * The same question for a blade that keeps its own unsaved state instead of a form: before the blade closes (also when
+ * the shell switches to another screen) and before the browser tab closes
+ */
+export function useCloseConfirmation(dirty: ComputedRef<boolean>) {
+  const { onBeforeClose } = useBlade();
+  const { showConfirmation } = usePopup();
+  useBeforeUnload(dirty);
+  onBeforeClose(async () => dirty.value && !(await showConfirmation(t("PLATFORM.COMMON.CLOSE_CONFIRMATION"))));
 }
 
 /**

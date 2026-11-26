@@ -254,39 +254,6 @@
         "ADMIN": "מנהל",
         "LOCKED": "נעול"
       }
-    },
-    "FRAMEWORK": {
-      "PROGRESS": "התקדמות",
-      "CLOSE_SIDEBAR": "סגירת הסרגל הצדדי",
-      "DASHBOARD_GRID": "וידג'טים של לוח הבקרה. יש לגרור וידג'ט, או להתמקד בו וללחוץ Enter כדי לסדר מחדש באמצעות מקשי החצים.",
-      "DATE_PICKER": {
-        "TOGGLE_OVERLAY": "הצגה או הסתרה של הבורר",
-        "MENU": "תפריט בורר התאריכים",
-        "INPUT": "הזנת תאריך",
-        "OPEN_TIME_PICKER": "פתיחת בורר השעה",
-        "CLOSE_TIME_PICKER": "סגירת בורר השעה",
-        "INCREMENT": "הגדלת {unit}",
-        "DECREMENT": "הקטנת {unit}",
-        "OPEN_TIME_OVERLAY": "בחירת {unit}",
-        "AM_PM": "מעבר בין AM/PM",
-        "OPEN_YEARS": "בחירת שנה",
-        "OPEN_MONTHS": "בחירת חודש",
-        "NEXT_MONTH": "החודש הבא",
-        "PREV_MONTH": "החודש הקודם",
-        "NEXT_YEAR": "השנה הבאה",
-        "PREV_YEAR": "השנה הקודמת",
-        "CLEAR": "ניקוי הערך",
-        "CALENDAR_ICON": "פתיחת לוח השנה",
-        "TIME_PICKER": "בורר שעה",
-        "MONTH_PICKER": "בורר חודש",
-        "YEAR_PICKER": "בורר שנה",
-        "TIME_OVERLAY": "בורר {unit}",
-        "UNITS": {
-          "hours": "שעות",
-          "minutes": "דקות",
-          "seconds": "שניות"
-        }
-      }
     }
   }
 }

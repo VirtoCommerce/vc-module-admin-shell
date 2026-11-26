@@ -254,39 +254,6 @@
         "ADMIN": "管理者",
         "LOCKED": "ロック中"
       }
-    },
-    "FRAMEWORK": {
-      "PROGRESS": "進行状況",
-      "CLOSE_SIDEBAR": "サイドバーを閉じる",
-      "DASHBOARD_GRID": "ダッシュボードのウィジェット。ウィジェットをドラッグするか、選択して Enter キーを押し、矢印キーで並べ替えます。",
-      "DATE_PICKER": {
-        "TOGGLE_OVERLAY": "選択画面の表示を切り替え",
-        "MENU": "日付選択メニュー",
-        "INPUT": "日付の入力",
-        "OPEN_TIME_PICKER": "時刻選択を開く",
-        "CLOSE_TIME_PICKER": "時刻選択を閉じる",
-        "INCREMENT": "{unit}を増やす",
-        "DECREMENT": "{unit}を減らす",
-        "OPEN_TIME_OVERLAY": "{unit}を選択",
-        "AM_PM": "午前/午後を切り替え",
-        "OPEN_YEARS": "年を選択",
-        "OPEN_MONTHS": "月を選択",
-        "NEXT_MONTH": "次の月",
-        "PREV_MONTH": "前の月",
-        "NEXT_YEAR": "次の年",
-        "PREV_YEAR": "前の年",
-        "CLEAR": "値をクリア",
-        "CALENDAR_ICON": "カレンダーを開く",
-        "TIME_PICKER": "時刻選択",
-        "MONTH_PICKER": "月の選択",
-        "YEAR_PICKER": "年の選択",
-        "TIME_OVERLAY": "{unit}の選択",
-        "UNITS": {
-          "hours": "時",
-          "minutes": "分",
-          "seconds": "秒"
-        }
-      }
     }
   }
 }
