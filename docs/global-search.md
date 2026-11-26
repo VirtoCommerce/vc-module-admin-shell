@@ -216,8 +216,8 @@ Open results the way a user would get there, so the screens behave as usual (a d
 | Helper | Description |
 |---|---|
 | `openBlade({ route, workspace, blades })` | A Vue screen: goes to the workspace `route` (skipped when the workspace blade `workspace` is open), then opens each of `blades` (`{ name, param?, options? }`) under the previous one. An open blade with the same name and param is reused; one asked for with `options` opens again so it gets them. Blades open over the last one (over the workspace, without `blades`) close, so it ends on top: Show all reveals the list, also on a phone. Stops if the user keeps unsaved changes. |
-| `openLegacy({ url, parent, parentReady, open })` | An AngularJS screen: shows the embedded admin on the state `url` (`/workspace/orders`, as in the menu), waits for the blade `parent` (an id, or a predicate when blades share an id) to be on screen and, with `parentReady`, to have that method or pass that test, then calls `open({ injector, parent, showBlade })` inside AngularJS. The first open loads the AngularJS admin, which takes a few seconds. |
-| `goTo(route)` | Any shell route. |
+| `openLegacy({ url, parent, parentReady, open })` | An AngularJS screen: shows the embedded admin on the state `url` (`/workspace/orders`, as in the menu), waits for the blade `parent` (an id, or a predicate when blades share an id) to be on screen and, with `parentReady`, to have that method or pass that test, then calls `open({ injector, parent, showBlade })` inside AngularJS. The first open loads the AngularJS admin, which takes a few seconds. Stops without calling `open` if the user keeps unsaved changes. |
+| `goTo(route)` | Any shell route. Resolves `false` if the user keeps unsaved changes, `true` otherwise. |
 | `waitFor(test, timeoutMs)` | Resolves with `test()`'s value once it is truthy. |
 
 A plugin with Vue screens can as well open them with vc-shell's navigation, as its own lists do.
