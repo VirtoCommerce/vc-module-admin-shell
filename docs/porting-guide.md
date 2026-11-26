@@ -43,6 +43,8 @@ If `generate-api-client` fails for a module, hand-write a small typed fetch clie
 
 - **Blades**: `defineBlade({ url, name, isWorkspace, permissions })`. Names are global — prefix them with the module
   (`CatalogProductDetails`, `CustomerContactDetails`). The workspace blade `url` equals the menu `route`.
+  A blade that gets its record only through `options` (not `param`) needs `routable: false`: `options` live only in
+  memory, so after a page reload or from a link the blade would open empty.
 - **Control reference: the vc-shell storybook — https://vc-shell-storybook.govirto.com/** (component list:
   `/index.json`). Check it before building any control by hand; e.g. dynamic properties are `VcDynamicProperty`,
   images `VcImageUpload`/`VcGallery`, money `VcInputCurrency`, colors `VcColorInput`, videos `VcVideo`.
