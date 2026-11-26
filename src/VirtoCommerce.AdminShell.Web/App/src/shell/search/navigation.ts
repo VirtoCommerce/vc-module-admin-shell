@@ -5,7 +5,7 @@
  */
 import type { BladeDescriptor } from "@vc-shell/framework";
 import { useBladeStack } from "@vc-shell/framework";
-import type { Router } from "vue-router";
+import { isNavigationFailure, NavigationFailureType, type Router } from "vue-router";
 import { legacyAdminBaseUrl } from "../legacyAdmin";
 
 type BladeStack = ReturnType<typeof useBladeStack>;
@@ -47,9 +47,10 @@ export function waitFor<T>(
   });
 }
 
-/** Goes to a route of the shell (a Vue screen, Home); resolves once the router has moved */
-export async function goTo(to: Parameters<Router["push"]>[0]) {
-  await required(router, "The router").push(to);
+/** Goes to a route of the shell (a Vue screen, Home); resolves once the router has moved; false if a guard stopped it */
+export async function goTo(to: Parameters<Router["push"]>[0]): Promise<boolean> {
+  const failure = await required(router, "The router").push(to);
+  return !isNavigationFailure(failure, NavigationFailureType.aborted);
 }
 
 /**
@@ -63,7 +64,8 @@ export async function goTo(to: Parameters<Router["push"]>[0]) {
 export async function openBlade(options: { route: string; workspace: string; blades?: BladeOpenEvent[] }) {
   const bladeStack = required(stack, "The blade stack");
   if (bladeStack.workspace.value?.name !== options.workspace) {
-    await goTo(options.route);
+    // the user kept their unsaved changes: not an error
+    if (!(await goTo(options.route))) return;
     await waitFor(() => bladeStack.workspace.value?.name === options.workspace, 5000, options.workspace);
   }
   let parent = bladeStack.workspace.value as BladeDescriptor;
@@ -144,7 +146,8 @@ export async function openLegacy(options: {
   const route = required(router, "The router").currentRoute.value;
   const routeChanges = route.name !== "Legacy" || route.query.url !== options.url;
   // LegacyHost moves the admin to the url when the route changes (and reloads the state when it is there already)
-  await goTo({ name: "Legacy", query: { url: options.url } });
+  // the user kept their unsaved changes: not an error
+  if (!(await goTo({ name: "Legacy", query: { url: options.url } }))) return;
   // no AngularJS admin installed: LegacyHost says so, and there is no admin to wait for
   if ((await legacyAdminBaseUrl()) === null) return;
   const injector = await waitFor(legacyInjector, 30000, "The AngularJS admin");
