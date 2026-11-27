@@ -5,7 +5,7 @@
  */
 import type { BladeDescriptor } from "@vc-shell/framework";
 import { useBladeStack } from "@vc-shell/framework";
-import type { Router } from "vue-router";
+import { isNavigationFailure, NavigationFailureType, type Router } from "vue-router";
 import { legacyAdminBaseUrl } from "../legacyAdmin";
 
 type BladeStack = ReturnType<typeof useBladeStack>;
@@ -23,6 +23,10 @@ export function configureSearchNavigation(options: { router: Router; bladeStack:
 function required<T>(value: T | undefined, what: string): T {
   if (!value) throw new Error(`[global-search] ${what} is not configured`);
   return value;
+}
+
+function topBlade(bladeStack: BladeStack): BladeDescriptor | undefined {
+  return bladeStack.blades.value[bladeStack.blades.value.length - 1];
 }
 
 /** Resolves with test()'s value once it is truthy; rejects after timeoutMs */
@@ -47,15 +51,17 @@ export function waitFor<T>(
   });
 }
 
-/** Goes to a route of the shell (a Vue screen, Home); resolves once the router has moved */
-export async function goTo(to: Parameters<Router["push"]>[0]) {
-  await required(router, "The router").push(to);
+/** Goes to a route of the shell (a Vue screen, Home); resolves once the router has moved; false if a guard stopped it */
+export async function goTo(to: Parameters<Router["push"]>[0]): Promise<boolean> {
+  const failure = await required(router, "The router").push(to);
+  return !isNavigationFailure(failure, NavigationFailureType.aborted);
 }
 
 /**
  * Opens a Vue blade: goes to the workspace (skipped when it is open), then opens each blade of `blades` under the
  * previous one. A blade already open there with the same name and param (and no options asked) is reused, so a list
  * stays as it is; blades open over the last one (or over the workspace, with no `blades`) close, so it is on top.
+ * Resolves true once it is, false if the user keeps unsaved changes.
  *
  *   openBlade({ route: "/security", workspace: "PlatformSecurity",
  *               blades: [{ name: "PlatformSecurityUsers" }, { name: "PlatformSecurityUserDetails", param: user.id }] })
@@ -63,7 +69,8 @@ export async function goTo(to: Parameters<Router["push"]>[0]) {
 export async function openBlade(options: { route: string; workspace: string; blades?: BladeOpenEvent[] }) {
   const bladeStack = required(stack, "The blade stack");
   if (bladeStack.workspace.value?.name !== options.workspace) {
-    await goTo(options.route);
+    // the user kept their unsaved changes: not an error
+    if (!(await goTo(options.route))) return false;
     await waitFor(() => bladeStack.workspace.value?.name === options.workspace, 5000, options.workspace);
   }
   let parent = bladeStack.workspace.value as BladeDescriptor;
@@ -79,15 +86,21 @@ export async function openBlade(options: { route: string; workspace: string; bla
       parent = open;
       continue;
     }
+    const previous = topBlade(bladeStack)?.id;
     await bladeStack.openBlade({ ...event, parentId: parent.id });
-    const opened = bladeStack.blades.value[bladeStack.blades.value.length - 1];
-    // a guard kept the blades that were open (the user chose to keep unsaved changes): stop here
-    if (!opened || opened.name !== event.name || opened.parentId !== parent.id) return;
+    const opened = topBlade(bladeStack);
+    // a guard kept the blades that were open (the user chose to keep unsaved changes): stop here. The one left on top can
+    // have the same name and parent as the one asked for, so only a new id says it opened
+    if (!opened || opened.id === previous || opened.name !== event.name || opened.parentId !== parent.id) return false;
     parent = opened;
   }
   // the last blade asked for (the workspace when there are none) ends on top: a list already open (Show all) closes the
   // detail open over it, as a phone shows only the top blade; unsaved changes there are asked about as usual
+
   await bladeStack.closeChildren(parent.id);
+
+  // closeChildren says whether a guard refused only since vc-shell 2.14, so look at what is on top
+  return topBlade(bladeStack)?.id === parent.id;
 }
 
 /* ---- AngularJS screens: the embedded admin in the LegacyHost frame ---- */
@@ -129,7 +142,8 @@ function legacyInjector(): Injector | undefined {
  * Opens an AngularJS screen: shows the embedded admin on the workspace `url` (an AngularJS state url, as in the menu:
  * /workspace/orders), waits for the blade `parent` (an id, or a predicate when blades share an id) to be there and,
  * with `parentReady`, to have that method (or pass that test), then calls open() inside AngularJS. The first open loads the AngularJS admin,
- * which takes a few seconds.
+ * which takes a few seconds. Resolves true once open() is queued, false if the user keeps unsaved changes or no
+ * AngularJS admin is installed.
  *
  *   openLegacy({ url: "/workspace/customers", parent: "members", parentReady: "showDetailBlade",
  *                open: ({ parent }) => parent.showDetailBlade(member) })
@@ -144,9 +158,10 @@ export async function openLegacy(options: {
   const route = required(router, "The router").currentRoute.value;
   const routeChanges = route.name !== "Legacy" || route.query.url !== options.url;
   // LegacyHost moves the admin to the url when the route changes (and reloads the state when it is there already)
-  await goTo({ name: "Legacy", query: { url: options.url } });
+  // the user kept their unsaved changes: not an error
+  if (!(await goTo({ name: "Legacy", query: { url: options.url } }))) return false;
   // no AngularJS admin installed: LegacyHost says so, and there is no admin to wait for
-  if ((await legacyAdminBaseUrl()) === null) return;
+  if ((await legacyAdminBaseUrl()) === null) return false;
   const injector = await waitFor(legacyInjector, 30000, "The AngularJS admin");
   // the route named this url already, so nothing moved the admin: it may have gone elsewhere by itself (a link in a blade)
   const frameWindow = document.querySelector<HTMLIFrameElement>("iframe.legacy-host")?.contentWindow;
@@ -186,4 +201,6 @@ export async function openLegacy(options: {
       showBlade: (blade, under) => navigation.showBlade(blade, under ?? parent),
     }),
   );
+
+  return true;
 }

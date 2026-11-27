@@ -25,7 +25,7 @@ LegacyHost (one iframe per session, same origin)
 - It loads the first time an AngularJS screen opens (a few seconds: the whole classic admin starts), then stays loaded.
 - It is the same origin as the shell, so the shell can reach the admin's AngularJS injector.
 - `{admin}` is where the AngularJS admin (module VirtoCommerce.AdminAngularJs, app `platform`) opens: `/` when it owns the site root, `/apps/platform/` when Admin Shell does. The shell reads it from `GET /api/platform/common/ui/context` (`adminUIs`), once per page; platforms without that list serve the AngularJS admin at `/`. Source: `src/shell/legacyAdmin.ts`.
-- Without the AngularJS admin installed, AngularJS menu items show a message instead of the frame, and `openLegacy` returns without opening anything.
+- Without the AngularJS admin installed, AngularJS menu items show a message instead of the frame, and `openLegacy` resolves `false` without opening anything.
 - The embedded admin keeps its own look; the shell doesn't restyle it.
 
 ## Opening an AngularJS screen
@@ -80,9 +80,9 @@ await shell.openLegacy({
 | `parentReady` | A method name the parent must have, or `(blade) => boolean`. Use it for lists that set themselves up after they appear (the catalog list closes its children until its catalogs are loaded). |
 | `open(context)` | Runs inside AngularJS's digest. `context.injector` (the admin's `$injector`), `context.parent` (the blade found), `context.showBlade(blade, under?)` (`bladeNavigationService.showBlade` under the parent). |
 
-`openLegacy` returns at once when no AngularJS admin is installed. Otherwise it waits up to 30 s for the classic admin to start and 15 s for the parent blade; it rejects with an error after that (the global search shows it as a notification). If the user moved the frame elsewhere by itself (a link inside a blade), it brings it back to `url` first.
+`openLegacy` resolves `false`, without calling `open`, when no AngularJS admin is installed or the user keeps unsaved changes, and `true` once `open` is queued. It waits up to 30 s for the classic admin to start and 15 s for the parent blade; it rejects with an error after that (the global search shows it as a notification). If the user moved the frame elsewhere by itself (a link inside a blade), it brings it back to `url` first.
 
-Other helpers on the same object: `goTo(route)` (any shell route), `waitFor(test, timeoutMs)` (resolves with `test()`'s value once it is truthy), `openBlade(...)` for Vue screens. See [Global search — Opening a result](global-search.md#opening-a-result).
+Other helpers on the same object: `goTo(route)` (any shell route; resolves `false` if the user keeps unsaved changes), `waitFor(test, timeoutMs)` (resolves with `test()`'s value once it is truthy), `openBlade(...)` for Vue screens (resolves `false` the same way). See [Global search — Opening a result](global-search.md#opening-a-result).
 
 ## Guidelines
 
