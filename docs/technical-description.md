@@ -95,7 +95,7 @@ The plugin list doesn't come from this module. The platform's `GET /api/apps/adm
 
 ### 3.1 Stack
 
-Vue 3.5, vue-router 5 (hash history under `/apps/admin-shell/`), `@vc-shell/framework` 2.14.1, `@vc-shell/mf-host` for Module Federation, Tailwind with the `tw-` prefix.
+Vue 3.5, vue-router 5 (hash history under `/apps/admin-shell/`), `@vc-shell/framework` 2.14.2, `@vc-shell/mf-host` for Module Federation, Tailwind with the `tw-` prefix.
 
 ### 3.2 Startup (`App/src/main.ts`)
 
