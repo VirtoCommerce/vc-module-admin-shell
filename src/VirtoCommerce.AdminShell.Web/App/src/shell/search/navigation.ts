@@ -25,6 +25,10 @@ function required<T>(value: T | undefined, what: string): T {
   return value;
 }
 
+function topBlade(bladeStack: BladeStack): BladeDescriptor | undefined {
+  return bladeStack.blades.value[bladeStack.blades.value.length - 1];
+}
+
 /** Resolves with test()'s value once it is truthy; rejects after timeoutMs */
 export function waitFor<T>(
   test: () => T | null | undefined | false,
@@ -82,16 +86,21 @@ export async function openBlade(options: { route: string; workspace: string; bla
       parent = open;
       continue;
     }
+    const previous = topBlade(bladeStack)?.id;
     await bladeStack.openBlade({ ...event, parentId: parent.id });
-    const opened = bladeStack.blades.value[bladeStack.blades.value.length - 1];
-    // a guard kept the blades that were open (the user chose to keep unsaved changes): stop here
-    if (!opened || opened.name !== event.name || opened.parentId !== parent.id) return false;
+    const opened = topBlade(bladeStack);
+    // a guard kept the blades that were open (the user chose to keep unsaved changes): stop here. The one left on top can
+    // have the same name and parent as the one asked for, so only a new id says it opened
+    if (!opened || opened.id === previous || opened.name !== event.name || opened.parentId !== parent.id) return false;
     parent = opened;
   }
   // the last blade asked for (the workspace when there are none) ends on top: a list already open (Show all) closes the
   // detail open over it, as a phone shows only the top blade; unsaved changes there are asked about as usual
 
-  return !(await bladeStack.closeChildren(parent.id));
+  await bladeStack.closeChildren(parent.id);
+
+  // closeChildren says whether a guard refused only since vc-shell 2.14, so look at what is on top
+  return topBlade(bladeStack)?.id === parent.id;
 }
 
 /* ---- AngularJS screens: the embedded admin in the LegacyHost frame ---- */

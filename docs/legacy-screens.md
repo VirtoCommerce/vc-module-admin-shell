@@ -25,7 +25,7 @@ LegacyHost (one iframe per session, same origin)
 - It loads the first time an AngularJS screen opens (a few seconds: the whole classic admin starts), then stays loaded.
 - It is the same origin as the shell, so the shell can reach the admin's AngularJS injector.
 - `{admin}` is where the AngularJS admin (module VirtoCommerce.AdminAngularJs, app `platform`) opens: `/` when it owns the site root, `/apps/platform/` when Admin Shell does. The shell reads it from `GET /api/platform/common/ui/context` (`adminUIs`), once per page; platforms without that list serve the AngularJS admin at `/`. Source: `src/shell/legacyAdmin.ts`.
-- Without the AngularJS admin installed, AngularJS menu items show a message instead of the frame, and `openLegacy` returns without opening anything.
+- Without the AngularJS admin installed, AngularJS menu items show a message instead of the frame, and `openLegacy` resolves `false` without opening anything.
 - The embedded admin keeps its own look; the shell doesn't restyle it.
 
 ## Opening an AngularJS screen
