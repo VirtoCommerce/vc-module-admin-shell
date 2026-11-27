@@ -124,7 +124,7 @@ globalSearch.registerProvider({
     return {
       total: data.totalCount, // "Show all 245 in Orders"
       // the plugin's list, filtered by the query (the list takes a keyword the plugin asks it to show)
-      showAll: () => globalSearch.openBlade({ route: "/orders", workspace: "OrdersList" }).then(() => (requestedKeyword.value = query)),
+      showAll: () => globalSearch.openBlade({ route: "/orders", workspace: "OrdersList" }).then((opened) => opened && (requestedKeyword.value = query)),
       items: data.results.map((order) => ({
         id: order.id,
         title: order.number,
@@ -215,8 +215,8 @@ Open results the way a user would get there, so the screens behave as usual (a d
 
 | Helper | Description |
 |---|---|
-| `openBlade({ route, workspace, blades })` | A Vue screen: goes to the workspace `route` (skipped when the workspace blade `workspace` is open), then opens each of `blades` (`{ name, param?, options? }`) under the previous one. An open blade with the same name and param is reused; one asked for with `options` opens again so it gets them. Blades open over the last one (over the workspace, without `blades`) close, so it ends on top: Show all reveals the list, also on a phone. Stops if the user keeps unsaved changes. |
-| `openLegacy({ url, parent, parentReady, open })` | An AngularJS screen: shows the embedded admin on the state `url` (`/workspace/orders`, as in the menu), waits for the blade `parent` (an id, or a predicate when blades share an id) to be on screen and, with `parentReady`, to have that method or pass that test, then calls `open({ injector, parent, showBlade })` inside AngularJS. The first open loads the AngularJS admin, which takes a few seconds. Stops without calling `open` if the user keeps unsaved changes. |
+| `openBlade({ route, workspace, blades })` | A Vue screen: goes to the workspace `route` (skipped when the workspace blade `workspace` is open), then opens each of `blades` (`{ name, param?, options? }`) under the previous one. An open blade with the same name and param is reused; one asked for with `options` opens again so it gets them. Blades open over the last one (over the workspace, without `blades`) close, so it ends on top: Show all reveals the list, also on a phone. Resolves `false`, and stops there, if the user keeps unsaved changes, `true` otherwise. |
+| `openLegacy({ url, parent, parentReady, open })` | An AngularJS screen: shows the embedded admin on the state `url` (`/workspace/orders`, as in the menu), waits for the blade `parent` (an id, or a predicate when blades share an id) to be on screen and, with `parentReady`, to have that method or pass that test, then calls `open({ injector, parent, showBlade })` inside AngularJS. The first open loads the AngularJS admin, which takes a few seconds. Resolves `false` without calling `open` if the user keeps unsaved changes or no AngularJS admin is installed, `true` otherwise. |
 | `goTo(route)` | Any shell route. Resolves `false` if the user keeps unsaved changes, `true` otherwise. |
 | `waitFor(test, timeoutMs)` | Resolves with `test()`'s value once it is truthy. |
 

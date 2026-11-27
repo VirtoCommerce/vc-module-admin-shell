@@ -80,9 +80,9 @@ await shell.openLegacy({
 | `parentReady` | A method name the parent must have, or `(blade) => boolean`. Use it for lists that set themselves up after they appear (the catalog list closes its children until its catalogs are loaded). |
 | `open(context)` | Runs inside AngularJS's digest. `context.injector` (the admin's `$injector`), `context.parent` (the blade found), `context.showBlade(blade, under?)` (`bladeNavigationService.showBlade` under the parent). |
 
-`openLegacy` returns at once when no AngularJS admin is installed. Otherwise it waits up to 30 s for the classic admin to start and 15 s for the parent blade; it rejects with an error after that (the global search shows it as a notification). If the user moved the frame elsewhere by itself (a link inside a blade), it brings it back to `url` first.
+`openLegacy` resolves `false`, without calling `open`, when no AngularJS admin is installed or the user keeps unsaved changes, and `true` once `open` is queued. It waits up to 30 s for the classic admin to start and 15 s for the parent blade; it rejects with an error after that (the global search shows it as a notification). If the user moved the frame elsewhere by itself (a link inside a blade), it brings it back to `url` first.
 
-Other helpers on the same object: `goTo(route)` (any shell route), `waitFor(test, timeoutMs)` (resolves with `test()`'s value once it is truthy), `openBlade(...)` for Vue screens. See [Global search — Opening a result](global-search.md#opening-a-result).
+Other helpers on the same object: `goTo(route)` (any shell route; resolves `false` if the user keeps unsaved changes), `waitFor(test, timeoutMs)` (resolves with `test()`'s value once it is truthy), `openBlade(...)` for Vue screens (resolves `false` the same way). See [Global search — Opening a result](global-search.md#opening-a-result).
 
 ## Guidelines
 
