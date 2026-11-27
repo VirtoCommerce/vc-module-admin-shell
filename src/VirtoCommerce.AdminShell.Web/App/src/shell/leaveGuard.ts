@@ -6,10 +6,10 @@ import type { Router } from "vue-router";
  * Asks before unsaved changes on a workspace screen are lost:
  * - leaving the screen in the shell (a menu item, search, a link, back): a confirmation, and staying if declined;
  * - closing or reloading the browser tab or window: the browser's own "leave site?" prompt.
- * vc-shell asks the workspace blade's close guard only when switching to another workspace; leaving for a page such as
- * Home closes the workspace without asking. So the question is asked here, by a guard that runs before vc-shell's
- * (installLeaveGuards, before the framework is installed), for the screens that signed up (useLeaveGuard), and a
- * screen with a blade form turns the form's own question off.
+ * vc-shell's blade form asks only when the blade itself is closed; switching screens is a route change, and vc-shell's
+ * own router guard opens the next workspace in place of this one without asking it. So the question is asked by a
+ * guard that runs before vc-shell's (installLeaveGuards, before the framework is installed), for the screens that
+ * signed up (useLeaveGuard).
  * Moving inside the screen is not leaving it: its child blades (`/settings/dictionary`) and its own query
  * (`?group=`) keep the path. Signing out (the login page) isn't asked about here either.
  */

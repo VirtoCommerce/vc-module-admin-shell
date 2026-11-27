@@ -588,8 +588,6 @@ const valid = computed(() =>
 const form = usePlatformBladeForm({
   data: item,
   canSaveOverride: computed(() => changed.value.length > 0 && valid.value && canUpdate.value),
-  // the Settings workspace is asked by the leave guard below; the form must not ask a second time
-  autoBeforeClose: objectScope !== undefined,
 });
 
 // leaving Settings for another screen, or closing the tab, with edits not saved asks first

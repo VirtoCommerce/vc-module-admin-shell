@@ -3134,9 +3134,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vc-shell/api-client-generator@npm:2.14.0":
-  version: 2.14.0
-  resolution: "@vc-shell/api-client-generator@npm:2.14.0"
+"@vc-shell/api-client-generator@npm:2.13.0":
+  version: 2.13.0
+  resolution: "@vc-shell/api-client-generator@npm:2.13.0"
   dependencies:
     chalk: "npm:^2.4.2"
     cross-spawn: "npm:^7.0.3"
@@ -3146,13 +3146,13 @@ __metadata:
     vite-plugin-dts: "npm:^4.5.4"
   bin:
     api-client-generator: dist/api-client-generator.js
-  checksum: 10/fc4c37097e9b2e82d232a368c73143a12a053b88d46ed113351000e9eb33f46dbf2410c7a39311ca0d595c2eb43f7d583fb0320337bfc2dfca49f6736d82c0ce
+  checksum: 10/620611284acc0673fab83151edfbee93223c7f93ecae12eb05d7d7ddcb05234ee5f18b070610d34cbe4df4081c01dcd625a945b3144e4f974cb43fa037826a26
   languageName: node
   linkType: hard
 
-"@vc-shell/config-generator@npm:2.14.0":
-  version: 2.14.0
-  resolution: "@vc-shell/config-generator@npm:2.14.0"
+"@vc-shell/config-generator@npm:2.13.0":
+  version: 2.13.0
+  resolution: "@vc-shell/config-generator@npm:2.13.0"
   dependencies:
     "@babel/parser": "npm:^7.27.0"
     "@vitejs/plugin-vue": "npm:^5.2.3"
@@ -3162,13 +3162,13 @@ __metadata:
     vite-plugin-circular-dependency: "npm:^0.5.0"
     vite-plugin-mkcert: "npm:^1.17.1"
     vue: "npm:^3.5.42"
-  checksum: 10/d67254399baa3bfc67ea5b95894e5db1a9668f4c730dfc870d342389a19ba7bf43062a4ff8a3edff72762bb8f0404cd5ba7ecaf5e465414436aea57e76ace194
+  checksum: 10/68d2ad4a8003536412a665e90b1435b5d14e8871b2a4e98ee69a1dfc5d3e19405378a6d342dbbcd213351b55b1e5a2d3b83eba1d8746792b2a2eea7484fd855d
   languageName: node
   linkType: hard
 
-"@vc-shell/framework@npm:2.14.0":
-  version: 2.14.0
-  resolution: "@vc-shell/framework@npm:2.14.0"
+"@vc-shell/framework@npm:2.13.0":
+  version: 2.13.0
+  resolution: "@vc-shell/framework@npm:2.13.0"
   dependencies:
     "@floating-ui/dom": "npm:^1.7.4"
     "@floating-ui/vue": "npm:^1.0.6"
@@ -3234,39 +3234,111 @@ __metadata:
       optional: false
   bin:
     vc-check-locales: dist/scripts/check-locales.cjs
-  checksum: 10/2467169d4756bdfc087f57665005bab886769192eb0c8dac5c735e3356fdc38c2756ebb979c5f55099cc4168df1bee8d1e725c1060c115d748affbf61cdba605
+  checksum: 10/4ba713629a4e5c6555fc62e1338c9de1fb811c4507c80285aff32794cee015ab1cebd313103ae8e8391428215a8d8a4f184093f4b0dc2d81c0fadcc445aa3d35
   languageName: node
   linkType: hard
 
-"@vc-shell/mf-config@npm:2.14.0":
-  version: 2.14.0
-  resolution: "@vc-shell/mf-config@npm:2.14.0"
-  checksum: 10/1ae85be7e1ae942e3dbfd4e95243aef51de4c438b70938473850224869c69cb563e26c20432a27b12522285756d4b6bc126210cc7f89316d6c4bd6dbe4ab6cd8
+"@vc-shell/framework@patch:@vc-shell/framework@npm%3A2.13.0#~/.yarn/patches/@vc-shell-framework-npm-2.13.0-e9b6b547ca.patch":
+  version: 2.13.0
+  resolution: "@vc-shell/framework@patch:@vc-shell/framework@npm%3A2.13.0#~/.yarn/patches/@vc-shell-framework-npm-2.13.0-e9b6b547ca.patch::version=2.13.0&hash=f5b7a0"
+  dependencies:
+    "@floating-ui/dom": "npm:^1.7.4"
+    "@floating-ui/vue": "npm:^1.0.6"
+    "@fontsource/lato": "npm:^5.2.7"
+    "@fontsource/plus-jakarta-sans": "npm:^5.1.0"
+    "@fortawesome/fontawesome-free": "npm:^6.7.2"
+    "@headlessui/vue": "npm:^1.7.19"
+    "@material-symbols/font-300": "npm:^0.32.0"
+    "@microsoft/signalr": "npm:^8.0.0"
+    "@tiptap/core": "npm:^3.33.0"
+    "@tiptap/extension-image": "npm:^3.33.0"
+    "@tiptap/extension-link": "npm:^3.33.0"
+    "@tiptap/extension-placeholder": "npm:^3.33.0"
+    "@tiptap/extension-table": "npm:^3.33.0"
+    "@tiptap/extension-table-cell": "npm:^3.33.0"
+    "@tiptap/extension-table-header": "npm:^3.33.0"
+    "@tiptap/extension-table-row": "npm:^3.33.0"
+    "@tiptap/extension-text-style": "npm:^3.33.0"
+    "@tiptap/extension-underline": "npm:^3.33.0"
+    "@tiptap/extensions": "npm:^3.33.0"
+    "@tiptap/pm": "npm:^3.33.0"
+    "@tiptap/starter-kit": "npm:^3.33.0"
+    "@tiptap/vue-3": "npm:^3.33.0"
+    "@unovis/ts": "npm:^1.7.1"
+    "@unovis/vue": "npm:^1.7.1"
+    "@vee-validate/i18n": "npm:^4.12.4"
+    "@vee-validate/rules": "npm:^4.12.4"
+    "@vuepic/vue-datepicker": "npm:^11.0.2"
+    "@vueuse/components": "npm:^10.7.1"
+    "@vueuse/core": "npm:^10.7.1"
+    "@vueuse/integrations": "npm:^10.7.1"
+    bootstrap-icons: "npm:^1.11.3"
+    core-js: "npm:^3.35.0"
+    date-fns: "npm:^4.1.0"
+    dompurify: "npm:^3.4.17"
+    gridstack: "npm:^12.4.2"
+    iso-639-1: "npm:^3.1.0"
+    js-beautify: "npm:^1.15.4"
+    lodash-es: "npm:^4.17.21"
+    lucide-vue-next: "npm:^0.577.0"
+    normalize.css: "npm:^8.0.1"
+    rrule: "npm:^2.8.1"
+    semver: "npm:^7.7.4"
+    sortablejs: "npm:^1.15.7"
+    swiper: "npm:^12.1.2"
+    tiptap-markdown: "npm:^0.9.0"
+    truncate-html: "npm:^1.1.1"
+    vue-currency-input: "npm:^3.0.5"
+    vue-i18n: "npm:^11.4.14"
+    vue3-application-insights: "npm:^1.1.0"
+    vue3-touch-events: "npm:^4.1.8"
+    web-vitals: "npm:^5.1.0"
+  peerDependencies:
+    vee-validate: ">=4.12.0"
+    vue: ">=3.4.0"
+    vue-router: ">=4.2.0"
+  peerDependenciesMeta:
+    vee-validate:
+      optional: false
+    vue:
+      optional: false
+    vue-router:
+      optional: false
+  bin:
+    vc-check-locales: dist/scripts/check-locales.cjs
+  checksum: 10/3dfcc93f512fdc17e14f75bb9ae89970e76e92259037e90f92de3c533d0a55fc0225b38e916c2af84eb28154890487b8b7cf849ae48e239a65696aba274d2927
   languageName: node
   linkType: hard
 
-"@vc-shell/mf-host@npm:2.14.0":
-  version: 2.14.0
-  resolution: "@vc-shell/mf-host@npm:2.14.0"
+"@vc-shell/mf-config@npm:2.13.0":
+  version: 2.13.0
+  resolution: "@vc-shell/mf-config@npm:2.13.0"
+  checksum: 10/b54507373ce97d3abe03bbf0011ced312bfe91292f8e570697e4094db1338d15bddef5a73874d75d495234f5a1a32dd9932863cd5b5b76862e28d55991f0c489
+  languageName: node
+  linkType: hard
+
+"@vc-shell/mf-host@npm:2.13.0":
+  version: 2.13.0
+  resolution: "@vc-shell/mf-host@npm:2.13.0"
   dependencies:
     "@module-federation/runtime": "npm:^2.9.3"
-    "@vc-shell/mf-config": "npm:2.14.0"
+    "@vc-shell/mf-config": "npm:2.13.0"
   peerDependencies:
-    "@vc-shell/framework": ^2.14.0
+    "@vc-shell/framework": ^2.13.0
     "@vueuse/core": ^10.0.0
     lodash-es: ^4.0.0
     vee-validate: ^4.12.0
     vue: ^3.4.0
     vue-i18n: ^9.0.0 || ^11.0.0
     vue-router: ^4.0.0 || ^5.0.0
-  checksum: 10/38e486cab535ccd64bad07cc047a446e071a95b3b25d53b8811d9f674d594e3e2d72b7d4c58cdb3bf1ca2e48575cd90b21573ac731b6c5f2fb73e3f756f9e0ff
+  checksum: 10/bfdf597ede12d91147443c9ec7c1068dae8a900c2395d7af232412729a9d0d71a4dcf033c5f598a80c9846e43b7770045f423c2aad3043242e07894fd7b949c0
   languageName: node
   linkType: hard
 
-"@vc-shell/ts-config@npm:2.14.0":
-  version: 2.14.0
-  resolution: "@vc-shell/ts-config@npm:2.14.0"
-  checksum: 10/4087770b8ac654d0d78d15d10cf06f4bb7844f0668241b369b6830d96f0234f98084356ddd349fbb9fb8ef9f1c1221a3f6d48fe7ae31c372c4549cb64d1c98a8
+"@vc-shell/ts-config@npm:2.13.0":
+  version: 2.13.0
+  resolution: "@vc-shell/ts-config@npm:2.13.0"
+  checksum: 10/ec94a30518e5391705b67c805f099453bb35886bec45f1908ec88b11eba476805d24d188f1b3a0ba0cf246186757b09630396d555e1b5ea1122340558608f627
   languageName: node
   linkType: hard
 
@@ -4040,11 +4112,11 @@ __metadata:
     "@types/sortablejs": "npm:^1"
     "@typescript-eslint/eslint-plugin": "npm:^8.43.0"
     "@typescript-eslint/parser": "npm:^8.43.0"
-    "@vc-shell/api-client-generator": "npm:2.14.0"
-    "@vc-shell/config-generator": "npm:2.14.0"
-    "@vc-shell/framework": "npm:2.14.0"
-    "@vc-shell/mf-host": "npm:2.14.0"
-    "@vc-shell/ts-config": "npm:2.14.0"
+    "@vc-shell/api-client-generator": "npm:2.13.0"
+    "@vc-shell/config-generator": "npm:2.13.0"
+    "@vc-shell/framework": "patch:@vc-shell/framework@npm%3A2.13.0#~/.yarn/patches/@vc-shell-framework-npm-2.13.0-e9b6b547ca.patch"
+    "@vc-shell/mf-host": "npm:2.13.0"
+    "@vc-shell/ts-config": "npm:2.13.0"
     "@vitejs/plugin-vue": "npm:^5.2.3"
     "@vue/eslint-config-prettier": "npm:^10.2.0"
     "@vue/eslint-config-typescript": "npm:^14.6.0"
