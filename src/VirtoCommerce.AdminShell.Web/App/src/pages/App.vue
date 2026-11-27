@@ -34,7 +34,6 @@ import {
   ModulesReadyKey,
   VcBladeNavigation,
   useBladeStack,
-  useBroadcastFilter,
   useResponsive,
   useUser,
 } from "@vc-shell/framework";
@@ -42,7 +41,6 @@ import type { BladeDescriptor } from "@vc-shell/framework";
 import { VcApp } from "@vc-shell/framework/ui";
 import { computed, inject, ref, watch } from "vue";
 import { useRouter } from "vue-router";
-import { isOwnBroadcast } from "../shell/broadcastFilter";
 import { takeRequestedPath } from "../shell/deepLink";
 import LegacyHost from "../shell/LegacyHost.vue";
 import ModuleErrorsNotice from "../shell/ModuleErrorsNotice.vue";
@@ -58,10 +56,6 @@ const version = import.meta.env.PACKAGE_VERSION;
 
 const { isAuthenticated, user } = useUser();
 const { isMobile } = useResponsive();
-
-// every notification with a creator is broadcast to every signed-in admin: show only the current user's. The filter reads
-// the user when a notification arrives, so it follows a sign-in as another user, and drops them all before the name loads
-useBroadcastFilter().setBroadcastFilter((x) => isOwnBroadcast(x, user.value?.userName));
 
 // the user's initials on the logo's amber, used when the user has no picture
 const initialsAvatar = computed(() => {
