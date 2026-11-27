@@ -531,10 +531,9 @@ import {
   type MenuSection,
 } from "../../../../api/adminMenu";
 import { useAdminMenu } from "../../../../composables/useAdminMenu";
-import { useLeaveGuard } from "../../../../shell/leaveGuard";
 import { discoverLegacyScreens, type LegacyScreen } from "../../../../shell/legacyDiscovery";
 import { loadServerTexts, localizeMenu, menuLocale, titleOfItem } from "../../../../shell/menuTitles";
-import { refreshItem } from "../../composables/blade";
+import { refreshItem, useCloseConfirmation } from "../../composables/blade";
 import { clean, emptyPatch } from "./patch";
 import RenameForm from "./RenameForm.vue";
 
@@ -585,7 +584,7 @@ const dirty = computed(
 );
 
 // leaving the editor for another screen, or closing the tab, with changes not saved asks first
-useLeaveGuard(dirty, "/menu-editor", () => t("PLATFORM.COMMON.CLOSE_CONFIRMATION"));
+useCloseConfirmation(dirty);
 
 // the language the editor renames in: the user's, with English beside it
 const locale = computed(() => menuLocale());

@@ -254,39 +254,6 @@
         "ADMIN": "Admin",
         "LOCKED": "Låst"
       }
-    },
-    "FRAMEWORK": {
-      "PROGRESS": "Förlopp",
-      "CLOSE_SIDEBAR": "Stäng sidofältet",
-      "DASHBOARD_GRID": "Instrumentpanelens widgetar. Dra en widget, eller markera den och tryck på Enter för att flytta den med piltangenterna.",
-      "DATE_PICKER": {
-        "TOGGLE_OVERLAY": "Visa eller dölj väljaren",
-        "MENU": "Datumväljarens meny",
-        "INPUT": "Datumfält",
-        "OPEN_TIME_PICKER": "Öppna tidsväljaren",
-        "CLOSE_TIME_PICKER": "Stäng tidsväljaren",
-        "INCREMENT": "Öka {unit}",
-        "DECREMENT": "Minska {unit}",
-        "OPEN_TIME_OVERLAY": "Välj {unit}",
-        "AM_PM": "Växla FM/EM",
-        "OPEN_YEARS": "Välj år",
-        "OPEN_MONTHS": "Välj månad",
-        "NEXT_MONTH": "Nästa månad",
-        "PREV_MONTH": "Föregående månad",
-        "NEXT_YEAR": "Nästa år",
-        "PREV_YEAR": "Föregående år",
-        "CLEAR": "Rensa värdet",
-        "CALENDAR_ICON": "Öppna kalendern",
-        "TIME_PICKER": "Tidsväljare",
-        "MONTH_PICKER": "Månadsväljare",
-        "YEAR_PICKER": "Årsväljare",
-        "TIME_OVERLAY": "Väljare: {unit}",
-        "UNITS": {
-          "hours": "timmar",
-          "minutes": "minuter",
-          "seconds": "sekunder"
-        }
-      }
     }
   }
 }

@@ -55,9 +55,9 @@ The menu's titles have files of their own: `App/src/locales/menu/<code>.json`, m
 
 ### vc-shell's English defaults
 
-Some vc-shell components default a text prop to fixed English instead of a translated text: the table search's "Search...", the phone table's "More", "Actions" and "Cancel", the date picker's labels, the loading and progress labels. A screen that doesn't pass its own text would show them in English. The host gives these props a default in the user's language (`App/src/locales/framework/defaults.ts`): vc-shell's own text where it has one (`COMPONENTS.ORGANISMS.VC_TABLE.SEARCH`), the shell's otherwise (`SHELL.FRAMEWORK`). Module plugins share vc-shell with the host, so their screens get the same texts without changes.
+vc-shell's components show their own texts (the table search's "Search...", the phone table's "More", "Actions" and "Cancel", the date picker's labels, the loading and progress labels) in the user's language when a screen doesn't pass one, since vc-shell 2.14. Module plugins share vc-shell with the host, so their screens get the same texts.
 
-Still English, because vc-shell builds them in code (fix in vc-shell): the screen-reader announcements of the dashboard's drag and drop, the "Remove …" label of a multi-select chip, the "Active"/"Inactive" label of a status icon, and the "Fullscreen" label of the rich text editor.
+Still English, because vc-shell builds them in code (fix in vc-shell): the "Active"/"Inactive" label of a status icon and the "Fullscreen" label of the rich text editor.
 
 ## Right-to-left languages
 

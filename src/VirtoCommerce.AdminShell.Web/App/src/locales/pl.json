@@ -254,39 +254,6 @@
         "ADMIN": "Admin",
         "LOCKED": "Zablokowany"
       }
-    },
-    "FRAMEWORK": {
-      "PROGRESS": "Postęp",
-      "CLOSE_SIDEBAR": "Zamknij panel boczny",
-      "DASHBOARD_GRID": "Widżety pulpitu. Przeciągnij widżet albo zaznacz go i naciśnij Enter, aby przestawić go klawiszami strzałek.",
-      "DATE_PICKER": {
-        "TOGGLE_OVERLAY": "Pokaż lub ukryj wybór",
-        "MENU": "Menu wyboru daty",
-        "INPUT": "Pole daty",
-        "OPEN_TIME_PICKER": "Otwórz wybór godziny",
-        "CLOSE_TIME_PICKER": "Zamknij wybór godziny",
-        "INCREMENT": "Zwiększ: {unit}",
-        "DECREMENT": "Zmniejsz: {unit}",
-        "OPEN_TIME_OVERLAY": "Wybierz: {unit}",
-        "AM_PM": "Przełącz AM/PM",
-        "OPEN_YEARS": "Wybierz rok",
-        "OPEN_MONTHS": "Wybierz miesiąc",
-        "NEXT_MONTH": "Następny miesiąc",
-        "PREV_MONTH": "Poprzedni miesiąc",
-        "NEXT_YEAR": "Następny rok",
-        "PREV_YEAR": "Poprzedni rok",
-        "CLEAR": "Wyczyść wartość",
-        "CALENDAR_ICON": "Otwórz kalendarz",
-        "TIME_PICKER": "Wybór godziny",
-        "MONTH_PICKER": "Wybór miesiąca",
-        "YEAR_PICKER": "Wybór roku",
-        "TIME_OVERLAY": "Wybór: {unit}",
-        "UNITS": {
-          "hours": "godziny",
-          "minutes": "minuty",
-          "seconds": "sekundy"
-        }
-      }
     }
   }
 }

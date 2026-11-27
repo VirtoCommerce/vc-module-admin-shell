@@ -7,8 +7,9 @@
 /* Design overrides (vc-one-shell / Platform Atomic Round V3) on top of vc-shell component tokens.
    Values come from the design JSX (Sidebar.jsx, QuoteRequestList.jsx, ProductDetail.jsx, StatusPill.jsx,
    ToolbarButton.jsx) and are checked by scratchpad spec-check.js.
-   :root:root and doubled classes beat vc-shell's own declarations regardless of stylesheet order. */
-:root:root {
+   vc-shell's token defaults sit in a cascade layer, so a plain :root wins over them; doubled classes beat its
+   component rules regardless of stylesheet order. */
+:root {
   /* blade header: 20px/700 title, grey buttons turning primary on hover */
   --blade-header-title-font-size: 20px;
   --blade-header-button-color: var(--color-neutral-400);
@@ -191,7 +192,7 @@
    The tables' search row (vc-shell's VcDataTable) and the settings-style screens (.ps__bar: Settings, Dynamic
    Properties) both read these. The field is white with the form fields' border, so it reads as editable, never as a
    disabled one; the Filters button is an outlined square of the same height. */
-:root:root {
+:root {
   --search-bar-padding: 9px 18px;
   --search-field-height: 36px;
   --search-field-radius: 6px;
@@ -321,7 +322,7 @@
 }
 
 /* ---- menus (VcDropdown, e.g. the widget overflow): 8px card, 6px padding, 9px 12px rows ---- */
-:root:root {
+:root {
   --vc-dropdown-text: var(--color-neutral-700);
   --vc-dropdown-border: var(--color-neutral-200);
   --vc-dropdown-accent: var(--color-secondary-50);
@@ -357,7 +358,7 @@
 }
 
 /* ---- forms (ProductDetail.jsx): 14px/500 #404040 labels, 40px fields with #D4D4D4 border and #171717 text ---- */
-:root:root {
+:root {
   --label-text-color: var(--color-neutral-700);
   --input-height: 40px;
   --input-border-color: var(--color-neutral-300);
@@ -389,7 +390,7 @@
 
 /* ==== dashboard (Dashboard.jsx, WidgetCard.jsx, DashboardTables.jsx, DashboardVisuals.jsx) ====
    Shared markup classes (.dash-*) are used by widgets in the host and in module plugins. */
-:root:root {
+:root {
   --gridstack-dashboard-background: var(--bg-app);
   /* the card draws the chrome; the grid item stays bare so the shadow isn't doubled */
   --gridstack-widget-background: transparent;

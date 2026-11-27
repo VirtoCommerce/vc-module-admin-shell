@@ -10,10 +10,11 @@ import { forgetHidden } from "./moduleErrors";
 // the sign-in pages themselves, which a finished sign-in must not land on again
 const SIGN_IN_PATHS = ["/login", "/sign-in-code"];
 
-// where an expired session or a deep link left off; same-site paths only. Read once, so a later sign-in can't land there.
+// where an expired session or a deep link left off, as vc-shell keeps it (per tab, in sessionStorage); same-site paths
+// only. Read once, so a later sign-in can't land there.
 export function takeRedirectTarget() {
-  const target = localStorage.getItem("redirectAfterLogin")?.trim();
-  localStorage.removeItem("redirectAfterLogin");
+  const target = sessionStorage.getItem("redirectAfterLogin")?.trim();
+  sessionStorage.removeItem("redirectAfterLogin");
   if (!target?.startsWith("/") || target.startsWith("//")) return "/";
   return SIGN_IN_PATHS.includes(target.split(/[?#]/)[0]) ? "/" : target;
 }

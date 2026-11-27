@@ -423,7 +423,6 @@ import { computed, nextTick, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 import { vComboboxName } from "../../../../shell/comboboxName";
-import { useLeaveGuard } from "../../../../shell/leaveGuard";
 import { refreshItem, saveResetItems, usePlatformBladeForm } from "../../composables/blade";
 import {
   exportDocument,
@@ -589,9 +588,6 @@ const form = usePlatformBladeForm({
   data: item,
   canSaveOverride: computed(() => changed.value.length > 0 && valid.value && canUpdate.value),
 });
-
-// leaving Settings for another screen, or closing the tab, with edits not saved asks first
-if (!objectScope) useLeaveGuard(form.isModified, "/settings", () => t("PLATFORM.COMMON.CLOSE_CONFIRMATION"));
 
 /** The editors from the stored values; `keepEdits` keeps the unsaved ones (a reload under them) */
 function fill(keepEdits = false) {

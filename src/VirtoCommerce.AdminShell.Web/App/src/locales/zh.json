@@ -254,39 +254,6 @@
         "ADMIN": "管理员",
         "LOCKED": "已锁定"
       }
-    },
-    "FRAMEWORK": {
-      "PROGRESS": "进度",
-      "CLOSE_SIDEBAR": "关闭侧边栏",
-      "DASHBOARD_GRID": "仪表板小组件。拖动小组件，或选中后按 Enter 键，再用方向键重新排列。",
-      "DATE_PICKER": {
-        "TOGGLE_OVERLAY": "显示或隐藏选择器",
-        "MENU": "日期选择菜单",
-        "INPUT": "日期输入",
-        "OPEN_TIME_PICKER": "打开时间选择",
-        "CLOSE_TIME_PICKER": "关闭时间选择",
-        "INCREMENT": "增加{unit}",
-        "DECREMENT": "减少{unit}",
-        "OPEN_TIME_OVERLAY": "选择{unit}",
-        "AM_PM": "切换上午/下午",
-        "OPEN_YEARS": "选择年份",
-        "OPEN_MONTHS": "选择月份",
-        "NEXT_MONTH": "下个月",
-        "PREV_MONTH": "上个月",
-        "NEXT_YEAR": "下一年",
-        "PREV_YEAR": "上一年",
-        "CLEAR": "清除值",
-        "CALENDAR_ICON": "打开日历",
-        "TIME_PICKER": "时间选择",
-        "MONTH_PICKER": "月份选择",
-        "YEAR_PICKER": "年份选择",
-        "TIME_OVERLAY": "{unit}选择",
-        "UNITS": {
-          "hours": "小时",
-          "minutes": "分钟",
-          "seconds": "秒"
-        }
-      }
     }
   }
 }

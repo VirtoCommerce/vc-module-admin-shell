@@ -254,39 +254,6 @@
         "ADMIN": "Admin",
         "LOCKED": "Bloqueado"
       }
-    },
-    "FRAMEWORK": {
-      "PROGRESS": "Progreso",
-      "CLOSE_SIDEBAR": "Cerrar barra lateral",
-      "DASHBOARD_GRID": "Widgets del panel. Arrastre un widget, o selecciónelo y pulse Intro para reorganizarlo con las teclas de flecha.",
-      "DATE_PICKER": {
-        "TOGGLE_OVERLAY": "Mostrar u ocultar el selector",
-        "MENU": "Menú del selector de fecha",
-        "INPUT": "Campo de fecha",
-        "OPEN_TIME_PICKER": "Abrir selector de hora",
-        "CLOSE_TIME_PICKER": "Cerrar selector de hora",
-        "INCREMENT": "Aumentar {unit}",
-        "DECREMENT": "Disminuir {unit}",
-        "OPEN_TIME_OVERLAY": "Elegir {unit}",
-        "AM_PM": "Cambiar AM/PM",
-        "OPEN_YEARS": "Elegir año",
-        "OPEN_MONTHS": "Elegir mes",
-        "NEXT_MONTH": "Mes siguiente",
-        "PREV_MONTH": "Mes anterior",
-        "NEXT_YEAR": "Año siguiente",
-        "PREV_YEAR": "Año anterior",
-        "CLEAR": "Borrar valor",
-        "CALENDAR_ICON": "Abrir calendario",
-        "TIME_PICKER": "Selector de hora",
-        "MONTH_PICKER": "Selector de mes",
-        "YEAR_PICKER": "Selector de año",
-        "TIME_OVERLAY": "Selector de {unit}",
-        "UNITS": {
-          "hours": "horas",
-          "minutes": "minutos",
-          "seconds": "segundos"
-        }
-      }
     }
   }
 }

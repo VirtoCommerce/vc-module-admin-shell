@@ -1,4 +1,4 @@
-# Porting an AngularJS admin module to the Admin Shell (vc-shell 2.7.0)
+# Porting an AngularJS admin module to the Admin Shell (vc-shell 2.14.3)
 
 The Admin Shell (`vc-module-admin-shell`, app id `admin-shell`, served at `http://localhost:10645/apps/admin-shell/`)
 is a vc-shell host. Each platform module contributes its **Vue admin UI** — a vc-shell *dynamic module*
@@ -18,12 +18,15 @@ In `src/<Module>.Web/vue/` create (copy and rename):
 
 | File | Notes |
 |---|---|
-| `package.json` | name `<module>-admin`; keep every `@vc-shell/*` at **exactly `2.7.0`**; `generate-api-client` script lists your module(s): `--APP_PLATFORM_MODULES='[VirtoCommerce.X]'` |
+| `package.json` | name `<module>-admin`; keep every `@vc-shell/*` at **exactly** the version the Admin Shell uses (`App/package.json`, now `2.14.3`); `generate-api-client` script lists your module(s): `--APP_PLATFORM_MODULES='[VirtoCommerce.X]'` |
 | `.yarnrc.yml`, `.yarn/releases/yarn-4.9.1.cjs`, empty `yarn.lock`, `.gitignore` | as in Orders |
 | `tsconfig.json`, `index.html` | as in Orders (vite needs index.html) |
 | `vite.config.mts` | `base = "/modules/$(VirtoCommerce.X)/plugins/admin-shell/"`, `process.env.APP_BASE_PATH = base`, `getDynamicModuleConfiguration({ appId: "admin-shell", moduleRoot: path.resolve(__dirname, ".."), entry: "./src/modules/index.ts", remoteName: "<module>_admin", base })` — always pass the options |
 | `public/plugin.json` | `remote: { name: "<module>_admin", exposed: "./Module" }` and `contributions.menu[]` (see 3) |
 | `src/modules/index.ts` | `export default defineAppModule({ blades, locales })`; cross-module widgets and dashboard widgets are registered at top level before it |
+
+The module runs on the Admin Shell's vc-shell, not its own. If it uses something added in a newer vc-shell, set the
+`VirtoCommerce.AdminShell` dependency in `module.manifest` to the Admin Shell release that ships it.
 
 Also: in the module's `.csproj` exclude `vue\**` and `plugins\**` from Compile/Content/EmbeddedResource/None and add the
 `AdminShellPlugin Include="plugins\**"` publish copy (see `VirtoCommerce.OrdersModule.Web.csproj`); in the repo `.gitignore`
@@ -40,6 +43,8 @@ If `generate-api-client` fails for a module, hand-write a small typed fetch clie
 
 - **Blades**: `defineBlade({ url, name, isWorkspace, permissions })`. Names are global — prefix them with the module
   (`CatalogProductDetails`, `CustomerContactDetails`). The workspace blade `url` equals the menu `route`.
+  A blade that gets its record only through `options` (not `param`) needs `routable: false`: `options` live only in
+  memory, so after a page reload or from a link the blade would open empty.
 - **Control reference: the vc-shell storybook — https://vc-shell-storybook.govirto.com/** (component list:
   `/index.json`). Check it before building any control by hand; e.g. dynamic properties are `VcDynamicProperty`,
   images `VcImageUpload`/`VcGallery`, money `VcInputCurrency`, colors `VcColorInput`, videos `VcVideo`.
@@ -49,11 +54,16 @@ If `generate-api-client` fails for a module, hand-write a small typed fetch clie
   design comes for free. Lists look like the Orders list; details like the Orders detail (VcForm + VcCard sections).
 - Toolbar actions via `toolbar-items`; save/reset/delete like Orders `details.vue` (`useBladeForm`/`useModificationTracker`
   as used there); confirm destructive actions with the framework's popup/confirmation.
+- Delete or reload from a list with a child blade open: put the work in `closeChildren(action)`. It asks about the
+  child's unsaved changes first and runs the action only if the child closed:
+  `await closeChildren(async () => { if (!(await showConfirmation(...))) return; await remove(ids); await load(); })`.
 - Nested entities open as child blades (`openBlade({ name, param, options })`); widgets on a details blade via
   `useBladeWidgets`/`VcWidget` (see Orders details: Payments/Shipments/Changes).
 - Localization: `src/modules/locales/en.json` under your module's root key; use `$t`.
-- Imports: in a remote import from **`@vc-shell/framework`** (main barrel) and `@vc-shell/framework/ui` only — never
-  `/dashboard`, `/charts` (not shared → duplicate framework, broken DI).
+- Imports: in a remote import only from the `@vc-shell/framework` entries the host shares: the main barrel, `/ui`,
+  `/ai-agent`, `/extensions`, and since vc-shell 2.14.2 `/dashboard` and `/charts`. Any other path gets bundled into the
+  module as a second framework copy with broken DI. A module that must run on an Admin Shell older than 2.14.2 takes
+  the dashboard and chart components (`DashboardWidgetCard`, ...) from the main barrel.
 
 ## 3. Menu
 
@@ -68,9 +78,7 @@ title, icon, priority and permission so the menu doesn't move.
 
 ## 4. Gotchas (all hit in this project)
 
-1. **Object template refs don't bind inside a remote** (`ref="x"` + `const x = ref()` stays undefined). Use a function ref:
-   `:ref="(el) => (x = el)"`.
-2. **Tailwind classes only exist if the host uses them.** Prefer vc-shell components; for custom layout write plain
+1. **Tailwind classes only exist if the host uses them.** Prefer vc-shell components; for custom layout write plain
    (scoped) CSS with the host tokens: `var(--color-neutral-700)`, `var(--color-primary-500)`, `var(--color-secondary-50)`,
    `var(--color-neutral-200)` (borders) etc. (`vc-module-admin-shell/.../App/src/styles/_tokens.scss`).
    **Never hard-code a color** (`#fff`, `white`, hex): the tokens have dark-theme values (`:root[data-theme="dark"]`),
@@ -78,12 +86,11 @@ title, icon, priority and permission so the menu doesn't move.
    On phones a list is rows of "name + values" without column labels; a count would read as a bare number, so give
    number columns `type="number"`, or wrap a custom count template in `<span class="vc-table-cell-number">` (render
    nothing when empty) — those keep their label ("Settings: 1").
-3. Shared host CSS classes available to plugins: `.dash-*` (dashboard), `.dash-inline` (wrap a `VcStatus` in a table cell).
-4. Git Bash rewrites `/paths` in arguments (`#/x` → `#C:/Program Files/Git/x`): prefix node commands with `MSYS_NO_PATHCONV=1`.
-5. PowerShell 5 `Set-Content` writes a BOM — don't use it for JSON.
-6. ASP.NET binds ISO dates **with `Z`** into server-local time; send UTC without `Z` when exact boundaries matter.
-7. `VcDataTable` money cells show `0` as "Not set" — format amounts yourself where 0 is meaningful.
-8. Some endpoints return `null` collections instead of `[]` — null-guard.
+2. Shared host CSS classes available to plugins: `.dash-*` (dashboard). A `VcStatus` in a table cell needs no wrapper.
+3. Git Bash rewrites `/paths` in arguments (`#/x` → `#C:/Program Files/Git/x`): prefix node commands with `MSYS_NO_PATHCONV=1`.
+4. PowerShell 5 `Set-Content` writes a BOM — don't use it for JSON.
+5. ASP.NET binds ISO dates **with `Z`** into server-local time; send UTC without `Z` when exact boundaries matter.
+6. Some endpoints return `null` collections instead of `[]` — null-guard.
 
 ## 5. Cross-module widgets (contracts)
 
@@ -116,8 +123,7 @@ these names. If the target plugin doesn't exist yet, still build the widget; it 
 - **Refreshing the owner:** `StoreDetails` exposes `reload`/`reloadWidgets` to children (`callParent("reloadWidgets")`
   from a blade a widget opened). Other owners: check the blade before relying on it.
 - **Toolbar entries:** some blade toolbars are extension points other modules add commands to (the contract is a doc
-  comment at the top of each blade). vc-shell's desktop "More" overflow menu doesn't apply a command's `disabled`, so
-  re-check the condition in `onClick`:
+  comment at the top of each blade):
   - `catalog-items-toolbar`: Catalog browse.
   - `customer-members-toolbar`: Customer `members-list.vue`. ctx `{ organization?, selection, keyword?, totalCount, openBlade, reload }`.
   - `pricing-pricelist-products-toolbar`: Pricing `pricelist-products.vue`. ctx `{ pricelistId, pricelist?, selection, keyword?, totalCount, openBlade, reload }`.
@@ -130,8 +136,6 @@ these names. If the target plugin doesn't exist yet, still build the widget; it 
     "Add item" / "Remove".
   - `orders-line-item-toolbar`: Orders `line-item-details.vue` (`OrderLineItemDetails`). ctx
     `{ order, item?, locked, openBlade, reload }`. Used by ProductSnapshot's "Product snapshot".
-- **Popups from toolbar commands:** a command's callback runs outside a component, so `usePopup` (it needs `useI18n`)
-  throws there. Open a blade instead (as CustomerExportImport's Export does).
 - vc-shell shows the first 3 widgets in the bar and the rest in its "More" dropdown — keep that (the host only restyles it).
 
 ## 6. Verification (required before you report)

@@ -254,39 +254,6 @@
         "ADMIN": "مسؤول",
         "LOCKED": "مقفل"
       }
-    },
-    "FRAMEWORK": {
-      "PROGRESS": "التقدم",
-      "CLOSE_SIDEBAR": "إغلاق الشريط الجانبي",
-      "DASHBOARD_GRID": "عناصر واجهة لوحة التحكم. اسحب عنصرًا، أو انتقل إليه واضغط Enter لإعادة ترتيبه باستخدام مفاتيح الأسهم.",
-      "DATE_PICKER": {
-        "TOGGLE_OVERLAY": "إظهار أداة الاختيار أو إخفاؤها",
-        "MENU": "قائمة منتقي التاريخ",
-        "INPUT": "إدخال التاريخ",
-        "OPEN_TIME_PICKER": "فتح منتقي الوقت",
-        "CLOSE_TIME_PICKER": "إغلاق منتقي الوقت",
-        "INCREMENT": "زيادة {unit}",
-        "DECREMENT": "إنقاص {unit}",
-        "OPEN_TIME_OVERLAY": "اختيار {unit}",
-        "AM_PM": "التبديل بين ص/م",
-        "OPEN_YEARS": "اختيار سنة",
-        "OPEN_MONTHS": "اختيار شهر",
-        "NEXT_MONTH": "الشهر التالي",
-        "PREV_MONTH": "الشهر السابق",
-        "NEXT_YEAR": "السنة التالية",
-        "PREV_YEAR": "السنة السابقة",
-        "CLEAR": "مسح القيمة",
-        "CALENDAR_ICON": "فتح التقويم",
-        "TIME_PICKER": "منتقي الوقت",
-        "MONTH_PICKER": "منتقي الشهر",
-        "YEAR_PICKER": "منتقي السنة",
-        "TIME_OVERLAY": "منتقي {unit}",
-        "UNITS": {
-          "hours": "الساعات",
-          "minutes": "الدقائق",
-          "seconds": "الثواني"
-        }
-      }
     }
   }
 }

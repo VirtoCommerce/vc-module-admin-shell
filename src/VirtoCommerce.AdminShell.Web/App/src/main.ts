@@ -1,4 +1,3 @@
-import "./shell/deepLink";
 // the host's dashboard widgets (module plugins add theirs when they load)
 import "./shell/dashboard";
 import VirtoShellFramework, { notification, useUser, useLanguages } from "@vc-shell/framework";
@@ -10,7 +9,6 @@ import * as locales from "./locales";
 import * as menuLocales from "./locales/menu";
 // vc-shell's texts in the languages it doesn't ship (docs/localization.md)
 import * as frameworkLocales from "./locales/framework";
-import { translateFrameworkDefaults } from "./locales/framework/defaults";
 import { RouterView } from "vue-router";
 // the platform's own screens (Settings, Security, Modules, ...) ship with the host
 import PlatformModule from "./modules/platform";
@@ -28,8 +26,6 @@ import { installSignInMethods } from "./shell/signInMethods";
 import { installRegionalSettings } from "./shell/regionalSettings";
 // white-labeling: the brand, the sign-in page, Home's welcome card, the theme files
 import { loadBranding } from "./shell/branding";
-// unsaved changes on a screen are asked about before the shell leaves it
-import { installLeaveGuards } from "./shell/leaveGuard";
 // who may enter: the platform's PlatformUI:Access rules (canAccessAdminUI)
 import { installAdminUIAccessGuard } from "./shell/adminUIAccess";
 
@@ -45,10 +41,8 @@ async function startApp() {
 
   const app = createApp(RouterView);
 
-  // before vc-shell's own guards: a user the platform keeps out of the admin UI gets no screen, and unsaved changes are
-  // asked about before vc-shell opens the next screen in place of theirs
+  // before vc-shell's own guards: a user the platform keeps out of the admin UI gets no screen
   installAdminUIAccessGuard(router);
-  installLeaveGuards(router);
 
   app.use(VirtoShellFramework, {
     router,
@@ -76,8 +70,6 @@ async function startApp() {
       app.config.globalProperties.$mergeLocaleMessage(key, message);
     }),
   );
-
-  translateFrameworkDefaults(app);
 
   setLocale(currentLocale.value);
 

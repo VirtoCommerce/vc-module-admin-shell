@@ -341,9 +341,8 @@
   --border-row: #1F252E;
 }
 
-/* vc-shell's own dark palette (#242A2E surfaces, #388BFD primary) onto the one above.
-   Doubled :root, because vc-shell's stylesheet loads after this one with the same selector. */
-:root:root[data-theme="dark"] {
+/* vc-shell's own dark palette (#242A2E surfaces, #388BFD primary) onto the one above. */
+:root[data-theme="dark"] {
   --neutrals-50: #0D1015;
   --neutrals-100: #12161C;
   --neutrals-200: #171C24;

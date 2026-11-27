@@ -217,8 +217,8 @@ $themes: (
   @include color-theme(true);
 }
 
-:root:root[data-color-theme]:not([data-theme="dark"]),
-:root:root[data-color-theme][data-theme="dark"] {
+:root[data-color-theme]:not([data-theme="dark"]),
+:root[data-color-theme][data-theme="dark"] {
   @include vc-shell-palette;
 }
 

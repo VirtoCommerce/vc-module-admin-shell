@@ -21,7 +21,7 @@
       >
         <ModuleErrorsNotice />
         <ShellHeader v-if="!isMobile" />
-        <VcBladeNavigation v-if="pluginsSettled" />
+        <VcBladeNavigation />
       </main>
     </template>
   </VcApp>
@@ -29,19 +29,10 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  ModulesLoadErrorKey,
-  ModulesReadyKey,
-  VcBladeNavigation,
-  useBladeStack,
-  useResponsive,
-  useUser,
-} from "@vc-shell/framework";
+import { VcBladeNavigation, useBladeStack, useResponsive, useUser } from "@vc-shell/framework";
 import type { BladeDescriptor } from "@vc-shell/framework";
 import { VcApp } from "@vc-shell/framework/ui";
-import { computed, inject, ref, watch } from "vue";
-import { useRouter } from "vue-router";
-import { takeRequestedPath } from "../shell/deepLink";
+import { computed } from "vue";
 import LegacyHost from "../shell/LegacyHost.vue";
 import ModuleErrorsNotice from "../shell/ModuleErrorsNotice.vue";
 import ShellHeader from "../shell/ShellHeader.vue";
@@ -75,24 +66,6 @@ const isReady = computed(() => isAuthenticated.value);
 // the current blade gets the accent edge only while another blade is beside it
 const { blades } = useBladeStack();
 const stacked = computed(() => !isMobile.value && blades.value.filter((b: BladeDescriptor) => b.visible).length > 1);
-
-// re-open a deep link into a module route (e.g. #/orders) once the modules have registered their routes
-const router = useRouter();
-const modulesReady = inject(ModulesReadyKey, ref(true));
-watch(
-  modulesReady,
-  (ready) => {
-    if (!ready) return;
-    const path = takeRequestedPath();
-    if (path && router.currentRoute.value.fullPath !== path) router.replace(path);
-  },
-  { immediate: true },
-);
-
-// the blades mount once every plugin is installed (or failed): vc-shell gathers a blade's external widgets when it
-// mounts, so a host blade opened at start (a link to #/settings?group=Personalization) would miss the plugins' widgets
-const modulesLoadError = inject(ModulesLoadErrorKey, ref(false));
-const pluginsSettled = computed(() => modulesReady.value || modulesLoadError.value);
 </script>
 
 <style lang="scss">

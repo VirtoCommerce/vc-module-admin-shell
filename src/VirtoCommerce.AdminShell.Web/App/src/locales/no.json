@@ -254,39 +254,6 @@
         "ADMIN": "Admin",
         "LOCKED": "Låst"
       }
-    },
-    "FRAMEWORK": {
-      "PROGRESS": "Fremdrift",
-      "CLOSE_SIDEBAR": "Lukk sidepanelet",
-      "DASHBOARD_GRID": "Kontrollpanel-widgeter. Dra en widget, eller velg den og trykk Enter for å flytte den med piltastene.",
-      "DATE_PICKER": {
-        "TOGGLE_OVERLAY": "Vis eller skjul velgeren",
-        "MENU": "Meny for datovelger",
-        "INPUT": "Datofelt",
-        "OPEN_TIME_PICKER": "Åpne tidsvelger",
-        "CLOSE_TIME_PICKER": "Lukk tidsvelger",
-        "INCREMENT": "Øk {unit}",
-        "DECREMENT": "Reduser {unit}",
-        "OPEN_TIME_OVERLAY": "Velg {unit}",
-        "AM_PM": "Bytt AM/PM",
-        "OPEN_YEARS": "Velg år",
-        "OPEN_MONTHS": "Velg måned",
-        "NEXT_MONTH": "Neste måned",
-        "PREV_MONTH": "Forrige måned",
-        "NEXT_YEAR": "Neste år",
-        "PREV_YEAR": "Forrige år",
-        "CLEAR": "Tøm verdi",
-        "CALENDAR_ICON": "Åpne kalender",
-        "TIME_PICKER": "Tidsvelger",
-        "MONTH_PICKER": "Månedsvelger",
-        "YEAR_PICKER": "Årsvelger",
-        "TIME_OVERLAY": "Velger: {unit}",
-        "UNITS": {
-          "hours": "timer",
-          "minutes": "minutter",
-          "seconds": "sekunder"
-        }
-      }
     }
   }
 }
