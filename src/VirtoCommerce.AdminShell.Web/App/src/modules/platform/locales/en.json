@@ -125,7 +125,13 @@
         "EMPTY": "No API keys",
         "KEY": "API key",
         "ACTIVE": "Active",
-        "GENERATE": "Generate key"
+        "GENERATE": "Generate key",
+        "NEW_KEY": "New API key",
+        "NEW_KEY_WARNING": "Copy the key now. It is not stored and will not be shown again.",
+        "COPY": "Copy",
+        "COPIED": "API key copied",
+        "COPY_FAILED": "Could not copy. Select the key and copy it by hand.",
+        "DONE": "Done"
       },
       "SESSIONS": {
         "TITLE": "Sessions",

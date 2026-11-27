@@ -6,6 +6,36 @@
     :loading="loading"
     width="50%"
   >
+    <VcBanner
+      v-if="newKey"
+      variant="warning"
+      icon="lucide-key"
+      class="platform-apikeys__new"
+    >
+      <template #title>{{ $t("PLATFORM.SECURITY.APIKEYS.NEW_KEY") }}</template>
+      <p>{{ $t("PLATFORM.SECURITY.APIKEYS.NEW_KEY_WARNING") }}</p>
+      <div class="platform-apikeys__new-value">
+        <code
+          class="platform-mono"
+          data-testid="new-api-key"
+          >{{ newKey }}</code
+        >
+        <VcButton
+          size="sm"
+          icon="lucide-copy"
+          @click="copyNewKey"
+        >
+          {{ $t("PLATFORM.SECURITY.APIKEYS.COPY") }}
+        </VcButton>
+        <VcButton
+          size="sm"
+          variant="secondary"
+          @click="newKey = undefined"
+        >
+          {{ $t("PLATFORM.SECURITY.APIKEYS.DONE") }}
+        </VcButton>
+      </div>
+    </VcBanner>
     <VcDataTable
       v-model:selection="selection"
       selection-mode="multiple"
@@ -47,6 +77,7 @@
 
 <script setup lang="ts">
 import {
+  notification,
   SecurityClient,
   useApiClient,
   useAsync,
@@ -57,7 +88,7 @@ import {
   type IBladeToolbar,
   type UserApiKey,
 } from "@vc-shell/framework";
-import { VcBlade, VcColumn, VcDataTable, VcSwitch } from "@vc-shell/framework/ui";
+import { VcBanner, VcBlade, VcButton, VcColumn, VcDataTable, VcSwitch } from "@vc-shell/framework/ui";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { refreshItem } from "../../composables/blade";
@@ -76,6 +107,8 @@ const { getApiClient } = useApiClient(SecurityClient);
 
 const keys = ref<UserApiKey[]>([]);
 const selection = ref<UserApiKey[]>([]);
+// The platform returns a key's value once, in the response that created it; the list shows only a hint.
+const newKey = ref<string>();
 
 const { loading: loadLoading, action: load } = useAsync(async () => {
   keys.value = (await (await getApiClient()).getUserApiKeys(param.value!)) ?? [];
@@ -90,7 +123,44 @@ const { loading: changeLoading, action: change } = useAsync<(client: SecurityCli
 
 const loading = useLoading(loadLoading, changeLoading);
 
+// The key comes back with its hint in place of the value, which tells the platform to keep the stored key.
 const toggle = (key: UserApiKey, isActive: boolean) => change((client) => client.updateUserApiKey({ ...key, isActive }));
+
+// The Clipboard API is refused in some embedded and non-secure contexts; a selected textarea and the
+// legacy copy command still work there.
+function copyWithSelection(text: string): boolean {
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.opacity = "0";
+  document.body.appendChild(textarea);
+  textarea.select();
+  try {
+    return document.execCommand("copy");
+  } catch {
+    return false;
+  } finally {
+    textarea.remove();
+  }
+}
+
+async function copyNewKey() {
+  const text = newKey.value ?? "";
+  let copied = false;
+  try {
+    await navigator.clipboard.writeText(text);
+    copied = true;
+  } catch {
+    copied = copyWithSelection(text);
+  }
+
+  if (copied) {
+    notification.success(t("PLATFORM.SECURITY.APIKEYS.COPIED"));
+  } else {
+    notification.error(t("PLATFORM.SECURITY.APIKEYS.COPY_FAILED"));
+  }
+}
 
 const toolbar = ref<IBladeToolbar[]>([
   refreshItem(() => load()),
@@ -99,11 +169,12 @@ const toolbar = ref<IBladeToolbar[]>([
     title: t("PLATFORM.SECURITY.APIKEYS.GENERATE"),
     icon: "lucide-plus",
     permissions: ["platform:security:update"],
-    // legacy generates a UUID v4 client-side
+    // No value: the platform generates the key and returns it this once.
     clickHandler: () =>
-      change((client) =>
-        client.saveUserApiKey({ apiKey: crypto.randomUUID(), isActive: true, userId: param.value, userName: options.value?.userName }),
-      ),
+      change(async (client) => {
+        const saved = await client.saveUserApiKey({ isActive: true, userId: param.value, userName: options.value?.userName });
+        newKey.value = saved?.[0]?.apiKey;
+      }),
   },
   {
     id: "delete",
@@ -121,4 +192,26 @@ const toolbar = ref<IBladeToolbar[]>([
 
 load();
 </script>
+
+<style lang="scss">
+.platform-apikeys__new {
+  margin: 12px;
+
+  p {
+    margin: 0 0 8px;
+  }
+}
+
+.platform-apikeys__new-value {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+
+  code {
+    word-break: break-all;
+    user-select: all;
+  }
+}
+</style>
 
