@@ -17,6 +17,7 @@
       <p>{{ $t("PLATFORM.SECURITY.APIKEYS.NEW_KEY_WARNING") }}</p>
       <div class="platform-apikeys__new-value">
         <code
+          ref="newKeyElement"
           class="platform-mono"
           data-testid="new-api-key"
           >{{ newKey }}</code
@@ -116,49 +117,37 @@ const { loading: loadLoading, action: load } = useAsync(async () => {
   selection.value = [];
 });
 
-const { loading: changeLoading, action: change } = useAsync<(client: SecurityClient) => Promise<unknown>>(async (fn) => {
-  await fn!(await getApiClient());
-  await load();
-  await callParent("reload");
-});
+const { loading: changeLoading, action: change } = useAsync<(client: SecurityClient) => Promise<unknown>>(
+  async (fn) => {
+    await fn!(await getApiClient());
+    await load();
+    await callParent("reload");
+  },
+);
 
 const loading = useLoading(loadLoading, changeLoading);
 
 // The key comes back with its hint in place of the value, which tells the platform to keep the stored key.
-const toggle = (key: UserApiKey, isActive: boolean) => change((client) => client.updateUserApiKey({ ...key, isActive }));
+const toggle = (key: UserApiKey, isActive: boolean) =>
+  change((client) => client.updateUserApiKey({ ...key, isActive }));
 
-// The Clipboard API is refused in some embedded and non-secure contexts; a selected textarea and the
-// legacy copy command still work there.
-function copyWithSelection(text: string): boolean {
-  const textarea = document.createElement("textarea");
-  textarea.value = text;
-  textarea.setAttribute("readonly", "");
-  textarea.style.position = "fixed";
-  textarea.style.opacity = "0";
-  document.body.appendChild(textarea);
-  textarea.select();
-  try {
-    return document.execCommand("copy");
-  } catch {
-    return false;
-  } finally {
-    textarea.remove();
+const newKeyElement = ref<HTMLElement>();
+
+// Where the browser refuses the Clipboard API (a non-secure context, a denied permission), the key is selected
+// in the banner so the user can copy it with the keyboard or the context menu.
+function selectNewKey() {
+  const selection = window.getSelection();
+  if (newKeyElement.value && selection) {
+    selection.selectAllChildren(newKeyElement.value);
   }
 }
 
 async function copyNewKey() {
-  const text = newKey.value ?? "";
-  let copied = false;
   try {
-    await navigator.clipboard.writeText(text);
-    copied = true;
-  } catch {
-    copied = copyWithSelection(text);
-  }
-
-  if (copied) {
+    await navigator.clipboard.writeText(newKey.value ?? "");
     notification.success(t("PLATFORM.SECURITY.APIKEYS.COPIED"));
-  } else {
+  } catch {
+    selectNewKey();
     notification.error(t("PLATFORM.SECURITY.APIKEYS.COPY_FAILED"));
   }
 }
@@ -173,7 +162,11 @@ const toolbar = ref<IBladeToolbar[]>([
     // No value: the platform generates the key and returns it this once.
     clickHandler: () =>
       change(async (client) => {
-        const saved = await client.saveUserApiKey({ isActive: true, userId: param.value, userName: options.value?.userName });
+        const saved = await client.saveUserApiKey({
+          isActive: true,
+          userId: param.value,
+          userName: options.value?.userName,
+        });
         newKey.value = saved?.[0]?.apiKey;
       }),
   },
@@ -215,4 +208,3 @@ load();
   }
 }
 </style>
-
