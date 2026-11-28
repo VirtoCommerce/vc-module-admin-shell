@@ -125,7 +125,13 @@
         "EMPTY": "APIキーはありません",
         "KEY": "APIキー",
         "ACTIVE": "有効",
-        "GENERATE": "キーを生成"
+        "GENERATE": "キーを生成",
+        "NEW_KEY": "新しい API キー",
+        "NEW_KEY_WARNING": "今すぐキーをコピーしてください。キーは保存されず、再表示されません。",
+        "COPY": "コピー",
+        "COPIED": "API キーをコピーしました",
+        "COPY_FAILED": "コピーできませんでした。キーを選択して手動でコピーしてください。",
+        "DONE": "完了"
       },
       "SESSIONS": {
         "TITLE": "セッション",

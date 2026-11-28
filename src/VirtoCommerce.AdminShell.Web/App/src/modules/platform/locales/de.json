@@ -125,7 +125,13 @@
         "EMPTY": "Keine API-Schlüssel",
         "KEY": "API-Schlüssel",
         "ACTIVE": "Aktiv",
-        "GENERATE": "Schlüssel generieren"
+        "GENERATE": "Schlüssel generieren",
+        "NEW_KEY": "Neuer API-Schlüssel",
+        "NEW_KEY_WARNING": "Kopieren Sie den Schlüssel jetzt. Er wird nicht gespeichert und nicht erneut angezeigt.",
+        "COPY": "Kopieren",
+        "COPIED": "API-Schlüssel kopiert",
+        "COPY_FAILED": "Kopieren nicht möglich. Markieren Sie den Schlüssel und kopieren Sie ihn manuell.",
+        "DONE": "Fertig"
       },
       "SESSIONS": {
         "TITLE": "Sitzungen",

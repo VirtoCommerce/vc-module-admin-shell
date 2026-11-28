@@ -125,7 +125,13 @@
         "EMPTY": "Ingen API-nøkler",
         "KEY": "API-nøkkel",
         "ACTIVE": "Aktiv",
-        "GENERATE": "Generer nøkkel"
+        "GENERATE": "Generer nøkkel",
+        "NEW_KEY": "Ny API-nøkkel",
+        "NEW_KEY_WARNING": "Kopier nøkkelen nå. Den lagres ikke og vises ikke igjen.",
+        "COPY": "Kopier",
+        "COPIED": "API-nøkkel kopiert",
+        "COPY_FAILED": "Kunne ikke kopiere. Merk nøkkelen og kopier den manuelt.",
+        "DONE": "Ferdig"
       },
       "SESSIONS": {
         "TITLE": "Økter",

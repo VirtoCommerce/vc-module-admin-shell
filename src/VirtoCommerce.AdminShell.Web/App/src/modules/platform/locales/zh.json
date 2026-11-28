@@ -125,7 +125,13 @@
         "EMPTY": "没有 API 密钥",
         "KEY": "API 密钥",
         "ACTIVE": "活动",
-        "GENERATE": "生成密钥"
+        "GENERATE": "生成密钥",
+        "NEW_KEY": "新 API 密钥",
+        "NEW_KEY_WARNING": "请立即复制密钥。密钥不会被保存，也不会再次显示。",
+        "COPY": "复制",
+        "COPIED": "已复制 API 密钥",
+        "COPY_FAILED": "无法复制。请选中密钥并手动复制。",
+        "DONE": "完成"
       },
       "SESSIONS": {
         "TITLE": "会话",

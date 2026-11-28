@@ -125,7 +125,13 @@
         "EMPTY": "Nessuna chiave API",
         "KEY": "Chiave API",
         "ACTIVE": "Attiva",
-        "GENERATE": "Genera chiave"
+        "GENERATE": "Genera chiave",
+        "NEW_KEY": "Nuova chiave API",
+        "NEW_KEY_WARNING": "Copia la chiave ora. Non viene memorizzata e non verrà più mostrata.",
+        "COPY": "Copia",
+        "COPIED": "Chiave API copiata",
+        "COPY_FAILED": "Impossibile copiare. Seleziona la chiave e copiala manualmente.",
+        "DONE": "Fatto"
       },
       "SESSIONS": {
         "TITLE": "Sessioni",
