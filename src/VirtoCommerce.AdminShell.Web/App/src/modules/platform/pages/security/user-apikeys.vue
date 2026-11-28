@@ -136,9 +136,9 @@ const newKeyElement = ref<HTMLElement>();
 // Where the browser refuses the Clipboard API (a non-secure context, a denied permission), the key is selected
 // in the banner so the user can copy it with the keyboard or the context menu.
 function selectNewKey() {
-  const selection = window.getSelection();
-  if (newKeyElement.value && selection) {
-    selection.selectAllChildren(newKeyElement.value);
+  const textSelection = window.getSelection();
+  if (newKeyElement.value && textSelection) {
+    textSelection.selectAllChildren(newKeyElement.value);
   }
 }
 
