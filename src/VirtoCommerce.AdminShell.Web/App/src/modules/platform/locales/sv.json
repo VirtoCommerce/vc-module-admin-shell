@@ -125,7 +125,13 @@
         "EMPTY": "Inga API-nycklar",
         "KEY": "API-nyckel",
         "ACTIVE": "Aktiv",
-        "GENERATE": "Generera nyckel"
+        "GENERATE": "Generera nyckel",
+        "NEW_KEY": "Ny API-nyckel",
+        "NEW_KEY_WARNING": "Kopiera nyckeln nu. Den lagras inte och visas inte igen.",
+        "COPY": "Kopiera",
+        "COPIED": "API-nyckel kopierad",
+        "COPY_FAILED": "Det gick inte att kopiera. Markera nyckeln och kopiera den manuellt.",
+        "DONE": "Klar"
       },
       "SESSIONS": {
         "TITLE": "Sessioner",

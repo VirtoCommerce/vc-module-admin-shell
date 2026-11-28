@@ -125,7 +125,13 @@
         "EMPTY": "Brak kluczy API",
         "KEY": "Klucz API",
         "ACTIVE": "Aktywny",
-        "GENERATE": "Wygeneruj klucz"
+        "GENERATE": "Wygeneruj klucz",
+        "NEW_KEY": "Nowy klucz API",
+        "NEW_KEY_WARNING": "Skopiuj klucz teraz. Nie jest przechowywany i nie zostanie ponownie wyświetlony.",
+        "COPY": "Kopiuj",
+        "COPIED": "Skopiowano klucz API",
+        "COPY_FAILED": "Nie udało się skopiować. Zaznacz klucz i skopiuj go ręcznie.",
+        "DONE": "Gotowe"
       },
       "SESSIONS": {
         "TITLE": "Sesje",

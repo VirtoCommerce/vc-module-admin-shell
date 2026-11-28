@@ -11,6 +11,7 @@
       variant="warning"
       icon="lucide-key"
       class="platform-apikeys__new"
+      :collapsed-height="1000"
     >
       <template #title>{{ $t("PLATFORM.SECURITY.APIKEYS.NEW_KEY") }}</template>
       <p>{{ $t("PLATFORM.SECURITY.APIKEYS.NEW_KEY_WARNING") }}</p>

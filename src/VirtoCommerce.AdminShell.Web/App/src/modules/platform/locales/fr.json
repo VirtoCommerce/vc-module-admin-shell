@@ -125,7 +125,13 @@
         "EMPTY": "Aucune clé API",
         "KEY": "Clé API",
         "ACTIVE": "Active",
-        "GENERATE": "Générer une clé"
+        "GENERATE": "Générer une clé",
+        "NEW_KEY": "Nouvelle clé API",
+        "NEW_KEY_WARNING": "Copiez la clé maintenant. Elle n'est pas enregistrée et ne sera plus affichée.",
+        "COPY": "Copier",
+        "COPIED": "Clé API copiée",
+        "COPY_FAILED": "Impossible de copier. Sélectionnez la clé et copiez-la manuellement.",
+        "DONE": "Terminé"
       },
       "SESSIONS": {
         "TITLE": "Sessions",

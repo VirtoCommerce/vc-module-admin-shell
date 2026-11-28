@@ -125,7 +125,13 @@
         "EMPTY": "Ei API-avaimia",
         "KEY": "API-avain",
         "ACTIVE": "Aktiivinen",
-        "GENERATE": "Luo avain"
+        "GENERATE": "Luo avain",
+        "NEW_KEY": "Uusi API-avain",
+        "NEW_KEY_WARNING": "Kopioi avain nyt. Sitä ei tallenneta, eikä sitä näytetä uudelleen.",
+        "COPY": "Kopioi",
+        "COPIED": "API-avain kopioitu",
+        "COPY_FAILED": "Kopiointi epäonnistui. Valitse avain ja kopioi se käsin.",
+        "DONE": "Valmis"
       },
       "SESSIONS": {
         "TITLE": "Istunnot",
